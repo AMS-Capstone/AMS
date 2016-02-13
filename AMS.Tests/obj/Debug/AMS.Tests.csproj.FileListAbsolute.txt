@@ -1,0 +1,11 @@
+c:\users\sluchianov1\documents\visual studio 2013\Projects\AMS\AMS.Tests\bin\Debug\AMS.Tests.dll
+c:\users\sluchianov1\documents\visual studio 2013\Projects\AMS\AMS.Tests\bin\Debug\AMS.Tests.pdb
+c:\users\sluchianov1\documents\visual studio 2013\Projects\AMS\AMS.Tests\bin\Debug\AMS.dll
+c:\users\sluchianov1\documents\visual studio 2013\Projects\AMS\AMS.Tests\bin\Debug\System.Web.Optimization.dll
+c:\users\sluchianov1\documents\visual studio 2013\Projects\AMS\AMS.Tests\bin\Debug\Microsoft.AspNet.FriendlyUrls.dll
+c:\users\sluchianov1\documents\visual studio 2013\Projects\AMS\AMS.Tests\bin\Debug\AMS.pdb
+c:\users\sluchianov1\documents\visual studio 2013\Projects\AMS\AMS.Tests\bin\Debug\System.Web.Optimization.xml
+c:\users\sluchianov1\documents\visual studio 2013\Projects\AMS\AMS.Tests\bin\Debug\Microsoft.AspNet.FriendlyUrls.xml
+c:\users\sluchianov1\documents\visual studio 2013\Projects\AMS\AMS.Tests\obj\Debug\AMS.Tests.csprojResolveAssemblyReference.cache
+c:\users\sluchianov1\documents\visual studio 2013\Projects\AMS\AMS.Tests\obj\Debug\AMS.Tests.dll
+c:\users\sluchianov1\documents\visual studio 2013\Projects\AMS\AMS.Tests\obj\Debug\AMS.Tests.pdb
