@@ -95,7 +95,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Code\" />
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
@@ -156,6 +155,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Code\FeeType.cs" />
+    <Content Include="App_Code\GST.cs" />
+    <Content Include="App_Code\PaymentType.cs" />
+    <Content Include="App_Code\ConditionStatus.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Default.aspx.cs">
