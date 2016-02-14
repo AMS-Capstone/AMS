@@ -19,3 +19,24 @@ c:\users\sluchianov1\documents\visual studio 2013\Projects\AMS\AMS\bin\Microsoft
 c:\users\sluchianov1\documents\visual studio 2013\Projects\AMS\AMS\obj\Debug\AMS.csprojResolveAssemblyReference.cache
 c:\users\sluchianov1\documents\visual studio 2013\Projects\AMS\AMS\obj\Debug\AMS.dll
 c:\users\sluchianov1\documents\visual studio 2013\Projects\AMS\AMS\obj\Debug\AMS.pdb
+F:\Tools\workspace2\GitHub\AMS\AMS\obj\Debug\AMS.csprojResolveAssemblyReference.cache
+F:\Tools\workspace2\GitHub\AMS\AMS\obj\Debug\AMS.dll
+F:\Tools\workspace2\GitHub\AMS\AMS\obj\Debug\AMS.pdb
+F:\Tools\workspace2\GitHub\AMS\AMS\bin\AMS.dll.config
+F:\Tools\workspace2\GitHub\AMS\AMS\bin\AMS.dll
+F:\Tools\workspace2\GitHub\AMS\AMS\bin\AMS.pdb
+F:\Tools\workspace2\GitHub\AMS\AMS\bin\Antlr3.Runtime.dll
+F:\Tools\workspace2\GitHub\AMS\AMS\bin\AspNet.ScriptManager.bootstrap.dll
+F:\Tools\workspace2\GitHub\AMS\AMS\bin\AspNet.ScriptManager.jQuery.dll
+F:\Tools\workspace2\GitHub\AMS\AMS\bin\Microsoft.AspNet.FriendlyUrls.dll
+F:\Tools\workspace2\GitHub\AMS\AMS\bin\Microsoft.AspNet.Web.Optimization.WebForms.dll
+F:\Tools\workspace2\GitHub\AMS\AMS\bin\Microsoft.ScriptManager.MSAjax.dll
+F:\Tools\workspace2\GitHub\AMS\AMS\bin\Microsoft.ScriptManager.WebForms.dll
+F:\Tools\workspace2\GitHub\AMS\AMS\bin\Microsoft.Web.Infrastructure.dll
+F:\Tools\workspace2\GitHub\AMS\AMS\bin\Newtonsoft.Json.dll
+F:\Tools\workspace2\GitHub\AMS\AMS\bin\System.Web.Optimization.dll
+F:\Tools\workspace2\GitHub\AMS\AMS\bin\WebGrease.dll
+F:\Tools\workspace2\GitHub\AMS\AMS\bin\System.Web.Optimization.xml
+F:\Tools\workspace2\GitHub\AMS\AMS\bin\Antlr3.Runtime.pdb
+F:\Tools\workspace2\GitHub\AMS\AMS\bin\Newtonsoft.Json.xml
+F:\Tools\workspace2\GitHub\AMS\AMS\bin\Microsoft.AspNet.FriendlyUrls.xml

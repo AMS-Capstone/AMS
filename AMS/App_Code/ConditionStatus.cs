@@ -10,7 +10,6 @@ namespace AMS.App_Code
         private int conditionID;
         private String conditionCode;
         private String conditionDescription;
-        private String conditionStatus;
 
         public int ConditionID
         {
@@ -28,12 +27,6 @@ namespace AMS.App_Code
         {
             get { return conditionDescription; }
             set { conditionDescription = value; }
-        }
-
-        public String ConditionStatus
-        {
-            get { return conditionStatus; }
-            set { conditionStatus = value; }
         }
 
         public ConditionStatus()
