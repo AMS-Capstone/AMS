@@ -23,7 +23,7 @@ namespace AMS.App_Code
             set { gstPercent = value; }
         }
 
-        public int GSTStatus
+        public bool GSTStatus
         {
             get { return gstStatus; }
             set { gstStatus = value; }
