@@ -18,9 +18,7 @@ namespace AMS
 
         protected void LBAuctionList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            MessageBox messageBox = new MessageBox("Text", "Title", MessageBox.MessageBoxIcons.Question, MessageBox.MessageBoxButtons.YesOrNo, MessageBox.MessageBoxStyle.StyleA);
-            messageBox.SuccessEvent.Add("YesModClick");
-            PopupBox.Text = messageBox.Show(this);
+
         }
 
         protected void DDLAuctionYear_SelectedIndexChanged(object sender, EventArgs e)
