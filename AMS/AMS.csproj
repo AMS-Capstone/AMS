@@ -95,14 +95,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Code\" />
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Content\MessageBox.css" />
     <Content Include="packages.config" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -156,6 +154,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Code\FeeType.cs" />
+    <Content Include="App_Code\GST.cs" />
+    <Content Include="App_Code\PaymentType.cs" />
+    <Content Include="App_Code\ConditionStatus.cs" />
+    <Content Include="App_Code\Seller.cs" />
+    <Content Include="App_Code\Buyer.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Default.aspx.cs">
