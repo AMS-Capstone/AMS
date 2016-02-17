@@ -46,7 +46,7 @@
                         <asp:TableRow><asp:TableCell HorizontalAlign="Right">
                             <asp:Label ID="Label10" runat="server" Text="NOTES:"></asp:Label></asp:TableCell>
                             <asp:TableCell HorizontalAlign="Left">
-                                <asp:TextBox ID="TXTNotes" Height="90px" Width="95%" runat="server" Rows="3" WordWrap="true"></asp:TextBox></asp:TableCell></asp:TableRow>
+                                <asp:TextBox ID="TXTNotes" Height="90px" TextMode="MultiLine" Columns="50" Rows="5" Width="95%" runat="server"></asp:TextBox></asp:TableCell></asp:TableRow>
 
                         <asp:TableRow><asp:TableCell HorizontalAlign="Right"></asp:TableCell></asp:TableRow>
                     </asp:Table>
