@@ -3,9 +3,9 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <div class="jumbotron">
         <h2>GST</h2>
-        <asp:Label ID="Label1" runat="server" Text="Active GST:"></asp:Label> <asp:DropDownList ID="DDLGST" runat="server" Width="162px" OnSelectedIndexChanged="DDLGST_SelectedIndexChanged"></asp:DropDownList>
+        <asp:Label ID="Label1" runat="server" Text="Active GST:"></asp:Label><asp:DropDownList ID="DDLGST" runat="server" Width="162px" OnSelectedIndexChanged="DDLGST_SelectedIndexChanged"></asp:DropDownList>
         <br />
-        <asp:Label ID="Label2" runat="server" Text="New GST (%):"></asp:Label><asp:TextBox ID="TXTNewGST" runat="server" Width="127px"></asp:TextBox>
+        <asp:Label ID="Label2" runat="server" Text="New GST (%):"></asp:Label><asp:TextBox ID="TXTNewGST" runat="server" Width="127px" ></asp:TextBox>
         <br />
         <asp:Button ID="BTNAddNewGST" runat="server" Text="Add New GST" Width="265px" OnClick="BTNAddNewGST_Click" />
     </div>
