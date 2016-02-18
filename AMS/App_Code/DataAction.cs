@@ -19,7 +19,6 @@ namespace AMS.App_Code
                 using (MySqlCommand cmd = con.CreateCommand())
                 {
                     cmd.CommandType = CommandType.Text;
-                    cmd.
                 }
                 return data;
 

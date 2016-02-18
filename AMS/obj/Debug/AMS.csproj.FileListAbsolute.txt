@@ -19,7 +19,6 @@ c:\users\sluchianov1\documents\visual studio 2013\Projects\AMS\AMS\bin\Microsoft
 c:\users\sluchianov1\documents\visual studio 2013\Projects\AMS\AMS\obj\Debug\AMS.csprojResolveAssemblyReference.cache
 c:\users\sluchianov1\documents\visual studio 2013\Projects\AMS\AMS\obj\Debug\AMS.dll
 c:\users\sluchianov1\documents\visual studio 2013\Projects\AMS\AMS\obj\Debug\AMS.pdb
-F:\Tools\workspace2\GitHub\AMS\AMS\obj\Debug\AMS.csprojResolveAssemblyReference.cache
 F:\Tools\workspace2\GitHub\AMS\AMS\obj\Debug\AMS.dll
 F:\Tools\workspace2\GitHub\AMS\AMS\obj\Debug\AMS.pdb
 F:\Tools\workspace2\GitHub\AMS\AMS\bin\AMS.dll.config
@@ -40,3 +39,5 @@ F:\Tools\workspace2\GitHub\AMS\AMS\bin\System.Web.Optimization.xml
 F:\Tools\workspace2\GitHub\AMS\AMS\bin\Antlr3.Runtime.pdb
 F:\Tools\workspace2\GitHub\AMS\AMS\bin\Newtonsoft.Json.xml
 F:\Tools\workspace2\GitHub\AMS\AMS\bin\Microsoft.AspNet.FriendlyUrls.xml
+F:\Tools\workspace2\GitHub\AMS\AMS\bin\MySql.Data.dll
+F:\Tools\workspace2\GitHub\AMS\AMS\obj\Debug\AMS.csprojResolveAssemblyReference.cache
