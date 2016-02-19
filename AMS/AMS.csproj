@@ -100,6 +100,7 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AuctionListing.aspx" />
     <Content Include="Buyers.aspx" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -165,8 +166,16 @@
     <Content Include="App_Code\Seller.cs" />
     <Content Include="App_Code\Buyer.cs" />
     <Content Include="App_Code\DataAction.cs" />
+    <Content Include="App_Code\Auction.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="AuctionListing.aspx.cs">
+      <DependentUpon>AuctionListing.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AuctionListing.aspx.designer.cs">
+      <DependentUpon>AuctionListing.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Buyers.aspx.cs">
       <DependentUpon>Buyers.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
