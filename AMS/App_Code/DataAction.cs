@@ -44,6 +44,29 @@ namespace AMS.App_Code
                 cmd.ExecuteNonQuery();
             }
         }
+
+        //View GST entry
+        public static DataTable GetGST()
+        {
+            DataTable dt = null;
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                using (MySqlCommand cmd = conn.CreateCommand())
+                {
+                    conn.Open();
+                    cmd.CommandText = "sp_viewGSTEntries";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                    {
+                        da.Fill(dt);
+
+                    }
+
+                }
+            }
+            return dt;
+        }
         //Create condition status
         public static void CreateConditionStatus(string conditionCode, string conditionDescription)
         {
@@ -74,6 +97,29 @@ namespace AMS.App_Code
             }
         }
 
+        //View Condition Status
+        public static DataTable GetConditionStatus()
+        {
+            DataTable dt = null;
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                using (MySqlCommand cmd = conn.CreateCommand())
+                {
+                    conn.Open();
+                    cmd.CommandText = "sp_viewConditionStatus";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                    {
+                        da.Fill(dt);
+
+                    }
+
+                }
+            }
+            return dt;
+        }
+
         public static void CreateFeeType(double feeCost, string feeType)
         {
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
@@ -88,7 +134,7 @@ namespace AMS.App_Code
                 cmd.ExecuteNonQuery();
             }
         }
-
+        //Update Fee Type
         public static void UpdateFeeType(int feeID, double feeCost, string feeType)
         {
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
@@ -104,6 +150,31 @@ namespace AMS.App_Code
             }
         }
 
+        //View Fee Type
+        public static DataTable GetFeeType()
+        {
+            DataTable dt = null;
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                using (MySqlCommand cmd = conn.CreateCommand())
+                {
+                    conn.Open();
+                    cmd.CommandText = "sp_viewFeeTypes";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                    {
+                        da.Fill(dt);
+
+                    }
+
+                }
+            }
+            return dt;
+        }
+
+
+        //Create Payment Type
         public static void CreatePaymentType(string paymentDescription)
         {
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
@@ -119,7 +190,7 @@ namespace AMS.App_Code
         }
 
 
-
+//Update PaymentType
         public static void UpdatePaymentType(int paymentID, string paymentDescription)
         {
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
@@ -134,6 +205,30 @@ namespace AMS.App_Code
                 cmd.ExecuteNonQuery();
             }
         }
+
+        //View PaymentType
+        public static DataTable GetPaymentType()
+        {
+            DataTable dt = null;
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                using (MySqlCommand cmd = conn.CreateCommand())
+                {
+                    conn.Open();
+                    cmd.CommandText = "sp_viewPayumentType";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                    {
+                        da.Fill(dt);
+
+                    }
+
+                }
+            }
+            return dt;
+        }
+
 
         #endregion
 
