@@ -1,3 +1,6 @@
+-- Temporarily disable foreign keys
+SET FOREIGN_KEY_CHECKS=0;
+
 Drop table if exists Buyer;
 -- Create the Buyer table
 Create Table Buyer
@@ -17,7 +20,7 @@ Create Table Buyer
 );
 
 
-Drop table if exists Buyer;
+Drop table if exists Seller;
 -- Create the Seller table
 Create Table Seller 
 (
@@ -40,6 +43,9 @@ Create Table Seller
     Private boolean,
     GSTNumber text
 );
+
+-- Re-enable foreign keys
+SET FOREIGN_KEY_CHECKS=1;
 
 DELIMITER $$
 DROP FUNCTION IF EXISTS ADD_BUYER $$
@@ -145,7 +151,7 @@ N_SellerOtherPhone text,
 N_SellerFax text, 
 N_ContactFirstName text, 
 N_SellerFileNumber text,
-N_CON_DL text,
+N_SellerDriverLicense text,
 N_GSTNumber boolean) RETURNS INTEGER
 begin
         insert into CONS(SellerCode, 
@@ -159,7 +165,7 @@ begin
         SellerFax, 
         ContactFirstName, 
         SellerFileNumber,
-        CON_DL,
+        SellerDriverLicense,
         GSTNumber) 
         
         values (N_SellerCode, 
@@ -173,7 +179,7 @@ begin
         N_SellerFax, 
         N_ContactFirstName, 
         N_SellerFileNumber,
-        N_CON_DL,
+        N_SellerDriverLicense,
         N_GSTNumber);
         return LAST_INSERT_ID();
         
@@ -182,7 +188,7 @@ DELIMITER ;
 
 drop procedure if exists UPDATE_CON;
 create procedure UPDATE_CON(
-N_CON_ID integer, 
+N_SellerID integer, 
 N_SellerCode text, 
 N_SellerFirstName text, 
 N_SellerAddress text, 
@@ -194,7 +200,7 @@ N_SellerOtherPhone text,
 N_SellerFax text, 
 N_ContactFirstName text, 
 N_SellerFileNumber text,
-N_CON_DL text,
+N_SellerDriverLicense text,
 N_GSTNumber boolean)
 UPDATE `cons`
 SET
@@ -209,19 +215,19 @@ SET
 `SellerFax` = N_SellerFax,
 `ContactFirstName` = N_ContactFirstName,
 `SellerFileNumber` = N_SellerFileNumber,
-CON_DL = N_CON_DL,
+SellerDriverLicense = N_SellerDriverLicense,
 GSTNumber = N_GSTNumber
-WHERE `CON_ID` = N_CON_ID;
+WHERE `SellerID` = N_SellerID;
 
 drop procedure if exists DEL_CON;
-create procedure DEL_CON(N_CON_ID integer)
+create procedure DEL_CON(N_SellerID integer)
 DELETE FROM CONS
-WHERE CON_ID = N_CON_ID;
+WHERE SellerID = N_SellerID;
 
 DROP PROCEDURE IF EXISTS GET_CONS;
 Create Procedure GET_CONS()
     SELECT
-CON_ID,
+SellerID,
 SellerCode,
 SellerFirstName,
 SellerAddress, 
@@ -233,6 +239,6 @@ SellerOtherPhone,
 SellerFax,
 ContactFirstName,
 SellerFileNumber 'CON_FILE#',
-CON_DL,
+SellerDriverLicense,
 GSTNumber
 FROM `cons`;
