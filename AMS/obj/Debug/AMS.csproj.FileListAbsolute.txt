@@ -41,3 +41,25 @@ F:\Tools\workspace2\GitHub\AMS\AMS\bin\Microsoft.AspNet.FriendlyUrls.xml
 F:\Tools\workspace2\GitHub\AMS\AMS\obj\Debug\AMS.dll
 F:\Tools\workspace2\GitHub\AMS\AMS\obj\Debug\AMS.pdb
 F:\Tools\workspace2\GitHub\AMS\AMS\obj\Debug\AMS.csprojResolveAssemblyReference.cache
+C:\Users\graysonm\Documents\School\BAIS 3990\Dev\AMS\AMS\bin\AMS.dll.config
+C:\Users\graysonm\Documents\School\BAIS 3990\Dev\AMS\AMS\bin\AMS.dll
+C:\Users\graysonm\Documents\School\BAIS 3990\Dev\AMS\AMS\bin\AMS.pdb
+C:\Users\graysonm\Documents\School\BAIS 3990\Dev\AMS\AMS\bin\Antlr3.Runtime.dll
+C:\Users\graysonm\Documents\School\BAIS 3990\Dev\AMS\AMS\bin\AspNet.ScriptManager.bootstrap.dll
+C:\Users\graysonm\Documents\School\BAIS 3990\Dev\AMS\AMS\bin\AspNet.ScriptManager.jQuery.dll
+C:\Users\graysonm\Documents\School\BAIS 3990\Dev\AMS\AMS\bin\Microsoft.AspNet.FriendlyUrls.dll
+C:\Users\graysonm\Documents\School\BAIS 3990\Dev\AMS\AMS\bin\Microsoft.AspNet.Web.Optimization.WebForms.dll
+C:\Users\graysonm\Documents\School\BAIS 3990\Dev\AMS\AMS\bin\Microsoft.ScriptManager.MSAjax.dll
+C:\Users\graysonm\Documents\School\BAIS 3990\Dev\AMS\AMS\bin\Microsoft.ScriptManager.WebForms.dll
+C:\Users\graysonm\Documents\School\BAIS 3990\Dev\AMS\AMS\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\graysonm\Documents\School\BAIS 3990\Dev\AMS\AMS\bin\MySql.Data.dll
+C:\Users\graysonm\Documents\School\BAIS 3990\Dev\AMS\AMS\bin\Newtonsoft.Json.dll
+C:\Users\graysonm\Documents\School\BAIS 3990\Dev\AMS\AMS\bin\System.Web.Optimization.dll
+C:\Users\graysonm\Documents\School\BAIS 3990\Dev\AMS\AMS\bin\WebGrease.dll
+C:\Users\graysonm\Documents\School\BAIS 3990\Dev\AMS\AMS\bin\System.Web.Optimization.xml
+C:\Users\graysonm\Documents\School\BAIS 3990\Dev\AMS\AMS\bin\Antlr3.Runtime.pdb
+C:\Users\graysonm\Documents\School\BAIS 3990\Dev\AMS\AMS\bin\Newtonsoft.Json.xml
+C:\Users\graysonm\Documents\School\BAIS 3990\Dev\AMS\AMS\bin\Microsoft.AspNet.FriendlyUrls.xml
+C:\Users\graysonm\Documents\School\BAIS 3990\Dev\AMS\AMS\obj\Debug\AMS.csprojResolveAssemblyReference.cache
+C:\Users\graysonm\Documents\School\BAIS 3990\Dev\AMS\AMS\obj\Debug\AMS.dll
+C:\Users\graysonm\Documents\School\BAIS 3990\Dev\AMS\AMS\obj\Debug\AMS.pdb

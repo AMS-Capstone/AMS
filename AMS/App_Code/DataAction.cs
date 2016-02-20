@@ -14,7 +14,7 @@ namespace AMS.App_Code
 
         #region Settingsscreen
         //Create a GST code
-        public static void CreateGSTEntry(int gstPercent, bool status)
+        public void CreateGSTEntry(double gstPercent, bool status)
             {
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -46,9 +46,9 @@ namespace AMS.App_Code
         }
 
         //View GST entry
-        public static DataTable GetGST()
+        public DataTable GetGST()
         {
-            DataTable dt = null;
+            DataTable dt = new DataTable();
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
@@ -208,14 +208,14 @@ namespace AMS.App_Code
         //View PaymentType
         public static DataTable GetPaymentType()
         {
-            DataTable dt = null;
+            DataTable dt = new DataTable();
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 using (MySqlCommand cmd = conn.CreateCommand())
                 {
                     conn.Open();
-                    cmd.CommandText = "sp_viewPayumentType";
+                    cmd.CommandText = "sp_viewPaymentType";
                     cmd.CommandType = CommandType.StoredProcedure;
                     using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
                     {
