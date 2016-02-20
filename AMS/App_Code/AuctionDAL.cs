@@ -20,7 +20,39 @@ namespace AMS.App_Code
             }
         }
 
-        public DataSet findAuctions()
+         public DataSet findAuctions()
+         {
+             DataSet ds = new DataSet("Auctions");
+             MySqlConnection conn = new MySqlConnection(connectionString);
+             MySqlDataAdapter da = new MySqlDataAdapter();
+
+             try
+             {
+                 MySqlCommand cmd = new MySqlCommand();
+                 cmd.CommandText = "sp_findAuctions";
+                 //cmd.Parameters.Add(new MySqlParameter("@pAuctionYear", MySqlDbType.String, 4));
+                 //   MySqlParameter returnParameter = new MySqlParameter();
+                //cmd.Parameters.Add(returnParameter);
+                cmd.CommandType = CommandType.StoredProcedure;
+                 cmd.Connection = conn;
+                 da.SelectCommand = cmd;
+                 da.Fill(ds, "Auctions");
+
+            }
+             catch (Exception ex)
+             {
+                 //Panic
+                 throw ex;
+             }
+             finally
+             {
+                 //Tie the loose ends here
+             }
+             return ds;
+         }
+
+
+        public DataSet getAuctionYears()
         {
             DataSet ds = new DataSet("Auctions");
             MySqlConnection conn = new MySqlConnection(connectionString);
@@ -29,11 +61,12 @@ namespace AMS.App_Code
             try
             {
                 MySqlCommand cmd = new MySqlCommand();
-                cmd.CommandText = "sp_findAuctions";
+                cmd.CommandText = "sp_getAuctionYears";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Connection = conn;
                 da.SelectCommand = cmd;
                 da.Fill(ds, "Auctions");
+
             }
             catch (Exception ex)
             {
@@ -46,6 +79,38 @@ namespace AMS.App_Code
             }
             return ds;
         }
+
+
+        /*
+public DataSet findAuctions()
+{
+DataSet ds = new DataSet("Auctions");
+MySqlConnection conn = new MySqlConnection(connectionString);
+MySqlDataAdapter da = new MySqlDataAdapter();
+
+try
+{
+MySqlCommand cmd = new MySqlCommand();
+cmd.CommandText = "sp_findAuctions";
+cmd.CommandType = CommandType.StoredProcedure;
+cmd.Connection = conn;
+da.SelectCommand = cmd;
+da.Fill(ds, "Auctions");
+}
+catch (Exception ex)
+{
+//Panic
+throw ex;
+}
+finally
+{
+//Tie the loose ends here
+}
+return ds;
+}
+
+ */
+
 
 
     }

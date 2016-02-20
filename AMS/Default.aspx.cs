@@ -12,18 +12,14 @@ namespace AMS
     public partial class _Default : Page
     {
 
-        AuctionDAL auctionService = new AMS.App_Code.AuctionDAL();
-
-        protected void Page_Load(object sender, EventArgs e)
+        protected void Page_load(object sender, EventArgs e)
         {
+
+            AuctionDAL auctionService = new AMS.App_Code.AuctionDAL();
+
             DataSet auctions = auctionService.findAuctions();
             if (auctions.Tables[0].Rows.Count > 0)
             {
-                //TXTAddress.Text = buyers.Tables["Buyers"].Rows[0]["BuyerName"].ToString();
-                //DDLBuyerName.DataTextField = "BuyerName";
-                //DDLBuyerName.DataValueField = "BuyerID";
-                //DDLBuyerName.DataSource = buyers;
-                //DDLBuyerName.DataBind();
 
                 LBAuctionList.DataSource = auctions;
                 LBAuctionList.DataTextField = "AuctionDate";
@@ -31,24 +27,21 @@ namespace AMS
                 LBAuctionList.DataBind();
 
             }
-            else
+
+            DataSet auctionYear = auctionService.getAuctionYears();
+            if (auctionYear.Tables[0].Rows.Count > 0)
             {
+
+                DDLAuctionYear.DataSource = auctionYear;
+                DDLAuctionYear.DataTextField = "Year";
+                DDLAuctionYear.DataValueField = "Year";
+                DDLAuctionYear.DataBind();
 
             }
 
-
+        }
 
 
         }
-
-        protected void LBAuctionList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void DDLAuctionYear_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-    }
+ 
 }
