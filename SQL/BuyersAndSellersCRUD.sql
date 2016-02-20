@@ -145,7 +145,7 @@ drop procedure if exists GET_BUYERS;
 create procedure GET_BUYERS()
 SELECT
 BuyerID,
-BuyerFirstName + " " + BuyerLastName as BuyerName,
+CONCAT(BuyerFirstName, " ", BuyerLastName) as BuyerName,
 BuyerFirstName,
 BuyerLastName,
 BuyerAddress,

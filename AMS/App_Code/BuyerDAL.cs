@@ -22,22 +22,27 @@ namespace AMS.App_Code
         //Get all Buyers
         public DataSet GetBuyers()
         {
-            DataSet ds = null;
-            
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            DataSet ds = new DataSet("Buyers");
+            MySqlConnection conn = new MySqlConnection(connectionString);
+            MySqlDataAdapter da = new MySqlDataAdapter();
+
+            try
             {
-                using (MySqlCommand cmd = conn.CreateCommand())
-                {
-                    conn.Open();
-                    cmd.CommandText = "GET_BUYERS";
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
-                    {
-                        da.Fill(ds);
-
-                    }
-
-                }
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.CommandText = "GET_BUYERS";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = conn;
+                da.SelectCommand = cmd;
+                da.Fill(ds, "Buyers");
+            }
+            catch (Exception ex)
+            {
+                //Panic
+                throw ex;
+            }
+            finally
+            {
+                //Tie the loose ends here
             }
             return ds;
         }

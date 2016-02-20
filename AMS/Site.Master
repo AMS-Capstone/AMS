@@ -14,7 +14,10 @@
 
     <webopt:bundlereference runat="server" path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-
+    <style>
+        body { padding-top: 70px; }
+        footer { padding-top: 150px; }
+    </style>
 </head>
 <body>
     <form runat="server">
@@ -62,8 +65,9 @@
 
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>
-            <hr />
             <footer>
+                
+            <hr />
                 <p>&copy; <%: DateTime.Now.Year %> - AMS Team</p>
             </footer>
         </div>

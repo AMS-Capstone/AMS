@@ -15,6 +15,18 @@ namespace AMS
         {
             BuyerDAL buyerService = new AMS.App_Code.BuyerDAL();
             DataSet buyers = buyerService.GetBuyers();
+            if (buyers.Tables[0].Rows.Count > 0)
+            {
+                //TXTAddress.Text = buyers.Tables["Buyers"].Rows[0]["BuyerName"].ToString();
+                DDLBuyerName.DataTextField = "BuyerName";
+                DDLBuyerName.DataValueField = "BuyerID";
+                DDLBuyerName.DataSource = buyers;
+                DDLBuyerName.DataBind();
+            }
+            else
+            {
+                
+            }
         }
     }
 }
