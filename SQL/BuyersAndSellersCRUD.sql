@@ -19,6 +19,20 @@ Create Table Buyer
     Banned boolean default false
 );
 
+-- this here is the code to create a blank buyer
+INSERT INTO `buyer`
+(`BuyerFirstName`,
+`BuyerLastName`,
+`BuyerAddress`,
+`BuyerCity`,
+`BuyerProvince`,
+`BuyerPostalCode`,
+`BuyerPhone`,
+`BidderNumber`,
+`Permanent`,
+`Banned` )
+VALUES
+("","","","","","","", 0,TRUE, FALSE);
 
 Drop table if exists Seller;
 -- Create the Seller table
@@ -49,7 +63,8 @@ SET FOREIGN_KEY_CHECKS=1;
 
 DELIMITER $$
 DROP FUNCTION IF EXISTS ADD_BUYER $$
-Create FUNCTION ADD_BUYER (N_BuyerFirstName text,
+Create FUNCTION ADD_BUYER (
+	N_BuyerFirstName text,
 	N_BuyerLastName text,
     N_BuyerAddress text,
     N_BuyerCity text,
@@ -63,6 +78,7 @@ Create FUNCTION ADD_BUYER (N_BuyerFirstName text,
 begin    
     INSERT INTO `buyer`
 (`BuyerFirstName`,
+`BuyerLastName`,
 `BuyerAddress`,
 `BuyerCity`,
 `BuyerProvince`,
@@ -89,8 +105,9 @@ VALUES
 end $$
 
 drop procedure if exists UPDATE_BUYER$$
-create procedure UPDATE_BUYER(N_BuyerID integer,
-N_BuyerFirstName text,
+create procedure UPDATE_BUYER(
+	N_BuyerID integer,
+	N_BuyerFirstName text,
 	N_BuyerLastName text,
     N_BuyerAddress text,
     N_BuyerCity text,
@@ -104,6 +121,7 @@ begin
 	UPDATE `buyer`
 		SET
 		`BuyerFirstName` = N_BuyerFirstName,
+		`BuyerLastName` = N_BuyerLastName,
 		`BuyerAddress` = N_BuyerAddress,
 		`BuyerCity` = N_BuyerCity,
 		`BuyerProvince` = N_BuyerProvince,
@@ -127,7 +145,9 @@ drop procedure if exists GET_BUYERS;
 create procedure GET_BUYERS()
 SELECT
 BuyerID,
+BuyerFirstName + " " + BuyerLastName as BuyerName,
 BuyerFirstName,
+BuyerLastName,
 BuyerAddress,
 BuyerCity,
 BuyerProvince,
@@ -141,7 +161,7 @@ FROM `buyer`;
 DELIMITER $$
 DROP FUNCTION IF EXISTS ADD_CON $$
 Create FUNCTION ADD_CON(N_SellerCode text, 
-N_SellerFirstName text, 
+N_SellerName text, 
 N_SellerAddress text, 
 N_SellerCity text, 
 N_SellerProvince text, 
@@ -150,6 +170,7 @@ N_SellerPhone text,
 N_SellerOtherPhone text, 
 N_SellerFax text, 
 N_ContactFirstName text, 
+N_ContactLastName text, 
 N_SellerFileNumber text,
 N_SellerDriverLicense text,
 N_GSTNumber boolean) RETURNS INTEGER
@@ -164,12 +185,14 @@ begin
         SellerOtherPhone, 
         SellerFax, 
         ContactFirstName, 
+        ContactLastName, 
         SellerFileNumber,
         SellerDriverLicense,
         GSTNumber) 
         
         values (N_SellerCode, 
-        N_SellerFirstName, 
+        N_SellerName, 
+        N_SellerLastName, 
         N_SellerAddress, 
         N_SellerCity, 
         N_SellerProvince, 
@@ -178,6 +201,7 @@ begin
         N_SellerOtherPhone, 
         N_SellerFax, 
         N_ContactFirstName, 
+        N_ContactLastName, 
         N_SellerFileNumber,
         N_SellerDriverLicense,
         N_GSTNumber);
@@ -186,11 +210,11 @@ begin
 end $$
 DELIMITER ;
 
-drop procedure if exists UPDATE_CON;
-create procedure UPDATE_CON(
+drop procedure if exists UPDATE_SELLER;
+create procedure UPDATE_SELLER(
 N_SellerID integer, 
 N_SellerCode text, 
-N_SellerFirstName text, 
+N_SellerName text, 
 N_SellerAddress text, 
 N_SellerCity text, 
 N_SellerProvince text, 
@@ -199,13 +223,14 @@ N_SellerPhone text,
 N_SellerOtherPhone text, 
 N_SellerFax text, 
 N_ContactFirstName text, 
+N_ContactLastName text, 
 N_SellerFileNumber text,
 N_SellerDriverLicense text,
 N_GSTNumber boolean)
 UPDATE `cons`
 SET
 `SellerCode` = N_SellerCode,
-`SellerFirstName` = N_SellerFirstName,
+`SellerFirstName` = N_SellerName,
 `SellerAddress` = N_SellerAddress, 
 `SellerCity` = N_SellerCity, 
 `SellerProvince` = N_SellerProvince,
@@ -214,6 +239,7 @@ SET
 `SellerOtherPhone` = N_SellerOtherPhone,
 `SellerFax` = N_SellerFax,
 `ContactFirstName` = N_ContactFirstName,
+`ContactLastName` = N_ContactLastName,
 `SellerFileNumber` = N_SellerFileNumber,
 SellerDriverLicense = N_SellerDriverLicense,
 GSTNumber = N_GSTNumber
@@ -238,6 +264,7 @@ SellerPhone,
 SellerOtherPhone,
 SellerFax,
 ContactFirstName,
+ContactLastName,
 SellerFileNumber 'CON_FILE#',
 SellerDriverLicense,
 GSTNumber
