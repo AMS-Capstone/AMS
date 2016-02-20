@@ -20,46 +20,6 @@ Create Table ConditionStatus
     CondidtionDescription text
 );
 
--- Create the Buyer table
-Create Table Buyer
-(
-	BuyerID integer primary key AUTO_INCREMENT,
-    BidderNumber integer,
-    BuyerFirstName text,
-    BuyerLastName text,
-    BuyerAddress text,
-    BuyerCity text,
-    BuyerProvince text,
-    BuyerPostalCode text,
-    BuyerCountry Text,
-    BuyerPhone Text,
-    Permanent boolean default false,
-    Banned boolean default false
-);
-
-
--- Create the Seller table
-Create Table Seller 
-(
-	SellerID integer primary key AUTO_INCREMENT,
-    SellerCode char(30),
-    SellerName text,
-    SellerStreet text,
-    SellerCity text,
-    SellerProvince text,
-    SellerPostalCode char(6),
-    SellerCountry text,
-    SellerPhone text,
-    SellerFax text,
-    ContactFirstName text,
-    ContactLastName text,
-    ConFile text,
-    DebtorFirstName text,
-    DebtorLastName text,
-    Private boolean,
-    GSTNumber text
-);
-
 -- Create Table FeeType
 Create Table FeeType
 (

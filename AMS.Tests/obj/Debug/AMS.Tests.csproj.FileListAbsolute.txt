@@ -9,9 +9,11 @@ c:\users\sluchianov1\documents\visual studio 2013\Projects\AMS\AMS.Tests\bin\Deb
 c:\users\sluchianov1\documents\visual studio 2013\Projects\AMS\AMS.Tests\obj\Debug\AMS.Tests.csprojResolveAssemblyReference.cache
 c:\users\sluchianov1\documents\visual studio 2013\Projects\AMS\AMS.Tests\obj\Debug\AMS.Tests.dll
 c:\users\sluchianov1\documents\visual studio 2013\Projects\AMS\AMS.Tests\obj\Debug\AMS.Tests.pdb
+F:\Tools\workspace2\GitHub\AMS\AMS.Tests\bin\Debug\AMS.Tests.dll.config
 F:\Tools\workspace2\GitHub\AMS\AMS.Tests\bin\Debug\AMS.Tests.dll
 F:\Tools\workspace2\GitHub\AMS\AMS.Tests\bin\Debug\AMS.Tests.pdb
 F:\Tools\workspace2\GitHub\AMS\AMS.Tests\bin\Debug\AMS.dll
+F:\Tools\workspace2\GitHub\AMS\AMS.Tests\bin\Debug\MySql.Data.dll
 F:\Tools\workspace2\GitHub\AMS\AMS.Tests\bin\Debug\System.Web.Optimization.dll
 F:\Tools\workspace2\GitHub\AMS\AMS.Tests\bin\Debug\Microsoft.AspNet.FriendlyUrls.dll
 F:\Tools\workspace2\GitHub\AMS\AMS.Tests\bin\Debug\AMS.pdb
