@@ -39,7 +39,7 @@ Create Table Province
 Create Table GST 
 (
 	GSTID integer primary key AUTO_INCREMENT,
-    GSTPercent integer,
+    GSTPercent double,
     GSTStatus boolean
 );
 
