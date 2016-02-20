@@ -107,6 +107,7 @@
     <Content Include="Buyers.aspx" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Default.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="packages.config" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -142,7 +143,6 @@
     <Content Include="Scripts\WebForms\WebParts.js" />
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Sellers.aspx" />
@@ -162,6 +162,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Code\AuctionDAL.cs" />
     <Compile Include="App_Code\FeeType.cs" />
     <Compile Include="App_Code\GST.cs" />
     <Compile Include="App_Code\PaymentType.cs" />
