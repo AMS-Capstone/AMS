@@ -35,12 +35,12 @@ namespace AMS.App_Code
             get { return buyerLastName; }
             set { buyerLastName = value; }
         }
-        private String buyerStreet;
+        private String buyerAddress;
 
-        public String BuyerStreet
+        public String BuyerAddress
         {
-            get { return buyerStreet; }
-            set { buyerStreet = value; }
+            get { return buyerAddress; }
+            set { buyerAddress = value; }
         }
         private String buyerCity;
 

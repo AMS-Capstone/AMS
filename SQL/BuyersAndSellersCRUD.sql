@@ -6,7 +6,7 @@ Drop table if exists Buyer;
 Create Table Buyer
 (
 	BuyerID integer primary key AUTO_INCREMENT,
-    BidderNumber integer,
+    BidderNumber integer unique,
     BuyerFirstName text,
     BuyerLastName text,
     BuyerAddress text,
@@ -159,8 +159,8 @@ Banned
 FROM `buyer`;
 
 DELIMITER $$
-DROP FUNCTION IF EXISTS ADD_CON $$
-Create FUNCTION ADD_CON(N_SellerCode text, 
+DROP FUNCTION IF EXISTS ADD_SELLER $$
+Create FUNCTION ADD_SELLER(N_SellerCode text, 
 N_SellerName text, 
 N_SellerAddress text, 
 N_SellerCity text, 
