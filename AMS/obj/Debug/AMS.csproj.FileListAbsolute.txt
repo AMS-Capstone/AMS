@@ -40,3 +40,4 @@ F:\Tools\workspace2\GitHub\AMS\AMS\bin\Newtonsoft.Json.xml
 F:\Tools\workspace2\GitHub\AMS\AMS\bin\Microsoft.AspNet.FriendlyUrls.xml
 F:\Tools\workspace2\GitHub\AMS\AMS\obj\Debug\AMS.dll
 F:\Tools\workspace2\GitHub\AMS\AMS\obj\Debug\AMS.pdb
+F:\Tools\workspace2\GitHub\AMS\AMS\obj\Debug\AMS.csprojResolveAssemblyReference.cache
