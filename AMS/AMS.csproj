@@ -162,7 +162,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <Compile Include="App_Code\FeeType.cs" />
     <Compile Include="App_Code\GST.cs" />
     <Compile Include="App_Code\PaymentType.cs" />
