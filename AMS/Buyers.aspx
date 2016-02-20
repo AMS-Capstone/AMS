@@ -1,8 +1,28 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Buyers.aspx.cs" Inherits="AMS.Buyers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+ 
     <div class="jumbotron">
     <div class="container-fluid">
-    <h1>BUYERS</h1>
+    <h2>BUYERS</h2>
+        <div class="input-group">
+            <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+            <input type="text" class="form-control" placeholder="Buyer's First Name">
+        </div>
+        <input type="text" class="form-control" placeholder="Buyer's First Name">
+        <span class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>
+        <div class="form-group">
+            <label class="control-label col-xs-3" for="firstName">First Name:</label>
+            <div class="col-xs-9">
+                <input type="text" class="form-control" id="firstName" placeholder="First Name">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-3" for="lastName">Last Name:</label>
+            <div class="col-xs-9">
+                <input type="text" class="form-control" id="lastName" placeholder="Last Name">
+            </div>
+        </div>
+
         <asp:Table ID="Table2" runat="server">
             <asp:TableRow>
                 <asp:TableCell HorizontalAlign="Right">
@@ -106,32 +126,5 @@
             </asp:TableRow>
         </asp:Table>
     </div>
-        <div class="container-fluid">
-    <div class="row">
-        <div class="col-xs-4">
-            <h2>HTML</h2>
-            <p>HTML is a markup language that is used for creating web pages. The HTML tutorial section will help you understand the basics of HTML, so that you can create your own web pages or website.</p>
-            <p><a href="http://www.tutorialrepublic.com/html-tutorial/" target="_blank" class="btn btn-success">Learn More &raquo;</a></p>
-        </div>
-        <div class="col-xs-4">
-            <h2>CSS</h2>
-            <p>CSS is used for describing the presentation of web pages. The CSS tutorial section will help you learn the essentials of CSS, so that you can fine control the style and layout of your HTML document.</p>
-            <p><a href="http://www.tutorialrepublic.com/css-tutorial/" target="_blank" class="btn btn-success">Learn More &raquo;</a></p>
-        </div>
-        <div class="col-xs-4">
-            <h2>Bootstrap</h2>
-            <p>Bootstrap is a powerful front-end framework for faster and easier web development. The Bootstrap tutorial section will help you learn the techniques of Bootstrap so that you can create web your own website.</p>
-            <p><a href="http://www.tutorialrepublic.com/twitter-bootstrap-tutorial/" target="_blank" class="btn btn-success">Learn More &raquo;</a></p>
-        </div>
-    </div>
-    <hr>
-    <div class="row">
-        <div class="col-xs-12">
-            <footer>
-                <p>&copy; Copyright 2013 Tutorial Republic</p>
-            </footer>
-        </div>
-    </div>
-</div>
     </div>
 </asp:Content>

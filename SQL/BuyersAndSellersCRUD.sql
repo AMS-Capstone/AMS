@@ -61,7 +61,7 @@ Create FUNCTION ADD_BUYER (N_BuyerFirstName text,
     N_BuyerBanned boolean) RETURNS INTEGER
 
 begin    
-    INSERT INTO `buyers`
+    INSERT INTO `buyer`
 (`BuyerFirstName`,
 `BuyerAddress`,
 `BuyerCity`,
@@ -101,7 +101,7 @@ N_BuyerFirstName text,
     N_BuyerPermanent boolean,
     N_BuyerBanned boolean)
 begin
-	UPDATE `buyers`
+	UPDATE `buyer`
 		SET
 		`BuyerFirstName` = N_BuyerFirstName,
 		`BuyerAddress` = N_BuyerAddress,
@@ -118,7 +118,7 @@ DELIMITER ;
 
 drop procedure if exists RESET_BUYER_BIDNUMS;
 create procedure RESET_BUYER_BIDNUMS()
-UPDATE `buyers`
+UPDATE `buyer`
 SET
 `BidderNumber` = null
 WHERE Permanent = FALSE; 
@@ -136,7 +136,7 @@ BuyerPhone,
 BidderNumber,
 Permanent,
 Banned
-FROM `buyers`;
+FROM `buyer`;
 
 DELIMITER $$
 DROP FUNCTION IF EXISTS ADD_CON $$
@@ -241,4 +241,4 @@ ContactFirstName,
 SellerFileNumber 'CON_FILE#',
 SellerDriverLicense,
 GSTNumber
-FROM `cons`;
+FROM `seller`;

@@ -161,13 +161,14 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Code\FeeType.cs" />
-    <Content Include="App_Code\GST.cs" />
-    <Content Include="App_Code\PaymentType.cs" />
-    <Content Include="App_Code\ConditionStatus.cs" />
-    <Content Include="App_Code\Seller.cs" />
-    <Content Include="App_Code\Buyer.cs" />
-    <Content Include="App_Code\DataAction.cs" />
+    <Compile Include="App_Code\FeeType.cs" />
+    <Compile Include="App_Code\GST.cs" />
+    <Compile Include="App_Code\PaymentType.cs" />
+    <Compile Include="App_Code\ConditionStatus.cs" />
+    <Compile Include="App_Code\Seller.cs" />
+    <Compile Include="App_Code\Buyer.cs" />
+    <Compile Include="App_Code\DataAction.cs" />
+    <Compile Include="App_Code\BuyerDAL.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Buyers.aspx.cs">
