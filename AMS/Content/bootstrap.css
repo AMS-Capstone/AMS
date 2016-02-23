@@ -113,9 +113,10 @@ input,
 optgroup,
 select,
 textarea {
-  margin: 0;
-  font: inherit;
   color: inherit;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 0;
 }
 button {
   overflow: visible;
@@ -1654,6 +1655,8 @@ pre code {
 }
 .col-xs-2 {
   width: 16.66666667%;
+    top: 0px;
+    left: 0px;
 }
 .col-xs-1 {
   width: 8.33333333%;
@@ -2639,6 +2642,9 @@ input[type="search"] {
   display: block;
   margin-top: 10px;
   margin-bottom: 10px;
+    top: 0px;
+    left: 16px;
+    width: 445px;
 }
 .radio label,
 .checkbox label {

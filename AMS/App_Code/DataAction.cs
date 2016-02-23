@@ -30,7 +30,7 @@ namespace AMS.App_Code
             }
 
         //Update a GST Code
-        public static void UpdateGSTEntry(int gstId, int gstPercent, bool status)
+        public void UpdateGSTEntry(int gstId, double gstPercent, bool status)
         {
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -44,7 +44,28 @@ namespace AMS.App_Code
                 cmd.ExecuteNonQuery();
             }
         }
+        //Get GST by ID
+        public DataTable GetGSTbyID(int gstID)
+        {
+            DataTable dt = new DataTable();
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                using (MySqlCommand cmd = conn.CreateCommand())
+                {
+                    conn.Open();
+                    cmd.CommandText = "sp_getGSTByID";
+                    cmd.Parameters.AddWithValue("pGstID", gstID);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                    {
+                        da.Fill(dt);
 
+                    }
+                }
+            }
+            return dt;
+        }
         //View GST entry
         public DataTable GetGST()
         {
@@ -67,7 +88,7 @@ namespace AMS.App_Code
             return dt;
         }
         //Create condition status
-        public static void CreateConditionStatus(string conditionCode, string conditionDescription)
+        public void CreateConditionStatus(string conditionCode, string conditionDescription)
         {
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -81,7 +102,7 @@ namespace AMS.App_Code
             }
         }
 
-        public static void UpdateConditionStatus(int conditionID, string conditionDescription, string conditionCode)
+        public  void UpdateConditionStatus(int conditionID, string conditionDescription, string conditionCode)
         {
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -97,9 +118,9 @@ namespace AMS.App_Code
         }
 
         //View Condition Status
-        public static DataTable GetConditionStatus()
+        public DataTable GetConditionStatus()
         {
-            DataTable dt = null;
+            DataTable dt = new DataTable();
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
@@ -118,7 +139,27 @@ namespace AMS.App_Code
             }
             return dt;
         }
+        public DataTable GetConditionStatusByID(int conditionID)
+        {
+            DataTable dt = new DataTable();
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                using (MySqlCommand cmd = conn.CreateCommand())
+                {
+                    conn.Open();
+                    cmd.CommandText = "sp_getConditionStatusByID";
+                    cmd.Parameters.AddWithValue("pConditionID", conditionID);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                    {
+                        da.Fill(dt);
 
+                    }
+                }
+            }
+            return dt;
+        }
         public static void CreateFeeType(double feeCost, string feeType)
         {
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
