@@ -34,7 +34,22 @@ namespace AMS
                 DDLConditionStatus.Items.Insert(0, new ListItem(String.Empty, String.Empty));
 
                 //Load All Fee Types
+                
+                dt = dataAction.GetFeeType();
+                DDLFeeTypes.DataSource = dt;
+                DDLFeeTypes.DataValueField = dt.Columns["FeeId"].ToString();
+                DDLFeeTypes.DataTextField = dt.Columns["description"].ToString();
+                DDLFeeTypes.DataBind();
+                DDLFeeTypes.Items.Insert(0, new ListItem(String.Empty, String.Empty));
+
                 //Load All Payment Types
+                dt = dataAction.GetPaymentType();
+                DDLPaymentTypes.DataSource = dt;
+                DDLPaymentTypes.DataValueField = dt.Columns["PaymentTypeID"].ToString();
+                DDLPaymentTypes.DataTextField = dt.Columns["PaymentDescription"].ToString();
+                DDLPaymentTypes.DataBind();
+                DDLPaymentTypes.Items.Insert(0, new ListItem(String.Empty, String.Empty));
+
             }
         }
 
@@ -120,6 +135,31 @@ namespace AMS
             }
         }
 
+        protected void BTNSaveFeeType_Click(object sender, EventArgs e)
+        {
+            DataAction dataAction = new DataAction();
+            if(DDLFeeTypes.SelectedValue == "")
+            {
+                dataAction.CreateFeeType(double.Parse(TXTFeeCost.Text.ToString().Trim()), TXTFeeType.Text.Trim());
+            }
+            else
+            {
+                dataAction.UpdateFeeType(int.Parse(DDLFeeTypes.SelectedValue.ToString().Trim()), double.Parse((TXTFeeCost.Text.ToString().Trim())), TXTFeeType.Text.Trim());
+            }
+        }
+        protected void BTNSavePaymentType_Click(object sender, EventArgs e)
+        {
+            DataAction dataAction = new DataAction();
+            if(DDLPaymentTypes.SelectedValue == "")
+            {
+                dataAction.CreatePaymentType(TXTPaymentTypes.Text.ToString().Trim());
+            }
+            else
+            {
+                dataAction.UpdatePaymentType(int.Parse(DDLPaymentTypes.SelectedValue.ToString().Trim()), TXTPaymentTypes.Text.Trim());
+            }
+        }
+
         protected void DDLConditionStatus_SelectedIndexChanged(object sender, EventArgs e)
         {
             if(DDLConditionStatus.SelectedValue == "")
@@ -139,6 +179,45 @@ namespace AMS
                     TXTConditionCode.Text = aRow["ConditionCode"].ToString();
                 }
             }
+        }
+
+        protected void DDLFeeTypes_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(DDLFeeTypes.SelectedValue == "")
+            {
+                TXTFeeCost.Text = "";
+                TXTFeeType.Text = "";
+            }
+            else
+            {
+                DataAction dataAction = new DataAction();
+                DataTable dt = dataAction.GetFeeTypeByID(int.Parse(DDLFeeTypes.SelectedValue.ToString()));
+
+                foreach(DataRow aRow in dt.Rows)
+                {
+                    TXTFeeCost.Text = aRow["FeeCost"].ToString();
+                    TXTFeeType.Text = aRow["FeeType"].ToString();
+                }
+            }
+        }
+
+        protected void DDLPaymentTypes_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(DDLPaymentTypes.SelectedValue == "")
+            {
+                TXTPaymentTypes.Text = "";
+            }
+            else
+            {
+                DataAction dataAction = new DataAction();
+                DataTable dt = dataAction.GetPaymentTypeByID(int.Parse(DDLPaymentTypes.SelectedValue.ToString()));
+
+                foreach(DataRow aRow in dt.Rows)
+                {
+                    TXTPaymentTypes.Text = aRow["PaymentDescription"].ToString();
+                }
+            }
+
         }
     }
 }

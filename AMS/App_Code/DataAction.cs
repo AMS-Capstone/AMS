@@ -160,7 +160,32 @@ namespace AMS.App_Code
             }
             return dt;
         }
-        public static void CreateFeeType(double feeCost, string feeType)
+
+
+        public DataTable GetPaymentTypeByID(int paymentID)
+        {
+            DataTable dt = new DataTable();
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                using (MySqlCommand cmd = conn.CreateCommand())
+                {
+                    conn.Open();
+                    cmd.CommandText = "sp_getPaymentTypeByID";
+                    cmd.Parameters.AddWithValue("pPaymentTypeID", paymentID);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                    {
+                        da.Fill(dt);
+
+                    }
+                }
+            }
+            return dt;
+        }
+
+
+        public void CreateFeeType(double feeCost, string feeType)
         {
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -174,8 +199,33 @@ namespace AMS.App_Code
                 cmd.ExecuteNonQuery();
             }
         }
+
+        //Get FeeType by ID
+
+        public DataTable GetFeeTypeByID(int feeID)
+        {
+            DataTable dt = new DataTable();
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                using (MySqlCommand cmd = conn.CreateCommand())
+                {
+                    conn.Open();
+                    cmd.CommandText = "sp_getFeeTypeByID";
+                    cmd.Parameters.AddWithValue("pFeeID", feeID);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                    {
+                        da.Fill(dt);
+
+                    }
+                }
+            }
+            return dt;
+        }
+
         //Update Fee Type
-        public static void UpdateFeeType(int feeID, double feeCost, string feeType)
+        public void UpdateFeeType(int feeID, double feeCost, string feeType)
         {
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -191,9 +241,9 @@ namespace AMS.App_Code
         }
 
         //View Fee Type
-        public static DataTable GetFeeType()
+        public DataTable GetFeeType()
         {
-            DataTable dt = null;
+            DataTable dt = new DataTable();
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
@@ -215,7 +265,7 @@ namespace AMS.App_Code
 
 
         //Create Payment Type
-        public static void CreatePaymentType(string paymentDescription)
+        public void CreatePaymentType(string paymentDescription)
         {
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -231,7 +281,7 @@ namespace AMS.App_Code
 
 
 //Update PaymentType
-        public static void UpdatePaymentType(int paymentID, string paymentDescription)
+        public void UpdatePaymentType(int paymentID, string paymentDescription)
         {
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -247,7 +297,7 @@ namespace AMS.App_Code
         }
 
         //View PaymentType
-        public static DataTable GetPaymentType()
+        public  DataTable GetPaymentType()
         {
             DataTable dt = new DataTable();
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;

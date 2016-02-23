@@ -77,4 +77,97 @@
          <asp:Button ID="BTNSaveConditionStatus" runat="server" CssClass="btn btn-primary" Text="Save" OnClick="BTNSaveConditionStatus_Click" />
         </div>
   
+
+
+
+
+
+
+     <div class=" col-xs-12"><hr /></div>
+        <h1>Fee Types:</h1>
+    <div class=" col-xs-12">
+        <div class="control group">
+          
+        <label class="control-label col-xs-2" for="DDLFeeTypes" >Fee Types:</label>
+               <div class="col-xs-9">
+        <asp:DropDownList class="form-control" ID="DDLFeeTypes" runat="server" AutoPostBack="true" OnSelectedIndexChanged="DDLFeeTypes_SelectedIndexChanged" ></asp:DropDownList>
+                   </div>
+    </div>
+        </div>
+      <div class=" col-xs-12">
+           <br />
+           </div> 
+      <div class=" col-xs-12">
+        <div class="control group">
+          
+        <label class="control-label col-xs-2" for="TXTFeeType" >Type:</label>
+                <div class="col-xs-9">
+            <asp:TextBox ID="TXTFeeType" runat="server" Width="127px" ></asp:TextBox>
+                     </div>
+    </div>
+        </div>
+      <div class=" col-xs-12">
+           <br />
+           </div> 
+      <div class=" col-xs-12">
+        <div class="control group">
+          
+        <label class="control-label col-xs-2" for="TXTConditionDescription" >Fee Cost:</label>
+                <div class="col-xs-9">
+            <asp:TextBox ID="TXTFeeCost" runat="server" Width="127px" ></asp:TextBox>
+                     </div>
+    </div>
+        </div>
+        <div class="btn-group col-xs-12">
+         <asp:Button ID="BTNSaveFeeType" runat="server" CssClass="btn btn-primary" Text="Save" OnClick="BTNSaveFeeType_Click" />
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+         <div class=" col-xs-12"><hr /></div>
+        <h1>Payment Types</h1>
+    <div class=" col-xs-12">
+        <div class="control group">
+          
+        <label class="control-label col-xs-2" for="DDLPaymentTypes" >Payment Types:</label>
+               <div class="col-xs-9">
+        <asp:DropDownList class="form-control" ID="DDLPaymentTypes" runat="server" AutoPostBack="true" OnSelectedIndexChanged="DDLPaymentTypes_SelectedIndexChanged"  ></asp:DropDownList>
+                   </div>
+    </div>
+        </div>
+      <div class=" col-xs-12">
+           <br />
+           </div> 
+      <div class=" col-xs-12">
+        <div class="control group">
+          
+        <label class="control-label col-xs-2" for="TXTPaymentTypes" >Type:</label>
+                <div class="col-xs-9">
+            <asp:TextBox ID="TXTPaymentTypes" runat="server" Width="127px" ></asp:TextBox>
+                     </div>
+    </div>
+        </div>
+      <div class=" col-xs-12">
+           <br />
+           </div> 
+      
+        <div class="btn-group col-xs-12">
+         <asp:Button ID="BTNSavePaymentType" runat="server" CssClass="btn btn-primary" Text="Save" OnClick="BTNSavePaymentType_Click"  />
+        </div>
+
+
+
+
+
+
 </asp:Content>
