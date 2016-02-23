@@ -6,7 +6,7 @@
 delimiter //
 drop procedure if exists sp_createGSTEntry //
 create procedure sp_createGSTEntry
-( pGstPercent integer,pGSTStatus boolean)
+( pGstPercent double,pGSTStatus boolean)
 
 BEGIN
 	
@@ -24,9 +24,15 @@ BEGIN
 	FROM GST;
 
 END//
-
+drop procedure if exists sp_getGSTByID //
+create procedure sp_getGSTByID(IN pGstID integer)
+BEGIN
+	Select GSTPercent, GSTStatus
+    FROM GST
+    where GSTID = pGstID;
+END//
 drop procedure if exists sp_updateGSTEntry //
-create procedure sp_updateGSTEntry(IN pGstID integer, IN pGSTPercent integer, pGSTStatus boolean)
+create procedure sp_updateGSTEntry(IN pGstID integer, IN pGSTPercent double, pGSTStatus boolean)
 
 BEGIN
 
@@ -43,7 +49,7 @@ create procedure sp_createConditionStatus
 
 BEGIN
 	
-	INSERT INTO ConditionStatus (ConditionCode,ConditionDescription)
+	INSERT INTO ConditionStatus (ConditionCode,CondidtionDescription)
 	VALUES (pConditionCode, pConditionDescription);
 
 END//
@@ -53,7 +59,7 @@ create procedure sp_viewConditionStatus()
 
 BEGIN
 	
-	Select ConditionId, ConditionCode, ConditionDescription
+	Select ConditionId,CONCAT( ConditionCode , ' - ' , CondidtionDescription) as Description
 	FROM ConditionStatus;
 
 END//
@@ -66,8 +72,8 @@ BEGIN
 	UPDATE ConditionStatus
 	SET
 	ConditionCode = pConditionCode,
-	ConditionDescription = pConditionDescription
-	WHERE ConditionStatus = pConditionId;
+	CondidtionDescription = pConditionDescription
+	WHERE ConditionID = pConditionId;
 END//
 
 drop procedure if exists sp_createFeeType //
@@ -86,7 +92,7 @@ create procedure sp_viewFeeTypes()
 
 BEGIN
 	
-	Select FeeId, FeeCost, FeeType
+	Select FeeId, CONCAT( FeeCost, ' - ' , FeeType) as description
 	FROM FeeType;
 
 END//
@@ -135,3 +141,24 @@ BEGIN
 	PaymentDescription = pPaymentDescription
 	WHERE PaymentTypeId = PaymentTypeId;
 END //
+drop procedure if exists sp_getConditionStatusByID //
+create procedure sp_getConditionStatusByID(IN pConditionID integer)
+BEGIN
+	Select ConditionCode, CondidtionDescription
+    FROM conditionstatus
+    where ConditionID = pConditionID;
+END//
+drop procedure if exists sp_getFeeTypeByID //
+create procedure sp_getFeeTypeByID(IN pFeeID integer)
+BEGIN
+	Select FeeCost, FeeType
+    FROM feetype
+    where FeeID = pFeeID;
+END//
+drop procedure if exists sp_getPaymentTypeByID //
+create procedure sp_getPaymentTypeByID(IN pPaymentTypeID integer)
+BEGIN
+	Select PaymentDescription
+    FROM paymenttype
+    where PaymentTypeID = pPaymentTypeID;
+END//
