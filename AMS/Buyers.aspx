@@ -5,7 +5,7 @@
     <div class="control-group">
         <label class="control-label col-xs-2" for="DDLBuyerName">Select Buyer:</label>
         <div class="col-xs-9">
-            <asp:DropDownList class="form-control" ID="DDLBuyerName" runat="server"></asp:DropDownList>
+            <asp:DropDownList CssClass="form-control" ID="DDLBuyerName" runat="server" AutoPostBack="True" OnSelectedIndexChanged="DDLBuyerName_SelectedIndexChanged"></asp:DropDownList>
         </div>         
     </div>
     <div class=" col-xs-12"></div>
@@ -100,8 +100,8 @@
     </div>
     <div class=" col-xs-12"><hr /></div>
     <div class="btn-group col-xs-12">
-        <asp:Button ID="BTNSubmit" runat="server" class="btn btn-primary" Text="Submit Form" OnClick="BTNSubmit_Click" />
-        <asp:Button ID="Button1" runat="server" class="btn btn-primary hide" disabled="true" Text="Update Form" />
-        <asp:Button ID="Button2" runat="server" class="btn btn-primary hide" disabled="true" Text="Delete Form" />
+        <asp:Button ID="BTNSubmit" runat="server" CssClass="btn btn-primary" Text="Submit Form" OnClick="BTNSubmit_Click" />
+        <asp:Button ID="BTNUpdate" runat="server" CssClass="btn btn-primary hidden"  Text="Update Form" OnClick="BTNUpdate_Click" />
+        <asp:Button ID="BTNDelete" runat="server" CssClass="btn btn-primary hidden" Text="Delete Form" OnClick="BTNDelete_Click" />
     </div>
 </asp:Content>
