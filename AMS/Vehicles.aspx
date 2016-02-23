@@ -15,7 +15,7 @@
             <asp:TextBox ID="TXTLotNumber" runat="server" CssClass="form-control"></asp:TextBox>
         </div>
         <div class="col-xs-2">
-            <asp:Button ID="BTNSearchByLotNumber" runat="server" CssClass="btn btn-primary" Text="Search" />
+            <asp:Button ID="BTNSearchByLotNumber" runat="server" CssClass="btn btn-primary" Text="Search" OnClick="BTNSearchByLotNumber_Click" />
         </div>
     </div>
     <div class=" col-xs-12"></div>

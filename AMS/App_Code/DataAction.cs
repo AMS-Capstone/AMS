@@ -323,8 +323,50 @@ namespace AMS.App_Code
         #endregion
 
         #region VehicleScreen
+        //GET SELLERS
+        public DataTable GetSellers()
+        {
+            DataTable dt = new DataTable();
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                using (MySqlCommand cmd = conn.CreateCommand())
+                {
+                    conn.Open();
+                    cmd.CommandText = "sp_getSellers";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                    {
+                        da.Fill(dt);
 
+                    }
+                }
+            }
+            return dt;
+        }
 
+        //GET VEHICLE BY LOT NUMBER
+        public DataTable GetVehicleByLotNumber(int lotNumber)
+        {
+            DataTable dt = new DataTable();
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                using (MySqlCommand cmd = conn.CreateCommand())
+                {
+                    conn.Open();
+                    cmd.CommandText = "sp_getVehicleByLotNumber";
+                    cmd.Parameters.AddWithValue("pLotNumber", lotNumber);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                    {
+                        da.Fill(dt);
+
+                    }
+                }
+            }
+            return dt;
+        }
 
         #endregion
 
