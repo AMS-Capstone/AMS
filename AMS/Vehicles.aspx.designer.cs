@@ -31,15 +31,6 @@ namespace AMS {
         protected global::System.Web.UI.WebControls.TextBox TXTLotNumber;
         
         /// <summary>
-        /// BTNSearchByLotNumber control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BTNSearchByLotNumber;
-        
-        /// <summary>
         /// TXTYear control.
         /// </summary>
         /// <remarks>
@@ -92,6 +83,33 @@ namespace AMS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList DDLUnits;
+        
+        /// <summary>
+        /// TXTTransmission control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TXTTransmission;
+        
+        /// <summary>
+        /// TXTColor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TXTColor;
+        
+        /// <summary>
+        /// TXTOptions control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TXTOptions;
         
         /// <summary>
         /// BTNSaveVehicle control.

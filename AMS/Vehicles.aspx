@@ -14,9 +14,6 @@
         <div class="col-xs-3">
             <asp:TextBox ID="TXTLotNumber" runat="server" CssClass="form-control"></asp:TextBox>
         </div>
-        <div class="col-xs-2">
-            <asp:Button ID="BTNSearchByLotNumber" runat="server" CssClass="btn btn-primary" Text="Search" OnClick="BTNSearchByLotNumber_Click" />
-        </div>
     </div>
     <div class=" col-xs-12"></div>
     <div class="control-group">
@@ -56,6 +53,27 @@
             <asp:DropDownList runat="server" ID="DDLUnits" CssClass="form-control"></asp:DropDownList>
         </div>
   </div>
+    <div class=" col-xs-12"></div>
+    <div class="control-group">
+        <label class="control-label col-xs-2" for="TXTTransmission" CssClass="form-control">Transmission</label>
+        <div class="col-xs-3">
+                        <asp:TextBox ID="TXTTransmission" runat="server" CssClass="form-control"></asp:TextBox>
+        </div>
+    </div>
+    <div class=" col-xs-12"></div>
+    <div class="control-group">
+        <label class="control-label col-xs-2" for="TXTColor" CssClass="form-control">Color</label>
+        <div class="col-xs-3">
+                        <asp:TextBox ID="TXTColor" runat="server" CssClass="form-control"></asp:TextBox>
+        </div>
+    </div>
+    <div class=" col-xs-12"></div>
+    <div class="control-group">
+        <label class="control-label col-xs-2" for="TXTOptions" CssClass="form-control">Options</label>
+        <div class="col-xs-3">
+            <asp:TextBox ID="TXTOptions" runat="server" CssClass="form-control" TextMode="MultiLine" ></asp:TextBox>
+        </div>
+    </div>
         <div class=" col-xs-12"></div>
       <div class="btn-group col-xs-12">
          <asp:Button ID="BTNSaveVehicle" runat="server" CssClass="btn btn-primary" Text="Save" />

@@ -10,9 +10,7 @@
         <asp:DropDownList class="form-control" ID="DDLGST" runat="server" OnSelectedIndexChanged="DDLGST_SelectedIndexChanged1" AutoPostBack="true"></asp:DropDownList>
                    </div>
     </div>
-       <div class=" col-xs-12">
-           <br />
-           </div> 
+   
 
     </div>
     <div class=" col-xs-12">
@@ -38,7 +36,8 @@
          <asp:Button ID="BTNSave" runat="server" CssClass="btn btn-primary" Text="Save" OnClick="BTNSave_Click" />
         </div>
  
-    <div class=" col-xs-12"><hr /></div>
+    <div class=" col-xs-12"></div>
+    <hr />
         <h1>Condition status</h1>
     <div class=" col-xs-12">
         <div class="control group">
@@ -78,7 +77,13 @@
         </div>
   
 
+    <asp:GridView ID="GRVConditionStatus" runat="server" AutoGenerateColumns="false">
+        <Columns>
+            <asp:TemplateField HeaderText="ID" Visible="false">
 
+            </asp:TemplateField>
+        </Columns>
+    </asp:GridView>
 
 
 
