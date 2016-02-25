@@ -17,7 +17,8 @@ Create Table ConditionStatus
 (
 	ConditionID integer primary key AUTO_INCREMENT,
     ConditionCode tinytext,
-    CondidtionDescription text
+    CondidtionDescription text,
+    Status boolean
 );
 
 -- Create Table FeeType
@@ -25,7 +26,8 @@ Create Table FeeType
 (
 	FeeID integer primary key AUTO_INCREMENT,
     FeeCost double,
-    FeeType text
+    FeeType text, 
+    Status boolean
 );
 
 -- Create Table Province
@@ -47,7 +49,8 @@ Create Table GST
 Create Table PaymentType
 (
 	PaymentTypeID integer primary key AUTO_INCREMENT,
-    PaymentDescription text
+    PaymentDescription text,
+    Status boolean
 );
 -- Create the vehicle table
 
@@ -124,4 +127,3 @@ Create Table Payment
     constraint FK_Payment_PaymentTypeID foreign key (PaymentTypeID) references PaymentType(PaymentTypeID),
     PaymentDate datetime
 );
-
