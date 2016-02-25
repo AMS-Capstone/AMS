@@ -76,10 +76,10 @@
     </div>
         <div class=" col-xs-12"></div>
       <div class="btn-group col-xs-12">
-         <asp:Button ID="BTNSaveVehicle" runat="server" CssClass="btn btn-primary" Text="Save" />
+         <asp:Button ID="BTNSaveVehicle" runat="server" CssClass="btn btn-primary" Text="Save" OnClick="BTNSaveVehicle_Click" />
         </div>
-
-
-    
+           <div class=" col-xs-12"></div>
+    <asp:FileUpload ID="FUVehicle" runat="server"  />
+      <asp:Button ID="BTNUpload" runat="server" CssClass="btn btn-primary" Text="Upload" OnClick="BTNUpload_Click"  />
   
 </asp:Content>
