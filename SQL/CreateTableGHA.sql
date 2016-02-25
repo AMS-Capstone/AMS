@@ -125,3 +125,12 @@ Create Table Payment
     constraint FK_Payment_PaymentTypeID foreign key (PaymentTypeID) references PaymentType(PaymentTypeID),
     PaymentDate datetime
 );
+
+Create Table VehiclePictures
+(
+	PictureID integer primary key AUTO_INCREMENT,
+    Image longblob,
+    VehicleID integer,
+    constraint FK_VehiclePictures_VehicleID foreign key (VehicleID) references Vehicle(VehicleID)
+);
+    
