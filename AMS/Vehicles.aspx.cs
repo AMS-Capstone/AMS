@@ -53,14 +53,12 @@ namespace AMS
 
                 FileStream fs;
                 BinaryReader br;
-                string fileName = FUVehicle.PostedFile.FileName;
-                byte[] imageData;
-                fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
-                br = new BinaryReader(fs);
-                imageData = br.ReadBytes((int)fs.Length);
-                br.Close();
-                fs.Close();
 
+            
+
+           
+                DataAction dataAction = new DataAction();
+                dataAction.CreateImage(FUVehicle.FileBytes, int.Parse("2"));
                 
 
             }

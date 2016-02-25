@@ -402,23 +402,10 @@ namespace AMS.App_Code
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
-                MySqlCommand cmd = new MySqlCommand("", conn);
+                MySqlCommand cmd = new MySqlCommand("sp_createVehiclePicture", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("pLotNumber", lotNumber);
-                cmd.Parameters.AddWithValue("pYear", year);
-                cmd.Parameters.AddWithValue("pMake", make);
-                cmd.Parameters.AddWithValue("pModel", model);
-                cmd.Parameters.AddWithValue("pVin", vin);
-                cmd.Parameters.AddWithValue("pColor", color);
-                cmd.Parameters.AddWithValue("pMileage", mileage);
-                cmd.Parameters.AddWithValue("pUnits", units);
-                cmd.Parameters.AddWithValue("pTransmission", transmission);
-                cmd.Parameters.AddWithValue("pSellerID", sellerID);
-                cmd.Parameters.AddWithValue("pOptions", options);
-
-
-
-
+                cmd.Parameters.Add("@pImage", MySqlDbType.Blob).Value = data;
+                cmd.Parameters.AddWithValue("pVehicleID", "2");
                 conn.Open();
                 cmd.ExecuteNonQuery();
             }
