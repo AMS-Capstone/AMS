@@ -65,8 +65,6 @@ Create Table Vehicle
     Color text,
     Mileage int,
     Units text,
-    ProvinceID integer,
-    constraint FK_Vehicle_ProvinceID  foreign key (ProvinceID) references Province(ProvinceID),
     Transmission text, 
     VehicleOptions text,
     SellerID integer,
