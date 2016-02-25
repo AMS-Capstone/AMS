@@ -67,7 +67,7 @@ namespace AMS.App_Code
                 cmd.Parameters.Add(new MySqlParameter("@N_BuyerPhone", buyer.BuyerPhone));
                 cmd.Parameters.Add(new MySqlParameter("@N_BuyerBidderNumber", buyer.BidderNum));
                 cmd.Parameters.Add(new MySqlParameter("@N_BuyerPermanent", buyer.BuyerIsPermanent));
-                cmd.Parameters.Add(new MySqlParameter("@N_BuyerBanned", buyer.BuyerIsBanned));
+                cmd.Parameters.Add(new MySqlParameter("@N_BuyerBanned", buyer.IsBanned));
 
                 MySqlParameter returnParameter = new MySqlParameter();
                 returnParameter.Direction = System.Data.ParameterDirection.ReturnValue;
@@ -113,7 +113,8 @@ namespace AMS.App_Code
                 cmd.Parameters.Add(new MySqlParameter("@N_BuyerPhone", buyer.BuyerPhone));
                 cmd.Parameters.Add(new MySqlParameter("@N_BuyerBidderNumber", buyer.BidderNum));
                 cmd.Parameters.Add(new MySqlParameter("@N_BuyerPermanent", buyer.BuyerIsPermanent));
-                cmd.Parameters.Add(new MySqlParameter("@N_BuyerBanned", buyer.BuyerIsBanned));
+                cmd.Parameters.Add(new MySqlParameter("@N_BuyerBanned", buyer.IsBanned));
+                cmd.Parameters.Add(new MySqlParameter("@N_BuyerNotes", buyer.Notes));
 
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Connection = conn;

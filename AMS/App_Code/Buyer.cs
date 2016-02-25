@@ -95,28 +95,28 @@ namespace AMS.App_Code
             set { buyerIsPermanent = value; }
         }
 
-        private bool buyerIsBanned;
+        private bool isBanned;
 
-        public bool BuyerIsBanned
+        public bool IsBanned
         {
-            get { return buyerIsBanned; }
-            set { buyerIsBanned = value; }
+            get { return isBanned; }
+            set { isBanned = value; }
         }
 
-        private String buyerNotes;
+        private String notes;
 
-        public String BuyerNotes
+        public String Notes
         {
-            get { return buyerNotes; }
-            set { buyerNotes = value; }
+            get { return notes; }
+            set { notes = value; }
         }
 
-        private String buyerDL;
+        private String buyerDriverLicense;
 
-        public String BuyerDL
+        public String BuyerDriverLicense
         {
-            get { return buyerDL; }
-            set { buyerDL = value; }
+            get { return buyerDriverLicense; }
+            set { buyerDriverLicense = value; }
         }
 
         public Buyer()

@@ -16,7 +16,8 @@ Create Table Buyer
     -- BuyerCountry Text,
     BuyerPhone Text,
     Permanent boolean default false,
-    Banned boolean default false
+    Banned boolean default false,
+	Notes Text
 );
 
 -- this here is the code to create a blank buyer
@@ -30,9 +31,10 @@ INSERT INTO `buyer`
 `BuyerPhone`,
 `BidderNumber`,
 `Permanent`,
-`Banned` )
+`Banned`,
+`Notes` )
 VALUES
-("","","","","","","", 0,TRUE, FALSE);
+("","","","","","","", 0,TRUE, FALSE, "");
 
 Drop table if exists Seller;
 -- Create the Seller table
@@ -73,7 +75,8 @@ Create FUNCTION ADD_BUYER (
     N_BuyerPhone text,
     N_BuyerBidderNumber integer,
     N_BuyerPermanent boolean,
-    N_BuyerBanned boolean) RETURNS INTEGER
+    N_BuyerBanned boolean,
+	N_BuyerNotes text) RETURNS INTEGER
 
 begin    
     INSERT INTO `buyer`
@@ -86,7 +89,8 @@ begin
 `BuyerPhone`,
 `BidderNumber`,
 `Permanent`,
-`Banned` )
+`Banned`,
+`Notes`)
 VALUES
 (
 	N_BuyerFirstName,
@@ -98,7 +102,8 @@ VALUES
     N_BuyerPhone,
     N_BuyerBidderNumber,
     N_BuyerPermanent,
-    N_BuyerBanned)
+    N_BuyerBanned,
+	N_BuyerNotes)
 ;
     return LAST_INSERT_ID()
     ;
@@ -128,7 +133,8 @@ begin
 		`BuyerPostalCode` = N_BuyerPostalCode,
 		`BuyerPhone` = N_BuyerPhone,
 		`BidderNumber` = N_BuyerBidderNumber,
-		`Banned` = N_BuyerBanned
+		`Banned` = N_BuyerBanned,
+		`Notes` = N_BuyerNotes
 		WHERE `BuyerID` = N_BuyerID;
 end;
 $$
@@ -155,7 +161,8 @@ BuyerPostalCode,
 BuyerPhone,
 BidderNumber,
 Permanent,
-Banned
+Banned,
+Notes
 FROM `buyer`;
 
 DELIMITER $$
