@@ -35,14 +35,15 @@ namespace AMS
 
 
             }
+
         }
 
         protected void BTNSaveVehicle_Click(object sender, EventArgs e)
         {
             //Save the inputed information 
             DataAction dataAction = new DataAction();
-            dataAction.CreateVehicle(int.Parse(TXTLotNumber.Text.ToString()), TXTYear.Text.Trim(), TXTMake.Text.Trim(), TXTModel.Text.Trim(), TXTVin.Text.Trim(), TXTColor.Text.Trim(), int.Parse(TXTMileage.Text.ToString()), DDLUnits.SelectedItem.ToString(), TXTTransmission.Text.Trim(), int.Parse(DDLSeller.SelectedValue), TXTOptions.Text.ToString());
-
+           dataAction.CreateVehicle(int.Parse(TXTLotNumber.Text.ToString()), TXTYear.Text.Trim(), TXTMake.Text.Trim(), TXTModel.Text.Trim(), TXTVin.Text.Trim(), TXTColor.Text.Trim(), int.Parse(TXTMileage.Text.ToString()), DDLUnits.SelectedItem.ToString(), TXTTransmission.Text.Trim(), int.Parse(DDLSeller.SelectedValue), TXTOptions.Text.ToString());
+            
 
         }
 
@@ -51,14 +52,13 @@ namespace AMS
             if(FUVehicle.HasFile)
             {
 
-                FileStream fs;
-                BinaryReader br;
+              
 
             
 
            
                 DataAction dataAction = new DataAction();
-                dataAction.CreateImage(FUVehicle.FileBytes, int.Parse("2"));
+                dataAction.CreateImage(FUVehicle.FileBytes, int.Parse(Session["VehicleID"].ToString()));
                 
 
             }

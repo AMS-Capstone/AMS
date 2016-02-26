@@ -373,6 +373,7 @@ namespace AMS.App_Code
         public void CreateVehicle(int lotNumber, string year, string make, string model, string vin, string color, int mileage, string units, string transmission, int sellerID, string options )
         {
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
+            long ID;
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 MySqlCommand cmd = new MySqlCommand("sp_createVehicle", conn);
@@ -388,13 +389,18 @@ namespace AMS.App_Code
                 cmd.Parameters.AddWithValue("pTransmission", transmission);
                 cmd.Parameters.AddWithValue("pSellerID", sellerID);
                 cmd.Parameters.AddWithValue("pOptions", options);
-
-
+                cmd.Parameters.Add(new MySqlParameter("pVehicleID", MySqlDbType.UInt64));
+                cmd.Parameters["pVehicleID"].Direction = ParameterDirection.Output;
+                
 
 
                 conn.Open();
-                cmd.ExecuteNonQuery();
+                var id = cmd.ExecuteNonQuery();
+
+                
+                
             }
+          
         }
 
         public void CreateImage(byte[] data, int vehicleID )
@@ -405,7 +411,7 @@ namespace AMS.App_Code
                 MySqlCommand cmd = new MySqlCommand("sp_createVehiclePicture", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add("@pImage", MySqlDbType.Blob).Value = data;
-                cmd.Parameters.AddWithValue("pVehicleID", "2");
+                cmd.Parameters.AddWithValue("pVehicleID", vehicleID);
                 conn.Open();
                 cmd.ExecuteNonQuery();
             }
