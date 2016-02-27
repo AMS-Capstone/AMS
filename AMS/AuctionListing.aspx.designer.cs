@@ -10,7 +10,16 @@
 namespace AMS {
     
     
-    public partial class Settings {
+    public partial class AuctionListing {
+        
+        /// <summary>
+        /// form1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
         /// Label1 control.
@@ -22,66 +31,84 @@ namespace AMS {
         protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
-        /// DDLGST control.
+        /// DropDownList1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DDLGST;
+        protected global::System.Web.UI.WebControls.DropDownList DropDownList1;
         
         /// <summary>
-        /// Label2 control.
+        /// lstAuctions control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
+        protected global::System.Web.UI.WebControls.ListBox lstAuctions;
         
         /// <summary>
-        /// TXTNewGST control.
+        /// btnSelectAuction control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TXTNewGST;
+        protected global::System.Web.UI.WebControls.Button btnSelectAuction;
         
         /// <summary>
-        /// BTNAddNewGST control.
+        /// btnManageCars control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BTNAddNewGST;
+        protected global::System.Web.UI.WebControls.Button btnManageCars;
         
         /// <summary>
-        /// GVConditionStatus control.
+        /// btnManageBuyers control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GVConditionStatus;
+        protected global::System.Web.UI.WebControls.Button btnManageBuyers;
         
         /// <summary>
-        /// GVFeeTypes control.
+        /// btnManageSellers control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GVFeeTypes;
+        protected global::System.Web.UI.WebControls.Button btnManageSellers;
         
         /// <summary>
-        /// GVPaymentTypes control.
+        /// btnCreateNewAuction control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GVPaymentTypes;
+        protected global::System.Web.UI.WebControls.Button btnCreateNewAuction;
+        
+        /// <summary>
+        /// btnManageInventory control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnManageInventory;
+        
+        /// <summary>
+        /// btnManageSettings control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnManageSettings;
     }
 }

@@ -11,7 +11,20 @@ namespace AMS
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            //Load All GST
+            //Load All Condition Statuses
+            //Load All Fee Types
+            //Load All Payment Types
+        }
 
+        protected void BTNAddNewGST_Click(object sender, EventArgs e)
+        {
+            //Add New GST
+        }
+
+        protected void DDLGST_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //Update Active GST
         }
     }
 }
