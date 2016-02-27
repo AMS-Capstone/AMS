@@ -43,7 +43,7 @@ Create Table Seller
 	SellerID integer primary key AUTO_INCREMENT,
     SellerCode char(30),
     SellerName text,
-    SellerStreet text,
+    SellerAddress text,
     SellerCity text,
     SellerProvince text,
     SellerPostalCode char(6),
@@ -53,10 +53,10 @@ Create Table Seller
     SellerFax text,
     ContactFirstName text,
     ContactLastName text,
-    SellerFileNumber text,
-    DebtorFirstName text,
-    DebtorLastName text,
-    Private boolean,
+    -- SellerFileNumber text,
+    -- DebtorFirstName text,
+    -- DebtorLastName text,
+    SellerPrivate boolean,
     GSTNumber text
 );
 
@@ -178,12 +178,12 @@ N_SellerOtherPhone text,
 N_SellerFax text, 
 N_ContactFirstName text, 
 N_ContactLastName text, 
-N_SellerFileNumber text,
-N_SellerDriverLicense text,
-N_GSTNumber boolean) RETURNS INTEGER
+-- N_SellerFileNumber text,
+N_SellerPrivate boolean,
+N_GSTNumber text) RETURNS INTEGER
 begin
-        insert into CONS(SellerCode, 
-        SellerFirstName, 
+        insert into seller(SellerCode, 
+        SellerName, 
         SellerAddress, 
         SellerCity, 
         SellerProvince, 
@@ -193,13 +193,12 @@ begin
         SellerFax, 
         ContactFirstName, 
         ContactLastName, 
-        SellerFileNumber,
-        SellerDriverLicense,
+        -- SellerFileNumber,
+        SellerPrivate,
         GSTNumber) 
         
         values (N_SellerCode, 
-        N_SellerName, 
-        N_SellerLastName, 
+        N_SellerName,  
         N_SellerAddress, 
         N_SellerCity, 
         N_SellerProvince, 
@@ -209,8 +208,8 @@ begin
         N_SellerFax, 
         N_ContactFirstName, 
         N_ContactLastName, 
-        N_SellerFileNumber,
-        N_SellerDriverLicense,
+        -- N_SellerFileNumber,
+        N_SellerPrivate,
         N_GSTNumber);
         return LAST_INSERT_ID();
         
@@ -231,13 +230,13 @@ N_SellerOtherPhone text,
 N_SellerFax text, 
 N_ContactFirstName text, 
 N_ContactLastName text, 
-N_SellerFileNumber text,
-N_SellerDriverLicense text,
+-- N_SellerFileNumber text,
+N_SellerPrivate boolean,
 N_GSTNumber boolean)
-UPDATE `cons`
+UPDATE `seller`
 SET
 `SellerCode` = N_SellerCode,
-`SellerFirstName` = N_SellerName,
+`SellerName` = N_SellerName,
 `SellerAddress` = N_SellerAddress, 
 `SellerCity` = N_SellerCity, 
 `SellerProvince` = N_SellerProvince,
@@ -247,22 +246,22 @@ SET
 `SellerFax` = N_SellerFax,
 `ContactFirstName` = N_ContactFirstName,
 `ContactLastName` = N_ContactLastName,
-`SellerFileNumber` = N_SellerFileNumber,
-SellerDriverLicense = N_SellerDriverLicense,
-GSTNumber = N_GSTNumber
+-- `SellerFileNumber` = N_SellerFileNumber,
+`SellerPrivate` = N_SellerPrivate,
+`GSTNumber` = N_GSTNumber
 WHERE `SellerID` = N_SellerID;
 
-drop procedure if exists DEL_CON;
-create procedure DEL_CON(N_SellerID integer)
-DELETE FROM CONS
+drop procedure if exists DEL_SELLER;
+create procedure DEL_SELLER(N_SellerID integer)
+DELETE FROM seller
 WHERE SellerID = N_SellerID;
 
-DROP PROCEDURE IF EXISTS GET_CONS;
-Create Procedure GET_CONS()
+DROP PROCEDURE IF EXISTS GET_SELLERS;
+Create Procedure GET_SELLERS()
     SELECT
 SellerID,
 SellerCode,
-SellerFirstName,
+SellerName,
 SellerAddress, 
 SellerCity, 
 SellerProvince,
@@ -272,7 +271,7 @@ SellerOtherPhone,
 SellerFax,
 ContactFirstName,
 ContactLastName,
-SellerFileNumber 'CON_FILE#',
-SellerDriverLicense,
+-- SellerFileNumber 'SELLER_FILE#',
+SellerPrivate,
 GSTNumber
 FROM `seller`;

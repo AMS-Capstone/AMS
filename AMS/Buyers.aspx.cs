@@ -33,6 +33,9 @@ namespace AMS
             provinces.Add("SK");
             provinces.Add("YT");
 
+            DDLProvince.DataSource = provinces;
+            DDLProvince.DataBind();
+
             try 
             {
                 buyers = buyerService.GetBuyers();
@@ -46,10 +49,6 @@ namespace AMS
                         DDLBuyerName.DataValueField = "BuyerID";
                         DDLBuyerName.DataSource = buyers;
                         DDLBuyerName.DataBind();
-
-                        DDLProvince.DataSource = provinces;
-                        DDLProvince.DataBind();
-
                     }
                     else
                     {

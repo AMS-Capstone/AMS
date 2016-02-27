@@ -52,12 +52,15 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <%--<a class="navbar-brand" runat="server" href="~/">AMS</a>--%>
+                    <a class="navbar-brand" runat="server" href="~/">AMS</a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a runat="server" href="~/Buyers">Manage Buyers</a></li>
-                        <%--<li><a runat="server" href="~/Settings">Settings</a></li>--%>
+                        <li><a runat="server" href="~/NewAuction">New Auction</a></li>
+                        <li><a runat="server" href="~/Buyers">Buyers</a></li>
+                        <li><a runat="server" href="~/Sellers">Sellers</a></li>
+                        <li><a runat="server" href="~/Vehicles">Vehicles</a></li>
+                        <li><a runat="server" href="~/Settings">Settings</a></li>
                     </ul>
                 </div>
             </div>

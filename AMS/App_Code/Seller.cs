@@ -28,12 +28,12 @@ namespace AMS.App_Code
             get { return sellerName; }
             set { sellerName = value; }
         }
-        private String sellerStreet;
+        private String sellerAddress;
 
-        public String SellerStreet
+        public String SellerAddress
         {
-            get { return sellerStreet; }
-            set { sellerStreet = value; }
+            get { return sellerAddress; }
+            set { sellerAddress = value; }
         }
         private String sellerCity;
 
@@ -97,27 +97,6 @@ namespace AMS.App_Code
         {
             get { return contactLastName; }
             set { contactLastName = value; }
-        }
-        private String conFile;
-
-        public String ConFile
-        {
-            get { return conFile; }
-            set { conFile = value; }
-        }
-        private String debtorFirstName;
-
-        public String DebtorFirstName
-        {
-            get { return debtorFirstName; }
-            set { debtorFirstName = value; }
-        }
-        private String debtorLastName;
-
-        public String DebtorLastName
-        {
-            get { return debtorLastName; }
-            set { debtorLastName = value; }
         }
         private bool sellerIsPrivate;
 
