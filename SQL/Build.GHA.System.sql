@@ -1,4 +1,4 @@
-USE GHATest;
+-- USE GHATest;
 -- Purpose: The statements below create the tables for the GHA system.alter. The script is broken into 3 major phases.
 -- [1] Drop Tables if it exists
 -- [2] Create Tables
@@ -92,16 +92,19 @@ Create Table Buyer
     -- BuyerCountry Text,
     BuyerPhone Text,
     Permanent boolean default false,
-    Banned boolean default false
+    Banned boolean default false,
+	Notes Text
 );
 
+
 -- Create the Seller table
+
 Create Table Seller 
 (
 	SellerID integer primary key AUTO_INCREMENT,
     SellerCode char(30),
     SellerName text,
-    SellerStreet text,
+    SellerAddress text,
     SellerCity text,
     SellerProvince text,
     SellerPostalCode char(6),
@@ -111,10 +114,10 @@ Create Table Seller
     SellerFax text,
     ContactFirstName text,
     ContactLastName text,
-    SellerFileNumber text,
-    DebtorFirstName text,
-    DebtorLastName text,
-    Private boolean,
+    -- SellerFileNumber text,
+    -- DebtorFirstName text,
+    -- DebtorLastName text,
+    SellerPrivate boolean,
     GSTNumber text
 );
 
@@ -212,6 +215,7 @@ Create Table VehiclePictures
 -- [3][3]						[3][3] --
 
 -- Store Blank Buyer, (We need this if a vehicle is not purchased for an auction
+
 INSERT INTO `buyer`
 (`BuyerFirstName`,
 `BuyerLastName`,
@@ -222,9 +226,27 @@ INSERT INTO `buyer`
 `BuyerPhone`,
 `BidderNumber`,
 `Permanent`,
-`Banned` )
+`Banned`,
+`Notes` )
 VALUES
-("","","","","","","", 0,TRUE, FALSE);
+("","","","","","","", 0,TRUE, FALSE, "");
+
+INSERT INTO `conditionstatus` (`ConditionCode`) VALUES ('Not Sold');
+INSERT INTO `conditionstatus` (`ConditionCode`) VALUES ('Conditional');
+INSERT INTO  `conditionstatus` (`ConditionCode`) VALUES ('Refused');
+INSERT INTO  `conditionstatus` (`ConditionCode`) VALUES ('Sold');
+INSERT INTO  `conditionstatus` (`ConditionCode`) VALUES ('Paid');
+
+INSERT INTO `paymenttype` (`PaymentDescription`) VALUES ('Cash');
+INSERT INTO `paymenttype` (`PaymentDescription`) VALUES ('Cheque');
+INSERT INTO `paymenttype` (`PaymentDescription`) VALUES ('Credit Card');
+INSERT INTO `paymenttype` (`PaymentDescription`) VALUES ('Debit');
+
+INSERT INTO `feetype` (`FeeType`) VALUES ('Towing');
+INSERT INTO `feetype` (`FeeType`) VALUES ('Cleaning');
+INSERT INTO `feetype` (`FeeType`) VALUES ('Miscellaneous');
+INSERT INTO `feetype` (`FeeType`) VALUES ('Storage');
+
 
 -- [4][4]					[4][4] --
 -- [4][4]					[4][4] --
@@ -271,12 +293,12 @@ END//
 
 drop procedure if exists sp_createConditionStatus //
 create procedure sp_createConditionStatus
-(IN pConditionCode tinyText, IN pConditionDescription text)
+(IN pConditionCode tinyText, IN pConditionDescription text, IN pStatus boolean)
 
 BEGIN
 	
-	INSERT INTO ConditionStatus (ConditionCode,ConditionDescription)
-	VALUES (pConditionCode, pConditionDescription);
+	INSERT INTO ConditionStatus (ConditionCode,CondidtionDescription, status)
+	VALUES (pConditionCode, pConditionDescription, pStatus);
 
 END//
 
@@ -285,31 +307,32 @@ create procedure sp_viewConditionStatus()
 
 BEGIN
 	
-	Select ConditionId, ConditionCode, ConditionDescription
+	Select ConditionId,CONCAT( ConditionCode , ' - ' , CondidtionDescription) as Description, status
 	FROM ConditionStatus;
 
 END//
 
 drop procedure if exists sp_updateConditionStatus //
-create procedure sp_updateConditionStatus(IN pConditionId integer, IN pConditionDescription text, pConditionCode tinyText)
+create procedure sp_updateConditionStatus(IN pConditionId integer, IN pConditionDescription text, pConditionCode tinyText, IN pStatus boolean)
 
 BEGIN
 
 	UPDATE ConditionStatus
 	SET
 	ConditionCode = pConditionCode,
-	ConditionDescription = pConditionDescription
-	WHERE ConditionStatus = pConditionId;
+	CondidtionDescription = pConditionDescription,
+    status = pStatus 
+	WHERE ConditionID = pConditionId;
 END//
 
 drop procedure if exists sp_createFeeType //
 create procedure sp_createFeeType
-(IN pFeeCost double, IN pFeeType text)
+(IN pFeeCost double, IN pFeeType text, in pStatus boolean)
 
 BEGIN
 	
-	INSERT INTO FeeType (FeeCost,FeeType)
-	VALUES (pFeeCost, pFeeType);
+	INSERT INTO FeeType (FeeCost,FeeType, Status)
+	VALUES (pFeeCost, pFeeType, pStatus);
 
 END//
 
@@ -318,32 +341,32 @@ create procedure sp_viewFeeTypes()
 
 BEGIN
 	
-	Select FeeId, FeeCost, FeeType
+	Select FeeId, CONCAT( FeeCost, ' - ' , FeeType) as description, status
 	FROM FeeType;
 
 END//
 
 drop procedure if exists sp_updateFeeType //
-create procedure sp_updateFeeType(IN pFeeId integer, IN pFeeType text, pFeeCost double)
+create procedure sp_updateFeeType(IN pFeeId integer, IN pFeeType text, pFeeCost double, pStatus boolean)
 
 BEGIN
 
 	UPDATE FeeType
 	SET
 	FeeCost = pFeeCost,
-	FeeType = pFeeType
+	FeeType = pFeeType, 
+    Status = pStatus
 	WHERE FeeId = pFeeId;
 END//
 
-
 drop procedure if exists sp_createPaymentType //	
 create procedure sp_createPaymentType
-(IN pPaymentDescription text)
+(IN pPaymentDescription text, in pStatus boolean)
 
 BEGIN
 	
-	INSERT INTO PaymentType (PaymentDescription)
-	VALUES (pPaymentDescription);
+	INSERT INTO PaymentType (PaymentDescription, Status)
+	VALUES (pPaymentDescription, pStatus);
 
 END //
 
@@ -352,21 +375,55 @@ create procedure sp_viewPaymentType()
 
 BEGIN
 	
-	Select PaymentTypeId, PaymentDescription
+	Select PaymentTypeId, PaymentDescription, pStatus
 	FROM PaymentType;
 
 END//
 
 drop procedure if exists sp_updatePaymentType //
-create procedure sp_updatePaymentType(IN pPaymentId integer, IN pPaymentDescription text)
+create procedure sp_updatePaymentType(IN pPaymentId integer, IN pPaymentDescription text, IN pStatus boolean)
 
 BEGIN
 
 	UPDATE PaymentType
 	SET
-	PaymentDescription = pPaymentDescription
+	PaymentDescription = pPaymentDescription, 
+    Status = pStatus
 	WHERE PaymentTypeId = PaymentTypeId;
 END //
+
+drop procedure if exists sp_getGSTByID //
+create procedure sp_getGSTByID(IN pGstID integer)
+BEGIN
+	Select GSTPercent, GSTStatus
+    FROM GST
+    where GSTID = pGstID;
+END//
+
+drop procedure if exists sp_getConditionStatusByID //
+create procedure sp_getConditionStatusByID(IN pConditionID integer)
+BEGIN
+	Select ConditionCode, CondidtionDescription, Status
+    FROM conditionstatus
+    where ConditionID = pConditionID;
+END//
+
+drop procedure if exists sp_getFeeTypeByID //
+create procedure sp_getFeeTypeByID(IN pFeeID integer)
+BEGIN
+	Select FeeCost, FeeType, Status
+    FROM feetype
+    where FeeID = pFeeID;
+END//
+
+drop procedure if exists sp_getPaymentTypeByID //
+create procedure sp_getPaymentTypeByID(IN pPaymentTypeID integer)
+BEGIN
+	Select PaymentDescription, Status
+    FROM paymenttype
+    where PaymentTypeID = pPaymentTypeID;
+END//
+
 
 -- Buyers Stored Procedures
 
@@ -381,7 +438,8 @@ Create FUNCTION ADD_BUYER (
     N_BuyerPhone text,
     N_BuyerBidderNumber integer,
     N_BuyerPermanent boolean,
-    N_BuyerBanned boolean) RETURNS INTEGER
+    N_BuyerBanned boolean,
+	N_BuyerNotes text) RETURNS INTEGER
 
 begin    
     INSERT INTO `buyer`
@@ -394,7 +452,8 @@ begin
 `BuyerPhone`,
 `BidderNumber`,
 `Permanent`,
-`Banned` )
+`Banned`,
+`Notes`)
 VALUES
 (
 	N_BuyerFirstName,
@@ -406,11 +465,12 @@ VALUES
     N_BuyerPhone,
     N_BuyerBidderNumber,
     N_BuyerPermanent,
-    N_BuyerBanned)
+    N_BuyerBanned,
+	N_BuyerNotes)
 ;
     return LAST_INSERT_ID()
     ;
-end  // 
+end //
 
 drop procedure if exists UPDATE_BUYER //
 create procedure UPDATE_BUYER(
@@ -436,7 +496,8 @@ begin
 		`BuyerPostalCode` = N_BuyerPostalCode,
 		`BuyerPhone` = N_BuyerPhone,
 		`BidderNumber` = N_BuyerBidderNumber,
-		`Banned` = N_BuyerBanned
+		`Banned` = N_BuyerBanned,
+		`Notes` = N_BuyerNotes
 		WHERE `BuyerID` = N_BuyerID;
 end //
 
@@ -464,8 +525,9 @@ BuyerPostalCode,
 BuyerPhone,
 BidderNumber,
 Permanent,
-Banned
-FROM `buyer`;
+Banned,
+Notes
+FROM `buyer` ;
 END //
 
 -- Sellers Stored procedures 
@@ -482,12 +544,12 @@ N_SellerOtherPhone text,
 N_SellerFax text, 
 N_ContactFirstName text, 
 N_ContactLastName text, 
-N_SellerFileNumber text,
-N_SellerDriverLicense text,
-N_GSTNumber boolean) RETURNS INTEGER
+-- N_SellerFileNumber text,
+N_SellerPrivate boolean,
+N_GSTNumber text) RETURNS INTEGER
 begin
-        insert into Seller(SellerCode, 
-        SellerFirstName, 
+        insert into seller(SellerCode, 
+        SellerName, 
         SellerAddress, 
         SellerCity, 
         SellerProvince, 
@@ -497,13 +559,12 @@ begin
         SellerFax, 
         ContactFirstName, 
         ContactLastName, 
-        SellerFileNumber,
-        SellerDriverLicense,
+        -- SellerFileNumber,
+        SellerPrivate,
         GSTNumber) 
         
         values (N_SellerCode, 
-        N_SellerName, 
-        N_SellerLastName, 
+        N_SellerName,  
         N_SellerAddress, 
         N_SellerCity, 
         N_SellerProvince, 
@@ -513,8 +574,8 @@ begin
         N_SellerFax, 
         N_ContactFirstName, 
         N_ContactLastName, 
-        N_SellerFileNumber,
-        N_SellerDriverLicense,
+        -- N_SellerFileNumber,
+        N_SellerPrivate,
         N_GSTNumber);
         return LAST_INSERT_ID();
         
@@ -534,14 +595,14 @@ N_SellerOtherPhone text,
 N_SellerFax text, 
 N_ContactFirstName text, 
 N_ContactLastName text, 
-N_SellerFileNumber text,
-N_SellerDriverLicense text,
+-- N_SellerFileNumber text,
+N_SellerPrivate boolean,
 N_GSTNumber boolean)
 BEGIN
-	UPDATE `Seller`
+	UPDATE `seller`
 	SET
 `SellerCode` = N_SellerCode,
-`SellerFirstName` = N_SellerName,
+`SellerName` = N_SellerName,
 `SellerAddress` = N_SellerAddress, 
 `SellerCity` = N_SellerCity, 
 `SellerProvince` = N_SellerProvince,
@@ -551,11 +612,11 @@ BEGIN
 `SellerFax` = N_SellerFax,
 `ContactFirstName` = N_ContactFirstName,
 `ContactLastName` = N_ContactLastName,
-`SellerFileNumber` = N_SellerFileNumber,
-SellerDriverLicense = N_SellerDriverLicense,
-GSTNumber = N_GSTNumber
-WHERE `SellerID` = N_SellerID;
-END //
+-- `SellerFileNumber` = N_SellerFileNumber,
+`SellerPrivate` = N_SellerPrivate,
+`GSTNumber` = N_GSTNumber
+	WHERE `SellerID` = N_SellerID;
+	END //
 
 drop procedure if exists DEL_CON //
 create procedure DEL_CON(N_SellerID integer)
@@ -564,13 +625,20 @@ create procedure DEL_CON(N_SellerID integer)
 	WHERE SellerID = N_SellerID;
 	END //
 
-DROP PROCEDURE IF EXISTS GET_CONS //
-Create Procedure GET_CONS()
+drop procedure if exists DEL_SELLER // 
+create procedure DEL_SELLER(N_SellerID integer)
+BEGIN
+DELETE FROM seller
+WHERE SellerID = N_SellerID;
+END //
+
+DROP PROCEDURE IF EXISTS GET_SELLERS //
+Create Procedure GET_SELLERS()
 BEGIN
     SELECT
 SellerID,
 SellerCode,
-SellerFirstName,
+SellerName,
 SellerAddress, 
 SellerCity, 
 SellerProvince,
@@ -580,11 +648,18 @@ SellerOtherPhone,
 SellerFax,
 ContactFirstName,
 ContactLastName,
-SellerFileNumber 'CON_FILE#',
-SellerDriverLicense,
+-- SellerFileNumber 'SELLER_FILE#',
+SellerPrivate,
 GSTNumber
 FROM `seller`;
 END //
+
+-- drop procedure if exists sp_getSellers //
+-- create procedure sp_getSellers()
+-- BEGIN
+-- Select SellerID, SellerName
+--   FROM seller;
+-- END//
 
 -- Auction Queries
 drop procedure if exists sp_findAuction //
@@ -631,4 +706,49 @@ BEGIN
 	order by year(auctionDate) desc;
 END //
 
+-- Vehicle Screen queries
+
+drop procedure if exists sp_createVehicle //
+create procedure sp_createVehicle(In pLotNumber integer, in pYear text, in pMake text, in pModel text, in pVin text, in pColor text, in pMileage integer, in pUnits text, in pTransmission text, in pSellerID int, in pOptions text, out vehicleID integer)
+BEGIN
+INSERT INTO  `vehicle`
+(
+`LotNumber`,
+`Year`,
+`Make`,
+`Model`,
+`VIN`,
+`Color`,
+`Mileage`,
+`Units`,
+`Transmission`,
+`VehicleOptions`,
+`SellerID`)
+VALUES
+(
+pLotNumber,
+pYear,
+pMake,
+pModel,
+pVin,
+pColor,
+pMileage,
+pUnits,
+pTransmission,
+pOptions,
+pSellerID);
+
+SELECT LAST_INSERT_ID();
+END//
+
+drop procedure if exists sp_createVehiclePicture //
+create procedure sp_createVehiclePicture(in pImage blob, pVehicleID int)
+begin
+INSERT INTO vehiclepictures(Image, VehicleID)
+VALUES
+(
+	pImage,
+    pVehicleID
+);
+END//
  
