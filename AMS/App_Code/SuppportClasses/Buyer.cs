@@ -14,6 +14,7 @@ namespace AMS.App_Code
             get { return buyerID; }
             set { buyerID = value; }
         }
+
         private int bidderNum;
 
         public int BidderNum
@@ -21,6 +22,7 @@ namespace AMS.App_Code
             get { return bidderNum; }
             set { bidderNum = value; }
         }
+
         private String buyerFirstName;
 
         public String BuyerFirstName
@@ -28,6 +30,7 @@ namespace AMS.App_Code
             get { return buyerFirstName; }
             set { buyerFirstName = value; }
         }
+
         private String buyerLastName;
 
         public String BuyerLastName
@@ -35,6 +38,7 @@ namespace AMS.App_Code
             get { return buyerLastName; }
             set { buyerLastName = value; }
         }
+
         private String buyerAddress;
 
         public String BuyerAddress
@@ -42,6 +46,7 @@ namespace AMS.App_Code
             get { return buyerAddress; }
             set { buyerAddress = value; }
         }
+
         private String buyerCity;
 
         public String BuyerCity
@@ -49,6 +54,7 @@ namespace AMS.App_Code
             get { return buyerCity; }
             set { buyerCity = value; }
         }
+
         private String buyerProvince;
 
         public String BuyerProvince
@@ -56,6 +62,7 @@ namespace AMS.App_Code
             get { return buyerProvince; }
             set { buyerProvince = value; }
         }
+
         private String buyerPostalCode;
 
         public String BuyerPostalCode
@@ -63,6 +70,7 @@ namespace AMS.App_Code
             get { return buyerPostalCode; }
             set { buyerPostalCode = value; }
         }
+
         private String buyerCountry; // Needs to default to Canada
 
         public String BuyerCountry
@@ -70,6 +78,7 @@ namespace AMS.App_Code
             get { return buyerCountry; }
             set { buyerCountry = value; }
         }
+
         private String buyerPhone;
 
         public String BuyerPhone
@@ -77,6 +86,7 @@ namespace AMS.App_Code
             get { return buyerPhone; }
             set { buyerPhone = value; }
         }
+
         private bool buyerIsPermanent;
 
         public bool BuyerIsPermanent
@@ -84,12 +94,29 @@ namespace AMS.App_Code
             get { return buyerIsPermanent; }
             set { buyerIsPermanent = value; }
         }
-        private bool buyerIsBanned;
 
-        public bool BuyerIsBanned
+        private bool isBanned;
+
+        public bool IsBanned
         {
-            get { return buyerIsBanned; }
-            set { buyerIsBanned = value; }
+            get { return isBanned; }
+            set { isBanned = value; }
+        }
+
+        private String notes;
+
+        public String Notes
+        {
+            get { return notes; }
+            set { notes = value; }
+        }
+
+        private String buyerDriverLicense;
+
+        public String BuyerDriverLicense
+        {
+            get { return buyerDriverLicense; }
+            set { buyerDriverLicense = value; }
         }
 
         public Buyer()

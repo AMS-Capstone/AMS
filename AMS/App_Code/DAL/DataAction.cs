@@ -15,7 +15,7 @@ namespace AMS.App_Code
         #region Settingsscreen
         //Create a GST code
         public static void CreateGSTEntry(int gstPercent, bool status)
-            {
+        {
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
@@ -27,7 +27,7 @@ namespace AMS.App_Code
                 cmd.ExecuteNonQuery();
 
             }
-            }
+        }
 
         //Update a GST Code
         public static void UpdateGSTEntry(int gstId, int gstPercent, bool status)

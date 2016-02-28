@@ -50,11 +50,10 @@ namespace AMS.App_Code
         //Get all Buyers
         public int CreateBuyer(Buyer buyer)
         {
-            //DataSet ds = new DataSet("Buyers");
             int id = 0;
             MySqlConnection conn = new MySqlConnection(connectionString);
-            MySqlDataAdapter da = new MySqlDataAdapter();
             conn.Open();
+
             try
             {
                 MySqlCommand cmd = new MySqlCommand();
@@ -68,16 +67,58 @@ namespace AMS.App_Code
                 cmd.Parameters.Add(new MySqlParameter("@N_BuyerPhone", buyer.BuyerPhone));
                 cmd.Parameters.Add(new MySqlParameter("@N_BuyerBidderNumber", buyer.BidderNum));
                 cmd.Parameters.Add(new MySqlParameter("@N_BuyerPermanent", buyer.BuyerIsPermanent));
-                cmd.Parameters.Add(new MySqlParameter("@N_BuyerBanned", buyer.BuyerIsBanned));
+                cmd.Parameters.Add(new MySqlParameter("@N_BuyerBanned", buyer.IsBanned));
+
                 MySqlParameter returnParameter = new MySqlParameter();
                 returnParameter.Direction = System.Data.ParameterDirection.ReturnValue;
+
                 cmd.Parameters.Add(returnParameter);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Connection = conn;
                 cmd.ExecuteNonQuery();
+
                 id = Convert.ToInt32(returnParameter.Value.ToString());
-                //da.SelectCommand = cmd;
-                //da.Fill(ds, "Buyers");
+            }
+            catch (Exception ex)
+            {
+                //Panic
+                throw ex;
+            }
+            finally
+            {
+                //Tie the loose ends here
+                conn.Close();
+            }
+            return id;
+        }
+
+        //Get all Buyers
+        public int UpdateBuyer(Buyer buyer)
+        {
+            int id = 0;
+            MySqlConnection conn = new MySqlConnection(connectionString);
+            conn.Open();
+
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.CommandText = "UPDATE_BUYER";
+                cmd.Parameters.Add(new MySqlParameter("@N_BuyerID", buyer.BuyerID));
+                cmd.Parameters.Add(new MySqlParameter("@N_BuyerFirstName", buyer.BuyerFirstName));
+                cmd.Parameters.Add(new MySqlParameter("@N_BuyerLastName", buyer.BuyerLastName));
+                cmd.Parameters.Add(new MySqlParameter("@N_BuyerAddress", buyer.BuyerAddress));
+                cmd.Parameters.Add(new MySqlParameter("@N_BuyerCity", buyer.BuyerCity));
+                cmd.Parameters.Add(new MySqlParameter("@N_BuyerProvince", buyer.BuyerProvince));
+                cmd.Parameters.Add(new MySqlParameter("@N_BuyerPostalCode", buyer.BuyerPostalCode));
+                cmd.Parameters.Add(new MySqlParameter("@N_BuyerPhone", buyer.BuyerPhone));
+                cmd.Parameters.Add(new MySqlParameter("@N_BuyerBidderNumber", buyer.BidderNum));
+                cmd.Parameters.Add(new MySqlParameter("@N_BuyerPermanent", buyer.BuyerIsPermanent));
+                cmd.Parameters.Add(new MySqlParameter("@N_BuyerBanned", buyer.IsBanned));
+                cmd.Parameters.Add(new MySqlParameter("@N_BuyerNotes", buyer.Notes));
+
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = conn;
+                cmd.ExecuteNonQuery();
             }
             catch (Exception ex)
             {
