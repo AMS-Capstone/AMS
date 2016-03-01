@@ -11,8 +11,8 @@ namespace AMS.App_Code
     {
 
         //TODO: create global connection string
+        #region SettingsScreen
 
-        #region Settingsscreen
         //Create a GST code
         public static void CreateGSTEntry(int gstPercent, bool status)
         {
@@ -23,9 +23,20 @@ namespace AMS.App_Code
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("pGstPercent", gstPercent);
                 cmd.Parameters.AddWithValue("pGSTStatus", status);
-                conn.Open();
-                cmd.ExecuteNonQuery();
-
+                try
+                {
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    //Panic
+                    throw ex;
+                }
+                finally
+                {
+                    //Tie the loose ends here
+                }
             }
         }
 
@@ -40,8 +51,20 @@ namespace AMS.App_Code
                 cmd.Parameters.AddWithValue("pGstID", gstId);
                 cmd.Parameters.AddWithValue("pGstPercent", gstPercent);
                 cmd.Parameters.AddWithValue("pGSTStatus", status);
-                conn.Open();
-                cmd.ExecuteNonQuery();
+                try
+                {
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    //Panic
+                    throw ex;
+                }
+                finally
+                {
+                    //Tie the loose ends here
+                }
             }
         }
 
@@ -76,8 +99,20 @@ namespace AMS.App_Code
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("pConditionCode", conditionCode);
                 cmd.Parameters.AddWithValue("pConditionDescription", conditionDescription);
-                conn.Open();
-                cmd.ExecuteNonQuery();
+                try
+                {
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    //Panic
+                    throw ex;
+                }
+                finally
+                {
+                    //Tie the loose ends here
+                }
             }
         }
 
@@ -91,8 +126,20 @@ namespace AMS.App_Code
                 cmd.Parameters.AddWithValue("pConditionID", conditionID);
                 cmd.Parameters.AddWithValue("pConditionDescription", conditionDescription);
                 cmd.Parameters.AddWithValue("pConditionCode", conditionCode);
-                conn.Open();
-                cmd.ExecuteNonQuery();
+                try
+                {
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    //Panic
+                    throw ex;
+                }
+                finally
+                {
+                    //Tie the loose ends here
+                }
             }
         }
 
@@ -128,9 +175,21 @@ namespace AMS.App_Code
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("pFeeCost", feeCost);
                 cmd.Parameters.AddWithValue("pFeeType", feeType);
-                
-                conn.Open();
-                cmd.ExecuteNonQuery();
+
+                try
+                {
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    //Panic
+                    throw ex;
+                }
+                finally
+                {
+                    //Tie the loose ends here
+                }
             }
         }
         //Update Fee Type
@@ -144,8 +203,21 @@ namespace AMS.App_Code
                 cmd.Parameters.AddWithValue("pFeeId", feeID);
                 cmd.Parameters.AddWithValue("pFeeType", feeType);
                 cmd.Parameters.AddWithValue("pFeeCost", feeCost);
-                conn.Open();
-                cmd.ExecuteNonQuery();
+
+                try
+                {
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    //Panic
+                    throw ex;
+                }
+                finally
+                {
+                    //Tie the loose ends here
+                }
             }
         }
 
@@ -183,13 +255,25 @@ namespace AMS.App_Code
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("pPaymentDescription", paymentDescription);
 
-                conn.Open();
-                cmd.ExecuteNonQuery();
+                try
+                {
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    //Panic
+                    throw ex;
+                }
+                finally
+                {
+                    //Tie the loose ends here
+                }
             }
         }
 
 
-//Update PaymentType
+        //Update PaymentType
         public static void UpdatePaymentType(int paymentID, string paymentDescription)
         {
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
@@ -199,9 +283,21 @@ namespace AMS.App_Code
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("pPaymentID", paymentID);
                 cmd.Parameters.AddWithValue("pPaymentDescription", paymentDescription);
-                
-                conn.Open();
-                cmd.ExecuteNonQuery();
+
+                try
+                {
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    //Panic
+                    throw ex;
+                }
+                finally
+                {
+                    //Tie the loose ends here
+                }
             }
         }
 
@@ -231,10 +327,7 @@ namespace AMS.App_Code
 
         #endregion
 
-
-
-
-
+        
     }
 
 }
