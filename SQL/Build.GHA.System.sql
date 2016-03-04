@@ -148,17 +148,18 @@ Create Table AuctionSale
     constraint FK_AuctionSale_AuctionID foreign key (AuctionID) references Auction(AuctionID),
     VehicleID integer,
     constraint FK_AuctionSale_VehicleID foreign key (VehicleID) references Vehicle(VehicleID),
+    BuyerID integer,
+    constraint FK_AuctionSale_BuyerID foreign key (BuyerID) references Buyer(BuyerID),
     SellingPrice double, 
     BuyersFee double, 
     Deposit double,
-    ConiditonCode text,
+    ConiditonID integer,
+    constraint FK_AuctionSale_ConditionID foreign key (ConiditonID) references ConditionStatus(ConditionID),
     GSTID integer,
     constraint FK_AuctionSale_GSTID foreign key (GSTID) references GST(GSTID),
     Total double, 
     saledate date,
-    Notes text,
-    BuyerID integer,
-    constraint FK_AuctionSale_BuyerID foreign key (BuyerID) references Buyer(BuyerID)
+    Notes text
 );
 
 -- Create table Vehicle CondnReqs
@@ -246,6 +247,8 @@ INSERT INTO `feetype` (`FeeType`) VALUES ('Towing');
 INSERT INTO `feetype` (`FeeType`) VALUES ('Cleaning');
 INSERT INTO `feetype` (`FeeType`) VALUES ('Miscellaneous');
 INSERT INTO `feetype` (`FeeType`) VALUES ('Storage');
+
+INSERT INTO `gst` (`GSTPercent`, `GSTStatus`) VALUES (5.0, 1);
 
 
 -- [4][4]					[4][4] --
@@ -751,4 +754,156 @@ VALUES
     pVehicleID
 );
 END//
- 
+
+drop function if exists ADD_AUCTION_SALE //
+create function ADD_AUCTION_SALE(
+	`N_AuctionID` int(11),
+	`N_VehicleID` int(11),
+	`N_BuyerID` int(11),
+	`N_SellingPrice` double,
+	`N_BuyersFee` double,
+	`N_Deposit` double,
+	`N_ConiditonID` int(11),
+	`N_GSTID` int(11),
+	`N_Total` double,
+	`N_saledate` date,
+	`N_Notes` text) returns int
+
+BEGIN
+INSERT INTO `gha`.`auctionsale`
+(`AuctionID`,
+`VehicleID`,
+`BuyerID`,
+`SellingPrice`,
+`BuyersFee`,
+`Deposit`,
+`ConiditonID`,
+`GSTID`,
+`Total`,
+`saledate`,
+`Notes`)
+VALUES
+(`N_AuctionID`,
+`N_VehicleID`,
+`N_BuyerID`,
+`N_SellingPrice`,
+`N_BuyersFee`,
+`N_Deposit`,
+`N_ConiditonID`,
+`N_GSTID`,
+`N_Total`,
+`N_saledate`,
+`N_Notes`
+);
+
+RETURN LAST_INSERT_ID();
+END//
+
+DELIMITER //
+drop procedure if exists UPDATE_AUCTION_SALE //
+create procedure UPDATE_AUCTION_SALE(
+	`N_AuctionSaleID` int(11),
+	`N_AuctionID` int(11),
+	`N_VehicleID` int(11),
+	`N_BuyerID` int(11),
+	`N_SellingPrice` double,
+	`N_BuyersFee` double,
+	`N_Deposit` double,
+	`N_ConiditonID` int(11),
+	`N_GSTID` int(11),
+	`N_Total` double,
+	`N_saledate` date,
+	`N_Notes` text)
+
+BEGIN
+UPDATE `gha`.`auctionsale`
+SET
+`AuctionID` = N_AuctionID,
+`VehicleID` = N_VehicleID,
+`BuyerID` = N_BuyerID,
+`SellingPrice` = N_SellingPrice,
+`BuyersFee` = N_BuyersFee,
+`Deposit` = N_Deposit,
+`ConiditonID` = N_ConiditonID,
+`GSTID` = N_GSTID,
+`Total` = N_Total,
+`saledate` = N_saledate,
+`Notes` = N_Notes
+WHERE `AuctionSaleID` = N_AuctionSaleID;
+END//
+
+delimiter //
+drop function if exists ADD_PAYMENT //
+create function ADD_PAYMENT(
+  `PaymentAmount` double,
+  `AuctionSaleID` int(11),
+  `PaymentTypeID` int(11),
+  `Surcharges` double,
+  `PaymentDate` datetime
+) returns int
+
+BEGIN
+INSERT INTO `gha`.`payment`
+(
+`PaymentAmount`,
+`AuctionSaleID`,
+`PaymentTypeID`,
+`Surcharges`,
+`PaymentDate`)
+VALUES
+(
+`N_PaymentAmount`,
+`N_AuctionSaleID`,
+`N_PaymentTypeID`,
+`N_Surcharges`,
+`N_PaymentDate`);
+
+return LAST_INSERT_ID();
+END//
+
+delimiter //
+drop procedure if exists UPDATE_PAYMENT //
+create procedure UPDATE_PAYMENT(
+ `N_PaymentID` int(11),
+  `PaymentAmount` double,
+  `AuctionSaleID` int(11),
+  `PaymentTypeID` int(11),
+  `Surcharges` double,
+  `PaymentDate` datetime
+)
+BEGIN
+UPDATE `gha`.`payment`
+SET
+`PaymentAmount` = `N_PaymentAmount`,
+`AuctionSaleID` = `N_AuctionSaleID`,
+`PaymentTypeID` = `N_PaymentTypeID`,
+`Surcharges` = `N_Surcharges`,
+`PaymentDate` = `N_PaymentDate`
+WHERE `PaymentID` = `N_PaymentID`;
+END//
+
+drop procedure if exists DEL_AUCTION_SALE //
+create procedure DEL_AUCTION_SALE(N_AuctionSaleID integer)
+	BEGIN
+	DELETE FROM AuctionSale
+	WHERE AuctionSaleID = N_AuctionSaleID;
+	END //
+
+drop procedure if exists GET_PAYMENTTYPE //
+create procedure GET_PAYMENTTYPE()
+
+BEGIN	
+	Select PaymentTypeID, PaymentDescription
+	FROM PaymentType;
+END//
+
+
+drop procedure if exists GET_ACTIVEGST //
+create procedure GET_ACTIVEGST()
+
+BEGIN	
+
+	Select GSTPercent
+	FROM gst
+	where GSTStatus = 1;
+END//
