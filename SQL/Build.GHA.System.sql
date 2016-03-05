@@ -128,7 +128,7 @@ Create Table Seller
 Create Table Vehicle
 (
 	VehicleID integer primary key AUTO_INCREMENT,
-    LotNumber integer, 
+    LotNumber text, 
     Year text, 
     Make text,
     Model text,
@@ -720,7 +720,7 @@ END //
 -- Vehicle Screen queries
 
 drop procedure if exists sp_createVehicle //
-create procedure sp_createVehicle(In pLotNumber integer, in pYear text, in pMake text, in pModel text, in pVin text, in pColor text, in pMileage integer, in pUnits text, in pTransmission text, in pSellerID int, in pOptions text, out vehicleID integer)
+create procedure sp_createVehicle(In pLotNumber text, in pYear text, in pMake text, in pModel text, in pVin text, in pColor text, in pMileage integer, in pUnits text, in pTransmission text, in pSellerID int, in pOptions text, out vehicleID integer)
 BEGIN
 INSERT INTO  `vehicle`
 (
