@@ -104,6 +104,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AuctionListing.aspx" />
+    <Content Include="AuctionMain.aspx" />
     <Content Include="Buyers.aspx" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -166,6 +167,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Code\DAL\AuctionDAL.cs" />
     <Compile Include="App_Code\SuppportClasses\FeeType.cs" />
     <Compile Include="App_Code\SuppportClasses\GST.cs" />
     <Compile Include="App_Code\SuppportClasses\PaymentType.cs" />
@@ -183,6 +185,13 @@
     </Compile>
     <Compile Include="AuctionListing.aspx.designer.cs">
       <DependentUpon>AuctionListing.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AuctionMain.aspx.cs">
+      <DependentUpon>AuctionMain.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AuctionMain.aspx.designer.cs">
+      <DependentUpon>AuctionMain.aspx</DependentUpon>
     </Compile>
     <Compile Include="Buyers.aspx.cs">
       <DependentUpon>Buyers.aspx</DependentUpon>
