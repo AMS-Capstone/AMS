@@ -34,4 +34,7 @@
             <asp:TextBox ID="TXTNotes" TextMode="MultiLine" runat="server" CssClass="form-control" placeholder="Notes"/>
         </div>
     </div>
+    <div class="btn-group col-xs-12">
+        <asp:Button ID="BTNTotals" runat="server" CssClass="btn btn-primary pull-right" Text="Calculate Auction Totals" OnClick="BTNTotals_Click" />
+    </div>
 </asp:Content>

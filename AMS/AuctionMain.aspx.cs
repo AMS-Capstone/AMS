@@ -13,5 +13,10 @@ namespace AMS
         {
 
         }
+
+        protected void BTNTotals_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

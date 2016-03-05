@@ -136,7 +136,7 @@ Create Table Vehicle
     Color text,
     Mileage int,
     Units text,
-    ProvinceID integer,
+    Province text,
     Transmission text, 
     VehicleOptions text,
     SellerID integer,
@@ -720,7 +720,7 @@ END //
 -- Vehicle Screen queries
 
 drop procedure if exists sp_createVehicle //
-create procedure sp_createVehicle(In pLotNumber text, in pYear text, in pMake text, in pModel text, in pVin text, in pColor text, in pMileage integer, in pUnits text, in pTransmission text, in pSellerID int, in pOptions text, out vehicleID integer)
+create procedure sp_createVehicle(In pLotNumber text, in pYear text, in pMake text, in pModel text, in pVin text, in pColor text, in pMileage integer, in pUnits text, in pProvince text, in pTransmission text, in pSellerID int, in pOptions text, out vehicleID integer)
 BEGIN
 INSERT INTO  `vehicle`
 (
@@ -732,6 +732,7 @@ INSERT INTO  `vehicle`
 `Color`,
 `Mileage`,
 `Units`,
+`Province`,
 `Transmission`,
 `VehicleOptions`,
 `SellerID`)
@@ -745,6 +746,7 @@ pVin,
 pColor,
 pMileage,
 pUnits,
+pProvince,
 pTransmission,
 pOptions,
 pSellerID);
@@ -909,7 +911,6 @@ create procedure DEL_AUCTION_SALE(N_AuctionSaleID integer)
 
 drop procedure if exists GET_PAYMENTTYPE //
 create procedure GET_PAYMENTTYPE()
-
 BEGIN	
 	Select PaymentTypeID, PaymentDescription
 	FROM PaymentType;
@@ -918,10 +919,28 @@ END//
 
 drop procedure if exists GET_ACTIVEGST //
 create procedure GET_ACTIVEGST()
-
 BEGIN	
-
 	Select GSTPercent
 	FROM gst
 	where GSTStatus = 1;
+END//
+
+drop procedure if exists GET_AUCTION_DATA //
+create procedure GET_AUCTION_DATA(N_AuctionID int(11))
+BEGIN
+	SELECT 
+	`auctionsale`.`AuctionSaleID`,
+    `auctionsale`.`AuctionSaleID`,
+    `auctionsale`.`VehicleID`,
+    `auctionsale`.`BuyerID`,
+    `auctionsale`.`SellingPrice`,
+    `auctionsale`.`BuyersFee`,
+    `auctionsale`.`Deposit`,
+    `auctionsale`.`ConiditonID`,
+    `auctionsale`.`GSTID`,
+    `auctionsale`.`Total`,
+    `auctionsale`.`saledate`,
+    `auctionsale`.`Notes`
+FROM `gha`.`auctionsale`
+WHERE `auctionsale`.`AuctionID` = N_AuctionID;
 END//
