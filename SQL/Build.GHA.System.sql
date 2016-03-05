@@ -45,9 +45,7 @@ Create Table Auction
     SurCharges double,
     CashCharges double,
     ChequeCharges double,
-    CreditCardCharges double,
-    AuctioneerFirstName text,
-    AuctioneerLastName text
+    CreditCardCharges double
 );
     
 -- Create the ConditionStatus table
@@ -161,7 +159,6 @@ Create Table AuctionSale
     constraint FK_AuctionSale_ConditionID foreign key (ConiditonID) references ConditionStatus(ConditionID),
     GSTID integer,
     constraint FK_AuctionSale_GSTID foreign key (GSTID) references GST(GSTID),
-    GST double,
     Total double, 
     saledate date,
     Notes text
@@ -682,7 +679,7 @@ BEGIN
 END //
 
 drop function if exists sp_createAuction // 
-CREATE FUNCTION `sp_createAuction`(pAuctionDate DATE, pAuctionTotal Double, pSurcharges Double, pCashCharges double, pChequeCharges double, pCreditCardCharges double, pAuctioneerFirstName text, pAuctioneerLastName text) RETURNS int
+CREATE FUNCTION `sp_createAuction`(pAuctionDate DATE, pAuctionTotal Double, pSurcharges Double, pCashCharges double, pChequeCharges double, pCreditCardCharges double) RETURNS int
 begin
 	INSERT INTO auction
 		(AuctionDate,
@@ -690,9 +687,7 @@ begin
 		Surcharges,
 		CashCharges,
 		ChequeCharges,
-		CreditCardCharges,
-		AuctioneerFirstName,
-		AuctioneerLastName)
+		CreditCardCharges)
 	VALUES
 		(
         pAuctionDate,
@@ -700,9 +695,7 @@ begin
 		pSurcharges,
 		pCashCharges,
 		pChequeCharges,
-		pCreditCardCharges,
-		pAuctioneerFirstName,
-		pAuctioneerLastName
+		pCreditCardCharges
 		);
 
 return LAST_INSERT_ID()  ; 
@@ -776,7 +769,6 @@ create function ADD_AUCTION_SALE(
 	`N_Deposit` double,
 	`N_ConiditonID` int(11),
 	`N_GSTID` int(11),
-	`N_GST` double,
 	`N_Total` double,
 	`N_saledate` date,
 	`N_Notes` text) returns int
@@ -792,9 +784,9 @@ INSERT INTO `gha`.`auctionsale`
 `Deposit`,
 `ConiditonID`,
 `GSTID`,
-`GST`,
 `Total`,
 `saledate`,
+
 `Notes`)
 VALUES
 (`N_AuctionID`,
@@ -806,7 +798,6 @@ VALUES
 `N_Deposit`,
 `N_ConiditonID`,
 `N_GSTID`,
-`N_GST`,
 `N_Total`,
 `N_saledate`,
 `N_Notes`
@@ -828,7 +819,6 @@ create procedure UPDATE_AUCTION_SALE(
 	`N_Deposit` double,
 	`N_ConiditonID` int(11),
 	`N_GSTID` int(11),
-	`N_GST` double,
 	`N_Total` double,
 	`N_saledate` date,
 	`N_Notes` text)
@@ -845,7 +835,6 @@ SET
 `Deposit` = N_Deposit,
 `ConiditonID` = N_ConiditonID,
 `GSTID` = N_GSTID,
-`GST` = N_GST,
 `Total` = N_Total,
 `saledate` = N_saledate,
 `Notes` = N_Notes
@@ -909,8 +898,8 @@ create procedure DEL_AUCTION_SALE(N_AuctionSaleID integer)
 	WHERE AuctionSaleID = N_AuctionSaleID;
 	END //
 
-drop procedure if exists GET_PAYMENTTYPE //
-create procedure GET_PAYMENTTYPE()
+drop procedure if exists GET_PAYMENTTYPES //
+create procedure GET_PAYMENTTYPES()
 BEGIN	
 	Select PaymentTypeID, PaymentDescription
 	FROM PaymentType;
