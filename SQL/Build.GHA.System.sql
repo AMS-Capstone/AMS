@@ -53,7 +53,7 @@ Create Table ConditionStatus
 (
 	ConditionID integer primary key AUTO_INCREMENT,
     ConditionCode tinytext,
-    CondidtionDescription text
+    ConditionDescription text
 );
 
 -- Create Table FeeType
@@ -305,7 +305,7 @@ create procedure sp_createConditionStatus
 
 BEGIN
 	
-	INSERT INTO ConditionStatus (ConditionCode,CondidtionDescription, status)
+	INSERT INTO ConditionStatus (ConditionCode,ConditionDescription, status)
 	VALUES (pConditionCode, pConditionDescription, pStatus);
 
 END//
@@ -315,7 +315,7 @@ create procedure sp_viewConditionStatus()
 
 BEGIN
 	
-	Select ConditionId,CONCAT( ConditionCode , ' - ' , CondidtionDescription) as Description, status
+	Select ConditionId,CONCAT( ConditionCode , ' - ' , ConditionDescription) as Description, status
 	FROM ConditionStatus;
 
 END//
@@ -328,7 +328,7 @@ BEGIN
 	UPDATE ConditionStatus
 	SET
 	ConditionCode = pConditionCode,
-	CondidtionDescription = pConditionDescription,
+	ConditionDescription = pConditionDescription,
     status = pStatus 
 	WHERE ConditionID = pConditionId;
 END//
@@ -411,7 +411,7 @@ END//
 drop procedure if exists sp_getConditionStatusByID //
 create procedure sp_getConditionStatusByID(IN pConditionID integer)
 BEGIN
-	Select ConditionCode, CondidtionDescription, Status
+	Select ConditionCode, ConditionDescription, Status
     FROM conditionstatus
     where ConditionID = pConditionID;
 END//
