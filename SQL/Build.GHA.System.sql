@@ -5,6 +5,9 @@
 -- [3] Load Tables With Data
 -- [4] Create Prod
 
+-- Disabling foreign keys
+SET FOREIGN_KEY_CHECKS=0;
+
 -- [1][1]				[1][1] --
 -- [1][1]				[1][1] --
 -- [1][1]  DROP TABLES 	[1][1] --
@@ -209,6 +212,9 @@ Create Table VehiclePictures
      VehicleID integer, 
      constraint FK_VehiclePictures_VehicleID foreign key (VehicleID) references Vehicle(VehicleID) 
  ); 
+
+-- Enabling foreign keys
+SET FOREIGN_KEY_CHECKS=1;
 
 -- [3][3]						[3][3] --
 -- [3][3]						[3][3] --
