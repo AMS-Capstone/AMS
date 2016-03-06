@@ -103,7 +103,6 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AuctionListing.aspx" />
     <Content Include="AuctionMain.aspx" />
     <Content Include="Buyers.aspx" />
     <Content Include="Content\bootstrap.css" />
@@ -115,6 +114,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <None Include="Properties\PublishProfiles\AMS.pubxml" />
+    <None Include="Properties\PublishProfiles\ASP Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\Google VM Publish.pubxml" />
     <None Include="Properties\PublishProfiles\IIS.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -185,13 +185,6 @@
     <Compile Include="App_Code\DAL\SellerDAL.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="AuctionListing.aspx.cs">
-      <DependentUpon>AuctionListing.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="AuctionListing.aspx.designer.cs">
-      <DependentUpon>AuctionListing.aspx</DependentUpon>
-    </Compile>
     <Compile Include="AuctionMain.aspx.cs">
       <DependentUpon>AuctionMain.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
