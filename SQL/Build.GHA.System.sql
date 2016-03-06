@@ -435,8 +435,8 @@ END//
 
 -- Buyers Stored Procedures
 
-DROP FUNCTION IF EXISTS ADD_BUYER //
-Create FUNCTION ADD_BUYER (
+DROP FUNCTION IF EXISTS sp_createBuyer //
+Create FUNCTION sp_createBuyer (
 	N_BuyerFirstName text,
 	N_BuyerLastName text,
     N_BuyerAddress text,
@@ -480,8 +480,8 @@ VALUES
     ;
 end //
 
-drop procedure if exists UPDATE_BUYER //
-create procedure UPDATE_BUYER(
+drop procedure if exists sp_updateBuyer //
+create procedure sp_updateBuyer(
 	N_BuyerID integer,
 	N_BuyerFirstName text,
 	N_BuyerLastName text,
@@ -509,8 +509,8 @@ begin
 		WHERE `BuyerID` = N_BuyerID;
 end //
 
-drop procedure if exists RESET_BUYER_BIDNUMS //
-create procedure RESET_BUYER_BIDNUMS()
+drop procedure if exists RESET_BuyerBidnums //
+create procedure RESET_BuyerBidnums()
 BEGIN
 UPDATE `buyer`
 SET
@@ -518,8 +518,8 @@ SET
 WHERE Permanent = FALSE; 
 END //
 
-drop procedure if exists GET_BUYERS //
-create procedure GET_BUYERS()
+drop procedure if exists sp_viewBuyers //
+create procedure sp_viewBuyers()
 BEGIN
 SELECT
 BuyerID,
@@ -540,8 +540,8 @@ END //
 
 -- Sellers Stored procedures 
 
-DROP FUNCTION IF EXISTS ADD_SELLER //
-Create FUNCTION ADD_SELLER(N_SellerCode text, 
+DROP FUNCTION IF EXISTS sp_createSeller //
+Create FUNCTION sp_createSeller(N_SellerCode text, 
 N_SellerName text, 
 N_SellerAddress text, 
 N_SellerCity text, 
@@ -589,8 +589,8 @@ begin
         
 end //
 
-drop procedure if exists UPDATE_SELLER //
-create procedure UPDATE_SELLER(
+drop procedure if exists sp_updateSeller //
+create procedure sp_updateSeller(
 N_SellerID integer, 
 N_SellerCode text, 
 N_SellerName text, 
@@ -626,22 +626,15 @@ BEGIN
 	WHERE `SellerID` = N_SellerID;
 	END //
 
-drop procedure if exists DEL_CON //
-create procedure DEL_CON(N_SellerID integer)
-	BEGIN
-	DELETE FROM CONS
-	WHERE SellerID = N_SellerID;
-	END //
-
-drop procedure if exists DEL_SELLER // 
-create procedure DEL_SELLER(N_SellerID integer)
+drop procedure if exists sp_deleteSeller // 
+create procedure sp_deleteSeller(N_SellerID integer)
 BEGIN
 DELETE FROM seller
 WHERE SellerID = N_SellerID;
 END //
 
-DROP PROCEDURE IF EXISTS GET_SELLERS //
-Create Procedure GET_SELLERS()
+DROP PROCEDURE IF EXISTS sp_viewSellers //
+Create Procedure sp_viewSellers()
 BEGIN
     SELECT
 SellerID,
@@ -656,7 +649,6 @@ SellerOtherPhone,
 SellerFax,
 ContactFirstName,
 ContactLastName,
--- SellerFileNumber 'SELLER_FILE#',
 SellerPrivate,
 GSTNumber
 FROM `seller`;
@@ -758,8 +750,8 @@ VALUES
 );
 END//
 
-drop function if exists ADD_AUCTION_SALE //
-create function ADD_AUCTION_SALE(
+drop function if exists sp_createAuctionSale //
+create function sp_createAuctionSale(
 	`N_AuctionID` int(11),
 	`N_VehicleID` int(11),
 	`N_BuyerID` int(11),
@@ -774,7 +766,7 @@ create function ADD_AUCTION_SALE(
 	`N_Notes` text) returns int
 
 BEGIN
-INSERT INTO `gha`.`auctionsale`
+INSERT INTO `auctionsale`
 (`AuctionID`,
 `VehicleID`,
 `BuyerID`,
@@ -807,8 +799,8 @@ RETURN LAST_INSERT_ID();
 END//
 
 DELIMITER //
-drop procedure if exists UPDATE_AUCTION_SALE //
-create procedure UPDATE_AUCTION_SALE(
+drop procedure if exists sp_updateAuctionSale //
+create procedure sp_updateAuctionSale(
 	`N_AuctionSaleID` int(11),
 	`N_AuctionID` int(11),
 	`N_VehicleID` int(11),
@@ -824,7 +816,7 @@ create procedure UPDATE_AUCTION_SALE(
 	`N_Notes` text)
 
 BEGIN
-UPDATE `gha`.`auctionsale`
+UPDATE `auctionsale`
 SET
 `AuctionID` = N_AuctionID,
 `VehicleID` = N_VehicleID,
@@ -841,25 +833,25 @@ SET
 WHERE `AuctionSaleID` = N_AuctionSaleID;
 END//
 
-drop procedure if exists DEL_AUCTION_SALE //
-create procedure DEL_AUCTION_SALE(N_AuctionSaleID integer)
+drop procedure if exists sp_deleteAuctionSale //
+create procedure sp_deleteAuctionSale(N_AuctionSaleID integer)
 	BEGIN
 	DELETE FROM AuctionSale
 	WHERE AuctionSaleID = N_AuctionSaleID;
 	END //
 
 delimiter //
-drop function if exists ADD_PAYMENT //
-create function ADD_PAYMENT(
-  `PaymentAmount` double,
-  `AuctionSaleID` int(11),
-  `PaymentTypeID` int(11),
-  `Surcharges` double,
-  `PaymentDate` datetime
+drop function if exists sp_createPayment //
+create function sp_createPayment(
+  `N_PaymentAmount` double,
+  `N_AuctionSaleID` int(11),
+  `N_PaymentTypeID` int(11),
+  `N_Surcharges` double,
+  `N_PaymentDate` datetime
 ) returns int
 
 BEGIN
-INSERT INTO `gha`.`payment`
+INSERT INTO `payment`
 (
 `PaymentAmount`,
 `AuctionSaleID`,
@@ -878,8 +870,8 @@ return LAST_INSERT_ID();
 END//
 
 delimiter //
-drop procedure if exists UPDATE_PAYMENT //
-create procedure UPDATE_PAYMENT(
+drop procedure if exists sp_updatePayment //
+create procedure sp_updatePayment(
  `N_PaymentID` int(11),
   `PaymentAmount` double,
   `AuctionSaleID` int(11),
@@ -888,7 +880,7 @@ create procedure UPDATE_PAYMENT(
   `PaymentDate` datetime
 )
 BEGIN
-UPDATE `gha`.`payment`
+UPDATE `payment`
 SET
 `PaymentAmount` = `N_PaymentAmount`,
 `AuctionSaleID` = `N_AuctionSaleID`,
@@ -898,27 +890,28 @@ SET
 WHERE `PaymentID` = `N_PaymentID`;
 END//
 
-drop procedure if exists GET_PAYMENTTYPES //
-create procedure GET_PAYMENTTYPES()
+drop procedure if exists sp_viewPaymentTypes //
+create procedure sp_viewPaymentTypes()
 BEGIN	
 	Select PaymentTypeID, PaymentDescription
 	FROM PaymentType;
 END//
 
 
-drop procedure if exists GET_ACTIVEGST //
-create procedure GET_ACTIVEGST()
+drop procedure if exists sp_getACTIVEGST //
+create procedure sp_getACTIVEGST()
 BEGIN	
 	Select GSTPercent
 	FROM gst
 	where GSTStatus = 1;
 END//
 
-drop procedure if exists GET_AUCTION_DATA //
-create procedure GET_AUCTION_DATA(N_AuctionID int(11))
+drop procedure if exists sp_getAuctionData //
+create procedure sp_getAuctionData(N_AuctionID int(11))
 BEGIN
-	SELECT 
-	`auctionsale`.`AuctionSaleID`,
+SELECT 
+	`seller`.`SellerCode`,
+    `seller`.`SellerID`,
     `auctionsale`.`AuctionSaleID`,
     `auctionsale`.`VehicleID`,
     `auctionsale`.`BuyerID`,
@@ -929,7 +922,13 @@ BEGIN
     `auctionsale`.`GSTID`,
     `auctionsale`.`Total`,
     `auctionsale`.`saledate`,
+	IF(SUM(`payment`.`PaymentAmount`) is null, 0.00, SUM(`payment`.`PaymentAmount`))  as 'Payments',
+	IF(SUM(`payment`.`Surcharges`) is null, 0.00, SUM(`payment`.`Surcharges`))  as 'Surcharges',
     `auctionsale`.`Notes`
-FROM `gha`.`auctionsale`
-WHERE `auctionsale`.`AuctionID` = N_AuctionID;
+FROM (`seller`, `vehicle`, `auctionsale`) left join `payment` on `payment`.`AuctionSaleID` = `auctionSale`.`AuctionSaleID`
+	and `auctionsale`.`VehicleID` = `vehicle`.`VehicleID`
+	and `payment`.`AuctionSaleID` = `auctionSale`.`AuctionSaleID`
+WHERE `auctionsale`.`AuctionID` = 1 
+    and `vehicle`.`SellerID` = `seller`.`SellerID`
+    ;
 END//
