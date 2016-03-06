@@ -160,7 +160,7 @@ Create Table AuctionSale
     GSTID integer,
     constraint FK_AuctionSale_GSTID foreign key (GSTID) references GST(GSTID),
     Total double, 
-    saledate date,
+    Saledate date,
     Notes text
 );
 
@@ -509,8 +509,8 @@ begin
 		WHERE `BuyerID` = N_BuyerID;
 end //
 
-drop procedure if exists RESET_BuyerBidnums //
-create procedure RESET_BuyerBidnums()
+drop procedure if exists sp_resetBuyerBidnums //
+create procedure sp_resetBuyerBidnums()
 BEGIN
 UPDATE `buyer`
 SET
@@ -762,7 +762,7 @@ create function sp_createAuctionSale(
 	`N_ConiditonID` int(11),
 	`N_GSTID` int(11),
 	`N_Total` double,
-	`N_saledate` date,
+	`N_Saledate` date,
 	`N_Notes` text) returns int
 
 BEGIN
@@ -777,7 +777,7 @@ INSERT INTO `auctionsale`
 `ConiditonID`,
 `GSTID`,
 `Total`,
-`saledate`,
+`Saledate`,
 
 `Notes`)
 VALUES
@@ -791,7 +791,7 @@ VALUES
 `N_ConiditonID`,
 `N_GSTID`,
 `N_Total`,
-`N_saledate`,
+`N_Saledate`,
 `N_Notes`
 );
 
@@ -812,7 +812,7 @@ create procedure sp_updateAuctionSale(
 	`N_ConiditonID` int(11),
 	`N_GSTID` int(11),
 	`N_Total` double,
-	`N_saledate` date,
+	`N_Saledate` date,
 	`N_Notes` text)
 
 BEGIN
@@ -828,7 +828,7 @@ SET
 `ConiditonID` = N_ConiditonID,
 `GSTID` = N_GSTID,
 `Total` = N_Total,
-`saledate` = N_saledate,
+`Saledate` = N_Saledate,
 `Notes` = N_Notes
 WHERE `AuctionSaleID` = N_AuctionSaleID;
 END//
@@ -898,8 +898,8 @@ BEGIN
 END//
 
 
-drop procedure if exists sp_getACTIVEGST //
-create procedure sp_getACTIVEGST()
+drop procedure if exists sp_getActiveGST //
+create procedure sp_getActiveGST()
 BEGIN	
 	Select GSTPercent
 	FROM gst
@@ -921,7 +921,7 @@ SELECT
     `auctionsale`.`ConiditonID`,
     `auctionsale`.`GSTID`,
     `auctionsale`.`Total`,
-    `auctionsale`.`saledate`,
+    `auctionsale`.`Saledate`,
 	IF(SUM(`payment`.`PaymentAmount`) is null, 0.00, SUM(`payment`.`PaymentAmount`))  as 'Payments',
 	IF(SUM(`payment`.`Surcharges`) is null, 0.00, SUM(`payment`.`Surcharges`))  as 'Surcharges',
     `auctionsale`.`Notes`

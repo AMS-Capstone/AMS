@@ -29,7 +29,7 @@ namespace AMS.App_Code
             try
             {
                 MySqlCommand cmd = new MySqlCommand();
-                cmd.CommandText = "GET_SELLERS";
+                cmd.CommandText = "sp_viewSellers";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Connection = conn;
                 da.SelectCommand = cmd;
@@ -47,7 +47,7 @@ namespace AMS.App_Code
             return ds;
         }
 
-        //Get all Sellers
+        //Create Seller
         public int CreateSeller(Seller seller)
         {
             int id = 0;
@@ -57,7 +57,7 @@ namespace AMS.App_Code
             try
             {
                 MySqlCommand cmd = new MySqlCommand();
-                cmd.CommandText = "ADD_SELLER";
+                cmd.CommandText = "sp_createSeller";
                 cmd.Parameters.Add(new MySqlParameter("@N_SellerCode", seller.SellerCode));
                 cmd.Parameters.Add(new MySqlParameter("@N_SellerName", seller.SellerName));
                 cmd.Parameters.Add(new MySqlParameter("@N_SellerAddress", seller.SellerAddress));
@@ -96,17 +96,16 @@ namespace AMS.App_Code
             return id;
         }
 
-        //Get all Sellers
-        public int UpdateSeller(Seller seller)
+        //Update Seller
+        public void UpdateSeller(Seller seller)
         {
-            int id = 0;
             MySqlConnection conn = new MySqlConnection(connectionString);
             conn.Open();
 
             try
             {
                 MySqlCommand cmd = new MySqlCommand();
-                cmd.CommandText = "UPDATE_SELLER";
+                cmd.CommandText = "sp_updateSeller";
                 cmd.Parameters.Add(new MySqlParameter("@N_SellerID", seller.SellerID));
                 cmd.Parameters.Add(new MySqlParameter("@N_SellerCode", seller.SellerCode));
                 cmd.Parameters.Add(new MySqlParameter("@N_SellerName", seller.SellerName));
@@ -137,7 +136,6 @@ namespace AMS.App_Code
                 //Tie the loose ends here
                 conn.Close();
             }
-            return id;
         }
     }
 }
