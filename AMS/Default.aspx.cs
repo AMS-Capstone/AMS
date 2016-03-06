@@ -4,25 +4,44 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
+using System.Data;
+using AMS.App_Code;
 
 namespace AMS
 {
     public partial class _Default : Page
     {
-        protected void Page_Load(object sender, EventArgs e)
+
+        protected void Page_load(object sender, EventArgs e)
         {
+
+            AuctionDAL auctionService = new AMS.App_Code.AuctionDAL();
+
+            DataSet auctions = auctionService.findAuctions();
+            if (auctions.Tables[0].Rows.Count > 0)
+            {
+
+                LBAuctionList.DataSource = auctions;
+                LBAuctionList.DataTextField = "AuctionDate";
+                LBAuctionList.DataValueField = "AuctionId";
+                LBAuctionList.DataBind();
+
+            }
+
+            DataSet auctionYear = auctionService.getAuctionYears();
+            if (auctionYear.Tables[0].Rows.Count > 0)
+            {
+
+                DDLAuctionYear.DataSource = auctionYear;
+                DDLAuctionYear.DataTextField = "Year";
+                DDLAuctionYear.DataValueField = "Year";
+                DDLAuctionYear.DataBind();
+
+            }
 
         }
 
-        protected void LBAuctionList_SelectedIndexChanged(object sender, EventArgs e)
-        {
 
         }
-
-        protected void DDLAuctionYear_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-    }
+ 
 }

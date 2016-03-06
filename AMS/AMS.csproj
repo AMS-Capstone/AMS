@@ -108,6 +108,7 @@
     <Content Include="Buyers.aspx" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Default.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="packages.config" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -146,7 +147,6 @@
     <Content Include="Scripts\WebForms\WebParts.js" />
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Sellers.aspx" />
@@ -168,6 +168,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <Content Include="App_Code\DAL\AuctionDAL.cs" />
     <Content Include="App_Code\SuppportClasses\AuctionSale.cs" />
     <Content Include="App_Code\SuppportClasses\Payment.cs" />
@@ -180,6 +181,17 @@
     <Compile Include="App_Code\DAL\DataAction.cs" />
     <Compile Include="App_Code\DAL\BuyerDAL.cs" />
     <Compile Include="App_Code\DAL\SellerDAL.cs" />
+=======
+    <Compile Include="App_Code\AuctionDAL.cs" />
+    <Compile Include="App_Code\FeeType.cs" />
+    <Compile Include="App_Code\GST.cs" />
+    <Compile Include="App_Code\PaymentType.cs" />
+    <Compile Include="App_Code\ConditionStatus.cs" />
+    <Compile Include="App_Code\Seller.cs" />
+    <Compile Include="App_Code\Buyer.cs" />
+    <Compile Include="App_Code\DataAction.cs" />
+    <Compile Include="App_Code\BuyerDAL.cs" />
+>>>>>>> duaneb
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="AuctionListing.aspx.cs">
