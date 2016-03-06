@@ -197,7 +197,7 @@ namespace AMS
             try
             {
                 //Call DAL
-                int id = buyerService.UpdateBuyer(buyer);
+                buyerService.UpdateBuyer(buyer);
             }
             catch (Exception ex)
             {

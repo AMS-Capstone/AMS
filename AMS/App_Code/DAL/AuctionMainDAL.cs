@@ -7,11 +7,11 @@ using System.Data;
 
 namespace AMS.App_Code.DAL
 {
-    public class AuctionDAL
+    public class AuctionMainDAL
     {
         private string connectionString = "";
 
-        public AuctionDAL()
+        public AuctionMainDAL()
         {
             if (System.Configuration.ConfigurationManager.ConnectionStrings.Count > 0)
             {
