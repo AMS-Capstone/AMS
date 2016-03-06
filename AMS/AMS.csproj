@@ -169,7 +169,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Code\DAL\AuctionDAL.cs" />
+    <Compile Include="App_Code\DAL\AuctionDAL.cs" />
     <Content Include="App_Code\SuppportClasses\AuctionSale.cs" />
     <Content Include="App_Code\SuppportClasses\Payment.cs" />
     <Compile Include="App_Code\SuppportClasses\FeeType.cs" />
