@@ -114,6 +114,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <None Include="Properties\PublishProfiles\AMS.pubxml" />
+    <None Include="Properties\PublishProfiles\Google VM Publish.pubxml" />
     <None Include="Properties\PublishProfiles\IIS.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -168,6 +169,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Code\DAL\AuctionDAL.cs" />
+    <Content Include="App_Code\SuppportClasses\AuctionSale.cs" />
+    <Content Include="App_Code\SuppportClasses\Payment.cs" />
     <Compile Include="App_Code\SuppportClasses\FeeType.cs" />
     <Compile Include="App_Code\SuppportClasses\GST.cs" />
     <Compile Include="App_Code\SuppportClasses\PaymentType.cs" />

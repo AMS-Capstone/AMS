@@ -7,6 +7,13 @@ namespace AMS.App_Code
 {
     public class AuctionSale
     {
+        private int auctionSaleID;
+
+        public int AuctionSaleID
+        {
+            get { return auctionSaleID; }
+            set { auctionSaleID = value; }
+        }
         private int auctionID;
 
         public int AuctionID

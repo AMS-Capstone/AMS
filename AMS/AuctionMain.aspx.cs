@@ -11,7 +11,7 @@ namespace AMS
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            int auctionID = Convert.ToInt16(Request["AuctionID"]);
         }
 
         protected void BTNTotals_Click(object sender, EventArgs e)
