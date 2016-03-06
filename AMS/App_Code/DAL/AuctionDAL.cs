@@ -29,7 +29,7 @@ namespace AMS.App_Code
              try
              {
                  MySqlCommand cmd = new MySqlCommand();
-                 cmd.CommandText = "sp_findAuctions";
+                 cmd.CommandText = "sp_findAuction";
                  //cmd.Parameters.Add(new MySqlParameter("@pAuctionYear", MySqlDbType.String, 4));
                  //   MySqlParameter returnParameter = new MySqlParameter();
                 //cmd.Parameters.Add(returnParameter);

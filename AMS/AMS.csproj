@@ -172,6 +172,8 @@
     <Compile Include="App_Code\DAL\AuctionDAL.cs" />
     <Content Include="App_Code\SuppportClasses\AuctionSale.cs" />
     <Content Include="App_Code\SuppportClasses\Payment.cs" />
+    <Content Include="App_Code\DAL\AuctionMainDAL.cs" />
+    <Content Include="App_Code\SuppportClasses\Auction.cs" />
     <Compile Include="App_Code\SuppportClasses\FeeType.cs" />
     <Compile Include="App_Code\SuppportClasses\GST.cs" />
     <Compile Include="App_Code\SuppportClasses\PaymentType.cs" />

@@ -663,7 +663,7 @@ END //
 
 -- Auction Queries
 drop procedure if exists sp_findAuction //
-CREATE PROCEDURE `sp_FindAuction`(IN pAuctionYear text)
+CREATE PROCEDURE `sp_findAuction`(IN pAuctionYear text)
 BEGIN
 	select date_format(auctiondate, '%M %e %Y') As AuctionDate, AuctionID, AuctionTotal 
     from AUCTION
