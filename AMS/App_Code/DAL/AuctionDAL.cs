@@ -20,7 +20,7 @@ namespace AMS.App_Code
             }
         }
 
-         public DataSet findAuctions()
+         public DataSet findAuctions(String auctionYear)
          {
              DataSet ds = new DataSet("Auctions");
              MySqlConnection conn = new MySqlConnection(connectionString);
@@ -28,16 +28,13 @@ namespace AMS.App_Code
 
              try
              {
-                 MySqlCommand cmd = new MySqlCommand();
-                 cmd.CommandText = "sp_findAuction";
-                 //cmd.Parameters.Add(new MySqlParameter("@pAuctionYear", MySqlDbType.String, 4));
-                 //   MySqlParameter returnParameter = new MySqlParameter();
-                //cmd.Parameters.Add(returnParameter);
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.CommandText = "sp_findAuction";
+                cmd.Parameters.Add(new MySqlParameter("@pAuctionYear", auctionYear));
                 cmd.CommandType = CommandType.StoredProcedure;
-                 cmd.Connection = conn;
-                 da.SelectCommand = cmd;
-                 da.Fill(ds, "Auctions");
-
+                cmd.Connection = conn;
+                da.SelectCommand = cmd;
+                da.Fill(ds, "Auctions");
             }
              catch (Exception ex)
              {

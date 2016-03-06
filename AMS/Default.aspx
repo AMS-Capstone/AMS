@@ -9,6 +9,8 @@
             <br />
          <asp:ListBox ID="LBAuctionList" runat="server">
          </asp:ListBox>
+        <br />
+        <asp:Button ID="btnSelectAuction" runat="server" Text="Go to Selected Auction" />
     </div>
 
     

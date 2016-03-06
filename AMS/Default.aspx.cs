@@ -17,16 +17,6 @@ namespace AMS
 
             AuctionDAL auctionService = new AMS.App_Code.AuctionDAL();
 
-            DataSet auctions = auctionService.findAuctions();
-            if (auctions.Tables[0].Rows.Count > 0)
-            {
-
-                LBAuctionList.DataSource = auctions;
-                LBAuctionList.DataTextField = "AuctionDate";
-                LBAuctionList.DataValueField = "AuctionId";
-                LBAuctionList.DataBind();
-
-            }
 
             DataSet auctionYear = auctionService.getAuctionYears();
             if (auctionYear.Tables[0].Rows.Count > 0)
@@ -39,6 +29,16 @@ namespace AMS
 
             }
 
+            DataSet auctions = auctionService.findAuctions(DDLAuctionYear.SelectedValue);
+            if (auctions.Tables[0].Rows.Count > 0)
+            {
+
+                LBAuctionList.DataSource = auctions;
+                LBAuctionList.DataTextField = "AuctionDate";
+                LBAuctionList.DataValueField = "AuctionId";
+                LBAuctionList.DataBind();
+
+            }
         }
 
 
