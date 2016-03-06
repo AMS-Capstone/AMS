@@ -17,7 +17,7 @@ SET FOREIGN_KEY_CHECKS=0;
 
 drop table if exists VehiclePictures;
 drop table if exists Payment;
-drop table if exists VehicleFeeId;
+drop table if exists VehicleFee;
 drop table if exists VehicleCondnReqs;
 drop table if exists AuctionSale;
 drop table if exists Vehicle;
@@ -179,14 +179,14 @@ Create Table VehicleCondnReqs
     ForSale boolean
 );
 
--- Create table VehicleFeeID
-Create Table VehicleFeeID
+-- Create table VehicleFee
+Create Table VehicleFee
 (
 	VehicleFeeID integer primary key AUTO_INCREMENT,
     VehicleConReqID integer,
     constraint FK_VehicleConReqID foreign key (VehicleConReqID) references VehicleCondnReqs(VehicleConReqID),
     FeeID integer,
-    constraint FK_VehicleFeeID_FeeID foreign key(FeeID) references FeeType(FeeID),
+    constraint FK_VehicleFee_FeeID foreign key(FeeID) references FeeType(FeeID),
     VehiclFeeCost double
 );
 
@@ -841,6 +841,13 @@ SET
 WHERE `AuctionSaleID` = N_AuctionSaleID;
 END//
 
+drop procedure if exists DEL_AUCTION_SALE //
+create procedure DEL_AUCTION_SALE(N_AuctionSaleID integer)
+	BEGIN
+	DELETE FROM AuctionSale
+	WHERE AuctionSaleID = N_AuctionSaleID;
+	END //
+
 delimiter //
 drop function if exists ADD_PAYMENT //
 create function ADD_PAYMENT(
@@ -890,13 +897,6 @@ SET
 `PaymentDate` = `N_PaymentDate`
 WHERE `PaymentID` = `N_PaymentID`;
 END//
-
-drop procedure if exists DEL_AUCTION_SALE //
-create procedure DEL_AUCTION_SALE(N_AuctionSaleID integer)
-	BEGIN
-	DELETE FROM AuctionSale
-	WHERE AuctionSaleID = N_AuctionSaleID;
-	END //
 
 drop procedure if exists GET_PAYMENTTYPES //
 create procedure GET_PAYMENTTYPES()
