@@ -266,8 +266,8 @@ INSERT INTO `gst` (`GSTPercent`, `GSTStatus`) VALUES (5.0, 1);
 -- Settings Management STORED PROCEDURES
 
 delimiter //
-drop procedure if exists sp_createGSTEntry //
-create procedure sp_createGSTEntry
+DROP PROCEDURE IF EXISTS sp_createGSTEntry //
+CREATE PROCEDURE sp_createGSTEntry
 ( pGstPercent integer,pGSTStatus boolean)
 
 BEGIN
@@ -277,8 +277,8 @@ BEGIN
 
 END//
 
-drop procedure if exists sp_viewGSTEntries //
-create procedure sp_viewGSTEntries()
+DROP PROCEDURE IF EXISTS sp_viewGSTEntries //
+CREATE PROCEDURE sp_viewGSTEntries()
 
 BEGIN
 	
@@ -287,8 +287,8 @@ BEGIN
 
 END//
 
-drop procedure if exists sp_updateGSTEntry //
-create procedure sp_updateGSTEntry(IN pGstID integer, IN pGSTPercent integer, pGSTStatus boolean)
+DROP PROCEDURE IF EXISTS sp_updateGSTEntry //
+CREATE PROCEDURE sp_updateGSTEntry(IN pGstID integer, IN pGSTPercent integer, pGSTStatus boolean)
 
 BEGIN
 
@@ -299,8 +299,8 @@ BEGIN
 	WHERE GSTID = pGstID;
 END//
 
-drop procedure if exists sp_createConditionStatus //
-create procedure sp_createConditionStatus
+DROP PROCEDURE IF EXISTS sp_createConditionStatus //
+CREATE PROCEDURE sp_createConditionStatus
 (IN pConditionCode tinyText, IN pConditionDescription text, IN pStatus boolean)
 
 BEGIN
@@ -310,8 +310,8 @@ BEGIN
 
 END//
 
-drop procedure if exists sp_viewConditionStatus //
-create procedure sp_viewConditionStatus()
+DROP PROCEDURE IF EXISTS sp_viewConditionStatus //
+CREATE PROCEDURE sp_viewConditionStatus()
 
 BEGIN
 	
@@ -320,8 +320,8 @@ BEGIN
 
 END//
 
-drop procedure if exists sp_updateConditionStatus //
-create procedure sp_updateConditionStatus(IN pConditionId integer, IN pConditionDescription text, pConditionCode tinyText, IN pStatus boolean)
+DROP PROCEDURE IF EXISTS sp_updateConditionStatus //
+CREATE PROCEDURE sp_updateConditionStatus(IN pConditionId integer, IN pConditionDescription text, pConditionCode tinyText, IN pStatus boolean)
 
 BEGIN
 
@@ -333,8 +333,8 @@ BEGIN
 	WHERE ConditionID = pConditionId;
 END//
 
-drop procedure if exists sp_createFeeType //
-create procedure sp_createFeeType
+DROP PROCEDURE IF EXISTS sp_createFeeType //
+CREATE PROCEDURE sp_createFeeType
 (IN pFeeCost double, IN pFeeType text, in pStatus boolean)
 
 BEGIN
@@ -344,18 +344,18 @@ BEGIN
 
 END//
 
-drop procedure if exists sp_viewFeeTypes //
-create procedure sp_viewFeeTypes()
+DROP PROCEDURE IF EXISTS sp_viewFeeTypes //
+CREATE PROCEDURE sp_viewFeeTypes()
 
 BEGIN
 	
-	Select FeeId, CONCAT( FeeCost, ' - ' , FeeType) as description
+	Select FeeId, CONCAT(FeeType, " - ", if(FeeCost is null, 0.00, FeeCost)) as description
 	FROM FeeType;
 
 END//
 
-drop procedure if exists sp_updateFeeType //
-create procedure sp_updateFeeType(IN pFeeId integer, IN pFeeType text, pFeeCost double)
+DROP PROCEDURE IF EXISTS sp_updateFeeType //
+CREATE PROCEDURE sp_updateFeeType(IN pFeeId integer, IN pFeeType text, pFeeCost double)
 
 BEGIN
 
@@ -367,8 +367,8 @@ BEGIN
 	WHERE FeeId = pFeeId;
 END//
 
-drop procedure if exists sp_createPaymentType //	
-create procedure sp_createPaymentType
+DROP PROCEDURE IF EXISTS sp_createPaymentType //	
+CREATE PROCEDURE sp_createPaymentType
 (IN pPaymentDescription text)
 
 BEGIN
@@ -378,8 +378,8 @@ BEGIN
 
 END //
 
-drop procedure if exists sp_viewPaymentType //
-create procedure sp_viewPaymentType()
+DROP PROCEDURE IF EXISTS sp_viewPaymentType //
+CREATE PROCEDURE sp_viewPaymentType()
 
 BEGIN
 	
@@ -388,8 +388,8 @@ BEGIN
 
 END//
 
-drop procedure if exists sp_updatePaymentType //
-create procedure sp_updatePaymentType(IN pPaymentId integer, IN pPaymentDescription text)
+DROP PROCEDURE IF EXISTS sp_updatePaymentType //
+CREATE PROCEDURE sp_updatePaymentType(IN pPaymentId integer, IN pPaymentDescription text)
 
 BEGIN
 
@@ -399,32 +399,32 @@ BEGIN
 	WHERE PaymentTypeId = PaymentTypeId;
 END //
 
-drop procedure if exists sp_getGSTByID //
-create procedure sp_getGSTByID(IN pGstID integer)
+DROP PROCEDURE IF EXISTS sp_getGSTByID //
+CREATE PROCEDURE sp_getGSTByID(IN pGstID integer)
 BEGIN
 	Select GSTPercent, GSTStatus
     FROM GST
     where GSTID = pGstID;
 END//
 
-drop procedure if exists sp_getConditionStatusByID //
-create procedure sp_getConditionStatusByID(IN pConditionID integer)
+DROP PROCEDURE IF EXISTS sp_getConditionStatusByID //
+CREATE PROCEDURE sp_getConditionStatusByID(IN pConditionID integer)
 BEGIN
 	Select ConditionCode, ConditionDescription
     FROM conditionstatus
     where ConditionID = pConditionID;
 END//
 
-drop procedure if exists sp_getFeeTypeByID //
-create procedure sp_getFeeTypeByID(IN pFeeID integer)
+DROP PROCEDURE IF EXISTS sp_getFeeTypeByID //
+CREATE PROCEDURE sp_getFeeTypeByID(IN pFeeID integer)
 BEGIN
 	Select FeeCost, FeeType
     FROM feetype
     where FeeID = pFeeID;
 END//
 
-drop procedure if exists sp_getPaymentTypeByID //
-create procedure sp_getPaymentTypeByID(IN pPaymentTypeID integer)
+DROP PROCEDURE IF EXISTS sp_getPaymentTypeByID //
+CREATE PROCEDURE sp_getPaymentTypeByID(IN pPaymentTypeID integer)
 BEGIN
 	Select PaymentDescription
     FROM paymenttype
@@ -479,8 +479,8 @@ VALUES
     ;
 end //
 
-drop procedure if exists sp_updateBuyer //
-create procedure sp_updateBuyer(
+DROP PROCEDURE IF EXISTS sp_updateBuyer //
+CREATE PROCEDURE sp_updateBuyer(
 	N_BuyerID integer,
 	N_BuyerFirstName text,
 	N_BuyerLastName text,
@@ -509,8 +509,8 @@ begin
 		WHERE `BuyerID` = N_BuyerID;
 end //
 
-drop procedure if exists sp_resetBuyerBidnums //
-create procedure sp_resetBuyerBidnums()
+DROP PROCEDURE IF EXISTS sp_resetBuyerBidnums //
+CREATE PROCEDURE sp_resetBuyerBidnums()
 BEGIN
 UPDATE `buyer`
 SET
@@ -518,8 +518,8 @@ SET
 WHERE Permanent = FALSE; 
 END //
 
-drop procedure if exists sp_viewBuyers //
-create procedure sp_viewBuyers()
+DROP PROCEDURE IF EXISTS sp_viewBuyers //
+CREATE PROCEDURE sp_viewBuyers()
 BEGIN
 SELECT
 BuyerID,
@@ -589,8 +589,8 @@ begin
         
 end //
 
-drop procedure if exists sp_updateSeller //
-create procedure sp_updateSeller(
+DROP PROCEDURE IF EXISTS sp_updateSeller //
+CREATE PROCEDURE sp_updateSeller(
 N_SellerID integer, 
 N_SellerCode text, 
 N_SellerName text, 
@@ -626,15 +626,15 @@ BEGIN
 	WHERE `SellerID` = N_SellerID;
 	END //
 
-drop procedure if exists sp_deleteSeller // 
-create procedure sp_deleteSeller(N_SellerID integer)
+DROP PROCEDURE IF EXISTS sp_deleteSeller // 
+CREATE PROCEDURE sp_deleteSeller(N_SellerID integer)
 BEGIN
 DELETE FROM seller
 WHERE SellerID = N_SellerID;
 END //
 
 DROP PROCEDURE IF EXISTS sp_viewSellers //
-Create Procedure sp_viewSellers()
+CREATE PROCEDURE sp_viewSellers()
 BEGIN
     SELECT
 SellerID,
@@ -654,15 +654,15 @@ GSTNumber
 FROM `seller`;
 END //
 
--- drop procedure if exists sp_getSellers //
--- create procedure sp_getSellers()
+-- DROP PROCEDURE IF EXISTS sp_getSellers //
+-- CREATE PROCEDURE sp_getSellers()
 -- BEGIN
 -- Select SellerID, SellerName
 --   FROM seller;
 -- END//
 
 -- Auction Queries
-drop procedure if exists sp_findAuction //
+DROP PROCEDURE IF EXISTS sp_findAuction //
 CREATE PROCEDURE `sp_findAuction`(IN pAuctionYear text)
 BEGIN
 	select date_format(auctiondate, '%M %e %Y') As AuctionDate, AuctionID, AuctionTotal 
@@ -694,7 +694,7 @@ return LAST_INSERT_ID()  ;
 
 end //
 
-drop procedure if exists sp_getAuctionYears //
+DROP PROCEDURE IF EXISTS sp_getAuctionYears //
 CREATE PROCEDURE `sp_getAuctionYears`()
 BEGIN
 	select distinct Year(AuctionDate) As Year
@@ -704,8 +704,8 @@ END //
 
 -- Vehicle Screen queries
 
-drop procedure if exists sp_createVehicle //
-create procedure sp_createVehicle(In pLotNumber text, in pYear text, in pMake text, in pModel text, in pVin text, in pColor text, in pMileage integer, in pUnits text, in pProvince text, in pTransmission text, in pSellerID int, in pOptions text, out vehicleID integer)
+DROP PROCEDURE IF EXISTS sp_createVehicle //
+CREATE PROCEDURE sp_createVehicle(In pLotNumber text, in pYear text, in pMake text, in pModel text, in pVin text, in pColor text, in pMileage integer, in pUnits text, in pProvince text, in pTransmission text, in pSellerID int, in pOptions text, out vehicleID integer)
 BEGIN
 INSERT INTO  `vehicle`
 (
@@ -739,8 +739,8 @@ pSellerID);
 SELECT LAST_INSERT_ID();
 END//
 
-drop procedure if exists sp_createVehiclePicture //
-create procedure sp_createVehiclePicture(in pImage blob, pVehicleID int)
+DROP PROCEDURE IF EXISTS sp_createVehiclePicture //
+CREATE PROCEDURE sp_createVehiclePicture(in pImage blob, pVehicleID int)
 begin
 INSERT INTO vehiclepictures(Image, VehicleID)
 VALUES
@@ -799,8 +799,8 @@ RETURN LAST_INSERT_ID();
 END//
 
 DELIMITER //
-drop procedure if exists sp_updateAuctionSale //
-create procedure sp_updateAuctionSale(
+DROP PROCEDURE IF EXISTS sp_updateAuctionSale //
+CREATE PROCEDURE sp_updateAuctionSale(
 	`N_AuctionSaleID` int(11),
 	`N_AuctionID` int(11),
 	`N_VehicleID` int(11),
@@ -833,8 +833,8 @@ SET
 WHERE `AuctionSaleID` = N_AuctionSaleID;
 END//
 
-drop procedure if exists sp_deleteAuctionSale //
-create procedure sp_deleteAuctionSale(N_AuctionSaleID integer)
+DROP PROCEDURE IF EXISTS sp_deleteAuctionSale //
+CREATE PROCEDURE sp_deleteAuctionSale(N_AuctionSaleID integer)
 	BEGIN
 	DELETE FROM AuctionSale
 	WHERE AuctionSaleID = N_AuctionSaleID;
@@ -870,8 +870,8 @@ return LAST_INSERT_ID();
 END//
 
 delimiter //
-drop procedure if exists sp_updatePayment //
-create procedure sp_updatePayment(
+DROP PROCEDURE IF EXISTS sp_updatePayment //
+CREATE PROCEDURE sp_updatePayment(
  `N_PaymentID` int(11),
   `PaymentAmount` double,
   `AuctionSaleID` int(11),
@@ -890,24 +890,24 @@ SET
 WHERE `PaymentID` = `N_PaymentID`;
 END//
 
-drop procedure if exists sp_viewPaymentTypes //
-create procedure sp_viewPaymentTypes()
+DROP PROCEDURE IF EXISTS sp_viewPaymentTypes //
+CREATE PROCEDURE sp_viewPaymentTypes()
 BEGIN	
 	Select PaymentTypeID, PaymentDescription
 	FROM PaymentType;
 END//
 
 
-drop procedure if exists sp_getActiveGST //
-create procedure sp_getActiveGST()
+DROP PROCEDURE IF EXISTS sp_getActiveGST //
+CREATE PROCEDURE sp_getActiveGST()
 BEGIN	
 	Select GSTPercent
 	FROM gst
 	where GSTStatus = 1;
 END//
 
-drop procedure if exists sp_getAuctionData //
-create procedure sp_getAuctionData(N_AuctionID int(11))
+DROP PROCEDURE IF EXISTS sp_getAuctionData //
+CREATE PROCEDURE sp_getAuctionData(N_AuctionID int(11))
 BEGIN
 SELECT 
 	`seller`.`SellerCode`,
@@ -931,4 +931,47 @@ FROM (`seller`, `vehicle`, `auctionsale`) left join `payment` on `payment`.`Auct
 WHERE `auctionsale`.`AuctionID` = 1 
     and `vehicle`.`SellerID` = `seller`.`SellerID`
     ;
+END//
+
+DROP PROCEDURE IF EXISTS sp_viewVehiclePictures //
+CREATE PROCEDURE sp_viewVehiclePictures(N_VehicleID int)
+BEGIN
+    SELECT `vehiclepictures`.`Image`,
+    `vehiclepictures`.`VehicleID`
+	FROM `vehiclepictures`
+    WHERE `VehicleID` = N_VehicleID;
+END//
+
+DROP PROCEDURE IF EXISTS sp_getVehicle //
+CREATE PROCEDURE sp_getVehicle(N_VehicleID int)
+BEGIN
+	SELECT 
+    `vehicle`.`LotNumber`,
+    `vehicle`.`Year`,
+    `vehicle`.`Make`,
+    `vehicle`.`Model`,
+    `vehicle`.`VIN`,
+    `vehicle`.`Color`,
+    `vehicle`.`Mileage`,
+    `vehicle`.`Units`,
+    `vehicle`.`Province`,
+    `vehicle`.`Transmission`,
+    `vehicle`.`VehicleOptions`,
+    `vehicle`.`SellerID`
+FROM `vehicle`
+WHERE `vehicle`.`VehicleID` = N_VehicleID;
+END//
+
+DROP PROCEDURE IF EXISTS sp_updateAuction//
+CREATE PROCEDURE sp_updateAuction(N_AuctionID int, N_AuctionDate datetime, N_AuctionTotal double, N_SurCharges double, N_CashCharges double, N_ChequeCharges double, N_CreditCardCharges double)
+BEGIN
+	UPDATE `gha`.`auction`
+	SET
+	`AuctionDate` = N_AuctionDate,
+	`AuctionTotal` = N_AuctionTotal,
+	`SurCharges` = N_SurCharges,
+	`CashCharges` = N_CashCharges,
+	`ChequeCharges` = N_ChequeCharges,
+	`CreditCardCharges` = N_CreditCardCharges
+	WHERE `AuctionID` = N_AuctionID;
 END//
