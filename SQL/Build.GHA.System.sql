@@ -880,14 +880,14 @@ CREATE PROCEDURE sp_updatePayment(
   `PaymentDate` datetime
 )
 BEGIN
-UPDATE `payment`
-SET
-`PaymentAmount` = `N_PaymentAmount`,
-`AuctionSaleID` = `N_AuctionSaleID`,
-`PaymentTypeID` = `N_PaymentTypeID`,
-`Surcharges` = `N_Surcharges`,
-`PaymentDate` = `N_PaymentDate`
-WHERE `PaymentID` = `N_PaymentID`;
+	UPDATE `payment`
+	SET
+	`PaymentAmount` = `N_PaymentAmount`,
+	`AuctionSaleID` = `N_AuctionSaleID`,
+	`PaymentTypeID` = `N_PaymentTypeID`,
+	`Surcharges` = `N_Surcharges`,
+	`PaymentDate` = `N_PaymentDate`
+	WHERE `PaymentID` = `N_PaymentID`;
 END//
 
 DROP PROCEDURE IF EXISTS sp_viewPaymentTypes //
@@ -925,10 +925,10 @@ SELECT
 	IF(SUM(`payment`.`PaymentAmount`) is null, 0.00, SUM(`payment`.`PaymentAmount`))  as 'Payments',
 	IF(SUM(`payment`.`Surcharges`) is null, 0.00, SUM(`payment`.`Surcharges`))  as 'Surcharges',
     `auctionsale`.`Notes`
-FROM (`seller`, `vehicle`, `auctionsale`) left join `payment` on `payment`.`AuctionSaleID` = `auctionSale`.`AuctionSaleID`
+	FROM (`seller`, `vehicle`, `auctionsale`) left join `payment` on `payment`.`AuctionSaleID` = `auctionSale`.`AuctionSaleID`
 	and `auctionsale`.`VehicleID` = `vehicle`.`VehicleID`
 	and `payment`.`AuctionSaleID` = `auctionSale`.`AuctionSaleID`
-WHERE `auctionsale`.`AuctionID` = 1 
+	WHERE `auctionsale`.`AuctionID` = 1 
     and `vehicle`.`SellerID` = `seller`.`SellerID`
     ;
 END//
@@ -958,14 +958,14 @@ BEGIN
     `vehicle`.`Transmission`,
     `vehicle`.`VehicleOptions`,
     `vehicle`.`SellerID`
-FROM `vehicle`
-WHERE `vehicle`.`VehicleID` = N_VehicleID;
+	FROM `vehicle`
+	WHERE `vehicle`.`VehicleID` = N_VehicleID;
 END//
 
 DROP PROCEDURE IF EXISTS sp_updateAuction//
 CREATE PROCEDURE sp_updateAuction(N_AuctionID int, N_AuctionDate datetime, N_AuctionTotal double, N_SurCharges double, N_CashCharges double, N_ChequeCharges double, N_CreditCardCharges double)
 BEGIN
-	UPDATE `gha`.`auction`
+	UPDATE `auction`
 	SET
 	`AuctionDate` = N_AuctionDate,
 	`AuctionTotal` = N_AuctionTotal,
