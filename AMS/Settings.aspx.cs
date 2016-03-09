@@ -175,7 +175,7 @@ namespace AMS
 
                 foreach(DataRow aRow in dt.Rows )
                 {
-                    TXTConditionDescription.Text = aRow["CondidtionDescription"].ToString();
+                    TXTConditionDescription.Text = aRow["ConditionDescription"].ToString();
                     TXTConditionCode.Text = aRow["ConditionCode"].ToString();
                 }
             }

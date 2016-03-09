@@ -68,6 +68,7 @@ namespace AMS.App_Code
                 cmd.Parameters.Add(new MySqlParameter("@N_BuyerBidderNumber", buyer.BidderNum));
                 cmd.Parameters.Add(new MySqlParameter("@N_BuyerPermanent", buyer.BuyerIsPermanent));
                 cmd.Parameters.Add(new MySqlParameter("@N_BuyerBanned", buyer.IsBanned));
+                cmd.Parameters.Add(new MySqlParameter("@N_BuyerNotes", buyer.Notes));
 
                 MySqlParameter returnParameter = new MySqlParameter();
                 returnParameter.Direction = System.Data.ParameterDirection.ReturnValue;

@@ -333,7 +333,7 @@ namespace AMS.App_Code
                 using (MySqlCommand cmd = conn.CreateCommand())
                 {
                     conn.Open();
-                    cmd.CommandText = "sp_getSellers";
+                    cmd.CommandText = "sp_viewSellers";
                     cmd.CommandType = CommandType.StoredProcedure;
                     using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
                     {
