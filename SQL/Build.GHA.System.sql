@@ -83,7 +83,7 @@ Create Table PaymentType
 Create Table Buyer
 (
 	BuyerID integer primary key AUTO_INCREMENT,
-    BidderNumber integer unique,
+    BidderNumber integer,
     BuyerFirstName text,
     BuyerLastName text,
     BuyerAddress text,
@@ -235,7 +235,7 @@ INSERT INTO `buyer`
 `Banned`,
 `Notes` )
 VALUES
-("","","","","","","", 0,TRUE, FALSE, "");
+("","","","","AB","","", 0,TRUE, FALSE, "");
 
 INSERT INTO `conditionstatus` (`ConditionCode`) VALUES ('Not Sold');
 INSERT INTO `conditionstatus` (`ConditionCode`) VALUES ('Conditional');
@@ -305,8 +305,8 @@ create procedure sp_createConditionStatus
 
 BEGIN
 	
-	INSERT INTO ConditionStatus (ConditionCode,ConditionDescription, status)
-	VALUES (pConditionCode, pConditionDescription, pStatus);
+	INSERT INTO ConditionStatus (ConditionCode,ConditionDescription)
+	VALUES (pConditionCode, pConditionDescription);
 
 END//
 
@@ -315,7 +315,7 @@ create procedure sp_viewConditionStatus()
 
 BEGIN
 	
-	Select ConditionId,CONCAT( ConditionCode , ' - ' , ConditionDescription) as Description, status
+	Select ConditionId,CONCAT( ConditionCode , if (ConditionDescription is null, "", CONCAT( ' - ' , ConditionDescription))) as Description
 	FROM ConditionStatus;
 
 END//
@@ -339,8 +339,8 @@ create procedure sp_createFeeType
 
 BEGIN
 	
-	INSERT INTO FeeType (FeeCost,FeeType, Status)
-	VALUES (pFeeCost, pFeeType, pStatus);
+	INSERT INTO FeeType (FeeCost,FeeType)
+	VALUES (pFeeCost, pFeeType);
 
 END//
 
@@ -349,13 +349,13 @@ create procedure sp_viewFeeTypes()
 
 BEGIN
 	
-	Select FeeId, CONCAT( FeeCost, ' - ' , FeeType) as description, status
+	Select FeeId, CONCAT( FeeCost, ' - ' , FeeType) as description
 	FROM FeeType;
 
 END//
 
 drop procedure if exists sp_updateFeeType //
-create procedure sp_updateFeeType(IN pFeeId integer, IN pFeeType text, pFeeCost double, pStatus boolean)
+create procedure sp_updateFeeType(IN pFeeId integer, IN pFeeType text, pFeeCost double)
 
 BEGIN
 
@@ -369,12 +369,12 @@ END//
 
 drop procedure if exists sp_createPaymentType //	
 create procedure sp_createPaymentType
-(IN pPaymentDescription text, in pStatus boolean)
+(IN pPaymentDescription text)
 
 BEGIN
 	
 	INSERT INTO PaymentType (PaymentDescription, Status)
-	VALUES (pPaymentDescription, pStatus);
+	VALUES (pPaymentDescription);
 
 END //
 
@@ -383,20 +383,19 @@ create procedure sp_viewPaymentType()
 
 BEGIN
 	
-	Select PaymentTypeId, PaymentDescription, pStatus
+	Select PaymentTypeId, PaymentDescription
 	FROM PaymentType;
 
 END//
 
 drop procedure if exists sp_updatePaymentType //
-create procedure sp_updatePaymentType(IN pPaymentId integer, IN pPaymentDescription text, IN pStatus boolean)
+create procedure sp_updatePaymentType(IN pPaymentId integer, IN pPaymentDescription text)
 
 BEGIN
 
 	UPDATE PaymentType
 	SET
-	PaymentDescription = pPaymentDescription, 
-    Status = pStatus
+	PaymentDescription = pPaymentDescription
 	WHERE PaymentTypeId = PaymentTypeId;
 END //
 
@@ -411,7 +410,7 @@ END//
 drop procedure if exists sp_getConditionStatusByID //
 create procedure sp_getConditionStatusByID(IN pConditionID integer)
 BEGIN
-	Select ConditionCode, ConditionDescription, Status
+	Select ConditionCode, ConditionDescription
     FROM conditionstatus
     where ConditionID = pConditionID;
 END//
@@ -419,7 +418,7 @@ END//
 drop procedure if exists sp_getFeeTypeByID //
 create procedure sp_getFeeTypeByID(IN pFeeID integer)
 BEGIN
-	Select FeeCost, FeeType, Status
+	Select FeeCost, FeeType
     FROM feetype
     where FeeID = pFeeID;
 END//
@@ -427,7 +426,7 @@ END//
 drop procedure if exists sp_getPaymentTypeByID //
 create procedure sp_getPaymentTypeByID(IN pPaymentTypeID integer)
 BEGIN
-	Select PaymentDescription, Status
+	Select PaymentDescription
     FROM paymenttype
     where PaymentTypeID = pPaymentTypeID;
 END//
@@ -492,7 +491,8 @@ create procedure sp_updateBuyer(
     N_BuyerPhone text,
     N_BuyerBidderNumber integer,
     N_BuyerPermanent boolean,
-    N_BuyerBanned boolean)
+    N_BuyerBanned boolean,
+	N_BuyerNotes text)
 begin
 	UPDATE `buyer`
 		SET
