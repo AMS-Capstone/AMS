@@ -44,7 +44,7 @@
             </Scripts>
         </asp:ScriptManager>
         
-        <%--<link href="Content/bootstrap-datetimepicker-build.less" rel="stylesheet/less" />--%>
+        <link href="Content/bootstrap-datetimepicker.css" rel="stylesheet" />
         <script src="Scripts/moment.js"></script>
         <script src="Scripts/bootstrap-datetimepicker.js"></script>
         

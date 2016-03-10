@@ -4,8 +4,7 @@
     
     <div class=" col-xs-12" id="AlertDiv" runat="server"></div>
 
-    <asp:GridView ID="GVAuction" runat="server" CssClass="table table-hover col-xs-12" AutoGenerateColumns="False" OnRowDataBound="RowDataBound"
-        >
+    <asp:GridView ID="GVAuction" runat="server" CssClass="table table-hover col-xs-12" AutoGenerateColumns="False" OnRowDataBound="RowDataBound">
         <Columns>
             <asp:BoundField HeaderText="Con Code" DataField="SellerCode" />            
             <asp:BoundField HeaderText="Lot #" DataField="LotNumber" />
