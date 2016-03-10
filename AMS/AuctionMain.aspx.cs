@@ -11,6 +11,21 @@ namespace AMS
 {
     public partial class AuctionMain : System.Web.UI.Page
     {
+        protected override void Render(System.Web.UI.HtmlTextWriter writer)
+        {
+            foreach (GridViewRow row in GVAuction.Rows)
+            {
+                if (row.RowType == DataControlRowType.DataRow &&
+                    row.RowState.HasFlag(DataControlRowState.Edit) == false)
+                {
+                    // enable click on row to enter edit mode
+                    row.Attributes["onclick"] =
+                        ClientScript.GetPostBackClientHyperlink(GVAuction, "Edit$" + row.DataItemIndex, true);
+                }
+            }
+            base.Render(writer);
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             String auctionIDString = "";

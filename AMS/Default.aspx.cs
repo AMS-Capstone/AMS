@@ -17,31 +17,44 @@ namespace AMS
 
             AuctionDAL auctionService = new AMS.App_Code.AuctionDAL();
 
-
-            DataSet auctionYear = auctionService.getAuctionYears();
-            if (auctionYear.Tables[0].Rows.Count > 0)
+            try
             {
+                DataSet auctionYear = auctionService.getAuctionYears();
+                if (auctionYear.Tables[0].Rows.Count > 0)
+                {
 
-                DDLAuctionYear.DataSource = auctionYear;
-                DDLAuctionYear.DataTextField = "Year";
-                DDLAuctionYear.DataValueField = "Year";
-                DDLAuctionYear.DataBind();
+                    DDLAuctionYear.DataSource = auctionYear;
+                    DDLAuctionYear.DataTextField = "Year";
+                    DDLAuctionYear.DataValueField = "Year";
+                    DDLAuctionYear.DataBind();
 
+                }
+
+                DataSet auctions = auctionService.findAuctions(DDLAuctionYear.SelectedValue);
+                if (auctions.Tables[0].Rows.Count > 0)
+                {
+
+                    LBAuctionList.DataSource = auctions;
+                    LBAuctionList.DataTextField = "AuctionDate";
+                    LBAuctionList.DataValueField = "AuctionId";
+                    LBAuctionList.DataBind();
+
+                }
             }
-
-            DataSet auctions = auctionService.findAuctions(DDLAuctionYear.SelectedValue);
-            if (auctions.Tables[0].Rows.Count > 0)
+            catch (Exception ex)
             {
-
-                LBAuctionList.DataSource = auctions;
-                LBAuctionList.DataTextField = "AuctionDate";
-                LBAuctionList.DataValueField = "AuctionId";
-                LBAuctionList.DataBind();
-
+                AlertDiv.InnerHtml = "<div class=\"alert alert-danger fade in\">" +
+                "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + ex.Message +
+                "</label></div>";
             }
         }
 
+        protected void BTNSubmit_Click(object sender, EventArgs e)
+        {
 
         }
- 
+
+
+    }
 }

@@ -129,6 +129,16 @@ namespace AMS
             CHKBanned.Checked = false;
             CHKPermanent.Checked = false;
             TXTNotes.Text = "";
+            {
+                TXTBidNum.Text = "";
+                CHKPermanent.Checked = false;
+                BTNSubmit.Enabled = true;
+                BTNSubmit.CssClass = "btn btn-primary";
+                BTNUpdate.Enabled = false;
+                BTNUpdate.CssClass = "btn btn-primary hidden";
+                BTNDelete.Enabled = false;
+                BTNDelete.CssClass = "btn btn-primary hidden";
+            }
         }
 
         protected void DDLBuyerName_SelectedIndexChanged(object sender, EventArgs e)

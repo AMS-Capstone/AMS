@@ -605,7 +605,7 @@ N_ContactFirstName text,
 N_ContactLastName text, 
 -- N_SellerFileNumber text,
 N_SellerPrivate boolean,
-N_GSTNumber boolean)
+N_GSTNumber text)
 BEGIN
 	UPDATE `seller`
 	SET

@@ -1,6 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Settings.aspx.cs" Inherits="AMS.Settings" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+    
+    <div class=" col-xs-12" id="AlertDiv" runat="server"></div>
     <h1>GST</h1>
     <div class=" col-xs-12"></div>
     <div class="control group">          

@@ -124,6 +124,14 @@ namespace AMS
             TXTLastName.Text = "";
             TXTGSTNumber.Text = "";
             CHKPrivate.Checked = false;
+            {
+                BTNSubmit.Enabled = true;
+                BTNSubmit.CssClass = "btn btn-primary";
+                BTNUpdate.Enabled = false;
+                BTNUpdate.CssClass = "btn btn-primary hidden";
+                BTNDelete.Enabled = false;
+                BTNDelete.CssClass = "btn btn-primary hidden";
+            }
         }
 
         protected void DDLSellerName_SelectedIndexChanged(object sender, EventArgs e)
