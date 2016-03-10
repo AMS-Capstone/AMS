@@ -2,11 +2,15 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h1>New Auction</h1>
     <div class=" col-xs-12" id="AlertDiv" runat="server"></div>
-    <div class="progress progress-striped">
-        <div class="progress-bar progress-bar-info" style="width: 20%">
-            <span class="sr-only">Creating New Auction - </span>
-        </div>
+    <div class=" col-xs-6" id="ProgressBar" runat="server">
+        <%--<div class="progress progress-striped">
+            <div class="progress-bar progress-bar-info" style="width: 0%">
+                Creating
+            </div>
+        </div>--%>
+        <%--<span class="sr-only">Creating New Auction</span>--%>
     </div>
+    <div class="col-xs-12"></div>
     <div class="control-group">
         <label class="control-label col-xs-2" for="TXTNotes">New Auction Date:</label>
             <div class="container">
@@ -39,8 +43,8 @@
     <div class=" col-xs-12"></div>
     <div class="control-group">
         <label class="control-label col-xs-2" for="LVAuctionCars">Auction Cars:</label>
-        <div class="col-xs-4">
-            <asp:ListBox ID="LBAuctionCars" CssClass="form-control" runat="server"></asp:ListBox>
+        <div class="col-xs-4 row-fluid">
+            <asp:ListBox ID="LBAuctionCars" CssClass="form-control" runat="server" SelectionMode="Multiple"></asp:ListBox>
             <%--<asp:ListView ID="LVAuctionCars" runat="server">
                 <ItemTemplate>
                     
@@ -48,5 +52,9 @@
             </asp:ListView>--%>
         </div>
         <div class="col-xs-6"></div>
-    </div>  
+    </div>
+    <div class=" col-xs-12"><hr /></div>
+    <div class="btn-group col-xs-12">
+        <asp:Button ID="BTNSubmit" runat="server" CssClass="btn btn-primary" Text="Create New Auction" OnClick="BTNSubmit_Click" />
+    </div>
 </asp:Content>

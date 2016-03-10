@@ -106,7 +106,7 @@ namespace AMS.App_Code
         }
 
         //Create a new AuctionSale
-        public int AuctionSale(AuctionSale auctionSale)
+        public int createAuctionSale(AuctionSale auctionSale)
         {
             int id = 0;
             MySqlConnection conn = new MySqlConnection(connectionString);
