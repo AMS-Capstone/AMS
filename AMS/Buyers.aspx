@@ -27,12 +27,17 @@
     <div class="control-group">
         <label class="control-label col-xs-2" for="TXTBidNum">Bidder #:</label>
         <div class="col-xs-3">
-            <asp:TextBox ID="TXTBidNum" runat="server" CssClass="form-control" placeholder="Bidder Number" onkeypress='return event.charCode >= 48 && event.charCode <= 57'/>
+            <asp:TextBox ID="TXTBidNum" runat="server" CssClass="form-control numbersOnly" placeholder="Bidder Number"/>
             <div class="checkbox">
                 <label><asp:CheckBox runat="server" id="CHKPermanent" Text="Permanent"></asp:CheckBox></label>
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        jQuery('.numbersOnly').keyup(function () {
+            this.value = this.value.replace(/[^0-9\.]/g, '');
+        });
+    </script>
     <div class=" col-xs-12"></div>
     <div class="control-group">
         <label class="control-label col-xs-2" for="TXTAddress">Address:</label>

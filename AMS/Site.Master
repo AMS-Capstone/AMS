@@ -61,6 +61,7 @@
                         <li><a runat="server" href="~/Sellers">Sellers</a></li>
                         <li><a runat="server" href="~/Vehicles">Vehicles</a></li>
                         <li><a runat="server" href="~/Settings">Settings</a></li>
+                        <li><a runat="server" href="~/AuctionMain?AuctionID=1">Test Auction Main</a></li>
                     </ul>
                 </div>
             </div>

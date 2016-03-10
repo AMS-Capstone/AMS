@@ -13,15 +13,6 @@ namespace AMS {
     public partial class Settings {
         
         /// <summary>
-        /// Label1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
-        
-        /// <summary>
         /// DDLGST control.
         /// </summary>
         /// <remarks>
@@ -29,15 +20,6 @@ namespace AMS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList DDLGST;
-        
-        /// <summary>
-        /// Label2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
         
         /// <summary>
         /// TXTNewGST control.
@@ -49,39 +31,120 @@ namespace AMS {
         protected global::System.Web.UI.WebControls.TextBox TXTNewGST;
         
         /// <summary>
-        /// BTNAddNewGST control.
+        /// CHKActive control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BTNAddNewGST;
+        protected global::System.Web.UI.WebControls.CheckBox CHKActive;
         
         /// <summary>
-        /// GVConditionStatus control.
+        /// BTNSave control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GVConditionStatus;
+        protected global::System.Web.UI.WebControls.Button BTNSave;
         
         /// <summary>
-        /// GVFeeTypes control.
+        /// DDLConditionStatus control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GVFeeTypes;
+        protected global::System.Web.UI.WebControls.DropDownList DDLConditionStatus;
         
         /// <summary>
-        /// GVPaymentTypes control.
+        /// TXTConditionCode control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GVPaymentTypes;
+        protected global::System.Web.UI.WebControls.TextBox TXTConditionCode;
+        
+        /// <summary>
+        /// TXTConditionDescription control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TXTConditionDescription;
+        
+        /// <summary>
+        /// BTNSaveConditionStatus control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BTNSaveConditionStatus;
+        
+        /// <summary>
+        /// DDLFeeTypes control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DDLFeeTypes;
+        
+        /// <summary>
+        /// TXTFeeType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TXTFeeType;
+        
+        /// <summary>
+        /// TXTFeeCost control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TXTFeeCost;
+        
+        /// <summary>
+        /// BTNSaveFeeType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BTNSaveFeeType;
+        
+        /// <summary>
+        /// DDLPaymentTypes control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DDLPaymentTypes;
+        
+        /// <summary>
+        /// TXTPaymentTypes control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TXTPaymentTypes;
+        
+        /// <summary>
+        /// BTNSavePaymentType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BTNSavePaymentType;
     }
 }

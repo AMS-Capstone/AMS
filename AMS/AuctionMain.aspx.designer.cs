@@ -10,42 +10,42 @@
 namespace AMS {
     
     
-    public partial class _Default {
+    public partial class AuctionMain {
         
         /// <summary>
-        /// Label1 control.
+        /// AlertDiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl AlertDiv;
         
         /// <summary>
-        /// DDLAuctionYear control.
+        /// GVAuction control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DDLAuctionYear;
+        protected global::System.Web.UI.WebControls.GridView GVAuction;
         
         /// <summary>
-        /// LBAuctionList control.
+        /// TXTNotes control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox LBAuctionList;
+        protected global::System.Web.UI.WebControls.TextBox TXTNotes;
         
         /// <summary>
-        /// btnSelectAuction control.
+        /// BTNTotals control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSelectAuction;
+        protected global::System.Web.UI.WebControls.Button BTNTotals;
     }
 }

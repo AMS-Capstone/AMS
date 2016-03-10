@@ -91,6 +91,12 @@ namespace AMS
             {
                 //Call DAL
                 int id = sellerService.CreateSeller(seller);
+
+                //Success message
+                AlertDiv.InnerHtml = "<div class=\"alert alert-success fade in\">" +
+                "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                "<strong>Success!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "New Seller was created with internal ID: " + id.ToString() +
+                "</label></div>";
             }
             catch (Exception ex)
             {
@@ -179,7 +185,7 @@ namespace AMS
             try
             {
                 //Call DAL
-                int id = sellerService.UpdateSeller(seller);
+                sellerService.UpdateSeller(seller);
             }
             catch (Exception ex)
             {

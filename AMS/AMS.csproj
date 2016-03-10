@@ -103,16 +103,19 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AuctionListing.aspx" />
+    <Content Include="AuctionMain.aspx" />
     <Content Include="Buyers.aspx" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Default.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="packages.config" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <None Include="Properties\PublishProfiles\AMS.pubxml" />
+    <None Include="Properties\PublishProfiles\ASP Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\Google VM Publish.pubxml" />
     <None Include="Properties\PublishProfiles\IIS.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -144,12 +147,12 @@
     <Content Include="Scripts\WebForms\WebParts.js" />
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Sellers.aspx" />
     <Content Include="Settings.aspx" />
     <Content Include="Site.Master" />
+    <Content Include="Vehicles.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -166,6 +169,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Code\DAL\AuctionDAL.cs" />
+    <Compile Include="App_Code\SuppportClasses\AuctionSale.cs" />
+    <Compile Include="App_Code\SuppportClasses\Payment.cs" />
+    <Compile Include="App_Code\DAL\AuctionMainDAL.cs" />
+    <Compile Include="App_Code\SuppportClasses\Auction.cs" />
     <Compile Include="App_Code\SuppportClasses\FeeType.cs" />
     <Compile Include="App_Code\SuppportClasses\GST.cs" />
     <Compile Include="App_Code\SuppportClasses\PaymentType.cs" />
@@ -177,12 +185,12 @@
     <Compile Include="App_Code\DAL\SellerDAL.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="AuctionListing.aspx.cs">
-      <DependentUpon>AuctionListing.aspx</DependentUpon>
+    <Compile Include="AuctionMain.aspx.cs">
+      <DependentUpon>AuctionMain.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="AuctionListing.aspx.designer.cs">
-      <DependentUpon>AuctionListing.aspx</DependentUpon>
+    <Compile Include="AuctionMain.aspx.designer.cs">
+      <DependentUpon>AuctionMain.aspx</DependentUpon>
     </Compile>
     <Compile Include="Buyers.aspx.cs">
       <DependentUpon>Buyers.aspx</DependentUpon>
@@ -229,6 +237,13 @@
     </Compile>
     <Compile Include="Site.Mobile.Master.designer.cs">
       <DependentUpon>Site.Mobile.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Vehicles.aspx.cs">
+      <DependentUpon>Vehicles.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vehicles.aspx.designer.cs">
+      <DependentUpon>Vehicles.aspx</DependentUpon>
     </Compile>
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>

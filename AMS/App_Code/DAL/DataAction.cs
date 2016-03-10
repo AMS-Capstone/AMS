@@ -14,8 +14,8 @@ namespace AMS.App_Code
 
         #region Settingsscreen
         //Create a GST code
-        public static void CreateGSTEntry(int gstPercent, bool status)
-        {
+        public void CreateGSTEntry(double gstPercent, bool status)
+            {
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
@@ -27,10 +27,10 @@ namespace AMS.App_Code
                 cmd.ExecuteNonQuery();
 
             }
-        }
+            }
 
         //Update a GST Code
-        public static void UpdateGSTEntry(int gstId, int gstPercent, bool status)
+        public void UpdateGSTEntry(int gstId, double gstPercent, bool status)
         {
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -44,11 +44,32 @@ namespace AMS.App_Code
                 cmd.ExecuteNonQuery();
             }
         }
-
-        //View GST entry
-        public static DataTable GetGST()
+        //Get GST by ID
+        public DataTable GetGSTbyID(int gstID)
         {
-            DataTable dt = null;
+            DataTable dt = new DataTable();
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                using (MySqlCommand cmd = conn.CreateCommand())
+                {
+                    conn.Open();
+                    cmd.CommandText = "sp_getGSTByID";
+                    cmd.Parameters.AddWithValue("pGstID", gstID);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                    {
+                        da.Fill(dt);
+
+                    }
+                }
+            }
+            return dt;
+        }
+        //View GST entry
+        public DataTable GetGST()
+        {
+            DataTable dt = new DataTable();
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
@@ -67,7 +88,7 @@ namespace AMS.App_Code
             return dt;
         }
         //Create condition status
-        public static void CreateConditionStatus(string conditionCode, string conditionDescription)
+        public void CreateConditionStatus(string conditionCode, string conditionDescription)
         {
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -81,7 +102,7 @@ namespace AMS.App_Code
             }
         }
 
-        public static void UpdateConditionStatus(int conditionID, string conditionDescription, string conditionCode)
+        public  void UpdateConditionStatus(int conditionID, string conditionDescription, string conditionCode)
         {
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -97,9 +118,9 @@ namespace AMS.App_Code
         }
 
         //View Condition Status
-        public static DataTable GetConditionStatus()
+        public DataTable GetConditionStatus()
         {
-            DataTable dt = null;
+            DataTable dt = new DataTable();
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
@@ -118,8 +139,53 @@ namespace AMS.App_Code
             }
             return dt;
         }
+        public DataTable GetConditionStatusByID(int conditionID)
+        {
+            DataTable dt = new DataTable();
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                using (MySqlCommand cmd = conn.CreateCommand())
+                {
+                    conn.Open();
+                    cmd.CommandText = "sp_getConditionStatusByID";
+                    cmd.Parameters.AddWithValue("pConditionID", conditionID);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                    {
+                        da.Fill(dt);
 
-        public static void CreateFeeType(double feeCost, string feeType)
+                    }
+                }
+            }
+            return dt;
+        }
+
+
+        public DataTable GetPaymentTypeByID(int paymentID)
+        {
+            DataTable dt = new DataTable();
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                using (MySqlCommand cmd = conn.CreateCommand())
+                {
+                    conn.Open();
+                    cmd.CommandText = "sp_getPaymentTypeByID";
+                    cmd.Parameters.AddWithValue("pPaymentTypeID", paymentID);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                    {
+                        da.Fill(dt);
+
+                    }
+                }
+            }
+            return dt;
+        }
+
+
+        public void CreateFeeType(double feeCost, string feeType)
         {
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -133,8 +199,33 @@ namespace AMS.App_Code
                 cmd.ExecuteNonQuery();
             }
         }
+
+        //Get FeeType by ID
+
+        public DataTable GetFeeTypeByID(int feeID)
+        {
+            DataTable dt = new DataTable();
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                using (MySqlCommand cmd = conn.CreateCommand())
+                {
+                    conn.Open();
+                    cmd.CommandText = "sp_getFeeTypeByID";
+                    cmd.Parameters.AddWithValue("pFeeID", feeID);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                    {
+                        da.Fill(dt);
+
+                    }
+                }
+            }
+            return dt;
+        }
+
         //Update Fee Type
-        public static void UpdateFeeType(int feeID, double feeCost, string feeType)
+        public void UpdateFeeType(int feeID, double feeCost, string feeType)
         {
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -150,9 +241,9 @@ namespace AMS.App_Code
         }
 
         //View Fee Type
-        public static DataTable GetFeeType()
+        public DataTable GetFeeType()
         {
-            DataTable dt = null;
+            DataTable dt = new DataTable();
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
@@ -174,7 +265,7 @@ namespace AMS.App_Code
 
 
         //Create Payment Type
-        public static void CreatePaymentType(string paymentDescription)
+        public void CreatePaymentType(string paymentDescription)
         {
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -190,7 +281,7 @@ namespace AMS.App_Code
 
 
 //Update PaymentType
-        public static void UpdatePaymentType(int paymentID, string paymentDescription)
+        public void UpdatePaymentType(int paymentID, string paymentDescription)
         {
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -206,16 +297,16 @@ namespace AMS.App_Code
         }
 
         //View PaymentType
-        public static DataTable GetPaymentType()
+        public  DataTable GetPaymentType()
         {
-            DataTable dt = null;
+            DataTable dt = new DataTable();
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 using (MySqlCommand cmd = conn.CreateCommand())
                 {
                     conn.Open();
-                    cmd.CommandText = "sp_viewPayumentType";
+                    cmd.CommandText = "sp_viewPaymentType";
                     cmd.CommandType = CommandType.StoredProcedure;
                     using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
                     {
@@ -231,7 +322,101 @@ namespace AMS.App_Code
 
         #endregion
 
+        #region VehicleScreen
+        //GET SELLERS
+        public DataTable GetSellers()
+        {
+            DataTable dt = new DataTable();
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                using (MySqlCommand cmd = conn.CreateCommand())
+                {
+                    conn.Open();
+                    cmd.CommandText = "sp_viewSellers";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                    {
+                        da.Fill(dt);
 
+                    }
+                }
+            }
+            return dt;
+        }
+
+        //GET VEHICLE BY LOT NUMBER
+        public DataTable GetVehicleByLotNumber(int lotNumber)
+        {
+            DataTable dt = new DataTable();
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                using (MySqlCommand cmd = conn.CreateCommand())
+                {
+                    conn.Open();
+                    cmd.CommandText = "sp_getVehicleByLotNumber";
+                    cmd.Parameters.AddWithValue("pLotNumber", lotNumber);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                    {
+                        da.Fill(dt);
+
+                    }
+                }
+            }
+            return dt;
+        }
+
+
+
+        public void CreateVehicle(int lotNumber, string year, string make, string model, string vin, string color, int mileage, string units, string transmission, int sellerID, string options )
+        {
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
+            long ID;
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                MySqlCommand cmd = new MySqlCommand("sp_createVehicle", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("pLotNumber", lotNumber);
+                cmd.Parameters.AddWithValue("pYear", year);
+                cmd.Parameters.AddWithValue("pMake", make);
+                cmd.Parameters.AddWithValue("pModel", model);
+                cmd.Parameters.AddWithValue("pVin", vin);
+                cmd.Parameters.AddWithValue("pColor", color);
+                cmd.Parameters.AddWithValue("pMileage", mileage);
+                cmd.Parameters.AddWithValue("pUnits", units);
+                cmd.Parameters.AddWithValue("pTransmission", transmission);
+                cmd.Parameters.AddWithValue("pSellerID", sellerID);
+                cmd.Parameters.AddWithValue("pOptions", options);
+                cmd.Parameters.Add(new MySqlParameter("pVehicleID", MySqlDbType.UInt64));
+                cmd.Parameters["pVehicleID"].Direction = ParameterDirection.Output;
+                
+
+
+                conn.Open();
+                var id = cmd.ExecuteNonQuery();
+
+                
+                
+            }
+          
+        }
+
+        public void CreateImage(byte[] data, int vehicleID )
+        {
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                MySqlCommand cmd = new MySqlCommand("sp_createVehiclePicture", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("@pImage", MySqlDbType.Blob).Value = data;
+                cmd.Parameters.AddWithValue("pVehicleID", vehicleID);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
+        #endregion
 
 
 

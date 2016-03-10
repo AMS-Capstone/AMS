@@ -10,105 +10,132 @@
 namespace AMS {
     
     
-    public partial class AuctionListing {
+    public partial class Vehicles {
         
         /// <summary>
-        /// form1 control.
+        /// DDLSeller control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.WebControls.DropDownList DDLSeller;
         
         /// <summary>
-        /// Label1 control.
+        /// TXTLotNumber control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.TextBox TXTLotNumber;
         
         /// <summary>
-        /// DropDownList1 control.
+        /// TXTYear control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownList1;
+        protected global::System.Web.UI.WebControls.TextBox TXTYear;
         
         /// <summary>
-        /// lstAuctions control.
+        /// TXTMake control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox lstAuctions;
+        protected global::System.Web.UI.WebControls.TextBox TXTMake;
         
         /// <summary>
-        /// btnSelectAuction control.
+        /// TXTModel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSelectAuction;
+        protected global::System.Web.UI.WebControls.TextBox TXTModel;
         
         /// <summary>
-        /// btnManageCars control.
+        /// TXTVin control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnManageCars;
+        protected global::System.Web.UI.WebControls.TextBox TXTVin;
         
         /// <summary>
-        /// btnManageBuyers control.
+        /// TXTMileage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnManageBuyers;
+        protected global::System.Web.UI.WebControls.TextBox TXTMileage;
         
         /// <summary>
-        /// btnManageSellers control.
+        /// DDLUnits control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnManageSellers;
+        protected global::System.Web.UI.WebControls.DropDownList DDLUnits;
         
         /// <summary>
-        /// btnCreateNewAuction control.
+        /// TXTTransmission control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCreateNewAuction;
+        protected global::System.Web.UI.WebControls.TextBox TXTTransmission;
         
         /// <summary>
-        /// btnManageInventory control.
+        /// TXTColor control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnManageInventory;
+        protected global::System.Web.UI.WebControls.TextBox TXTColor;
         
         /// <summary>
-        /// btnManageSettings control.
+        /// TXTOptions control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnManageSettings;
+        protected global::System.Web.UI.WebControls.TextBox TXTOptions;
+        
+        /// <summary>
+        /// FUVehicle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload FUVehicle;
+        
+        /// <summary>
+        /// BTNUpload control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BTNUpload;
+        
+        /// <summary>
+        /// BTNSaveVehicle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BTNSaveVehicle;
     }
 }
