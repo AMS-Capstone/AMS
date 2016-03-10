@@ -18,7 +18,6 @@ namespace AMS
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
             provinces.Add("AB");
             provinces.Add("BC");
             provinces.Add("MB");
@@ -36,7 +35,7 @@ namespace AMS
             DDLProvince.DataSource = provinces;
             DDLProvince.DataBind();
 
-            try 
+            try
             {
                 buyers = buyerService.GetBuyers();
                 if (buyers.Tables.Count > 0)
@@ -44,11 +43,13 @@ namespace AMS
                     if (buyers.Tables[0].Rows.Count > 0)
                     {
                         selectedIndex = DDLBuyerName.SelectedIndex;
-                        
-                        DDLBuyerName.DataTextField = "BuyerName";
-                        DDLBuyerName.DataValueField = "BuyerID";
-                        DDLBuyerName.DataSource = buyers;
-                        DDLBuyerName.DataBind();
+                        if (!IsPostBack)
+                        {
+                            DDLBuyerName.DataTextField = "BuyerName";
+                            DDLBuyerName.DataValueField = "BuyerID";
+                            DDLBuyerName.DataSource = buyers;
+                            DDLBuyerName.DataBind();
+                        }
                     }
                     else
                     {
@@ -67,7 +68,7 @@ namespace AMS
                 "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + ex.Message +
                 "</label></div>";
             }
-
+            
         }
 
         protected void BTNSubmit_Click(object sender, EventArgs e)
@@ -102,7 +103,7 @@ namespace AMS
                 //Success message
                 AlertDiv.InnerHtml = "<div class=\"alert alert-success fade in\">" +
                 "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
-                "<strong>Success!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "New Sellerr was created with internal ID: " + id.ToString() +
+                "<strong>Success!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "New Buyer was created with internal ID: " + id.ToString() +
                 "</label></div>";
             }
             catch (Exception ex)
@@ -204,17 +205,43 @@ namespace AMS
             buyer.BuyerIsPermanent = CHKPermanent.Checked;
             buyer.Notes = TXTNotes.Text;
 
-            try
+            //Ensure that new Bidder Number is unique
+            bool bidnumisUnique = true;
+            foreach (DataRow row in buyers.Tables[0].Rows)
             {
-                //Call DAL
-                buyerService.UpdateBuyer(buyer);
+                if (buyer.BidderNum.ToString().Equals(row["BidderNumber"].ToString()) && !buyer.BuyerID.ToString().Equals(row["BuyerID"].ToString()))
+                {
+                    AlertDiv.InnerHtml = "<div class=\"alert alert-danger fade in\">" +
+                    "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                    "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "Bidder Number must be unique and above zero" +
+                    //buyer.BuyerID.ToString() + " " + row["BuyerID"].ToString() +
+
+                    "</label></div>";
+                    bidnumisUnique = false;
+                    break;
+                }
             }
-            catch (Exception ex)
+
+            if (bidnumisUnique)
             {
-                AlertDiv.InnerHtml = "<div class=\"alert alert-danger fade in\">" +
-                "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
-                "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + ex.Message +
-                "</label></div>";
+                try
+                {
+                    //Call DAL
+                    buyerService.UpdateBuyer(buyer);
+
+                    //Success message
+                    AlertDiv.InnerHtml = "<div class=\"alert alert-success fade in\">" +
+                    "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                    "<strong>Success!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "Buyer was updated successfully" +
+                    "</label></div>";
+                }
+                catch (Exception ex)
+                {
+                    AlertDiv.InnerHtml = "<div class=\"alert alert-danger fade in\">" +
+                    "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                    "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + ex.Message +
+                    "</label></div>";
+                }
             }
         }
 

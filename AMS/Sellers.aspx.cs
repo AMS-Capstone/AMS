@@ -194,6 +194,12 @@ namespace AMS
             {
                 //Call DAL
                 sellerService.UpdateSeller(seller);
+
+                //Success message
+                AlertDiv.InnerHtml = "<div class=\"alert alert-success fade in\">" +
+                "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                "<strong>Success!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "Seller was updated successfully" +
+                "</label></div>";
             }
             catch (Exception ex)
             {
