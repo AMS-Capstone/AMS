@@ -7,7 +7,7 @@
         <div class="control-group">
             <asp:Label ID="Label1" class="control-label col-xs-1" runat="server" Text="Year:"></asp:Label>            
             <div class="col-xs-2">
-                <asp:DropDownList ID="DDLAuctionYear" CssClass="form-control" runat="server"></asp:DropDownList>
+                <asp:DropDownList ID="DDLAuctionYear" CssClass="form-control" runat="server" OnSelectedIndexChanged="DDLAuctionYear_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
             </div>
         </div>
        

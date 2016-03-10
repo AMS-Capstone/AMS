@@ -165,7 +165,7 @@ namespace AMS.App_Code
                 cmd.Parameters.Add(new MySqlParameter("@N_SellingPrice", auctionSale.SellingPrice));
                 cmd.Parameters.Add(new MySqlParameter("@N_BuyersFee", auctionSale.BuyersFee));
                 cmd.Parameters.Add(new MySqlParameter("@N_Deposit", auctionSale.Deposit));
-                cmd.Parameters.Add(new MySqlParameter("@N_ConditonID", auctionSale.ConditionID));
+                cmd.Parameters.Add(new MySqlParameter("@N_ConditionID", auctionSale.ConditionID));
                 cmd.Parameters.Add(new MySqlParameter("@N_GSTID", auctionSale.GstID));
                 cmd.Parameters.Add(new MySqlParameter("@N_Total", auctionSale.Total));
                 cmd.Parameters.Add(new MySqlParameter("@N_Saledate", auctionSale.SaleDate));

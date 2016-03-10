@@ -155,8 +155,8 @@ Create Table AuctionSale
     SellingPrice double, 
     BuyersFee double, 
     Deposit double,
-    ConditonID integer,
-    constraint FK_AuctionSale_ConditionID foreign key (ConditonID) references conditionstatus(ConditionID),
+    ConditionID integer,
+    constraint FK_AuctionSale_ConditionID foreign key (ConditionID) references conditionstatus(ConditionID),
     GSTID integer,
     constraint FK_AuctionSale_GSTID foreign key (GSTID) references GST(GSTID),
     Total double, 
@@ -531,7 +531,7 @@ BuyerCity,
 BuyerProvince,
 BuyerPostalCode,
 BuyerPhone,
-BidderNumber,
+IF(BidderNumber = 0 , "", BidderNumber),
 Permanent,
 Banned,
 Notes
@@ -667,7 +667,8 @@ CREATE PROCEDURE `sp_findAuction`(IN pAuctionYear text)
 BEGIN
 	select date_format(auctiondate, '%M %e %Y') As AuctionDate, AuctionID, AuctionTotal 
     from AUCTION
-    where YEAR(AUCTION.AUCTIONDATE) = pAuctionYear;
+    where YEAR(AUCTION.AUCTIONDATE) = pAuctionYear
+    order by AuctionDate desc;
 END //
 
 drop function if exists sp_createAuction // 
@@ -759,7 +760,7 @@ create function sp_createAuctionSale(
 	`N_SellingPrice` double,
 	`N_BuyersFee` double,
 	`N_Deposit` double,
-	`N_ConditonID` int(11),
+	`N_ConditionID` int(11),
 	`N_GSTID` int(11),
 	`N_Total` double,
 	`N_Saledate` date,
@@ -774,7 +775,7 @@ INSERT INTO `auctionsale`
 `SellingPrice`,
 `BuyersFee`,
 `Deposit`,
-`ConditonID`,
+`ConditionID`,
 `GSTID`,
 `Total`,
 `Saledate`,
@@ -788,7 +789,7 @@ VALUES
 `N_SellingPrice`,
 `N_BuyersFee`,
 `N_Deposit`,
-`N_ConditonID`,
+`N_ConditionID`,
 `N_GSTID`,
 `N_Total`,
 `N_Saledate`,
@@ -809,7 +810,7 @@ CREATE PROCEDURE sp_updateAuctionSale(
 	`N_SellingPrice` double,
 	`N_BuyersFee` double,
 	`N_Deposit` double,
-	`N_ConditonID` int(11),
+	`N_ConditionID` int(11),
 	`N_GSTID` int(11),
 	`N_Total` double,
 	`N_Saledate` date,
@@ -825,7 +826,7 @@ SET
 `SellingPrice` = N_SellingPrice,
 `BuyersFee` = N_BuyersFee,
 `Deposit` = N_Deposit,
-`ConditonID` = N_ConditonID,
+`ConditionID` = N_ConditionID,
 `GSTID` = N_GSTID,
 `Total` = N_Total,
 `Saledate` = N_Saledate,
@@ -913,15 +914,14 @@ SELECT
 	`seller`.`SellerCode`,
     `vehicle`.`LotNumber`,
     `seller`.`SellerID`,
-    `buyer`.`BidderNumber`,
-    `conditionstatus`.`ConditionCode`,
+    `auctionsale`.`AuctionID`,
     `auctionsale`.`AuctionSaleID`,
     `auctionsale`.`VehicleID`,
     `auctionsale`.`BuyerID`,
     `auctionsale`.`SellingPrice`,
     `auctionsale`.`BuyersFee`,
     `auctionsale`.`Deposit`,
-    `auctionsale`.`ConditonID`,
+    `auctionsale`.`ConditionID`,
     `auctionsale`.`GSTID`,
     0.00 as `GST`,
     0.00 as `PaymentsTotal`,
@@ -932,12 +932,13 @@ SELECT
 	IF(SUM(`payment`.`PaymentAmount`) is null, 0.00, SUM(`payment`.`PaymentAmount`))  as 'Payments',
 	IF(SUM(`payment`.`Surcharges`) is null, 0.00, SUM(`payment`.`Surcharges`))  as 'Surcharges',
     `auctionsale`.`Notes`
-	FROM (`seller`, `vehicle`, `auctionsale`, `conditionstatus`) left join `buyer` on `auctionsale`.`BuyerID` = `buyer`.`BuyerID` left join `payment` on `payment`.`AuctionSaleID` = `auctionSale`.`AuctionSaleID`
-	and `auctionsale`.`VehicleID` = `vehicle`.`VehicleID`
-	and `payment`.`AuctionSaleID` = `auctionSale`.`AuctionSaleID`
-    and `conditionstatus`.`ConditionID` = `auctionSale`.`ConditonID`
-	WHERE `auctionsale`.`AuctionID` = 1 
+	FROM (`seller`, `vehicle`, `auctionsale`) left join `payment` on `payment`.`AuctionSaleID` = `auctionSale`.`AuctionSaleID`
+  -- and `payment`.`AuctionSaleID` = `auctionSale`.`AuctionSaleID`
+  -- and `conditionstatus`.`ConditionID` = `auctionSale`.`ConditonID`
+	WHERE `auctionsale`.`AuctionID` = N_AuctionID 
     and `vehicle`.`SellerID` = `seller`.`SellerID`
+	and `auctionsale`.`VehicleID` = `vehicle`.`VehicleID`
+    group by AuctionSaleID
     ;
 END//
 

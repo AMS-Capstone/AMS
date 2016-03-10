@@ -92,6 +92,7 @@ namespace AMS
                                 //Assembling AuctionSale object
                                 AuctionSale auctionSale = new AuctionSale();
                                 auctionSale.AuctionID = auctionID;
+                                auctionSale.SaleDate = Convert.ToDateTime(TXTDate.Text.ToString());
 
                                 //Not Sold Sale Status
                                 auctionSale.ConditionID = 1;
@@ -103,7 +104,8 @@ namespace AMS
                                 //default buyer's fee for vehicles
                                 auctionSale.BuyersFee = 250.00;
                                 auctionSale.Deposit = 0.00;
-                                auctionSale.
+                                auctionSale.GstID = activeGST.GSTID;
+                                auctionSale.Notes = "";
                                 
                                 //Saving object to the database
                                 id = auctionService.createAuctionSale(auctionSale);

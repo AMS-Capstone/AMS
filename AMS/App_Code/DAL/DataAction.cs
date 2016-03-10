@@ -587,7 +587,7 @@ namespace AMS.App_Code
         public void CreateVehicle(int lotNumber, string year, string make, string model, string vin, string color, int mileage, string units, string transmission, int sellerID, string options )
         {
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
-            long ID;
+            //long ID;
             try
             {
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
