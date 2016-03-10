@@ -17,18 +17,18 @@
             <asp:TemplateField  HeaderText="Sale Status">
                 <ItemTemplate>
                     <asp:Label ID="lblSaleStatus" runat="server" Text='<%# Eval("ConditionID") %>' Visible="false" />
-                    <asp:DropDownList ID="ddlSaleStatuses" runat="server"></asp:DropDownList>
+                    <asp:DropDownList ID="DDLSaleStatuses" runat="server" OnSelectedIndexChanged="DDLSaleStatuses_SelectedIndexChanged"></asp:DropDownList>
                 </ItemTemplate>
             </asp:TemplateField>   
-            <asp:BoundField HeaderText="Selling Price" DataField="SellingPrice" />
+            <asp:BoundField HeaderText="Selling Price" DataField="SellingPrice" DataFormatString="{0:c}" />
             <asp:BoundField HeaderText="AuctionSaleID" DataField="AuctionSaleID" Visible="false"/>
-            <asp:BoundField HeaderText="Buyer's Fee" DataField="BuyersFee" />
-            <asp:BoundField HeaderText="GST" DataField="GST" /><%--Auto-calculated and stored field--%>
-            <asp:BoundField HeaderText="Total" DataField="Total" /><%--Auto-calculated and stored field--%>
-            <asp:BoundField HeaderText="Deposit" DataField="Deposit" />
-            <asp:BoundField HeaderText="Payments" DataField="PaymentsTotal" /><%--Payments will show a total with the link to the popup that would add a new payment--%>
-            <asp:BoundField HeaderText="Surcharges" DataField="SurchargesTotal" /><%--Auto-calculated and stored field--%>
-            <asp:BoundField HeaderText="Net Total" DataField="NetTotal" /><%--Auto-calculated and stored field--%>
+            <asp:BoundField HeaderText="Buyer's Fee" DataField="BuyersFee" DataFormatString="{0:c}" />
+            <asp:BoundField HeaderText="GST" DataField="GST" DataFormatString="{0:c}" /><%--Auto-calculated and stored field--%>
+            <asp:BoundField HeaderText="Total" DataField="Total" DataFormatString="{0:c}" /><%--Auto-calculated and stored field--%>
+            <asp:BoundField HeaderText="Deposit" DataField="Deposit" DataFormatString="{0:c}" />
+            <asp:BoundField HeaderText="Payments" DataField="PaymentsTotal" DataFormatString="{0:c}" /><%--Payments will show a total with the link to the popup that would add a new payment--%>
+            <asp:BoundField HeaderText="Surcharges" DataField="SurchargesTotal" DataFormatString="{0:c}" /><%--Auto-calculated and stored field--%>
+            <asp:BoundField HeaderText="Net Total" DataField="NetTotal" DataFormatString="{0:c}" /><%--Auto-calculated and stored field--%>
 
         </Columns>
     </asp:GridView>

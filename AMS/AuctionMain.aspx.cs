@@ -13,7 +13,10 @@ namespace AMS
     {
 
         DataSet auctionData = new DataSet();
+        DataSet paymentTypes = new DataSet();
+        DataSet ConditionStatuses = new DataSet();
         AuctionMainDAL auctionService = new AuctionMainDAL();
+        DataAction dataAction = new DataAction();
         int auctionID = 0;
 
         BuyerDAL buyerService = new AMS.App_Code.BuyerDAL();
@@ -58,6 +61,8 @@ namespace AMS
                 try
                 {
                     buyers = buyerService.GetBuyers();
+                    paymentTypes = auctionService.GetPaymentTypes();
+                    ConditionStatuses.Tables.Add(dataAction.GetConditionStatus());
 
                     auctionData = auctionService.GetAuctionData(auctionID);
                     GVAuction.DataSource = auctionData.Tables[0].DefaultView;
@@ -77,7 +82,7 @@ namespace AMS
                 //Alert about inability to connect to the server
                 AlertDiv.InnerHtml = "<div class=\"alert alert-warning fade in\">" +
                 "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
-                "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "Could not retrieve any auction data from the server." +
+                "<strong>Warning!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "Could not retrieve any auction data from the server." +
                 "</label></div>";
             }
         }
@@ -94,12 +99,42 @@ namespace AMS
                     DDLBidderNumbers.DataTextField = "BidderNumber";
                     DDLBidderNumbers.DataValueField = "BuyerID";
                     DDLBidderNumbers.DataBind();
+                    //DDLBidderNumbers.AutoPostBack = true;
 
-                    DataRowView dr = e.Row.DataItem as DataRowView;
-                    String value = (e.Row.FindControl("lblBidderNumber") as Label).Text;
-                    DDLBidderNumbers.Items.FindByValue(value).Selected = true;
+                    //DataRowView dr = e.Row.DataItem as DataRowView;
+                    String value1 = (e.Row.FindControl("lblBidderNumber") as Label).Text;
+                    DDLBidderNumbers.Items.FindByValue(value1).Selected = true;
+
+
+                    DropDownList DDLSaleStatuses = (DropDownList)e.Row.FindControl("DDLSaleStatuses");
+
+                    DDLSaleStatuses.DataSource = ConditionStatuses.Tables[0];
+                    DDLSaleStatuses.DataTextField = "Description";
+                    DDLSaleStatuses.DataValueField = "ConditionID";
+                    DDLSaleStatuses.DataBind();
+                    //DDLSaleStatuses.AutoPostBack = true;
+
+                    //DataRowView dr2 = e.Row.DataItem as DataRowView;
+                    String value2 = (e.Row.FindControl("lblSaleStatus") as Label).Text;
+                    DDLSaleStatuses.Items.FindByValue(value2).Selected = true;
+
+                    //DropDownList DDLSaleStatuses = (DropDownList)e.Row.FindControl("DDLSaleStatuses");
+
+                    //DDLSaleStatuses.DataSource = paymentTypes.Tables[0];
+                    //DDLSaleStatuses.DataTextField = "PaymentDescription";
+                    //DDLSaleStatuses.DataValueField = "PaymentTypeID";
+                    //DDLSaleStatuses.DataBind();
+
+                    ////DataRowView dr3 = e.Row.DataItem as DataRowView;
+                    //String value3 = (e.Row.FindControl("lblSaleStatus") as Label).Text;
+                    //DDLSaleStatuses.Items.FindByValue(value3).Selected = true;
                 }
             }
+        }
+
+        private void updateAuctionSale(AuctionSale auctionSale)
+        {
+
         }
 
         protected void gv_RowEditing(object sender, GridViewEditEventArgs e)
@@ -127,12 +162,22 @@ namespace AMS
 
         protected void DDLBidderNumbers_SelectedIndexChanged(object sender, EventArgs e)
         {
+           
+        }
 
+        protected void DDLSaleStatuses_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
         }
 
         protected void BTNTotals_Click(object sender, EventArgs e)
         {
 
         }
+
+         //AlertDiv.InnerHtml = "<div class=\"alert alert-warning fade in\">" +
+         //       "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+         //       "<strong>Warning!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "Test" +
+         //       "</label></div>";
     }
 }

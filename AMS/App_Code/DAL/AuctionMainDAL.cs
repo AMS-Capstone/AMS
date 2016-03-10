@@ -106,11 +106,42 @@ namespace AMS.App_Code
             try
             {
                 MySqlCommand cmd = new MySqlCommand();
-                cmd.CommandText = "GET_PAYMENT_TYPES";
+                cmd.CommandText = "sp_viewPaymentTypes";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Connection = conn;
                 da.SelectCommand = cmd;
                 da.Fill(ds, "PaymentTypes");
+            }
+            catch (Exception ex)
+            {
+                //Panic
+                throw ex;
+            }
+            finally
+            {
+                //Tie the loose ends here
+            }
+            return ds;
+        }
+
+        /// <summary>
+        /// This procedure retrieves all sale payments pertaining to an auction sale
+        /// </summary>
+        /// <returns>Sale Payments</returns>
+        public DataSet GetSalePayments()
+        {
+            DataSet ds = new DataSet("SalePayments");
+            MySqlConnection conn = new MySqlConnection(connectionString);
+            MySqlDataAdapter da = new MySqlDataAdapter();
+
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.CommandText = "sp_viewAuctionSalePayments";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = conn;
+                da.SelectCommand = cmd;
+                da.Fill(ds, "SalePayments");
             }
             catch (Exception ex)
             {
