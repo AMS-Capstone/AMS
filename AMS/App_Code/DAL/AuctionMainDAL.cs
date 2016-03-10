@@ -5,7 +5,7 @@ using System.Web;
 using MySql.Data.MySqlClient;
 using System.Data;
 
-namespace AMS.App_Code.DAL
+namespace AMS.App_Code
 {
     public class AuctionMainDAL
     {
@@ -26,7 +26,7 @@ namespace AMS.App_Code.DAL
         /// <returns>A DataSet containing AuctionData table</returns>
         public DataSet GetAuctionData(int auctionID)
         {
-            DataSet ds = new DataSet("Buyers");
+            DataSet ds = new DataSet("AuctionData");
             MySqlConnection conn = new MySqlConnection(connectionString);
             MySqlDataAdapter da = new MySqlDataAdapter();
 

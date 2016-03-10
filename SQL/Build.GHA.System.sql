@@ -26,7 +26,7 @@ drop table if exists Buyer;
 drop table if exists PaymentType ;
 drop table if exists GST;
 drop table if exists FeeType;
-drop table if exists ConditionStatus;
+drop table if exists conditionstatus;
 drop table if exists Auction;
 
 -- [2][2]						[2][2] --
@@ -48,8 +48,8 @@ Create Table Auction
     CreditCardCharges double
 );
     
--- Create the ConditionStatus table
-Create Table ConditionStatus
+-- Create the conditionstatus table
+Create Table conditionstatus
 (
 	ConditionID integer primary key AUTO_INCREMENT,
     ConditionCode tinytext,
@@ -155,8 +155,8 @@ Create Table AuctionSale
     SellingPrice double, 
     BuyersFee double, 
     Deposit double,
-    ConiditonID integer,
-    constraint FK_AuctionSale_ConditionID foreign key (ConiditonID) references ConditionStatus(ConditionID),
+    ConditonID integer,
+    constraint FK_AuctionSale_ConditionID foreign key (ConditonID) references conditionstatus(ConditionID),
     GSTID integer,
     constraint FK_AuctionSale_GSTID foreign key (GSTID) references GST(GSTID),
     Total double, 
@@ -299,33 +299,33 @@ BEGIN
 	WHERE GSTID = pGstID;
 END//
 
-DROP PROCEDURE IF EXISTS sp_createConditionStatus //
-CREATE PROCEDURE sp_createConditionStatus
+DROP PROCEDURE IF EXISTS sp_createconditionstatus //
+CREATE PROCEDURE sp_createconditionstatus
 (IN pConditionCode tinyText, IN pConditionDescription text, IN pStatus boolean)
 
 BEGIN
 	
-	INSERT INTO ConditionStatus (ConditionCode,ConditionDescription)
+	INSERT INTO conditionstatus (ConditionCode,ConditionDescription)
 	VALUES (pConditionCode, pConditionDescription);
 
 END//
 
-DROP PROCEDURE IF EXISTS sp_viewConditionStatus //
-CREATE PROCEDURE sp_viewConditionStatus()
+DROP PROCEDURE IF EXISTS sp_viewconditionstatus //
+CREATE PROCEDURE sp_viewconditionstatus()
 
 BEGIN
 	
 	Select ConditionId,CONCAT( ConditionCode , if (ConditionDescription is null, "", CONCAT( ' - ' , ConditionDescription))) as Description
-	FROM ConditionStatus;
+	FROM conditionstatus;
 
 END//
 
-DROP PROCEDURE IF EXISTS sp_updateConditionStatus //
-CREATE PROCEDURE sp_updateConditionStatus(IN pConditionId integer, IN pConditionDescription text, pConditionCode tinyText, IN pStatus boolean)
+DROP PROCEDURE IF EXISTS sp_updateconditionstatus //
+CREATE PROCEDURE sp_updateconditionstatus(IN pConditionId integer, IN pConditionDescription text, pConditionCode tinyText, IN pStatus boolean)
 
 BEGIN
 
-	UPDATE ConditionStatus
+	UPDATE conditionstatus
 	SET
 	ConditionCode = pConditionCode,
 	ConditionDescription = pConditionDescription,
@@ -407,8 +407,8 @@ BEGIN
     where GSTID = pGstID;
 END//
 
-DROP PROCEDURE IF EXISTS sp_getConditionStatusByID //
-CREATE PROCEDURE sp_getConditionStatusByID(IN pConditionID integer)
+DROP PROCEDURE IF EXISTS sp_getconditionstatusByID //
+CREATE PROCEDURE sp_getconditionstatusByID(IN pConditionID integer)
 BEGIN
 	Select ConditionCode, ConditionDescription
     FROM conditionstatus
@@ -759,7 +759,7 @@ create function sp_createAuctionSale(
 	`N_SellingPrice` double,
 	`N_BuyersFee` double,
 	`N_Deposit` double,
-	`N_ConiditonID` int(11),
+	`N_ConditonID` int(11),
 	`N_GSTID` int(11),
 	`N_Total` double,
 	`N_Saledate` date,
@@ -774,7 +774,7 @@ INSERT INTO `auctionsale`
 `SellingPrice`,
 `BuyersFee`,
 `Deposit`,
-`ConiditonID`,
+`ConditonID`,
 `GSTID`,
 `Total`,
 `Saledate`,
@@ -788,7 +788,7 @@ VALUES
 `N_SellingPrice`,
 `N_BuyersFee`,
 `N_Deposit`,
-`N_ConiditonID`,
+`N_ConditonID`,
 `N_GSTID`,
 `N_Total`,
 `N_Saledate`,
@@ -809,7 +809,7 @@ CREATE PROCEDURE sp_updateAuctionSale(
 	`N_SellingPrice` double,
 	`N_BuyersFee` double,
 	`N_Deposit` double,
-	`N_ConiditonID` int(11),
+	`N_ConditonID` int(11),
 	`N_GSTID` int(11),
 	`N_Total` double,
 	`N_Saledate` date,
@@ -825,7 +825,7 @@ SET
 `SellingPrice` = N_SellingPrice,
 `BuyersFee` = N_BuyersFee,
 `Deposit` = N_Deposit,
-`ConiditonID` = N_ConiditonID,
+`ConditonID` = N_ConditonID,
 `GSTID` = N_GSTID,
 `Total` = N_Total,
 `Saledate` = N_Saledate,
@@ -911,23 +911,31 @@ CREATE PROCEDURE sp_getAuctionData(N_AuctionID int(11))
 BEGIN
 SELECT 
 	`seller`.`SellerCode`,
+    `vehicle`.`LotNumber`,
     `seller`.`SellerID`,
+    `buyer`.`BidderNumber`,
+    `conditionstatus`.`ConditionCode`,
     `auctionsale`.`AuctionSaleID`,
     `auctionsale`.`VehicleID`,
     `auctionsale`.`BuyerID`,
     `auctionsale`.`SellingPrice`,
     `auctionsale`.`BuyersFee`,
     `auctionsale`.`Deposit`,
-    `auctionsale`.`ConiditonID`,
+    `auctionsale`.`ConditonID`,
     `auctionsale`.`GSTID`,
+    0.00 as `GST`,
+    0.00 as `PaymentsTotal`,
+    0.00 as `SurchargesTotal`,
+    0.00 as `NetTotal`,
     `auctionsale`.`Total`,
     `auctionsale`.`Saledate`,
 	IF(SUM(`payment`.`PaymentAmount`) is null, 0.00, SUM(`payment`.`PaymentAmount`))  as 'Payments',
 	IF(SUM(`payment`.`Surcharges`) is null, 0.00, SUM(`payment`.`Surcharges`))  as 'Surcharges',
     `auctionsale`.`Notes`
-	FROM (`seller`, `vehicle`, `auctionsale`) left join `payment` on `payment`.`AuctionSaleID` = `auctionSale`.`AuctionSaleID`
+	FROM (`seller`, `vehicle`, `auctionsale`, `conditionstatus`) left join `buyer` on `auctionsale`.`BuyerID` = `buyer`.`BuyerID` left join `payment` on `payment`.`AuctionSaleID` = `auctionSale`.`AuctionSaleID`
 	and `auctionsale`.`VehicleID` = `vehicle`.`VehicleID`
 	and `payment`.`AuctionSaleID` = `auctionSale`.`AuctionSaleID`
+    and `conditionstatus`.`ConditionID` = `auctionSale`.`ConditonID`
 	WHERE `auctionsale`.`AuctionID` = 1 
     and `vehicle`.`SellerID` = `seller`.`SellerID`
     ;

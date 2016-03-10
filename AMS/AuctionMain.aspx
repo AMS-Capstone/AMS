@@ -1,23 +1,28 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AuctionMain.aspx.cs" Inherits="AMS.AuctionMain" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h1>Auction: </h1>
-    <asp:GridView ID="GVAuction" runat="server" CssClass="table table-hover">
+    
+    <div class=" col-xs-12" id="AlertDiv" runat="server"></div>
+
+    <asp:GridView ID="GVAuction" runat="server" CssClass="table table-hover col-xs-12" AutoGenerateColumns="False" OnRowDataBound="RowDataBound"
+        >
         <Columns>
             <asp:BoundField HeaderText="Con Code" DataField="SellerCode" />            
             <asp:BoundField HeaderText="Lot #" DataField="LotNumber" />
             <asp:TemplateField HeaderText="Bidder #">
                 <ItemTemplate>
                     <asp:Label ID="lblBidderNumber" runat="server" Text='<%# Eval("BidderNumber") %>' Visible="false" />
-                    <asp:DropDownList ID="ddlBidderNumbers" runat="server"></asp:DropDownList>
+                    <asp:DropDownList ID="DDLBidderNumbers" runat="server"  OnSelectedIndexChanged="DDLBidderNumbers_SelectedIndexChanged"></asp:DropDownList>
                 </ItemTemplate>
             </asp:TemplateField>                   
             <asp:TemplateField  HeaderText="Sale Status">
                 <ItemTemplate>
-                    <asp:Label ID="lblSaleStatus" runat="server" Text='<%# Eval("SaleStatus") %>' Visible="false" />
+                    <asp:Label ID="lblSaleStatus" runat="server" Text='<%# Eval("ConditionCode") %>' Visible="false" />
                     <asp:DropDownList ID="ddlSaleStatuses" runat="server"></asp:DropDownList>
                 </ItemTemplate>
             </asp:TemplateField>   
             <asp:BoundField HeaderText="Selling Price" DataField="SellingPrice" />
+            <asp:BoundField HeaderText="AuctionSaleID" DataField="AuctionSaleID" Visible="false"/>
             <asp:BoundField HeaderText="Buyer's Fee" DataField="BuyersFee" />
             <asp:BoundField HeaderText="GST" DataField="GST" /><%--Auto-calculated and stored field--%>
             <asp:BoundField HeaderText="Total" DataField="Total" /><%--Auto-calculated and stored field--%>
