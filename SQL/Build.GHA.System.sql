@@ -170,7 +170,7 @@ Create Table VehicleCondnReqs
 	VehicleConReqID integer primary key AUTO_INCREMENT,
     VehicleID integer,
     constraint FK_VehicleCondnReqs_VehicleID foreign key (VehicleID) references Vehicle(VehicleID),
-	Reserve text,
+	Reserve double,
     Record boolean, 
     CallOnHigh boolean,
     Comments text,
