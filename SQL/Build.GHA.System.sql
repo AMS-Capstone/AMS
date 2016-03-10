@@ -1027,7 +1027,7 @@ END//
 DROP PROCEDURE IF EXISTS sp_viewVehiclesForSale//
 CREATE PROCEDURE sp_viewVehiclesForSale()
 BEGIN
-	SELECT `VehicleID`, CONCAT(`LotNumber`, `Year`, `Color`, `Make`, `Model`) as ``
+	SELECT `vehicle`.`VehicleID`, CONCAT(`LotNumber`, " - ", `Year`, " ", `Color`, " ", `Make`, " ", `Model`) as `DisplayInfo`
     FROM `vehicle`, `vehiclecondnreqs`
     WHERE `vehiclecondnreqs`.`VehicleID` = `vehicle`.`VehicleID`;
 END//

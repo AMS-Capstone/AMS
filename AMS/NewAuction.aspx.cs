@@ -1,5 +1,7 @@
-﻿using System;
+﻿using AMS.App_Code;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -13,7 +15,14 @@ namespace AMS
         {
             try
             {
+                DataSet vehiclesForSale = new DataSet();
+                AuctionDAL auctionService = new AuctionDAL();
+                vehiclesForSale = auctionService.viewVehiclesForSale();
 
+                LBAuctionCars.DataTextField = "DisplayInfo";
+                LBAuctionCars.DataValueField = "VehicleID";
+                LBAuctionCars.DataSource = vehiclesForSale;
+                LBAuctionCars.DataBind();
             }
             catch (Exception ex) 
             {

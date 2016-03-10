@@ -5,13 +5,12 @@
 
     <div class="control-group">
         <label class="control-label col-xs-2" for="TXTNotes">New Auction Date:</label>
-        <div class="col-xs-3">
             <div class="container">
                 <div class="row">
-                    <div class='col-sm-3'>
+                    <div class='col-sm-4'>
                         <div class="form-group">
                             <div class='input-group date' id='datetimepicker1'>
-                                <input type='text' class="form-control" />
+                                <input type='text' class="form-control dp" />
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
@@ -20,24 +19,29 @@
                     </div>
                     <script type="text/javascript">
                         $(function () {
-                            $('#datetimepicker1').datetimepicker();
+                            $('#datetimepicker1').datetimepicker({
+                                format: "DD/MMMM/YYYY"
+                            });
+                        });
+
+                        $('.dp').on('change', function () {
+                            $('.datepicker').hide();
                         });
                     </script>
                 </div>
             </div>
-        </div>
+        <div class="col-xs-6"></div>
     </div>
     <div class=" col-xs-12"></div>
     <div class="control-group">
         <label class="control-label col-xs-2" for="LVAuctionCars">Auction Cars:</label>
         <div class="col-xs-4">
-            <asp:ListView ID="LVAuctionCars" runat="server" placeholder="">
+            <asp:ListBox ID="LBAuctionCars" CssClass="form-control" runat="server"></asp:ListBox>
+            <%--<asp:ListView ID="LVAuctionCars" runat="server">
                 <ItemTemplate>
-                    <div class="col-md-4 portfolio-item">
-                        <!-- Some content -->
-                    </div>
+                    
                 </ItemTemplate>
-            </asp:ListView>
+            </asp:ListView>--%>
         </div>
         <div class="col-xs-6"></div>
     </div>  
