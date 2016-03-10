@@ -105,6 +105,48 @@ namespace AMS.App_Code
             return ds;
         }
 
+
+        //Create a new Auction
+        public int createAuction(Auction auction)
+        {
+            int id = 0;
+            MySqlConnection conn = new MySqlConnection(connectionString);
+            conn.Open();
+
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.CommandText = "sp_createAuction";
+                cmd.Parameters.Add(new MySqlParameter("@pAuctionDate", auction.AuctionDate));
+                cmd.Parameters.Add(new MySqlParameter("@pAuctionTotal", auction.AuctionTotal));
+                cmd.Parameters.Add(new MySqlParameter("@pSurcharges", auction.Surcharges));
+                cmd.Parameters.Add(new MySqlParameter("@pCashCharges", auction.CashCharges));
+                cmd.Parameters.Add(new MySqlParameter("@pChequeCharges", auction.ChequeCharges));
+                cmd.Parameters.Add(new MySqlParameter("@pCreditCardCharges", auction.CreditCardCharges));
+
+                MySqlParameter returnParameter = new MySqlParameter();
+                returnParameter.Direction = System.Data.ParameterDirection.ReturnValue;
+
+                cmd.Parameters.Add(returnParameter);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = conn;
+                cmd.ExecuteNonQuery();
+
+                id = Convert.ToInt32(returnParameter.Value.ToString());
+            }
+            catch (Exception ex)
+            {
+                //Panic
+                throw ex;
+            }
+            finally
+            {
+                //Tie the loose ends here
+                conn.Close();
+            }
+            return id;
+        }
+
         //Create a new AuctionSale
         public int createAuctionSale(AuctionSale auctionSale)
         {

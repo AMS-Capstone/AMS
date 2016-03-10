@@ -56,10 +56,14 @@ namespace AMS.App_Code
         /// Retrieves currently active GST
         /// </summary>
         /// <returns>GST</returns>
-        public double GetActiveGST()
+        public GST GetActiveGST()
         {
             DataSet ds = new DataSet("GST");
-            double gst = 5; // Setting default GST to 5%
+            GST gst = new GST();
+            // Setting default GST to 5%
+            gst.GSTPercent = 5;
+            gst.GSTID = 0;
+            gst.GSTStatus = true;
             MySqlConnection conn = new MySqlConnection(connectionString);
             MySqlDataAdapter da = new MySqlDataAdapter();
 
@@ -71,7 +75,9 @@ namespace AMS.App_Code
                 cmd.Connection = conn;
                 da.SelectCommand = cmd;
                 da.Fill(ds, "GST");
-                gst = Convert.ToDouble(ds.Tables["GST"].Rows[0][0].ToString());
+                gst.GSTID = Convert.ToInt32(ds.Tables["GST"].Rows[0]["GSTID"].ToString());
+                gst.GSTPercent = Convert.ToInt32(ds.Tables["GST"].Rows[0]["GSTPercent"].ToString())
+                gst.GSTStatus = Convert.ToBoolean(ds.Tables["GST"].Rows[0]["GSTStatus"].ToString());
             }
             catch (Exception ex)
             {

@@ -901,7 +901,7 @@ END//
 DROP PROCEDURE IF EXISTS sp_getActiveGST //
 CREATE PROCEDURE sp_getActiveGST()
 BEGIN	
-	Select GSTPercent
+	Select GSTID, GSTPercent, GSTStatus
 	FROM gst
 	where GSTStatus = 1;
 END//

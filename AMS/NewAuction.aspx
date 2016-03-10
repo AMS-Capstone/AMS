@@ -12,13 +12,13 @@
     </div>
     <div class="col-xs-12"></div>
     <div class="control-group">
-        <label class="control-label col-xs-2" for="TXTNotes">New Auction Date:</label>
+        <label class="control-label col-xs-2" for="TXTDate">New Auction Date:</label>
             <div class="container">
                 <div class="row">
                     <div class='col-sm-4'>
                         <div class="form-group">
                             <div class='input-group date' id='datetimepicker1'>
-                                <input type='text' class="form-control dp" />
+                                <asp:TextBox type='text' class="form-control dp" id="TXTDate" runat="server" />
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
@@ -35,6 +35,12 @@
                         $('.dp').on('change', function () {
                             $('.datepicker').hide();
                         });
+
+
+                        $('.dp').click(function () {
+                            $('.datepicker').click();
+                        });
+
                     </script>
                 </div>
             </div>

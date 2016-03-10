@@ -13,17 +13,22 @@ namespace AMS
     {
         DataSet vehiclesForSale = new DataSet();
         AuctionDAL auctionService = new AuctionDAL();
+        GST activeGST = new AuctionMainDAL().GetActiveGST();
 
         protected void Page_Load(object sender, EventArgs e)
         {
             try
             {
-                vehiclesForSale = auctionService.viewVehiclesForSale();
 
-                LBAuctionCars.DataTextField = "DisplayInfo";
-                LBAuctionCars.DataValueField = "VehicleID";
-                LBAuctionCars.DataSource = vehiclesForSale;
-                LBAuctionCars.DataBind();
+                if (!IsPostBack)
+                {
+                    vehiclesForSale = auctionService.viewVehiclesForSale();
+
+                    LBAuctionCars.DataTextField = "DisplayInfo";
+                    LBAuctionCars.DataValueField = "VehicleID";
+                    LBAuctionCars.DataSource = vehiclesForSale;
+                    LBAuctionCars.DataBind();
+                }
             }
             catch (Exception ex) 
             {
@@ -44,49 +49,88 @@ namespace AMS
 
                 //Create Auction Object
                 Auction auction = new Auction();
-                auction.AucioneerFirstName  
+                auction.AuctionDate = Convert.ToDateTime(TXTDate.Text.ToString());
+                auction.AuctionTotal = 0.00;
+                auction.Surcharges = 0.00;
+                auction.CashCharges = 0.00;
+                auction.ChequeCharges = 0.00;
+                auction.CreditCardCharges = 0.00;
 
-                double percentage = 0.00;
-                double totalSelected = 0.00;
-                double current = 0.00;
+                //Create Auction inside DB
+                auctionID = auctionService.createAuction(auction);
 
-                //Get the total number of selected cars
-                foreach (ListItem listItem in LBAuctionCars.Items)
+                if (auctionID > 0)
                 {
-                    if (listItem.Selected)
-                    {
-                        totalSelected += 1;
-                    }
-                }
+                    //Success message
+                    AlertDiv.InnerHtml = "<div class=\"alert alert-success fade in\">" +
+                    "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                    "<strong>Success!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "New Auction was created with internal ID: " + auctionID.ToString() +
+                    "</label></div>";
 
-                if (totalSelected > 0.00)
-                {
+                    double percentage = 0.00;
+                    double totalSelected = 0.00;
+                    double current = 0.00;
+
+                    //Get the total number of selected cars
                     foreach (ListItem listItem in LBAuctionCars.Items)
                     {
                         if (listItem.Selected)
                         {
-                            current += 1;
-                            percentage = (current / totalSelected) * 100;
-
-                            //Assemble AuctionSale object
-
-
-                            //Call DAL
-                            //int id = auctionService.createAuctionSale();
-
-                            //Show Progress
-                            ProgressBar.InnerHtml = "<div class=\"progress progress-striped\">" +
-                            "<div class=\"progress-bar progress-bar-success\" style=\"width: " + percentage + "%\">" +
-                            "Creating" +
-                            "</div>" +
-                            "</div>";
+                            totalSelected += 1;
                         }
                     }
 
-                    //Success message
-                    AlertDiv.InnerHtml = "<div class=\"alert alert-success fade in\">" +
+                    if (totalSelected > 0.00)
+                    {
+                        foreach (ListItem listItem in LBAuctionCars.Items)
+                        {
+                            if (listItem.Selected)
+                            {
+                                current += 1;
+                                percentage = (current / totalSelected) * 100;
+
+                                //Assembling AuctionSale object
+                                AuctionSale auctionSale = new AuctionSale();
+                                auctionSale.AuctionID = auctionID;
+
+                                //Not Sold Sale Status
+                                auctionSale.ConditionID = 1;
+                                auctionSale.VehicleID =Convert.ToInt32(listItem.Value);
+                                //Assigning an empty Buyer
+                                auctionSale.BuyerID = 1;
+                                auctionSale.SellingPrice = 0.00;
+                                auctionSale.BidderNumber = 0;
+                                //default buyer's fee for vehicles
+                                auctionSale.BuyersFee = 250.00;
+                                auctionSale.Deposit = 0.00;
+                                auctionSale.
+                                
+                                //Saving object to the database
+                                id = auctionService.createAuctionSale(auctionSale);
+
+                                //Show Progress
+                                //ProgressBar.InnerHtml = "<div class=\"progress progress-striped\">" +
+                                //"<div class=\"progress-bar progress-bar-success\" style=\"width: " + percentage + "%\">" +
+                                //"Creating" +
+                                //"</div>" +
+                                //"</div>";
+
+                                //System.Threading.Thread.Sleep(5000);
+                            }
+                        }
+
+                        //Success message
+                        AlertDiv.InnerHtml += "<div class=\"alert alert-success fade in\">" +
+                        "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                        "<strong>Success!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "New Auction was created and Vehicles were added successfully!" +
+                        "</label></div>";
+                    }
+                }
+                else
+                {
+                    AlertDiv.InnerHtml = "<div class=\"alert alert-danger fade in\">" +
                     "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
-                    "<strong>Success!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "New Auction was created with internal ID: " + id.ToString() +
+                    "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "Could not create auction, please contact your tech support" +
                     "</label></div>";
                 }
             }
