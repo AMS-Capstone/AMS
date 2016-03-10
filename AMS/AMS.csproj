@@ -200,6 +200,7 @@
     <Compile Include="App_Code\DAL\DataAction.cs" />
     <Compile Include="App_Code\DAL\BuyerDAL.cs" />
     <Compile Include="App_Code\DAL\SellerDAL.cs" />
+    <Content Include="App_Code\SuppportClasses\Vehicle.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="AuctionMain.aspx.cs">
