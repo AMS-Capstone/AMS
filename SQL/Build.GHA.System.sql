@@ -983,3 +983,51 @@ BEGIN
 	`CreditCardCharges` = N_CreditCardCharges
 	WHERE `AuctionID` = N_AuctionID;
 END//
+
+
+DROP FUNCTION IF EXISTS sp_createVehicleCondnReqs//
+CREATE FUNCTION sp_createVehicleCondnReqs(
+`N_VehicleConReqID` int,
+`N_VehicleID` int,
+`N_Reserve` double,
+`N_Record` boolean,
+`N_CallOnHigh` boolean,
+`N_Comments` text,
+`N_EstValue` double,
+`N_dateIn` date,
+`N_ForSale` boolean
+) returns int
+BEGIN
+INSERT INTO `vehiclecondnreqs`
+(`VehicleConReqID`,
+`VehicleID`,
+`Reserve`,
+`Record`,
+`CallOnHigh`,
+`Comments`,
+`EstValue`,
+`dateIn`,
+`ForSale`)
+VALUES
+(
+`N_VehicleConReqID`,
+`N_VehicleID`,
+`N_Reserve`,
+`N_Record`,
+`N_CallOnHigh`,
+`N_Comments`,
+`N_EstValue`,
+`N_dateIn`,
+`N_ForSale`
+);
+
+return LAST_INSERT_ID();
+END//
+
+DROP PROCEDURE IF EXISTS sp_viewVehiclesForSale//
+CREATE PROCEDURE sp_viewVehiclesForSale()
+BEGIN
+	SELECT `VehicleID`, CONCAT(`LotNumber`, `Year`, `Color`, `Make`, `Model`) as ``
+    FROM `vehicle`, `vehiclecondnreqs`
+    WHERE `vehiclecondnreqs`.`VehicleID` = `vehicle`.`VehicleID`;
+END//

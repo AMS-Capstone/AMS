@@ -77,8 +77,83 @@ namespace AMS.App_Code
             return ds;
         }
 
+        public DataSet viewVehiclesForSale()
+        {
+            DataSet ds = new DataSet("Auctions");
+            MySqlConnection conn = new MySqlConnection(connectionString);
+            MySqlDataAdapter da = new MySqlDataAdapter();
 
-        /*
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.CommandText = "sp_viewVehiclesForSale";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = conn;
+                da.SelectCommand = cmd;
+                da.Fill(ds, "Vehicles");
+
+            }
+            catch (Exception ex)
+            {
+                //Panic
+                throw ex;
+            }
+            finally
+            {
+                //Tie the loose ends here
+            }
+            return ds;
+        }
+
+        //Create a new AuctionSale
+        public int AuctionSale(AuctionSale auctionSale)
+        {
+            int id = 0;
+            MySqlConnection conn = new MySqlConnection(connectionString);
+            conn.Open();
+
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.CommandText = "sp_createAuctionSale";
+                cmd.Parameters.Add(new MySqlParameter("@N_AuctionID", auctionSale.AuctionID));
+                cmd.Parameters.Add(new MySqlParameter("@N_VehicleID", auctionSale.VehicleID));
+                cmd.Parameters.Add(new MySqlParameter("@N_BuyerID", auctionSale.BuyerID));
+                cmd.Parameters.Add(new MySqlParameter("@N_BidderNumber", auctionSale.BidderNumber));
+                cmd.Parameters.Add(new MySqlParameter("@N_SellingPrice", auctionSale.SellingPrice));
+                cmd.Parameters.Add(new MySqlParameter("@N_BuyersFee", auctionSale.BuyersFee));
+                cmd.Parameters.Add(new MySqlParameter("@N_Deposit", auctionSale.Deposit));
+                cmd.Parameters.Add(new MySqlParameter("@N_ConditonID", auctionSale.ConditionID));
+                cmd.Parameters.Add(new MySqlParameter("@N_GSTID", auctionSale.GstID));
+                cmd.Parameters.Add(new MySqlParameter("@N_Total", auctionSale.Total));
+                cmd.Parameters.Add(new MySqlParameter("@N_Saledate", auctionSale.SaleDate));
+                cmd.Parameters.Add(new MySqlParameter("@N_Notes", auctionSale.Notes));
+
+                MySqlParameter returnParameter = new MySqlParameter();
+                returnParameter.Direction = System.Data.ParameterDirection.ReturnValue;
+
+                cmd.Parameters.Add(returnParameter);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = conn;
+                cmd.ExecuteNonQuery();
+
+                id = Convert.ToInt32(returnParameter.Value.ToString());
+            }
+            catch (Exception ex)
+            {
+                //Panic
+                throw ex;
+            }
+            finally
+            {
+                //Tie the loose ends here
+                conn.Close();
+            }
+            return id;
+        }
+
+
+/*
 public DataSet findAuctions()
 {
 DataSet ds = new DataSet("Auctions");
@@ -106,7 +181,7 @@ finally
 return ds;
 }
 
- */
+*/
 
 
 

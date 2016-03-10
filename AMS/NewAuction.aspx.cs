@@ -11,7 +11,17 @@ namespace AMS
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            try
+            {
 
+            }
+            catch (Exception ex) 
+            {
+                AlertDiv.InnerHtml = "<div class=\"alert alert-danger fade in\">" +
+                "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + ex.Message +
+                "</label></div>";
+            }
         }
     }
 }
