@@ -2,7 +2,11 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h1>New Auction</h1>
     <div class=" col-xs-12" id="AlertDiv" runat="server"></div>
-
+    <div class="progress progress-striped">
+        <div class="progress-bar progress-bar-info" style="width: 20%">
+            <span class="sr-only">Creating New Auction - </span>
+        </div>
+    </div>
     <div class="control-group">
         <label class="control-label col-xs-2" for="TXTNotes">New Auction Date:</label>
             <div class="container">
