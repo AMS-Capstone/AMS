@@ -10,7 +10,7 @@
 namespace AMS {
     
     
-    public partial class _Default {
+    public partial class NewAuction {
         
         /// <summary>
         /// AlertDiv control.
@@ -22,39 +22,39 @@ namespace AMS {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl AlertDiv;
         
         /// <summary>
-        /// Label1 control.
+        /// ProgressBar control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ProgressBar;
         
         /// <summary>
-        /// DDLAuctionYear control.
+        /// TXTDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DDLAuctionYear;
+        protected global::System.Web.UI.WebControls.TextBox TXTDate;
         
         /// <summary>
-        /// LBAuctionList control.
+        /// LBAuctionCars control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox LBAuctionList;
+        protected global::System.Web.UI.WebControls.ListBox LBAuctionCars;
         
         /// <summary>
-        /// btnSelectAuction control.
+        /// BTNSubmit control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSelectAuction;
+        protected global::System.Web.UI.WebControls.Button BTNSubmit;
     }
 }

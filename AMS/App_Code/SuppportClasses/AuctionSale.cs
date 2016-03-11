@@ -35,6 +35,13 @@ namespace AMS.App_Code
             get { return buyerID; }
             set { buyerID = value; }
         }
+        private int bidderNumber;
+
+        public int BidderNumber
+        {
+            get { return bidderNumber; }
+            set { bidderNumber = value; }
+        }
         private double sellingPrice;
 
         public double SellingPrice

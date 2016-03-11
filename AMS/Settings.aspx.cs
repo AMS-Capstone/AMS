@@ -13,43 +13,53 @@ namespace AMS
         protected void Page_Load(object sender, EventArgs e)
         {
             if(!IsPostBack)
-            { 
-            //Load All GST
-            DataAction dataAction = new DataAction();
-            DataTable dt =  dataAction.GetGST();
+            {
+                try 
+                { 
+                    //Load All GST
+                    DataAction dataAction = new DataAction();
+                    DataTable dt =  dataAction.GetGST();
 
-            DDLGST.DataSource = dt;
+                    DDLGST.DataSource = dt;
             
-            DDLGST.DataValueField = dt.Columns["GSTID"].ToString();
-                DDLGST.DataTextField = dt.Columns["GSTPercent"].ToString();
-            DDLGST.DataBind();
-            DDLGST.Items.Insert(0, new ListItem(String.Empty, String.Empty));
-                //Load All Condition Statuses
+                    DDLGST.DataValueField = dt.Columns["GSTID"].ToString();
+                        DDLGST.DataTextField = dt.Columns["GSTPercent"].ToString();
+                    DDLGST.DataBind();
+                    DDLGST.Items.Insert(0, new ListItem(String.Empty, String.Empty));
+                    //Load All Condition Statuses
 
-                dt = dataAction.GetConditionStatus();
-                DDLConditionStatus.DataSource = dt;
-                DDLConditionStatus.DataValueField = dt.Columns["ConditionID"].ToString();
-                DDLConditionStatus.DataTextField = dt.Columns["Description"].ToString();
-                DDLConditionStatus.DataBind();
-                DDLConditionStatus.Items.Insert(0, new ListItem(String.Empty, String.Empty));
+                    dt = dataAction.GetConditionStatus();
+                    DDLConditionStatus.DataSource = dt;
+                    DDLConditionStatus.DataValueField = dt.Columns["ConditionID"].ToString();
+                    DDLConditionStatus.DataTextField = dt.Columns["Description"].ToString();
+                    DDLConditionStatus.DataBind();
+                    DDLConditionStatus.Items.Insert(0, new ListItem(String.Empty, String.Empty));
 
-                //Load All Fee Types
+                    //Load All Fee Types
                 
-                dt = dataAction.GetFeeType();
-                DDLFeeTypes.DataSource = dt;
-                DDLFeeTypes.DataValueField = dt.Columns["FeeId"].ToString();
-                DDLFeeTypes.DataTextField = dt.Columns["description"].ToString();
-                DDLFeeTypes.DataBind();
-                DDLFeeTypes.Items.Insert(0, new ListItem(String.Empty, String.Empty));
+                    dt = dataAction.GetFeeType();
+                    DDLFeeTypes.DataSource = dt;
+                    DDLFeeTypes.DataValueField = dt.Columns["FeeId"].ToString();
+                    DDLFeeTypes.DataTextField = dt.Columns["description"].ToString();
+                    DDLFeeTypes.DataBind();
+                    DDLFeeTypes.Items.Insert(0, new ListItem(String.Empty, String.Empty));
 
-                //Load All Payment Types
-                dt = dataAction.GetPaymentType();
-                DDLPaymentTypes.DataSource = dt;
-                DDLPaymentTypes.DataValueField = dt.Columns["PaymentTypeID"].ToString();
-                DDLPaymentTypes.DataTextField = dt.Columns["PaymentDescription"].ToString();
-                DDLPaymentTypes.DataBind();
-                DDLPaymentTypes.Items.Insert(0, new ListItem(String.Empty, String.Empty));
+                    //Load All Payment Types
+                    dt = dataAction.GetPaymentType();
+                    DDLPaymentTypes.DataSource = dt;
+                    DDLPaymentTypes.DataValueField = dt.Columns["PaymentTypeID"].ToString();
+                    DDLPaymentTypes.DataTextField = dt.Columns["PaymentDescription"].ToString();
+                    DDLPaymentTypes.DataBind();
+                    DDLPaymentTypes.Items.Insert(0, new ListItem(String.Empty, String.Empty));
 
+                }
+                catch (Exception ex)
+                {
+                    AlertDiv.InnerHtml = "<div class=\"alert alert-danger fade in\">" +
+                    "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                    "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + ex.Message +
+                    "</label></div>";
+                }
             }
         }
 
@@ -57,34 +67,52 @@ namespace AMS
         {
             DataAction dataAction = new DataAction();
             //Add New GST
-            if (TXTNewGST.Text.Trim() == "")
+            try
             {
+                if (TXTNewGST.Text.Trim() == "")
+                {
               
-                dataAction.CreateGSTEntry(double.Parse(TXTNewGST.Text.Trim()), true);
+                    dataAction.CreateGSTEntry(double.Parse(TXTNewGST.Text.Trim()), true);
+                }
+                else
+                {
+                    dataAction.UpdateGSTEntry(int.Parse(DDLGST.SelectedValue.ToString()), double.Parse(TXTNewGST.Text.Trim()), true);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                dataAction.UpdateGSTEntry(int.Parse(DDLGST.SelectedValue.ToString()), double.Parse(TXTNewGST.Text.Trim()), true);
+                AlertDiv.InnerHtml = "<div class=\"alert alert-danger fade in\">" +
+                "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + ex.Message +
+                "</label></div>";
             }
-   
         }
 
    
         protected void BTNSave_Click(object sender, EventArgs e)
         {
             DataAction dataAction = new DataAction();
-            if (DDLGST.SelectedItem.ToString() == "")
+            try
             {
-                //Create new one
-                dataAction.CreateGSTEntry(double.Parse(TXTNewGST.Text.ToString()), CHKActive.Checked);
+                if (DDLGST.SelectedItem.ToString() == "")
+                {
+                    //Create new one
+                    dataAction.CreateGSTEntry(double.Parse(TXTNewGST.Text.ToString()), CHKActive.Checked);
               
+                }
+                else
+                {
+                    //Update it
+                    dataAction.UpdateGSTEntry(int.Parse(DDLGST.SelectedValue.ToString()), double.Parse(TXTNewGST.Text),CHKActive.Checked);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                //Update it
-                dataAction.UpdateGSTEntry(int.Parse(DDLGST.SelectedValue.ToString()), double.Parse(TXTNewGST.Text),CHKActive.Checked);
+                AlertDiv.InnerHtml = "<div class=\"alert alert-danger fade in\">" +
+                "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + ex.Message +
+                "</label></div>";
             }
-
         }
 
         protected void DDLGST_SelectedIndexChanged1(object sender, EventArgs e)
@@ -97,27 +125,35 @@ namespace AMS
             }
             else
             {
-                DataAction dataAction = new DataAction();
-                DataTable dt = dataAction.GetGSTbyID(int.Parse(DDLGST.SelectedValue.ToString()));
-                foreach(DataRow aRow in dt.Rows)
+                try
                 {
-                 
-            
-            
+                    DataAction dataAction = new DataAction();
+                    DataTable dt = dataAction.GetGSTbyID(int.Parse(DDLGST.SelectedValue.ToString()));
+                
+                    foreach(DataRow aRow in dt.Rows)
+                    {
 
-                //DDLGST.DataBind();
-                TXTNewGST.Text = aRow["GSTPercent"].ToString();
+                        //DDLGST.DataBind();
+                        TXTNewGST.Text = aRow["GSTPercent"].ToString();
       
 
-                if (bool.Parse(aRow["GSTStatus"].ToString()) == true)
-                {
+                        if (bool.Parse(aRow["GSTStatus"].ToString()) == true)
+                        {
 
-                    CHKActive.Checked = true;
+                            CHKActive.Checked = true;
+                        }
+                        else
+                        {
+                            CHKActive.Checked = false;
+                        }
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    CHKActive.Checked = false;
-                }
+                    AlertDiv.InnerHtml = "<div class=\"alert alert-danger fade in\">" +
+                    "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                    "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + ex.Message +
+                    "</label></div>";
                 }
             }
         }
@@ -125,38 +161,69 @@ namespace AMS
         protected void BTNSaveConditionStatus_Click(object sender, EventArgs e)
         {
             DataAction dataAction = new DataAction();
-            if(DDLConditionStatus.SelectedValue == "")
+            try
             {
-                dataAction.CreateConditionStatus(TXTConditionCode.Text.Trim(), TXTConditionDescription.Text.Trim());
+                if(DDLConditionStatus.SelectedValue == "")
+                {
+                    dataAction.CreateConditionStatus(TXTConditionCode.Text.Trim(), TXTConditionDescription.Text.Trim());
+                }
+                else
+                {
+                    dataAction.UpdateConditionStatus(int.Parse(DDLConditionStatus.SelectedValue.ToString().Trim()), TXTConditionDescription.Text.Trim(), TXTConditionCode.Text.Trim());
+                }
             }
-            else
+            catch (Exception ex)
             {
-                dataAction.UpdateConditionStatus(int.Parse(DDLConditionStatus.SelectedValue.ToString().Trim()), TXTConditionDescription.Text.Trim(), TXTConditionCode.Text.Trim());
+                AlertDiv.InnerHtml = "<div class=\"alert alert-danger fade in\">" +
+                "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + ex.Message +
+                "</label></div>";
             }
         }
 
         protected void BTNSaveFeeType_Click(object sender, EventArgs e)
         {
             DataAction dataAction = new DataAction();
-            if(DDLFeeTypes.SelectedValue == "")
+            try
             {
-                dataAction.CreateFeeType(double.Parse(TXTFeeCost.Text.ToString().Trim()), TXTFeeType.Text.Trim());
+                if(DDLFeeTypes.SelectedValue == "")
+                {
+                    dataAction.CreateFeeType(double.Parse(TXTFeeCost.Text.ToString().Trim()), TXTFeeType.Text.Trim());
+                }
+                else
+                {
+                    dataAction.UpdateFeeType(int.Parse(DDLFeeTypes.SelectedValue.ToString().Trim()), double.Parse((TXTFeeCost.Text.ToString().Trim())), TXTFeeType.Text.Trim());
+                }
             }
-            else
+            catch (Exception ex)
             {
-                dataAction.UpdateFeeType(int.Parse(DDLFeeTypes.SelectedValue.ToString().Trim()), double.Parse((TXTFeeCost.Text.ToString().Trim())), TXTFeeType.Text.Trim());
+                AlertDiv.InnerHtml = "<div class=\"alert alert-danger fade in\">" +
+                "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + ex.Message +
+                "</label></div>";
             }
         }
+
         protected void BTNSavePaymentType_Click(object sender, EventArgs e)
         {
             DataAction dataAction = new DataAction();
-            if(DDLPaymentTypes.SelectedValue == "")
+            try
             {
-                dataAction.CreatePaymentType(TXTPaymentTypes.Text.ToString().Trim());
+                if(DDLPaymentTypes.SelectedValue == "")
+                {
+                    dataAction.CreatePaymentType(TXTPaymentTypes.Text.ToString().Trim());
+                }
+                else
+                {
+                    dataAction.UpdatePaymentType(int.Parse(DDLPaymentTypes.SelectedValue.ToString().Trim()), TXTPaymentTypes.Text.Trim());
+                }
             }
-            else
+            catch (Exception ex)
             {
-                dataAction.UpdatePaymentType(int.Parse(DDLPaymentTypes.SelectedValue.ToString().Trim()), TXTPaymentTypes.Text.Trim());
+                AlertDiv.InnerHtml = "<div class=\"alert alert-danger fade in\">" +
+                "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + ex.Message +
+                "</label></div>";
             }
         }
 
@@ -170,13 +237,20 @@ namespace AMS
             else
             {
                 DataAction dataAction = new DataAction();
-
-                DataTable dt = dataAction.GetConditionStatusByID(int.Parse(DDLConditionStatus.SelectedValue.ToString().Trim()));
-
-                foreach(DataRow aRow in dt.Rows )
+                try{
+                    DataTable dt = dataAction.GetConditionStatusByID(int.Parse(DDLConditionStatus.SelectedValue.ToString().Trim()));
+                    foreach (DataRow aRow in dt.Rows)
+                    {
+                        TXTConditionDescription.Text = aRow["ConditionDescription"].ToString();
+                        TXTConditionCode.Text = aRow["ConditionCode"].ToString();
+                    }
+                }
+                catch (Exception ex)
                 {
-                    TXTConditionDescription.Text = aRow["ConditionDescription"].ToString();
-                    TXTConditionCode.Text = aRow["ConditionCode"].ToString();
+                    AlertDiv.InnerHtml = "<div class=\"alert alert-danger fade in\">" +
+                    "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                    "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + ex.Message +
+                    "</label></div>";
                 }
             }
         }
@@ -191,12 +265,21 @@ namespace AMS
             else
             {
                 DataAction dataAction = new DataAction();
-                DataTable dt = dataAction.GetFeeTypeByID(int.Parse(DDLFeeTypes.SelectedValue.ToString()));
-
-                foreach(DataRow aRow in dt.Rows)
+                try
                 {
-                    TXTFeeCost.Text = aRow["FeeCost"].ToString();
-                    TXTFeeType.Text = aRow["FeeType"].ToString();
+                    DataTable dt = dataAction.GetFeeTypeByID(int.Parse(DDLFeeTypes.SelectedValue.ToString()));
+                    foreach (DataRow aRow in dt.Rows)
+                    {
+                        TXTFeeCost.Text = aRow["FeeCost"].ToString();
+                        TXTFeeType.Text = aRow["FeeType"].ToString();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    AlertDiv.InnerHtml = "<div class=\"alert alert-danger fade in\">" +
+                    "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                    "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + ex.Message +
+                    "</label></div>";
                 }
             }
         }
@@ -210,11 +293,20 @@ namespace AMS
             else
             {
                 DataAction dataAction = new DataAction();
-                DataTable dt = dataAction.GetPaymentTypeByID(int.Parse(DDLPaymentTypes.SelectedValue.ToString()));
-
-                foreach(DataRow aRow in dt.Rows)
+                try
                 {
-                    TXTPaymentTypes.Text = aRow["PaymentDescription"].ToString();
+                    DataTable dt = dataAction.GetPaymentTypeByID(int.Parse(DDLPaymentTypes.SelectedValue.ToString()));
+                    foreach (DataRow aRow in dt.Rows)
+                    {
+                        TXTPaymentTypes.Text = aRow["PaymentDescription"].ToString();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    AlertDiv.InnerHtml = "<div class=\"alert alert-danger fade in\">" +
+                    "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                    "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + ex.Message +
+                    "</label></div>";
                 }
             }
 

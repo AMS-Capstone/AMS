@@ -4,32 +4,35 @@
     
     <div class=" col-xs-12" id="AlertDiv" runat="server"></div>
 
-    <asp:GridView ID="GVAuction" runat="server" CssClass="table table-hover col-xs-12" AutoGenerateColumns="False" OnRowDataBound="RowDataBound"
+    <asp:GridView ID="GVAuction" runat="server" CssClass="table table-hover col-xs-12" 
+        AutoGenerateColumns="False" OnRowDataBound="RowDataBound" OnRowEditing="gv_RowEditing" OnRowUpdating="gv_RowUpdating" OnRowCancelingEdit="gv_RowCancelingEdit"
+        AutoGenerateEditButton="true"
         >
         <Columns>
             <asp:BoundField HeaderText="Con Code" DataField="SellerCode" />            
             <asp:BoundField HeaderText="Lot #" DataField="LotNumber" />
             <asp:TemplateField HeaderText="Bidder #">
                 <ItemTemplate>
-                    <asp:Label ID="lblBidderNumber" runat="server" Text='<%# Eval("BidderNumber") %>' Visible="false" />
+                    <asp:Label ID="lblBidderNumber" runat="server" Text='<%# Eval("BuyerID") %>' Visible="false" />
                     <asp:DropDownList ID="DDLBidderNumbers" runat="server"  OnSelectedIndexChanged="DDLBidderNumbers_SelectedIndexChanged"></asp:DropDownList>
                 </ItemTemplate>
             </asp:TemplateField>                   
             <asp:TemplateField  HeaderText="Sale Status">
                 <ItemTemplate>
-                    <asp:Label ID="lblSaleStatus" runat="server" Text='<%# Eval("ConditionCode") %>' Visible="false" />
-                    <asp:DropDownList ID="ddlSaleStatuses" runat="server"></asp:DropDownList>
+                    <asp:Label ID="lblSaleStatus" runat="server" Text='<%# Eval("ConditionID") %>' Visible="false" />
+                    <asp:DropDownList ID="DDLSaleStatuses" runat="server" OnSelectedIndexChanged="DDLSaleStatuses_SelectedIndexChanged"></asp:DropDownList>
                 </ItemTemplate>
             </asp:TemplateField>   
-            <asp:BoundField HeaderText="Selling Price" DataField="SellingPrice" />
+            <asp:BoundField HeaderText="Selling Price" DataField="SellingPrice" DataFormatString="{0:c}" />
             <asp:BoundField HeaderText="AuctionSaleID" DataField="AuctionSaleID" Visible="false"/>
-            <asp:BoundField HeaderText="Buyer's Fee" DataField="BuyersFee" />
-            <asp:BoundField HeaderText="GST" DataField="GST" /><%--Auto-calculated and stored field--%>
-            <asp:BoundField HeaderText="Total" DataField="Total" /><%--Auto-calculated and stored field--%>
-            <asp:BoundField HeaderText="Deposit" DataField="Deposit" />
-            <asp:BoundField HeaderText="Payments" DataField="PaymentsTotal" /><%--Payments will show a total with the link to the popup that would add a new payment--%>
-            <asp:BoundField HeaderText="Surcharges" DataField="SurchargesTotal" /><%--Auto-calculated and stored field--%>
-            <asp:BoundField HeaderText="Net Total" DataField="NetTotal" /><%--Auto-calculated and stored field--%>
+            <asp:BoundField HeaderText="Buyer's Fee" DataField="BuyersFee" DataFormatString="{0:c}" />
+            <asp:BoundField HeaderText="GST" DataField="GST" DataFormatString="{0:c}" /><%--Auto-calculated and stored field--%>
+            <asp:BoundField HeaderText="Total" DataField="Total" DataFormatString="{0:c}" /><%--Auto-calculated and stored field--%>
+            <asp:BoundField HeaderText="Deposit" DataField="Deposit" DataFormatString="{0:c}" />
+            <asp:BoundField HeaderText="Payments" DataField="PaymentsTotal" DataFormatString="{0:c}" /><%--Payments will show a total with the link to the popup that would add a new payment--%>
+            <asp:BoundField HeaderText="Surcharges" DataField="SurchargesTotal" DataFormatString="{0:c}" /><%--Auto-calculated and stored field--%>
+            <asp:BoundField HeaderText="Net Total" DataField="NetTotal" DataFormatString="{0:c}" /><%--Auto-calculated and stored field--%>
+
         </Columns>
     </asp:GridView>
     <div class=" col-xs-12"></div>

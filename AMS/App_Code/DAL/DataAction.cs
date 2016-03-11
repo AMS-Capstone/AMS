@@ -19,15 +19,25 @@ namespace AMS.App_Code
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
-                MySqlCommand cmd = new MySqlCommand("sp_createGSTEntry", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("pGstPercent", gstPercent);
-                cmd.Parameters.AddWithValue("pGSTStatus", status);
-                conn.Open();
-                cmd.ExecuteNonQuery();
-
+                try{
+                    MySqlCommand cmd = new MySqlCommand("sp_createGSTEntry", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("pGstPercent", gstPercent);
+                    cmd.Parameters.AddWithValue("pGSTStatus", status);
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    //Panic
+                    throw ex;
+                }
+                finally
+                {
+                    //Tie the loose ends here
+                }
             }
-            }
+        }
 
         //Update a GST Code
         public void UpdateGSTEntry(int gstId, double gstPercent, bool status)
@@ -35,13 +45,25 @@ namespace AMS.App_Code
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
-                MySqlCommand cmd = new MySqlCommand("sp_updateGSTEntry", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("pGstID", gstId);
-                cmd.Parameters.AddWithValue("pGstPercent", gstPercent);
-                cmd.Parameters.AddWithValue("pGSTStatus", status);
-                conn.Open();
-                cmd.ExecuteNonQuery();
+                try
+                {
+                    MySqlCommand cmd = new MySqlCommand("sp_updateGSTEntry", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("pGstID", gstId);
+                    cmd.Parameters.AddWithValue("pGstPercent", gstPercent);
+                    cmd.Parameters.AddWithValue("pGSTStatus", status);
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    //Panic
+                    throw ex;
+                }
+                finally
+                {
+                    //Tie the loose ends here
+                }
             }
         }
         //Get GST by ID
@@ -51,17 +73,29 @@ namespace AMS.App_Code
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
-                using (MySqlCommand cmd = conn.CreateCommand())
+                try
                 {
-                    conn.Open();
-                    cmd.CommandText = "sp_getGSTByID";
-                    cmd.Parameters.AddWithValue("pGstID", gstID);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                    using (MySqlCommand cmd = conn.CreateCommand())
                     {
-                        da.Fill(dt);
+                        conn.Open();
+                        cmd.CommandText = "sp_getGSTByID";
+                        cmd.Parameters.AddWithValue("pGstID", gstID);
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt);
 
+                        }
                     }
+                }
+                catch (Exception ex)
+                {
+                    //Panic
+                    throw ex;
+                }
+                finally
+                {
+                    //Tie the loose ends here
                 }
             }
             return dt;
@@ -73,16 +107,28 @@ namespace AMS.App_Code
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
-                using (MySqlCommand cmd = conn.CreateCommand())
+                try
                 {
-                    conn.Open();
-                    cmd.CommandText = "sp_viewGSTEntries";
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                    using (MySqlCommand cmd = conn.CreateCommand())
                     {
-                        da.Fill(dt);
+                        conn.Open();
+                        cmd.CommandText = "sp_viewGSTEntries";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt);
 
+                        }
                     }
+                }
+                catch (Exception ex)
+                {
+                    //Panic
+                    throw ex;
+                }
+                finally
+                {
+                    //Tie the loose ends here
                 }
             }
             return dt;
@@ -90,30 +136,54 @@ namespace AMS.App_Code
         //Create condition status
         public void CreateConditionStatus(string conditionCode, string conditionDescription)
         {
-            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            try
             {
-                MySqlCommand cmd = new MySqlCommand("sp_createConditionStatus", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("pConditionCode", conditionCode);
-                cmd.Parameters.AddWithValue("pConditionDescription", conditionDescription);
-                conn.Open();
-                cmd.ExecuteNonQuery();
+                string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    MySqlCommand cmd = new MySqlCommand("sp_createConditionStatus", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("pConditionCode", conditionCode);
+                    cmd.Parameters.AddWithValue("pConditionDescription", conditionDescription);
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                //Panic
+                throw ex;
+            }
+            finally
+            {
+                //Tie the loose ends here
             }
         }
 
         public  void UpdateConditionStatus(int conditionID, string conditionDescription, string conditionCode)
         {
-            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            try
             {
-                MySqlCommand cmd = new MySqlCommand("sp_updateConditionStatus", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("pConditionID", conditionID);
-                cmd.Parameters.AddWithValue("pConditionDescription", conditionDescription);
-                cmd.Parameters.AddWithValue("pConditionCode", conditionCode);
-                conn.Open();
-                cmd.ExecuteNonQuery();
+                string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    MySqlCommand cmd = new MySqlCommand("sp_updateConditionStatus", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("pConditionID", conditionID);
+                    cmd.Parameters.AddWithValue("pConditionDescription", conditionDescription);
+                    cmd.Parameters.AddWithValue("pConditionCode", conditionCode);
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                //Panic
+                throw ex;
+            }
+            finally
+            {
+                //Tie the loose ends here
             }
         }
 
@@ -124,17 +194,29 @@ namespace AMS.App_Code
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
-                using (MySqlCommand cmd = conn.CreateCommand())
+                try
                 {
-                    conn.Open();
-                    cmd.CommandText = "sp_viewConditionStatus";
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                    using (MySqlCommand cmd = conn.CreateCommand())
                     {
-                        da.Fill(dt);
+                        conn.Open();
+                        cmd.CommandText = "sp_viewConditionStatus";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt);
+
+                        }
 
                     }
-
+                }
+                catch (Exception ex)
+                {
+                    //Panic
+                    throw ex;
+                }
+                finally
+                {
+                    //Tie the loose ends here
                 }
             }
             return dt;
@@ -145,17 +227,29 @@ namespace AMS.App_Code
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
-                using (MySqlCommand cmd = conn.CreateCommand())
-                {
-                    conn.Open();
-                    cmd.CommandText = "sp_getConditionStatusByID";
-                    cmd.Parameters.AddWithValue("pConditionID", conditionID);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                try
+                { 
+                    using (MySqlCommand cmd = conn.CreateCommand())
                     {
-                        da.Fill(dt);
+                        conn.Open();
+                        cmd.CommandText = "sp_getConditionStatusByID";
+                        cmd.Parameters.AddWithValue("pConditionID", conditionID);
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt);
 
+                        }
                     }
+                }
+                catch (Exception ex)
+                {
+                    //Panic
+                    throw ex;
+                }
+                finally
+                {
+                    //Tie the loose ends here
                 }
             }
             return dt;
@@ -168,17 +262,29 @@ namespace AMS.App_Code
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
-                using (MySqlCommand cmd = conn.CreateCommand())
+                try
                 {
-                    conn.Open();
-                    cmd.CommandText = "sp_getPaymentTypeByID";
-                    cmd.Parameters.AddWithValue("pPaymentTypeID", paymentID);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                    using (MySqlCommand cmd = conn.CreateCommand())
                     {
-                        da.Fill(dt);
+                        conn.Open();
+                        cmd.CommandText = "sp_getPaymentTypeByID";
+                        cmd.Parameters.AddWithValue("pPaymentTypeID", paymentID);
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt);
 
+                        }
                     }
+                }
+                catch (Exception ex)
+                {
+                    //Panic
+                    throw ex;
+                }
+                finally
+                {
+                    //Tie the loose ends here
                 }
             }
             return dt;
@@ -187,16 +293,28 @@ namespace AMS.App_Code
 
         public void CreateFeeType(double feeCost, string feeType)
         {
-            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            try
             {
-                MySqlCommand cmd = new MySqlCommand("sp_createFeeType", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("pFeeCost", feeCost);
-                cmd.Parameters.AddWithValue("pFeeType", feeType);
+                string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    MySqlCommand cmd = new MySqlCommand("sp_createFeeType", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("pFeeCost", feeCost);
+                    cmd.Parameters.AddWithValue("pFeeType", feeType);
                 
-                conn.Open();
-                cmd.ExecuteNonQuery();
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                //Panic
+                throw ex;
+            }
+            finally
+            {
+                //Tie the loose ends here
             }
         }
 
@@ -208,17 +326,29 @@ namespace AMS.App_Code
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
-                using (MySqlCommand cmd = conn.CreateCommand())
+                try
                 {
-                    conn.Open();
-                    cmd.CommandText = "sp_getFeeTypeByID";
-                    cmd.Parameters.AddWithValue("pFeeID", feeID);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                    using (MySqlCommand cmd = conn.CreateCommand())
                     {
-                        da.Fill(dt);
+                        conn.Open();
+                        cmd.CommandText = "sp_getFeeTypeByID";
+                        cmd.Parameters.AddWithValue("pFeeID", feeID);
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt);
 
+                        }
                     }
+                }
+                catch (Exception ex)
+                {
+                    //Panic
+                    throw ex;
+                }
+                finally
+                {
+                    //Tie the loose ends here
                 }
             }
             return dt;
@@ -227,16 +357,28 @@ namespace AMS.App_Code
         //Update Fee Type
         public void UpdateFeeType(int feeID, double feeCost, string feeType)
         {
-            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            try
             {
-                MySqlCommand cmd = new MySqlCommand("sp_updateFeeType", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("pFeeId", feeID);
-                cmd.Parameters.AddWithValue("pFeeType", feeType);
-                cmd.Parameters.AddWithValue("pFeeCost", feeCost);
-                conn.Open();
-                cmd.ExecuteNonQuery();
+                string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    MySqlCommand cmd = new MySqlCommand("sp_updateFeeType", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("pFeeId", feeID);
+                    cmd.Parameters.AddWithValue("pFeeType", feeType);
+                    cmd.Parameters.AddWithValue("pFeeCost", feeCost);
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                //Panic
+                throw ex;
+            }
+            finally
+            {
+                //Tie the loose ends here
             }
         }
 
@@ -247,17 +389,29 @@ namespace AMS.App_Code
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
-                using (MySqlCommand cmd = conn.CreateCommand())
+                try
                 {
-                    conn.Open();
-                    cmd.CommandText = "sp_viewFeeTypes";
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                    using (MySqlCommand cmd = conn.CreateCommand())
                     {
-                        da.Fill(dt);
+                        conn.Open();
+                        cmd.CommandText = "sp_viewFeeTypes";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt);
+
+                        }
 
                     }
-
+                }
+                catch (Exception ex)
+                {
+                    //Panic
+                    throw ex;
+                }
+                finally
+                {
+                    //Tie the loose ends here
                 }
             }
             return dt;
@@ -267,15 +421,27 @@ namespace AMS.App_Code
         //Create Payment Type
         public void CreatePaymentType(string paymentDescription)
         {
-            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            try
             {
-                MySqlCommand cmd = new MySqlCommand("sp_createPaymentType", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("pPaymentDescription", paymentDescription);
+                string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    MySqlCommand cmd = new MySqlCommand("sp_createPaymentType", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("pPaymentDescription", paymentDescription);
 
-                conn.Open();
-                cmd.ExecuteNonQuery();
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                //Panic
+                throw ex;
+            }
+            finally
+            {
+                //Tie the loose ends here
             }
         }
 
@@ -283,16 +449,28 @@ namespace AMS.App_Code
 //Update PaymentType
         public void UpdatePaymentType(int paymentID, string paymentDescription)
         {
-            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            try
             {
-                MySqlCommand cmd = new MySqlCommand("sp_updatePaymentType", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("pPaymentID", paymentID);
-                cmd.Parameters.AddWithValue("pPaymentDescription", paymentDescription);
+                string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    MySqlCommand cmd = new MySqlCommand("sp_updatePaymentType", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("pPaymentID", paymentID);
+                    cmd.Parameters.AddWithValue("pPaymentDescription", paymentDescription);
                 
-                conn.Open();
-                cmd.ExecuteNonQuery();
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                //Panic
+                throw ex;
+            }
+            finally
+            {
+                //Tie the loose ends here
             }
         }
 
@@ -303,17 +481,29 @@ namespace AMS.App_Code
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
-                using (MySqlCommand cmd = conn.CreateCommand())
+                try
                 {
-                    conn.Open();
-                    cmd.CommandText = "sp_viewPaymentType";
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                    using (MySqlCommand cmd = conn.CreateCommand())
                     {
-                        da.Fill(dt);
+                        conn.Open();
+                        cmd.CommandText = "sp_viewPaymentType";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt);
+
+                        }
 
                     }
-
+                }
+                catch (Exception ex)
+                {
+                    //Panic
+                    throw ex;
+                }
+                finally
+                {
+                    //Tie the loose ends here
                 }
             }
             return dt;
@@ -330,16 +520,28 @@ namespace AMS.App_Code
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
-                using (MySqlCommand cmd = conn.CreateCommand())
+                try
                 {
-                    conn.Open();
-                    cmd.CommandText = "sp_viewSellers";
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                    using (MySqlCommand cmd = conn.CreateCommand())
                     {
-                        da.Fill(dt);
+                        conn.Open();
+                        cmd.CommandText = "sp_viewSellers";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt);
 
+                        }
                     }
+                }
+                catch (Exception ex)
+                {
+                    //Panic
+                    throw ex;
+                }
+                finally
+                {
+                    //Tie the loose ends here
                 }
             }
             return dt;
@@ -352,17 +554,29 @@ namespace AMS.App_Code
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
-                using (MySqlCommand cmd = conn.CreateCommand())
+                try
                 {
-                    conn.Open();
-                    cmd.CommandText = "sp_getVehicleByLotNumber";
-                    cmd.Parameters.AddWithValue("pLotNumber", lotNumber);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                    using (MySqlCommand cmd = conn.CreateCommand())
                     {
-                        da.Fill(dt);
+                        conn.Open();
+                        cmd.CommandText = "sp_getVehicleByLotNumber";
+                        cmd.Parameters.AddWithValue("pLotNumber", lotNumber);
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt);
 
+                        }
                     }
+                }
+                catch (Exception ex)
+                {
+                    //Panic
+                    throw ex;
+                }
+                finally
+                {
+                    //Tie the loose ends here
                 }
             }
             return dt;
@@ -373,47 +587,75 @@ namespace AMS.App_Code
         public void CreateVehicle(int lotNumber, string year, string make, string model, string vin, string color, int mileage, string units, string transmission, int sellerID, string options )
         {
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
-            long ID;
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            int id;
+            try
             {
-                MySqlCommand cmd = new MySqlCommand("sp_createVehicle", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("pLotNumber", lotNumber);
-                cmd.Parameters.AddWithValue("pYear", year);
-                cmd.Parameters.AddWithValue("pMake", make);
-                cmd.Parameters.AddWithValue("pModel", model);
-                cmd.Parameters.AddWithValue("pVin", vin);
-                cmd.Parameters.AddWithValue("pColor", color);
-                cmd.Parameters.AddWithValue("pMileage", mileage);
-                cmd.Parameters.AddWithValue("pUnits", units);
-                cmd.Parameters.AddWithValue("pTransmission", transmission);
-                cmd.Parameters.AddWithValue("pSellerID", sellerID);
-                cmd.Parameters.AddWithValue("pOptions", options);
-                cmd.Parameters.Add(new MySqlParameter("pVehicleID", MySqlDbType.UInt64));
-                cmd.Parameters["pVehicleID"].Direction = ParameterDirection.Output;
-                
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    MySqlCommand cmd = new MySqlCommand("sp_createVehicle", conn);
+                    cmd.Parameters.AddWithValue("pLotNumber", lotNumber);
+                    cmd.Parameters.AddWithValue("pYear", year);
+                    cmd.Parameters.AddWithValue("pMake", make);
+                    cmd.Parameters.AddWithValue("pModel", model);
+                    cmd.Parameters.AddWithValue("pVin", vin);
+                    cmd.Parameters.AddWithValue("pColor", color);
+                    cmd.Parameters.AddWithValue("pMileage", mileage);
+                    cmd.Parameters.AddWithValue("pProvince", "AB");
+                    cmd.Parameters.AddWithValue("pUnits", units);
+                    cmd.Parameters.AddWithValue("pTransmission", transmission);
+                    cmd.Parameters.AddWithValue("pSellerID", sellerID);
+                    cmd.Parameters.AddWithValue("pOptions", options);
+
+                    MySqlParameter returnParameter = new MySqlParameter();
+                    returnParameter.Direction = System.Data.ParameterDirection.ReturnValue;
+                    cmd.Parameters.Add(returnParameter);
 
 
-                conn.Open();
-                var id = cmd.ExecuteNonQuery();
 
-                
+                    conn.Open();
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Connection = conn;
+                    cmd.ExecuteNonQuery();
+
+                    id = Convert.ToInt32(returnParameter.Value.ToString());
+                    conn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                //Panic
+                throw ex;
+            }
+            finally
+            {
+                //Tie the loose ends here
                 
             }
-          
         }
 
         public void CreateImage(byte[] data, int vehicleID )
         {
-            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            try
             {
-                MySqlCommand cmd = new MySqlCommand("sp_createVehiclePicture", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add("@pImage", MySqlDbType.Blob).Value = data;
-                cmd.Parameters.AddWithValue("pVehicleID", vehicleID);
-                conn.Open();
-                cmd.ExecuteNonQuery();
+                string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    MySqlCommand cmd = new MySqlCommand("sp_createVehiclePicture", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@pImage", MySqlDbType.Blob).Value = data;
+                    cmd.Parameters.AddWithValue("pVehicleID", vehicleID);
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                //Panic
+                throw ex;
+            }
+            finally
+            {
+                //Tie the loose ends here
             }
         }
         #endregion

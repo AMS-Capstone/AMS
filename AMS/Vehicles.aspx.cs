@@ -17,22 +17,31 @@ namespace AMS
         {
             if(!IsPostBack)
             { 
-            //Load the sellers
-            DataAction dataAction = new DataAction();
-            DataTable dt = new DataTable();
-            dt = dataAction.GetSellers();
-            DDLSeller.DataSource = dt;
-            DDLSeller.DataValueField = dt.Columns["SellerID"].ToString();
-            DDLSeller.DataTextField = dt.Columns["SellerName"].ToString();
-            DDLSeller.DataBind();
-            DDLSeller.Items.Insert(0, new ListItem(String.Empty, String.Empty));
+                try
+                {
+                    //Load the sellers
+                    DataAction dataAction = new DataAction();
+                    DataTable dt = new DataTable();
+                    dt = dataAction.GetSellers();
+                    DDLSeller.DataSource = dt;
+                    DDLSeller.DataValueField = dt.Columns["SellerID"].ToString();
+                    DDLSeller.DataTextField = dt.Columns["SellerName"].ToString();
+                    DDLSeller.DataBind();
+                    DDLSeller.Items.Insert(0, new ListItem(String.Empty, String.Empty));
 
-            //Set the mileage units (NOT FROM DB)
+                    //Set the mileage units (NOT FROM DB)
 
-            DDLUnits.Items.Insert(0, new ListItem("KM", "1"));
-            DDLUnits.Items.Insert(1, new ListItem("Mi", "2"));
-            DDLUnits.Items.Insert(2, new ListItem("Hours", "3"));
-
+                    DDLUnits.Items.Insert(0, new ListItem("KM", "1"));
+                    DDLUnits.Items.Insert(1, new ListItem("Mi", "2"));
+                    DDLUnits.Items.Insert(2, new ListItem("Hours", "3"));
+                }
+                catch (Exception ex)
+                {
+                    AlertDiv.InnerHtml = "<div class=\"alert alert-danger fade in\">" +
+                    "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                    "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + ex.Message +
+                    "</label></div>";
+                }
 
             }
 
@@ -49,19 +58,19 @@ namespace AMS
 
         protected void BTNUpload_Click(object sender, EventArgs e)
         {
-            if(FUVehicle.HasFile)
-            {
+            //if(FUVehicle.HasFile)
+            //{
 
               
 
             
 
            
-                DataAction dataAction = new DataAction();
-                dataAction.CreateImage(FUVehicle.FileBytes, int.Parse(Session["VehicleID"].ToString()));
+            //    DataAction dataAction = new DataAction();
+            //    dataAction.CreateImage(FUVehicle.FileBytes, int.Parse(Session["VehicleID"].ToString()));
                 
 
-            }
+            //}
         }
     }
 }

@@ -44,11 +44,13 @@ namespace AMS
                     if (sellers.Tables[0].Rows.Count > 0)
                     {
                         selectedIndex = DDLSellerName.SelectedIndex;
-
-                        DDLSellerName.DataTextField = "SellerName";
-                        DDLSellerName.DataValueField = "SellerID";
-                        DDLSellerName.DataSource = sellers;
-                        DDLSellerName.DataBind();
+                        if (!IsPostBack)
+                        {
+                            DDLSellerName.DataTextField = "SellerName";
+                            DDLSellerName.DataValueField = "SellerID";
+                            DDLSellerName.DataSource = sellers;
+                            DDLSellerName.DataBind();
+                        }
                     }
                     else
                     {
@@ -124,6 +126,14 @@ namespace AMS
             TXTLastName.Text = "";
             TXTGSTNumber.Text = "";
             CHKPrivate.Checked = false;
+            {
+                BTNSubmit.Enabled = true;
+                BTNSubmit.CssClass = "btn btn-primary";
+                BTNUpdate.Enabled = false;
+                BTNUpdate.CssClass = "btn btn-primary hidden";
+                BTNDelete.Enabled = false;
+                BTNDelete.CssClass = "btn btn-primary hidden";
+            }
         }
 
         protected void DDLSellerName_SelectedIndexChanged(object sender, EventArgs e)
@@ -186,6 +196,12 @@ namespace AMS
             {
                 //Call DAL
                 sellerService.UpdateSeller(seller);
+
+                //Success message
+                AlertDiv.InnerHtml = "<div class=\"alert alert-success fade in\">" +
+                "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                "<strong>Success!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "Seller was updated successfully" +
+                "</label></div>";
             }
             catch (Exception ex)
             {

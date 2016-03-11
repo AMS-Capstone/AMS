@@ -155,8 +155,8 @@ Create Table AuctionSale
     SellingPrice double, 
     BuyersFee double, 
     Deposit double,
-    ConditonID integer,
-    constraint FK_AuctionSale_ConditionID foreign key (ConditonID) references conditionstatus(ConditionID),
+    ConditionID integer,
+    constraint FK_AuctionSale_ConditionID foreign key (ConditionID) references conditionstatus(ConditionID),
     GSTID integer,
     constraint FK_AuctionSale_GSTID foreign key (GSTID) references GST(GSTID),
     Total double, 
@@ -170,7 +170,7 @@ Create Table VehicleCondnReqs
 	VehicleConReqID integer primary key AUTO_INCREMENT,
     VehicleID integer,
     constraint FK_VehicleCondnReqs_VehicleID foreign key (VehicleID) references Vehicle(VehicleID),
-	Reserve text,
+	Reserve double,
     Record boolean, 
     CallOnHigh boolean,
     Comments text,
@@ -299,8 +299,8 @@ BEGIN
 	WHERE GSTID = pGstID;
 END//
 
-DROP PROCEDURE IF EXISTS sp_createconditionstatus //
-CREATE PROCEDURE sp_createconditionstatus
+DROP PROCEDURE IF EXISTS sp_createConditionStatus //
+CREATE PROCEDURE sp_createConditionStatus
 (IN pConditionCode tinyText, IN pConditionDescription text, IN pStatus boolean)
 
 BEGIN
@@ -310,8 +310,8 @@ BEGIN
 
 END//
 
-DROP PROCEDURE IF EXISTS sp_viewconditionstatus //
-CREATE PROCEDURE sp_viewconditionstatus()
+DROP PROCEDURE IF EXISTS sp_viewConditionStatus //
+CREATE PROCEDURE sp_viewConditionStatus()
 
 BEGIN
 	
@@ -320,8 +320,8 @@ BEGIN
 
 END//
 
-DROP PROCEDURE IF EXISTS sp_updateconditionstatus //
-CREATE PROCEDURE sp_updateconditionstatus(IN pConditionId integer, IN pConditionDescription text, pConditionCode tinyText, IN pStatus boolean)
+DROP PROCEDURE IF EXISTS sp_updateConditionStatus //
+CREATE PROCEDURE sp_updateConditionStatus(IN pConditionId integer, IN pConditionDescription text, pConditionCode tinyText, IN pStatus boolean)
 
 BEGIN
 
@@ -531,7 +531,7 @@ BuyerCity,
 BuyerProvince,
 BuyerPostalCode,
 BuyerPhone,
-BidderNumber,
+IF(BidderNumber = 0 , "", BidderNumber) as BidderNumber,
 Permanent,
 Banned,
 Notes
@@ -605,7 +605,7 @@ N_ContactFirstName text,
 N_ContactLastName text, 
 -- N_SellerFileNumber text,
 N_SellerPrivate boolean,
-N_GSTNumber boolean)
+N_GSTNumber text)
 BEGIN
 	UPDATE `seller`
 	SET
@@ -667,10 +667,11 @@ CREATE PROCEDURE `sp_findAuction`(IN pAuctionYear text)
 BEGIN
 	select date_format(auctiondate, '%M %e %Y') As AuctionDate, AuctionID, AuctionTotal 
     from AUCTION
-    where YEAR(AUCTION.AUCTIONDATE) = pAuctionYear;
+    where YEAR(AUCTION.AUCTIONDATE) = pAuctionYear
+    order by AuctionDate desc;
 END //
 
-drop function if exists sp_createAuction // 
+DROP FUNCTION IF EXISTS sp_createAuction // 
 CREATE FUNCTION `sp_createAuction`(pAuctionDate DATE, pAuctionTotal Double, pSurcharges Double, pCashCharges double, pChequeCharges double, pCreditCardCharges double) RETURNS int
 begin
 	INSERT INTO auction
@@ -704,8 +705,8 @@ END //
 
 -- Vehicle Screen queries
 
-DROP PROCEDURE IF EXISTS sp_createVehicle //
-CREATE PROCEDURE sp_createVehicle(In pLotNumber text, in pYear text, in pMake text, in pModel text, in pVin text, in pColor text, in pMileage integer, in pUnits text, in pProvince text, in pTransmission text, in pSellerID int, in pOptions text, out vehicleID integer)
+DROP FUNCTION IF EXISTS sp_createVehicle //
+CREATE FUNCTION sp_createVehicle(pLotNumber text,  pYear text,  pMake text,  pModel text,  pVin text,  pColor text,  pMileage integer,  pUnits text,  pProvince text,  pTransmission text,  pSellerID int,  pOptions text) returns int
 BEGIN
 INSERT INTO  `vehicle`
 (
@@ -736,7 +737,7 @@ pTransmission,
 pOptions,
 pSellerID);
 
-SELECT LAST_INSERT_ID();
+RETURN LAST_INSERT_ID();
 END//
 
 DROP PROCEDURE IF EXISTS sp_createVehiclePicture //
@@ -750,8 +751,8 @@ VALUES
 );
 END//
 
-drop function if exists sp_createAuctionSale //
-create function sp_createAuctionSale(
+DROP FUNCTION IF EXISTS sp_createAuctionSale //
+CREATE FUNCTION sp_createAuctionSale(
 	`N_AuctionID` int(11),
 	`N_VehicleID` int(11),
 	`N_BuyerID` int(11),
@@ -759,7 +760,7 @@ create function sp_createAuctionSale(
 	`N_SellingPrice` double,
 	`N_BuyersFee` double,
 	`N_Deposit` double,
-	`N_ConditonID` int(11),
+	`N_ConditionID` int(11),
 	`N_GSTID` int(11),
 	`N_Total` double,
 	`N_Saledate` date,
@@ -774,7 +775,7 @@ INSERT INTO `auctionsale`
 `SellingPrice`,
 `BuyersFee`,
 `Deposit`,
-`ConditonID`,
+`ConditionID`,
 `GSTID`,
 `Total`,
 `Saledate`,
@@ -788,7 +789,7 @@ VALUES
 `N_SellingPrice`,
 `N_BuyersFee`,
 `N_Deposit`,
-`N_ConditonID`,
+`N_ConditionID`,
 `N_GSTID`,
 `N_Total`,
 `N_Saledate`,
@@ -809,7 +810,7 @@ CREATE PROCEDURE sp_updateAuctionSale(
 	`N_SellingPrice` double,
 	`N_BuyersFee` double,
 	`N_Deposit` double,
-	`N_ConditonID` int(11),
+	`N_ConditionID` int(11),
 	`N_GSTID` int(11),
 	`N_Total` double,
 	`N_Saledate` date,
@@ -825,7 +826,7 @@ SET
 `SellingPrice` = N_SellingPrice,
 `BuyersFee` = N_BuyersFee,
 `Deposit` = N_Deposit,
-`ConditonID` = N_ConditonID,
+`ConditionID` = N_ConditionID,
 `GSTID` = N_GSTID,
 `Total` = N_Total,
 `Saledate` = N_Saledate,
@@ -841,8 +842,8 @@ CREATE PROCEDURE sp_deleteAuctionSale(N_AuctionSaleID integer)
 	END //
 
 delimiter //
-drop function if exists sp_createPayment //
-create function sp_createPayment(
+DROP FUNCTION IF EXISTS sp_createPayment //
+CREATE FUNCTION sp_createPayment(
   `N_PaymentAmount` double,
   `N_AuctionSaleID` int(11),
   `N_PaymentTypeID` int(11),
@@ -901,7 +902,7 @@ END//
 DROP PROCEDURE IF EXISTS sp_getActiveGST //
 CREATE PROCEDURE sp_getActiveGST()
 BEGIN	
-	Select GSTPercent
+	Select GSTID, GSTPercent, GSTStatus
 	FROM gst
 	where GSTStatus = 1;
 END//
@@ -913,15 +914,14 @@ SELECT
 	`seller`.`SellerCode`,
     `vehicle`.`LotNumber`,
     `seller`.`SellerID`,
-    `buyer`.`BidderNumber`,
-    `conditionstatus`.`ConditionCode`,
+    `auctionsale`.`AuctionID`,
     `auctionsale`.`AuctionSaleID`,
     `auctionsale`.`VehicleID`,
     `auctionsale`.`BuyerID`,
     `auctionsale`.`SellingPrice`,
     `auctionsale`.`BuyersFee`,
     `auctionsale`.`Deposit`,
-    `auctionsale`.`ConditonID`,
+    `auctionsale`.`ConditionID`,
     `auctionsale`.`GSTID`,
     0.00 as `GST`,
     0.00 as `PaymentsTotal`,
@@ -932,12 +932,13 @@ SELECT
 	IF(SUM(`payment`.`PaymentAmount`) is null, 0.00, SUM(`payment`.`PaymentAmount`))  as 'Payments',
 	IF(SUM(`payment`.`Surcharges`) is null, 0.00, SUM(`payment`.`Surcharges`))  as 'Surcharges',
     `auctionsale`.`Notes`
-	FROM (`seller`, `vehicle`, `auctionsale`, `conditionstatus`) left join `buyer` on `auctionsale`.`BuyerID` = `buyer`.`BuyerID` left join `payment` on `payment`.`AuctionSaleID` = `auctionSale`.`AuctionSaleID`
-	and `auctionsale`.`VehicleID` = `vehicle`.`VehicleID`
-	and `payment`.`AuctionSaleID` = `auctionSale`.`AuctionSaleID`
-    and `conditionstatus`.`ConditionID` = `auctionSale`.`ConditonID`
-	WHERE `auctionsale`.`AuctionID` = 1 
+	FROM (`seller`, `vehicle`, `auctionsale`) left join `payment` on `payment`.`AuctionSaleID` = `auctionSale`.`AuctionSaleID`
+  -- and `payment`.`AuctionSaleID` = `auctionSale`.`AuctionSaleID`
+  -- and `conditionstatus`.`ConditionID` = `auctionSale`.`ConditonID`
+	WHERE `auctionsale`.`AuctionID` = N_AuctionID 
     and `vehicle`.`SellerID` = `seller`.`SellerID`
+	and `auctionsale`.`VehicleID` = `vehicle`.`VehicleID`
+    group by AuctionSaleID
     ;
 END//
 
@@ -982,4 +983,67 @@ BEGIN
 	`ChequeCharges` = N_ChequeCharges,
 	`CreditCardCharges` = N_CreditCardCharges
 	WHERE `AuctionID` = N_AuctionID;
+END//
+
+
+DROP FUNCTION IF EXISTS sp_createVehicleCondnReqs//
+CREATE FUNCTION sp_createVehicleCondnReqs(
+`N_VehicleConReqID` int,
+`N_VehicleID` int,
+`N_Reserve` double,
+`N_Record` boolean,
+`N_CallOnHigh` boolean,
+`N_Comments` text,
+`N_EstValue` double,
+`N_dateIn` date,
+`N_ForSale` boolean
+) returns int
+BEGIN
+INSERT INTO `vehiclecondnreqs`
+(`VehicleConReqID`,
+`VehicleID`,
+`Reserve`,
+`Record`,
+`CallOnHigh`,
+`Comments`,
+`EstValue`,
+`dateIn`,
+`ForSale`)
+VALUES
+(
+`N_VehicleConReqID`,
+`N_VehicleID`,
+`N_Reserve`,
+`N_Record`,
+`N_CallOnHigh`,
+`N_Comments`,
+`N_EstValue`,
+`N_dateIn`,
+`N_ForSale`
+);
+
+return LAST_INSERT_ID();
+END//
+
+DROP PROCEDURE IF EXISTS sp_viewVehiclesForSale//
+CREATE PROCEDURE sp_viewVehiclesForSale()
+BEGIN
+	SELECT `vehicle`.`VehicleID`, CONCAT(`LotNumber`, " - ", `Year`, " ", `Color`, " ", `Make`, " ", `Model`) as `DisplayInfo`
+    FROM `vehicle`, `vehiclecondnreqs`
+    WHERE `vehiclecondnreqs`.`VehicleID` = `vehicle`.`VehicleID`;
+END//
+
+DROP PROCEDURE IF EXISTS sp_viewAuctionSalePayments//
+CREATE PROCEDURE sp_viewAuctionSalePayments(N_AuctionSaleID int)
+BEGIN
+	SELECT `payment`.`PaymentID`,
+    `payment`.`PaymentAmount`,
+    `payment`.`AuctionSaleID`,
+    `payment`.`PaymentTypeID`,
+    `payment`.`Surcharges`,
+    `payment`.`PaymentDate`
+	FROM `payment`
+    WHERE `AuctionSaleID` = N_AuctionSaleID
+	;
+
 END//

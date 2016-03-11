@@ -58,24 +58,6 @@ namespace AMS.App_Code
             set { creditCardCharges = value; }
         }
 
- 
-        private String auctioneerFirstName;
-
-        public String AucioneerFirstName
-        {
-            get { return auctioneerFirstName; }
-            set { auctioneerFirstName = value; }
-        }
-
-        private String auctioneerLastName;
-
-        public String AucioneerLastName
-        {
-            get { return auctioneerLastName; }
-            set { auctioneerLastName = value; }
-        }     
-
-
         public Auction()
         {
 
