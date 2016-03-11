@@ -705,8 +705,8 @@ END //
 
 -- Vehicle Screen queries
 
-DROP PROCEDURE IF EXISTS sp_createVehicle //
-CREATE PROCEDURE sp_createVehicle(In pLotNumber text, in pYear text, in pMake text, in pModel text, in pVin text, in pColor text, in pMileage integer, in pUnits text, in pProvince text, in pTransmission text, in pSellerID int, in pOptions text, out vehicleID integer)
+DROP FUNCTION IF EXISTS sp_createVehicle //
+CREATE FUNCTION sp_createVehicle(pLotNumber text,  pYear text,  pMake text,  pModel text,  pVin text,  pColor text,  pMileage integer,  pUnits text,  pProvince text,  pTransmission text,  pSellerID int,  pOptions text) returns int
 BEGIN
 INSERT INTO  `vehicle`
 (
@@ -737,7 +737,7 @@ pTransmission,
 pOptions,
 pSellerID);
 
-SELECT LAST_INSERT_ID();
+RETURN LAST_INSERT_ID();
 END//
 
 DROP PROCEDURE IF EXISTS sp_createVehiclePicture //

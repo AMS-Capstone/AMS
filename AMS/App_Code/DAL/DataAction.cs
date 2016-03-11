@@ -587,13 +587,12 @@ namespace AMS.App_Code
         public void CreateVehicle(int lotNumber, string year, string make, string model, string vin, string color, int mileage, string units, string transmission, int sellerID, string options )
         {
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
-            //long ID;
+            int id;
             try
             {
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
                     MySqlCommand cmd = new MySqlCommand("sp_createVehicle", conn);
-                    cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("pLotNumber", lotNumber);
                     cmd.Parameters.AddWithValue("pYear", year);
                     cmd.Parameters.AddWithValue("pMake", make);
@@ -601,17 +600,25 @@ namespace AMS.App_Code
                     cmd.Parameters.AddWithValue("pVin", vin);
                     cmd.Parameters.AddWithValue("pColor", color);
                     cmd.Parameters.AddWithValue("pMileage", mileage);
+                    cmd.Parameters.AddWithValue("pProvince", "AB");
                     cmd.Parameters.AddWithValue("pUnits", units);
                     cmd.Parameters.AddWithValue("pTransmission", transmission);
                     cmd.Parameters.AddWithValue("pSellerID", sellerID);
                     cmd.Parameters.AddWithValue("pOptions", options);
-                    cmd.Parameters.Add(new MySqlParameter("pVehicleID", MySqlDbType.UInt64));
-                    cmd.Parameters["pVehicleID"].Direction = ParameterDirection.Output;
-                
+
+                    MySqlParameter returnParameter = new MySqlParameter();
+                    returnParameter.Direction = System.Data.ParameterDirection.ReturnValue;
+                    cmd.Parameters.Add(returnParameter);
+
 
 
                     conn.Open();
-                    var id = cmd.ExecuteNonQuery();
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Connection = conn;
+                    cmd.ExecuteNonQuery();
+
+                    id = Convert.ToInt32(returnParameter.Value.ToString());
+                    conn.Close();
                 }
             }
             catch (Exception ex)
@@ -622,6 +629,7 @@ namespace AMS.App_Code
             finally
             {
                 //Tie the loose ends here
+                
             }
         }
 

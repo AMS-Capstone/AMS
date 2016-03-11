@@ -44,11 +44,13 @@ namespace AMS
                     if (sellers.Tables[0].Rows.Count > 0)
                     {
                         selectedIndex = DDLSellerName.SelectedIndex;
-
-                        DDLSellerName.DataTextField = "SellerName";
-                        DDLSellerName.DataValueField = "SellerID";
-                        DDLSellerName.DataSource = sellers;
-                        DDLSellerName.DataBind();
+                        if (!IsPostBack)
+                        {
+                            DDLSellerName.DataTextField = "SellerName";
+                            DDLSellerName.DataValueField = "SellerID";
+                            DDLSellerName.DataSource = sellers;
+                            DDLSellerName.DataBind();
+                        }
                     }
                     else
                     {

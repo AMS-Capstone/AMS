@@ -173,8 +173,8 @@ namespace AMS.App_Code
 
                 MySqlParameter returnParameter = new MySqlParameter();
                 returnParameter.Direction = System.Data.ParameterDirection.ReturnValue;
-
                 cmd.Parameters.Add(returnParameter);
+
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Connection = conn;
                 cmd.ExecuteNonQuery();

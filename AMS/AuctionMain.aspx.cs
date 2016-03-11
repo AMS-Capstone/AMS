@@ -22,20 +22,20 @@ namespace AMS
         BuyerDAL buyerService = new AMS.App_Code.BuyerDAL();
         DataSet buyers = new DataSet();
 
-        //protected override void Render(System.Web.UI.HtmlTextWriter writer)
-        //{
-        //    foreach (GridViewRow row in GVAuction.Rows)
-        //    {
-        //        if (row.RowType == DataControlRowType.DataRow &&
-        //            row.RowState.HasFlag(DataControlRowState.Edit) == false)
-        //        {
-        //            // enable click on row to enter edit mode
-        //            row.Attributes["onclick"] =
-        //                ClientScript.GetPostBackClientHyperlink(GVAuction, "Edit$" + row.DataItemIndex, true);
-        //        }
-        //    }
-        //    base.Render(writer);
-        //}
+        protected override void Render(System.Web.UI.HtmlTextWriter writer)
+        {
+            foreach (GridViewRow row in GVAuction.Rows)
+            {
+                if (row.RowType == DataControlRowType.DataRow &&
+                    row.RowState.HasFlag(DataControlRowState.Edit) == false)
+                {
+                    // enable click on row to enter edit mode
+                    row.Attributes["onclick"] =
+                        ClientScript.GetPostBackClientHyperlink(GVAuction, "Edit$" + row.DataItemIndex, true);
+                }
+            }
+            base.Render(writer);
+        }
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -67,7 +67,6 @@ namespace AMS
                     auctionData = auctionService.GetAuctionData(auctionID);
                     GVAuction.DataSource = auctionData.Tables[0].DefaultView;
                     GVAuction.DataBind();
-
                 }
                 catch (Exception ex)
                 {
@@ -155,9 +154,18 @@ namespace AMS
             }
         }
 
-        protected void gv_RowCancelingEdit(object sender, GridViewEditEventArgs e)
+        protected void gv_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
+            AlertDiv.InnerHtml = "<div class=\"alert alert-warning fade in\">" +
+                   "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                   "<strong>Warning!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "Test" +
+                   "</label></div>";
+        }
 
+        protected void gv_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            GVAuction.EditIndex = -1;
+            DataBind();
         }
 
         protected void DDLBidderNumbers_SelectedIndexChanged(object sender, EventArgs e)

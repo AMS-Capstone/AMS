@@ -88,7 +88,7 @@
     </div>
     <div class="col-xs-12"></div>
     
-        <div class="col-xs-12">
+      <%--  <div class="col-xs-12">
             <asp:FileUpload ID="FUVehicle" runat="server" CssClass="button-control" />
         </div>
     <div class="control-group">
@@ -97,7 +97,7 @@
         </div>
         <div class="col-xs-9"></div>
       
-    </div>
+    </div>--%>
    
         <div class=" col-xs-12"></div>
       <div class="btn-group col-xs-12">

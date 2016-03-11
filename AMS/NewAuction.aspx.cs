@@ -124,7 +124,7 @@ namespace AMS
                         //Success message
                         AlertDiv.InnerHtml += "<div class=\"alert alert-success fade in\">" +
                         "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
-                        "<strong>Success!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "New Auction was created and Vehicles were added successfully!" +
+                        "<strong>Success!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "Vehicles were added successfully!" +
                         "</label></div>";
                     }
                 }

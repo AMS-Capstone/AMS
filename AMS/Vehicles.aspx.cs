@@ -58,19 +58,19 @@ namespace AMS
 
         protected void BTNUpload_Click(object sender, EventArgs e)
         {
-            if(FUVehicle.HasFile)
-            {
+            //if(FUVehicle.HasFile)
+            //{
 
               
 
             
 
            
-                DataAction dataAction = new DataAction();
-                dataAction.CreateImage(FUVehicle.FileBytes, int.Parse(Session["VehicleID"].ToString()));
+            //    DataAction dataAction = new DataAction();
+            //    dataAction.CreateImage(FUVehicle.FileBytes, int.Parse(Session["VehicleID"].ToString()));
                 
 
-            }
+            //}
         }
     }
 }
