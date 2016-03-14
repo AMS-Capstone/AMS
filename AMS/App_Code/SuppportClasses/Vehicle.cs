@@ -7,6 +7,29 @@ namespace AMS.App_Code.SuppportClasses
 {
     public class Vehicle
     {
+        public Vehicle(string pLotNumber, string pYear, string pMake, string pModel, string pVin, string pColor, int pMileage, string pUnits, string pTransmission, int pSellerID, string pOptions)
+        {
+            lotNumber = pLotNumber;
+            year = pYear;
+            make = pMake;
+            model = pModel;
+            vin = pVin;
+            color = pColor;
+            mileage = pMileage;
+            units = pUnits;
+            transmission = pTransmission;
+            sellerID = pSellerID;
+            options = pOptions;
+            province = "AB";
+        }
+
+        private int sellerID;
+
+        public int SellerID
+        {
+            get { return sellerID; }
+            set { sellerID = value; }
+        }
         private int vehicleID;
 
         public int VehicleID
@@ -14,155 +37,82 @@ namespace AMS.App_Code.SuppportClasses
             get { return vehicleID; }
             set { vehicleID = value; }
         }
-        private int lotNumber;
-        public int LotNumber
+        private string lotNumber;
+
+        public string LotNumber
         {
-            get
-            {
-                return lotNumber;
-            }
-
-            set
-            {
-                lotNumber = value;
-            }
+            get { return lotNumber; }
+            set { lotNumber = value; }
         }
-
         private string year;
-          public string Year { 
-            get
-            {
-                return Year;
-            }
 
-    set
-            {
-                Year = value;
-            }
+        public string Year
+        {
+            get { return year; }
+            set { year = value; }
         }
         private string make;
+
         public string Make
         {
-            get
-            {
-                return Make;
-            }
-
-            set
-            {
-                Make = value;
-            }
+            get { return make; }
+            set { make = value; }
         }
         private string model;
+
         public string Model
         {
-            get
-            {
-                return Model;
-            }
-
-            set
-            {
-                Model = value;
-            }
+            get { return model; }
+            set { model = value; }
         }
-
         private string vin;
+
         public string Vin
         {
-            get
-            {
-                return Vin;
-            }
-
-            set
-            {
-                Vin = value;
-            }
+            get { return vin; }
+            set { vin = value; }
         }
-
         private string color;
+
         public string Color
         {
-            get
-            {
-                return Color;
-            }
-
-            set
-            {
-                Color = value;
-            }
+            get { return color; }
+            set { color = value; }
         }
-
         private int mileage;
-        public string Mileage
+
+        public int Mileage
         {
-            get
-            {
-                return Mileage;
-            }
-
-            set
-            {
-                Mileage = value;
-            }
+            get { return mileage; }
+            set { mileage = value; }
         }
-
         private string units;
+
         public string Units
         {
-            get
-            {
-                return Units;
-            }
-
-            set
-            {
-                Units = value;
-            }
+            get { return units; }
+            set { units = value; }
         }
-
         private string province;
+
         public string Province
         {
-            get
-            {
-                return Province;
-            }
-
-            set
-            {
-                Province = value;
-            }
+            get { return province; }
+            set { province = value; }
         }
-
         private string transmission;
+
         public string Transmission
         {
-            get
-            {
-                return Transmission;
-            }
-
-            set
-            {
-                Transmission = value;
-            }
+            get { return transmission; }
+            set { transmission = value; }
         }
+        private string options;
 
-        private string vehicleOptions;
-        public string VehicleOptions
+        public string Options
         {
-            get
-            {
-                return VehicleOptions;
-            }
-
-            set
-            {
-                VehicleOptions = value;
-            }
+            get { return options; }
+            set { options = value; }
         }
     }
 }

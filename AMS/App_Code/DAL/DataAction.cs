@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using MySql.Data.MySqlClient;
 using System.Configuration;
+using AMS.App_Code.SuppportClasses;
 
 namespace AMS.App_Code
 {
@@ -584,42 +585,40 @@ namespace AMS.App_Code
 
 
 
-        public void CreateVehicle(int lotNumber, string year, string make, string model, string vin, string color, int mileage, string units, string transmission, int sellerID, string options )
+        public int CreateVehicle(Vehicle vehicle)
         {
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
-            int id;
+            int id = 0;
+            
+                
+            MySqlConnection conn = new MySqlConnection(connectionString);
+            MySqlCommand cmd = new MySqlCommand("sp_createVehicle", conn);
+            cmd.Parameters.AddWithValue("pLotNumber", vehicle.LotNumber);
+            cmd.Parameters.AddWithValue("pYear", vehicle.Year);
+            cmd.Parameters.AddWithValue("pMake", vehicle.Make);
+            cmd.Parameters.AddWithValue("pModel", vehicle.Model);
+            cmd.Parameters.AddWithValue("pVin", vehicle.Vin);
+            cmd.Parameters.AddWithValue("pColor", vehicle.Color);
+            cmd.Parameters.AddWithValue("pMileage", vehicle.Mileage);
+            cmd.Parameters.AddWithValue("pProvince", vehicle.Province);
+            cmd.Parameters.AddWithValue("pUnits", vehicle.Units);
+            cmd.Parameters.AddWithValue("pTransmission", vehicle.Transmission);
+            cmd.Parameters.AddWithValue("pSellerID", vehicle.SellerID);
+            cmd.Parameters.AddWithValue("pOptions", vehicle.Options);
+
+            MySqlParameter returnParameter = new MySqlParameter();
+            returnParameter.Direction = System.Data.ParameterDirection.ReturnValue;
+            cmd.Parameters.Add(returnParameter);
+
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
-                {
-                    MySqlCommand cmd = new MySqlCommand("sp_createVehicle", conn);
-                    cmd.Parameters.AddWithValue("pLotNumber", lotNumber);
-                    cmd.Parameters.AddWithValue("pYear", year);
-                    cmd.Parameters.AddWithValue("pMake", make);
-                    cmd.Parameters.AddWithValue("pModel", model);
-                    cmd.Parameters.AddWithValue("pVin", vin);
-                    cmd.Parameters.AddWithValue("pColor", color);
-                    cmd.Parameters.AddWithValue("pMileage", mileage);
-                    cmd.Parameters.AddWithValue("pProvince", "AB");
-                    cmd.Parameters.AddWithValue("pUnits", units);
-                    cmd.Parameters.AddWithValue("pTransmission", transmission);
-                    cmd.Parameters.AddWithValue("pSellerID", sellerID);
-                    cmd.Parameters.AddWithValue("pOptions", options);
+                conn.Open();
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = conn;
+                cmd.ExecuteNonQuery();
 
-                    MySqlParameter returnParameter = new MySqlParameter();
-                    returnParameter.Direction = System.Data.ParameterDirection.ReturnValue;
-                    cmd.Parameters.Add(returnParameter);
-
-
-
-                    conn.Open();
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Connection = conn;
-                    cmd.ExecuteNonQuery();
-
-                    id = Convert.ToInt32(returnParameter.Value.ToString());
-                    conn.Close();
-                }
+                id = Convert.ToInt32(returnParameter.Value.ToString());
+                conn.Close();
             }
             catch (Exception ex)
             {
@@ -631,6 +630,7 @@ namespace AMS.App_Code
                 //Tie the loose ends here
                 
             }
+            return id;
         }
 
         public void CreateImage(byte[] data, int vehicleID )

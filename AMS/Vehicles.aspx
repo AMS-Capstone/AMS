@@ -88,22 +88,26 @@
     </div>
     <div class="col-xs-12"></div>
     
-      <%--  <div class="col-xs-12">
-            <asp:FileUpload ID="FUVehicle" runat="server" CssClass="button-control" />
-        </div>
+        
+    <div class=" col-xs-12"><hr /></div>
     <div class="control-group">
+        <div class="col-xs-12">
+            <asp:FileUpload ID="FUVehicle" runat="server" />
+        </div>
         <div class="col-xs-3">
             <asp:Button ID="BTNUpload" runat="server" CssClass="btn btn-primary" Text="Upload" OnClick="BTNUpload_Click"  />
         </div>
         <div class="col-xs-9"></div>
-      
-    </div>--%>
-   
-        <div class=" col-xs-12"></div>
-      <div class="btn-group col-xs-12">
-         <asp:Button ID="BTNSaveVehicle" runat="server" CssClass="btn btn-primary" Text="Save" OnClick="BTNSaveVehicle_Click" />
+        <div class="col-xs-12">
+            <asp:Image runat="server" ID="ImagePreview" />
         </div>
-           <div class=" col-xs-12"></div>
-    
-  
+    </div>
+   
+    <div class=" col-xs-12"><hr /></div>
+    <div class=" col-xs-12"></div>
+    <div class="btn-group col-xs-12">
+        <asp:Button ID="BTNSaveVehicle" runat="server" CssClass="btn btn-primary" Text="Save" OnClick="BTNSaveVehicle_Click" />
+    </div>
+
+    <div class=" col-xs-12"></div>
 </asp:Content>

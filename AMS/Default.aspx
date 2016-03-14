@@ -17,11 +17,11 @@
                 <asp:ListBox ID="LBAuctionList" CssClass="form-control"  runat="server"></asp:ListBox>
             </div>
         </div>
-        <div class="btn-group col-xs-12">
-            <asp:Button ID="btnSelectAuction" runat="server" CssClass="btn btn-primary" Text="Go to Selected Auction" OnClick="BTNSubmit_Click" />
-        </div>
         
         <div class=" col-xs-12"><hr /></div>
+        <div class="btn-group col-xs-12">
+            <asp:Button ID="btnSelectAuction" runat="server" CssClass="btn btn-primary" Text="Go to Selected Auction" OnClick="BTNSubmit_Click" />
+        </div>  
     </div>
 
     

@@ -133,7 +133,12 @@ namespace AMS
 
         private void updateAuctionSale(AuctionSale auctionSale)
         {
+            auctionService.UpdateAuctionSale(auctionSale);
+        }
 
+        private void createPayment(Payment payment)
+        {
+            auctionService.CreatePayment(payment);
         }
 
         protected void gv_RowEditing(object sender, GridViewEditEventArgs e)
@@ -156,6 +161,8 @@ namespace AMS
 
         protected void gv_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
+
+
             AlertDiv.InnerHtml = "<div class=\"alert alert-warning fade in\">" +
                    "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
                    "<strong>Warning!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "Test" +
