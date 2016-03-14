@@ -741,7 +741,7 @@ RETURN LAST_INSERT_ID();
 END//
 
 DROP PROCEDURE IF EXISTS sp_createVehiclePicture //
-CREATE PROCEDURE sp_createVehiclePicture(in pImage blob, pVehicleID int)
+CREATE PROCEDURE sp_createVehiclePicture(in pImage longblob, pVehicleID int)
 begin
 INSERT INTO vehiclepictures(Image, VehicleID)
 VALUES
