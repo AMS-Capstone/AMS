@@ -205,6 +205,7 @@ Create Table Payment
 
 Create Table VehiclePictures 
  ( 
+	 ImageID integer primary key AUTO_INCREMENT,
      Image longblob, 
      VehicleID integer, 
      constraint FK_VehiclePictures_VehicleID foreign key (VehicleID) references Vehicle(VehicleID) 
