@@ -178,6 +178,7 @@ namespace AMS
         {
             Seller seller = new Seller();
 
+            seller.SellerID = Convert.ToInt32(DDLSellerName.SelectedValue);
             seller.SellerCode = TXTCode.Text;
             seller.SellerName = TXTName.Text;
             seller.SellerAddress = TXTAddress.Text;
