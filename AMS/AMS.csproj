@@ -115,6 +115,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Default.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="MultiImageHandler.aspx" />
     <Content Include="NewAuction.aspx" />
     <Content Include="packages.config" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -231,6 +232,13 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="MultiImageHandler.aspx.cs">
+      <DependentUpon>MultiImageHandler.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MultiImageHandler.aspx.designer.cs">
+      <DependentUpon>MultiImageHandler.aspx</DependentUpon>
     </Compile>
     <Compile Include="NewAuction.aspx.cs">
       <DependentUpon>NewAuction.aspx</DependentUpon>

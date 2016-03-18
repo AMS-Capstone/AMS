@@ -7,6 +7,11 @@ namespace AMS.App_Code.SuppportClasses
 {
     public class Vehicle
     {
+        public Vehicle() 
+        { 
+
+        }
+
         public Vehicle(string pLotNumber, string pYear, string pMake, string pModel, string pVin, string pColor, int pMileage, string pUnits, string pTransmission, int pSellerID, string pOptions)
         {
             lotNumber = pLotNumber;

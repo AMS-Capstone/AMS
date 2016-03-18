@@ -207,6 +207,7 @@ Create Table VehiclePictures
  ( 
 	 ImageID integer primary key AUTO_INCREMENT,
      Image longblob, 
+     
      VehicleID integer, 
      constraint FK_VehiclePictures_VehicleID foreign key (VehicleID) references Vehicle(VehicleID) 
  ); 
@@ -741,8 +742,8 @@ pSellerID);
 RETURN LAST_INSERT_ID();
 END//
 
-DROP PROCEDURE IF EXISTS sp_createVehiclePicture //
-CREATE PROCEDURE sp_createVehiclePicture(in pImage longblob, pVehicleID int)
+DROP FUNCTION IF EXISTS sp_createVehiclePicture //
+CREATE FUNCTION sp_createVehiclePicture(pImage longblob, pVehicleID int) returns int
 begin
 INSERT INTO vehiclepictures(Image, VehicleID)
 VALUES
@@ -750,6 +751,8 @@ VALUES
 	pImage,
     pVehicleID
 );
+
+RETURN LAST_INSERT_ID();
 END//
 
 DROP FUNCTION IF EXISTS sp_createAuctionSale //
@@ -952,8 +955,8 @@ BEGIN
     WHERE `VehicleID` = N_VehicleID;
 END//
 
-DROP PROCEDURE IF EXISTS sp_getVehicle //
-CREATE PROCEDURE sp_getVehicle(N_VehicleID int)
+DROP PROCEDURE IF EXISTS sp_getVehicleByID //
+CREATE PROCEDURE sp_getVehicleByID(N_VehicleID int)
 BEGIN
 	SELECT 
     `vehicle`.`LotNumber`,
@@ -1044,7 +1047,14 @@ BEGIN
     `payment`.`Surcharges`,
     `payment`.`PaymentDate`
 	FROM `payment`
-    WHERE `AuctionSaleID` = N_AuctionSaleID
-	;
+    WHERE `AuctionSaleID` = N_AuctionSaleID;
+END//
 
+DROP PROCEDURE IF EXISTS sp_getVehiclePicturesByVehicleID//
+CREATE PROCEDURE sp_getVehiclePicturesByVehicleID(N_VehicleID int)
+BEGIN
+	SELECT `vehiclepictures`.`ImageID`,
+		`vehiclepictures`.`Image`
+	FROM `vehiclepictures`
+	WHERE `VehicleID` = N_VehicleID;
 END//

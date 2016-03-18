@@ -100,14 +100,19 @@
         <div class="col-xs-9"></div>
         <div class="col-xs-12">
             <asp:Image runat="server" ID="ImagePreview" />
-        </div>
+        </div>        
+        <div class="col-xs-12" id="ImageDiv" runat="server"></div>
     </div>
    
     <div class=" col-xs-12"><hr /></div>
-    <div class=" col-xs-12"></div>
+    <div class="col-xs-12"></div>
     <div class="btn-group col-xs-12">
-        <asp:Button ID="BTNSaveVehicle" runat="server" CssClass="btn btn-primary" Text="Save" OnClick="BTNSaveVehicle_Click" />
+        <asp:Button ID="BTNClear" runat="server" class="btn btn-warning" Text="Clear Form" OnClick="BTNClear_Click" />
     </div>
-
+    <div class=" col-xs-12"><hr /></div>
+    <div class="btn-group col-xs-12">
+        <asp:Button ID="BTNSubmit" runat="server" CssClass="btn btn-primary" Text="Submit Form" OnClick="BTNSubmit_Click" />
+        <asp:Button ID="BTNUpdate" runat="server" CssClass="btn btn-primary hidden"  Text="Update Form" OnClick="BTNUpdate_Click" />
+    </div>
     <div class=" col-xs-12"></div>
 </asp:Content>

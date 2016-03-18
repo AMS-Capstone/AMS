@@ -148,12 +148,39 @@ namespace AMS {
         protected global::System.Web.UI.WebControls.Image ImagePreview;
         
         /// <summary>
-        /// BTNSaveVehicle control.
+        /// ImageDiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BTNSaveVehicle;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ImageDiv;
+        
+        /// <summary>
+        /// BTNClear control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BTNClear;
+        
+        /// <summary>
+        /// BTNSubmit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BTNSubmit;
+        
+        /// <summary>
+        /// BTNUpdate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BTNUpdate;
     }
 }
