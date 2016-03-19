@@ -1058,3 +1058,10 @@ BEGIN
 	FROM `vehiclepictures`
 	WHERE `VehicleID` = N_VehicleID;
 END//
+
+DROP PROCEDURE IF EXISTS sp_deleteBuyer // 
+CREATE PROCEDURE sp_deleteBuyer(N_BuyerID integer)
+BEGIN
+DELETE FROM buyer
+WHERE BuyerID = N_BuyerID;
+END //
