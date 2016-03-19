@@ -22,7 +22,7 @@
     <div class="control-group">
         <label class="control-label col-xs-2" for="TXTYear">Year:</label>
         <div class="col-xs-3">
-            <asp:TextBox ID="TXTYear" runat="server" CssClass="form-control"></asp:TextBox>
+            <asp:TextBox ID="TXTYear" runat="server" CssClass="form-control numbersOnly"></asp:TextBox>
         </div>
         <div class="col-xs-7"></div>
     </div>
@@ -54,7 +54,7 @@
     <div class="control-group">
         <label class="control-label col-xs-2" for="TXTMileage">Mileage:</label>
         <div class="col-xs-3">
-            <asp:TextBox ID="TXTMileage" runat="server" CssClass="form-control"></asp:TextBox>
+            <asp:TextBox ID="TXTMileage" runat="server" CssClass="form-control numbersOnly"></asp:TextBox>
         </div>
         <div class="col-xs-2">
             <asp:DropDownList runat="server" ID="DDLUnits" CssClass="form-control"></asp:DropDownList>
@@ -111,8 +111,13 @@
     </div>
     <div class=" col-xs-12"><hr /></div>
     <div class="btn-group col-xs-12">
-        <asp:Button ID="BTNSubmit" runat="server" CssClass="btn btn-primary" Text="Submit Form" OnClick="BTNSubmit_Click" />
-        <asp:Button ID="BTNUpdate" runat="server" CssClass="btn btn-primary hidden"  Text="Update Form" OnClick="BTNUpdate_Click" />
+        <asp:Button ID="BTNSubmit" runat="server" CssClass="btn btn-primary" Text="Create" OnClick="BTNSubmit_Click" />
+        <asp:Button ID="BTNUpdate" runat="server" CssClass="btn btn-primary hidden"  Text="Update" OnClick="BTNUpdate_Click" />
     </div>
-    <div class=" col-xs-12"></div>
+    <div class=" col-xs-12"></div>    
+    <script type="text/javascript">
+        jQuery('.numbersOnly').keyup(function () {
+            this.value = this.value.replace(/[^0-9\.]/g, '');
+        });
+    </script>
 </asp:Content>
