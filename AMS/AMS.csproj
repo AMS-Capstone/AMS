@@ -104,6 +104,7 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_LocalResources\no_picture.jpg" />
     <Content Include="AuctionMain.aspx" />
     <Content Include="Buyers.aspx" />
     <Content Include="Content\bootstrap-datetimepicker.css" />
@@ -114,6 +115,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Default.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="MultiImageHandler.aspx" />
     <Content Include="NewAuction.aspx" />
     <Content Include="packages.config" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -122,6 +124,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="DocumentHandler.ashx" />
     <None Include="Properties\PublishProfiles\AMS.pubxml" />
     <None Include="Properties\PublishProfiles\ASP Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\Google VM Publish.pubxml" />
@@ -188,6 +191,9 @@
   <ItemGroup>
     <Compile Include="App_Code\DAL\AuctionDAL.cs" />
     <Compile Include="App_Code\SuppportClasses\AuctionSale.cs" />
+    <Compile Include="DocumentHandler.ashx.cs">
+      <DependentUpon>DocumentHandler.ashx</DependentUpon>
+    </Compile>
     <Compile Include="App_Code\SuppportClasses\Payment.cs" />
     <Compile Include="App_Code\DAL\AuctionMainDAL.cs" />
     <Compile Include="App_Code\SuppportClasses\Auction.cs" />
@@ -200,7 +206,7 @@
     <Compile Include="App_Code\DAL\DataAction.cs" />
     <Compile Include="App_Code\DAL\BuyerDAL.cs" />
     <Compile Include="App_Code\DAL\SellerDAL.cs" />
-    <Content Include="App_Code\SuppportClasses\Vehicle.cs" />
+    <Compile Include="App_Code\SuppportClasses\Vehicle.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="AuctionMain.aspx.cs">
@@ -226,6 +232,13 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="MultiImageHandler.aspx.cs">
+      <DependentUpon>MultiImageHandler.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MultiImageHandler.aspx.designer.cs">
+      <DependentUpon>MultiImageHandler.aspx</DependentUpon>
     </Compile>
     <Compile Include="NewAuction.aspx.cs">
       <DependentUpon>NewAuction.aspx</DependentUpon>
@@ -282,6 +295,9 @@
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />

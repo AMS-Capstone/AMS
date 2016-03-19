@@ -48,6 +48,13 @@
         <script src="Scripts/moment.js"></script>
         <script src="Scripts/bootstrap-datetimepicker.js"></script>
         
+    
+        <script type="text/javascript">
+            jQuery('.numbersOnly').keyup(function () {
+                this.value = this.value.replace(/[^0-9\.]/g, '');
+            });
+        </script>
+        
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">

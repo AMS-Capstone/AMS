@@ -4,6 +4,8 @@ using System.Data;
 using System.Linq;
 using MySql.Data.MySqlClient;
 using System.Configuration;
+using AMS.App_Code.SuppportClasses;
+using System.Collections;
 
 namespace AMS.App_Code
 {
@@ -583,43 +585,90 @@ namespace AMS.App_Code
         }
 
 
+        //GET VEHICLE BY ID
+        public Vehicle GetVehicleByID(int vehicleID)
+        {
+            Vehicle vehicle = new Vehicle();
+            DataTable dt = new DataTable();
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    using (MySqlCommand cmd = conn.CreateCommand())
+                    {
+                        conn.Open();
+                        cmd.CommandText = "sp_getVehicleByID";
+                        cmd.Parameters.AddWithValue("N_vehicleID", vehicleID);
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt);
 
-        public void CreateVehicle(int lotNumber, string year, string make, string model, string vin, string color, int mileage, string units, string transmission, int sellerID, string options )
+                            vehicle.VehicleID = vehicleID;
+                            vehicle.LotNumber = dt.Rows[0]["LotNumber"].ToString();
+                            vehicle.Year = dt.Rows[0]["Year"].ToString();
+                            vehicle.Make = dt.Rows[0]["Make"].ToString();
+                            vehicle.Model = dt.Rows[0]["Model"].ToString();
+                            vehicle.Vin = dt.Rows[0]["VIN"].ToString();
+                            vehicle.Color = dt.Rows[0]["Color"].ToString();
+                            vehicle.Mileage = Convert.ToInt32(dt.Rows[0]["Mileage"].ToString());
+                            vehicle.Units = dt.Rows[0]["Units"].ToString();
+                            vehicle.Province = dt.Rows[0]["Province"].ToString();
+                            vehicle.Transmission = dt.Rows[0]["Transmission"].ToString();
+                            vehicle.Options = dt.Rows[0]["VehicleOptions"].ToString();
+                            vehicle.SellerID = Convert.ToInt32(dt.Rows[0]["SellerID"].ToString());
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //Panic
+                    throw ex;
+                }
+                finally
+                {
+                    //Tie the loose ends here
+                }
+            }
+            return vehicle;
+        }
+
+
+        public int CreateVehicle(Vehicle vehicle)
         {
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
-            int id;
+            int id = 0;
+            
+                
+            MySqlConnection conn = new MySqlConnection(connectionString);
+            MySqlCommand cmd = new MySqlCommand("sp_createVehicle", conn);
+            cmd.Parameters.AddWithValue("pLotNumber", vehicle.LotNumber);
+            cmd.Parameters.AddWithValue("pYear", vehicle.Year);
+            cmd.Parameters.AddWithValue("pMake", vehicle.Make);
+            cmd.Parameters.AddWithValue("pModel", vehicle.Model);
+            cmd.Parameters.AddWithValue("pVin", vehicle.Vin);
+            cmd.Parameters.AddWithValue("pColor", vehicle.Color);
+            cmd.Parameters.AddWithValue("pMileage", vehicle.Mileage);
+            cmd.Parameters.AddWithValue("pProvince", vehicle.Province);
+            cmd.Parameters.AddWithValue("pUnits", vehicle.Units);
+            cmd.Parameters.AddWithValue("pTransmission", vehicle.Transmission);
+            cmd.Parameters.AddWithValue("pSellerID", vehicle.SellerID);
+            cmd.Parameters.AddWithValue("pOptions", vehicle.Options);
+
+            MySqlParameter returnParameter = new MySqlParameter();
+            returnParameter.Direction = System.Data.ParameterDirection.ReturnValue;
+            cmd.Parameters.Add(returnParameter);
+
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
-                {
-                    MySqlCommand cmd = new MySqlCommand("sp_createVehicle", conn);
-                    cmd.Parameters.AddWithValue("pLotNumber", lotNumber);
-                    cmd.Parameters.AddWithValue("pYear", year);
-                    cmd.Parameters.AddWithValue("pMake", make);
-                    cmd.Parameters.AddWithValue("pModel", model);
-                    cmd.Parameters.AddWithValue("pVin", vin);
-                    cmd.Parameters.AddWithValue("pColor", color);
-                    cmd.Parameters.AddWithValue("pMileage", mileage);
-                    cmd.Parameters.AddWithValue("pProvince", "AB");
-                    cmd.Parameters.AddWithValue("pUnits", units);
-                    cmd.Parameters.AddWithValue("pTransmission", transmission);
-                    cmd.Parameters.AddWithValue("pSellerID", sellerID);
-                    cmd.Parameters.AddWithValue("pOptions", options);
+                conn.Open();
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = conn;
+                cmd.ExecuteNonQuery();
 
-                    MySqlParameter returnParameter = new MySqlParameter();
-                    returnParameter.Direction = System.Data.ParameterDirection.ReturnValue;
-                    cmd.Parameters.Add(returnParameter);
-
-
-
-                    conn.Open();
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Connection = conn;
-                    cmd.ExecuteNonQuery();
-
-                    id = Convert.ToInt32(returnParameter.Value.ToString());
-                    conn.Close();
-                }
+                id = Convert.ToInt32(returnParameter.Value.ToString());
+                conn.Close();
             }
             catch (Exception ex)
             {
@@ -629,24 +678,67 @@ namespace AMS.App_Code
             finally
             {
                 //Tie the loose ends here
+                conn.Close();
                 
             }
+            return id;
         }
 
-        public void CreateImage(byte[] data, int vehicleID )
+        public int CreateImage(byte[] data, int vehicleID )
         {
-            try
-            {
+            int id = 0;
+            
                 string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                MySqlConnection conn = new MySqlConnection(connectionString);
+
                 {
                     MySqlCommand cmd = new MySqlCommand("sp_createVehiclePicture", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add("@pImage", MySqlDbType.Blob).Value = data;
                     cmd.Parameters.AddWithValue("pVehicleID", vehicleID);
-                    conn.Open();
-                    cmd.ExecuteNonQuery();
+
+                    MySqlParameter returnParameter = new MySqlParameter();
+                    returnParameter.Direction = System.Data.ParameterDirection.ReturnValue;
+                    cmd.Parameters.Add(returnParameter);
+
+                    try
+                    {
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+
+                        id = Convert.ToInt32(returnParameter.Value.ToString());
+                        conn.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        //Panic
+                        throw ex;
+                    }
+                    finally
+                    {
+                        //Tie the loose ends here
+                        conn.Close();
+                    }
                 }
+            return id;
+        }
+
+        public DataSet GetVehiclePicturesByVehicleID(int vehicleID)
+        {
+            DataSet ds = new DataSet();
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
+            MySqlConnection conn = new MySqlConnection(connectionString);
+            MySqlDataAdapter da = new MySqlDataAdapter();
+
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.CommandText = "sp_getVehiclePicturesByVehicleID";
+                cmd.Parameters.Add(new MySqlParameter("@N_VehicleID", vehicleID));
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = conn;
+                da.SelectCommand = cmd;
+                da.Fill(ds);
             }
             catch (Exception ex)
             {
@@ -657,6 +749,8 @@ namespace AMS.App_Code
             {
                 //Tie the loose ends here
             }
+
+            return ds;
         }
         #endregion
 

@@ -19,19 +19,19 @@ namespace AMS
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            provinces.Add("AB");
-            provinces.Add("BC");
-            provinces.Add("MB");
-            provinces.Add("NB");
-            provinces.Add("NL");
-            provinces.Add("NS");
-            provinces.Add("NT");
-            provinces.Add("NU");
-            provinces.Add("ON");
-            provinces.Add("PE");
-            provinces.Add("QC");
-            provinces.Add("SK");
-            provinces.Add("YT");
+            provinces.Add("Alberta");
+            provinces.Add("British Columbia");
+            provinces.Add("Manitoba");
+            provinces.Add("New Brunswick");
+            provinces.Add("Newfoundland and Labrador");
+            provinces.Add("Nova Scotia");
+            provinces.Add("Northwest Territories");
+            provinces.Add("Nunavut");
+            provinces.Add("Ontario");
+            provinces.Add("Prince Edward Island");
+            provinces.Add("Quebec");
+            provinces.Add("Saskatchewan");
+            provinces.Add("Yukon");
 
             DDLProvince.DataSource = provinces;
             DDLProvince.DataBind();
@@ -178,6 +178,7 @@ namespace AMS
         {
             Seller seller = new Seller();
 
+            seller.SellerID = Convert.ToInt32(DDLSellerName.SelectedValue);
             seller.SellerCode = TXTCode.Text;
             seller.SellerName = TXTName.Text;
             seller.SellerAddress = TXTAddress.Text;

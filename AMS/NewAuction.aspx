@@ -18,7 +18,7 @@
                     <div class='col-sm-4'>
                         <div class="form-group">
                             <div class='input-group date' id='datetimepicker1'>
-                                <asp:TextBox type='text' class="form-control dp" id="TXTDate" runat="server" />
+                                <asp:TextBox type='text' class="form-control dp" readonly id="TXTDate" runat="server" />
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
@@ -28,7 +28,9 @@
                     <script type="text/javascript">
                         $(function () {
                             $('#datetimepicker1').datetimepicker({
-                                format: "DD/MMMM/YYYY"
+                                format: "DD/MMMM/YYYY",
+                                minDate: moment(),
+                                ignoreReadonly: true
                             });
                         });
 
