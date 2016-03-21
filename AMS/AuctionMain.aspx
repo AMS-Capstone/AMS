@@ -6,8 +6,9 @@
 
     <asp:GridView ID="GVAuction" runat="server" CssClass="table table-hover col-xs-12" 
         AutoGenerateColumns="False" OnRowDataBound="RowDataBound" OnRowEditing="gv_RowEditing" 
-        OnRowUpdating="gv_RowUpdating" OnRowCancelingEdit="gv_RowCancelingEdit" >         
+        OnRowUpdating="gv_RowUpdating" OnRowCancelingEdit="gv_RowCancelingEdit">
         <Columns>
+            <asp:CommandField ShowEditButton="True" Visible="False"/>
             <asp:TemplateField  HeaderText="Con Code">
                 <ItemTemplate>
                     <asp:Label ID="lblSellerCode" runat="server" Text='<%# Eval("SellerCode") %>' Visible="true" />
@@ -20,72 +21,95 @@
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Bidder #">
                 <ItemTemplate>
+                    <asp:Label ID="lblBidderNumber2" runat="server"/>
+                    <asp:Label ID="lblBidderNumber" runat="server" Text='<%# Eval("BuyerID") %>' Visible="false" />
+                    <asp:DropDownList ID="DDLBidderNumbers" runat="server"  OnSelectedIndexChanged="DDLBidderNumbers_SelectedIndexChanged" AutoPostBack="true" Visible="false"></asp:DropDownList>
+                </ItemTemplate>
+                <EditItemTemplate>
+                    <asp:Label ID="lblBidderNumber2" runat="server" Visible="false" />
                     <asp:Label ID="lblBidderNumber" runat="server" Text='<%# Eval("BuyerID") %>' Visible="false" />
                     <asp:DropDownList ID="DDLBidderNumbers" runat="server"  OnSelectedIndexChanged="DDLBidderNumbers_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
-                </ItemTemplate>
+                </EditItemTemplate>
             </asp:TemplateField>                   
             <asp:TemplateField  HeaderText="Sale Status">
                 <ItemTemplate>
+                    <asp:Label ID="lblSaleStatus2" runat="server"/>
+                    <asp:Label ID="lblSaleStatus" runat="server" Text='<%# Eval("ConditionID") %>' Visible="false" />
+                    <asp:DropDownList ID="DDLSaleStatuses" runat="server" OnSelectedIndexChanged="DDLSaleStatuses_SelectedIndexChanged" AutoPostBack="true" Visible="false"></asp:DropDownList>
+                </ItemTemplate>
+                <EditItemTemplate>
+                    <asp:Label ID="lblSaleStatus2" runat="server" Visible="false"/>
                     <asp:Label ID="lblSaleStatus" runat="server" Text='<%# Eval("ConditionID") %>' Visible="false" />
                     <asp:DropDownList ID="DDLSaleStatuses" runat="server" OnSelectedIndexChanged="DDLSaleStatuses_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
-                </ItemTemplate>
+                </EditItemTemplate>
             </asp:TemplateField>   
             <asp:BoundField HeaderText="Selling Price" DataField="SellingPrice" DataFormatString="{0:c}" />
             <asp:BoundField HeaderText="AuctionSaleID" DataField="AuctionSaleID" Visible="false"/>
             <asp:BoundField HeaderText="Buyer's Fee" DataField="BuyersFee" DataFormatString="{0:c}" />
-            <%--<asp:BoundField HeaderText="GST" DataField="GST" DataFormatString="{0:c}" />--%><%--Auto-calculated and stored field--%>
             <asp:TemplateField  HeaderText="GST">
                 <ItemTemplate>
                     <asp:Label ID="lblGST" runat="server" Text='<%# Eval("GST", "{0:c}") %>' DataFormatString="{0:c}" Visible="true" />
                 </ItemTemplate>
             </asp:TemplateField>
-            <%--<asp:BoundField HeaderText="Total" DataField="Total" DataFormatString="{0:c}" />--%><%--Auto-calculated and stored field--%>
             <asp:TemplateField  HeaderText="Total">
                 <ItemTemplate>
                     <asp:Label ID="lblTotal" runat="server" Text='<%# Eval("Total", "{0:c}") %>' DataFormatString="{0:c}" Visible="true" />
                 </ItemTemplate>
             </asp:TemplateField>
-            <%--<asp:BoundField HeaderText="Deposit" DataField="Deposit" DataFormatString="{0:c}" />--%>
-            <asp:TemplateField  HeaderText="Deposit">
+            
+            <asp:BoundField HeaderText="Deposit" DataField="Deposit" DataFormatString="{0:c}" />
+            <%--<asp:TemplateField  HeaderText="Deposit">
                 <ItemTemplate>
                     <asp:Label ID="lblDeposit" runat="server" Text='<%# Eval("Deposit", "{0:c}") %>' DataFormatString="{0:c}" Visible="true" />
-                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" title="Add Deposit" data-target="#depositModal">Add Deposit</button>
                 </ItemTemplate>
-            </asp:TemplateField>
-            <%--<asp:BoundField HeaderText="Payments" DataField="PaymentsTotal" DataFormatString="{0:c}" />--%><%--Payments will show a total with the link to the popup that would add a new payment--%>
+                <EditItemTemplate>
+                    <div class="col-sm-2">
+                        <asp:TextBox ID="txtDeposit" CssClass="form-control numbersOnly" runat="server" Text='<%# Eval("Deposit", "{0:c}") %>' DataFormatString="{0:c}" Visible="true" />
+                    </div>
+                </EditItemTemplate>
+            </asp:TemplateField>--%>
             <asp:TemplateField  HeaderText="Payments">
                 <ItemTemplate>
-                    <asp:Label ID="lblPayments" runat="server" Text='<%# Eval("Payments", "{0:c}") %>' DataFormatString="{0:c}" Visible="true" />
-                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" title="Add Payment" data-target="#paymentModal">Add Payment</button>
+                    <asp:Label ID="lblPayments1" runat="server" Text='<%# Eval("Payments", "{0:c}") %>' DataFormatString="{0:c}" Visible="true" />
                     <%--<asp:Button ID="btnAddPayment" runat="server" Text="Add" data-target="#paymentModal" OnClick="btnAddPayment_Click"/>--%>
                 </ItemTemplate>
+                <EditItemTemplate>
+                    <asp:Label ID="lblPayments2" runat="server" Text='<%# Eval("Payments", "{0:c}") %>' DataFormatString="{0:c}" Visible="true" />
+                    <button type="button" class="btn btn-xs" data-toggle="modal" title="Add Payment" data-target="#paymentModal">Add Payment</button>
+                </EditItemTemplate>
             </asp:TemplateField>
-            <%--<asp:BoundField HeaderText="Surcharges" DataField="SurchargesTotal" DataFormatString="{0:c}" />--%><%--Auto-calculated and stored field--%>
             <asp:TemplateField  HeaderText="Surcharges">
                 <ItemTemplate>
                     <asp:Label ID="lblSurcharges" runat="server" Text='<%# Eval("Surcharges", "{0:c}") %>' DataFormatString="{0:c}" Visible="true" />
                 </ItemTemplate>
             </asp:TemplateField>
-            <%--<asp:BoundField HeaderText="Net Total" DataField="NetTotal" DataFormatString="{0:c}" />--%><%--Auto-calculated and stored field--%>
             <asp:TemplateField  HeaderText="Net Total">
                 <ItemTemplate>
                     <asp:Label ID="lblNetTotal" runat="server" Text='<%# Eval("NetTotal", "{0:c}") %>' DataFormatString="{0:c}" Visible="true" />
                 </ItemTemplate>
             </asp:TemplateField>
-            <asp:CommandField ShowEditButton="True" visible="false"/>
         </Columns>
     </asp:GridView>
     <script type="text/javascript">
         $(document).ready(function(){
             $('[data-toggle="tooltip"]').tooltip(); 
         });
+
+        function openPaymentModal() {
+            $('#paymentModal').modal('show');
+        }
         
         function openPaymentModal() {
             $('#paymentModal').modal('show');
         }
+
         function openDepositModal() {
             $('#depositModal').modal('show');
         }
+
+        jQuery('.numbersOnly').keyup(function () {
+            this.value = this.value.replace(/[^0-9\.]/g, '');
+        });
     </script>
     <!-- Modals -->
     <div id="paymentModal" class="modal fade" role="dialog">
