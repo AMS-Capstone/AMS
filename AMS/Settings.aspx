@@ -106,13 +106,44 @@
     <h1>Fee Types:</h1>
     <div class=" col-xs-12"></div>
     <div class="control group">
-        <label class="control-label col-xs-2" for="DDLFeeTypes" >Fee Types:</label>
+        <asp:GridView ID="GRDFeeTypes" runat="server" AutoGenerateColumns="false">
+            <Columns>
+                <asp:TemplateField HeaderText="FeeID" visible="false">
+                    <ItemTemplate>
+                        <asp:Label ID="lblFeeID" runat="server" Text='<%# Eval("FeeID") %>'></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField HeaderText="Cost">
+                            <ItemTemplate>
+                                <asp:TextBox ID="txtFeeCost"   AutoPostBack="true" runat="server"
+                                    Text='<%# Eval("FeeCost") %>' OnTextChanged="txtFeeCost_TextChanged" ></asp:TextBox>
+                               
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="Description">
+                            <ItemTemplate>
+                                <asp:TextBox ID="txtFeeDescription"   AutoPostBack="true" runat="server"
+                                    Text='<%# Eval("FeeType") %>' OnTextChanged="txtFeeType_TextChanged" ></asp:TextBox>
+                               
+                            </ItemTemplate>
+                        </asp:TemplateField>
+               <%--    <asp:TemplateField HeaderText="Status">
+                            <ItemTemplate>
+                                <asp:TextBox ID="txtCondtionDescription"   AutoPostBack="true" runat="server"
+                                    Text='<%# Eval("Status") %>' ></asp:TextBox>
+                               
+                            </ItemTemplate>
+                        </asp:TemplateField>--%>
+            </Columns>
+        </asp:GridView>
+      <%--  <label class="control-label col-xs-2" for="DDLFeeTypes" >Fee Types:</label>
         <div class="col-xs-10">
             <asp:DropDownList class="form-control" ID="DDLFeeTypes" runat="server" AutoPostBack="true" OnSelectedIndexChanged="DDLFeeTypes_SelectedIndexChanged" ></asp:DropDownList>
-        </div>
+        </div>--%>
     </div>
 
-    <div class=" col-xs-12">
+   <%-- <div class=" col-xs-12">
     
     </div> 
 
@@ -139,7 +170,7 @@
     </div>
     <div class="btn-group col-xs-12">
     <asp:Button ID="BTNSaveFeeType" runat="server" CssClass="btn btn-primary" Text="Save" OnClick="BTNSaveFeeType_Click" />
-    </div>
+    </div>--%>
 
 
     <div class=" col-xs-12"><hr /></div>

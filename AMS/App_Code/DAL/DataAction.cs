@@ -223,6 +223,41 @@ namespace AMS.App_Code
             }
             return dt;
         }
+
+
+        public DataTable GetFeeTypes()
+        {
+            DataTable dt = new DataTable();
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    using (MySqlCommand cmd = conn.CreateCommand())
+                    {
+                        conn.Open();
+                        cmd.CommandText = "sp_getFeeTypes";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt);
+
+                        }
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //Panic
+                    throw ex;
+                }
+                finally
+                {
+                    //Tie the loose ends here
+                }
+            }
+            return dt;
+        }
         public DataTable GetConditionStatusByID(int conditionID)
         {
             DataTable dt = new DataTable();
