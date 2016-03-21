@@ -111,7 +111,15 @@ namespace AMS
                 "</label></div>";
             }
         }
-
+        protected void txtConditionCode_TextChanged(object sender, EventArgs e)
+        {
+            //Get the ID update the value
+            string id = ((Label)((Control)sender).Parent.Parent.FindControl("lblCondtionID")).Text;
+            string value = ((TextBox)sender).Text;
+            DataAction dataAction = new DataAction();
+            dataAction.UpdateConditionStatus(int.Parse(id), value, "");
+          
+        }
         protected void DDLGST_SelectedIndexChanged1(object sender, EventArgs e)
         {
             //Update Active GST

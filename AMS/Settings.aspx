@@ -48,20 +48,20 @@
                         <asp:Label ID="lblCondtionID" runat="server" Text='<%# Eval("ConditionID") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
-                <asp:TemplateField HeaderText="Condition Code">
+                <asp:TemplateField HeaderText="Description">
                             <ItemTemplate>
                                 <asp:TextBox ID="txtConditionCode"   AutoPostBack="true" runat="server"
-                                    Text='<%# Eval("ConditionCode") %>'></asp:TextBox>
+                                    Text='<%# Eval("Description") %>' OnTextChanged="txtConditionCode_TextChanged"></asp:TextBox>
                                
                             </ItemTemplate>
                         </asp:TemplateField>
-                   <asp:TemplateField HeaderText="Condition Description">
+               <%--    <asp:TemplateField HeaderText="Status">
                             <ItemTemplate>
                                 <asp:TextBox ID="txtCondtionDescription"   AutoPostBack="true" runat="server"
-                                    Text='<%# Eval("CondidtionDescription") %>'></asp:TextBox>
+                                    Text='<%# Eval("Status") %>' ></asp:TextBox>
                                
                             </ItemTemplate>
-                        </asp:TemplateField>
+                        </asp:TemplateField>--%>
             </Columns>
         </asp:GridView>
    <%-- <label class="control-label col-xs-2" for="DDLConditionStatus" >Condition Status:</label>
@@ -70,7 +70,7 @@
         </div>--%>
     </div>
     
-    <div class=" col-xs-12"></div> 
+ <%--   <div class=" col-xs-12"></div> 
     
 
     <div class=" col-xs-12"></div>
@@ -96,7 +96,7 @@
     <div class="btn-group col-xs-12">
         <asp:Button ID="BTNSaveConditionStatus" runat="server" CssClass="btn btn-primary" Text="Save" OnClick="BTNSaveConditionStatus_Click" />
     </div>
-  
+  --%>
 
 
 
