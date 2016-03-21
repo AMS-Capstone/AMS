@@ -76,30 +76,12 @@ namespace AMS {
         protected global::System.Web.UI.WebControls.GridView GRDFeeTypes;
         
         /// <summary>
-        /// DDLPaymentTypes control.
+        /// GRDPaymentTypes control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DDLPaymentTypes;
-        
-        /// <summary>
-        /// TXTPaymentTypes control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TXTPaymentTypes;
-        
-        /// <summary>
-        /// BTNSavePaymentType control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BTNSavePaymentType;
+        protected global::System.Web.UI.WebControls.GridView GRDPaymentTypes;
     }
 }

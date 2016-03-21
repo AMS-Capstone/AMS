@@ -45,11 +45,13 @@ namespace AMS
 
                     //Load All Payment Types
                     dt = dataAction.GetPaymentType();
-                    DDLPaymentTypes.DataSource = dt;
-                    DDLPaymentTypes.DataValueField = dt.Columns["PaymentTypeID"].ToString();
-                    DDLPaymentTypes.DataTextField = dt.Columns["PaymentDescription"].ToString();
-                    DDLPaymentTypes.DataBind();
-                    DDLPaymentTypes.Items.Insert(0, new ListItem(String.Empty, String.Empty));
+                    GRDPaymentTypes.DataSource = dt;
+                    GRDPaymentTypes.DataBind();
+                    //DDLPaymentTypes.DataSource = dt;
+                    //DDLPaymentTypes.DataValueField = dt.Columns["PaymentTypeID"].ToString();
+                    //DDLPaymentTypes.DataTextField = dt.Columns["PaymentDescription"].ToString();
+                    //DDLPaymentTypes.DataBind();
+                    //DDLPaymentTypes.Items.Insert(0, new ListItem(String.Empty, String.Empty));
 
                 }
                 catch (Exception ex)
@@ -121,6 +123,15 @@ namespace AMS
             DataAction dataAction = new DataAction();
             dataAction.UpdateConditionStatus(int.Parse(id), value, "");
           
+        }
+        protected void txtPaymentType_TextChanged(object sender, EventArgs e)
+        {
+            //Get the ID update the value
+            string id = ((Label)((Control)sender).Parent.Parent.FindControl("lblPaymentTypeID")).Text;
+            string value = ((TextBox)sender).Text;
+            DataAction dataAction = new DataAction();
+            dataAction.UpdatePaymentType(int.Parse(id), value);
+
         }
 
         protected void txtFeeCost_TextChanged(object sender, EventArgs e)
@@ -238,28 +249,28 @@ namespace AMS
         //    }
         //}
 
-        protected void BTNSavePaymentType_Click(object sender, EventArgs e)
-        {
-            DataAction dataAction = new DataAction();
-            try
-            {
-                if(DDLPaymentTypes.SelectedValue == "")
-                {
-                    dataAction.CreatePaymentType(TXTPaymentTypes.Text.ToString().Trim());
-                }
-                else
-                {
-                    dataAction.UpdatePaymentType(int.Parse(DDLPaymentTypes.SelectedValue.ToString().Trim()), TXTPaymentTypes.Text.Trim());
-                }
-            }
-            catch (Exception ex)
-            {
-                AlertDiv.InnerHtml = "<div class=\"alert alert-danger fade in\">" +
-                "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
-                "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + ex.Message +
-                "</label></div>";
-            }
-        }
+        //protected void BTNSavePaymentType_Click(object sender, EventArgs e)
+        //{
+        //    DataAction dataAction = new DataAction();
+        //    try
+        //    {
+        //        if(DDLPaymentTypes.SelectedValue == "")
+        //        {
+        //            dataAction.CreatePaymentType(TXTPaymentTypes.Text.ToString().Trim());
+        //        }
+        //        else
+        //        {
+        //            dataAction.UpdatePaymentType(int.Parse(DDLPaymentTypes.SelectedValue.ToString().Trim()), TXTPaymentTypes.Text.Trim());
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        AlertDiv.InnerHtml = "<div class=\"alert alert-danger fade in\">" +
+        //        "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+        //        "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + ex.Message +
+        //        "</label></div>";
+        //    }
+        //}
 
         //protected void DDLConditionStatus_SelectedIndexChanged(object sender, EventArgs e)
         //{
@@ -318,32 +329,32 @@ namespace AMS
         //    }
         //}
 
-        protected void DDLPaymentTypes_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if(DDLPaymentTypes.SelectedValue == "")
-            {
-                TXTPaymentTypes.Text = "";
-            }
-            else
-            {
-                DataAction dataAction = new DataAction();
-                try
-                {
-                    DataTable dt = dataAction.GetPaymentTypeByID(int.Parse(DDLPaymentTypes.SelectedValue.ToString()));
-                    foreach (DataRow aRow in dt.Rows)
-                    {
-                        TXTPaymentTypes.Text = aRow["PaymentDescription"].ToString();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    AlertDiv.InnerHtml = "<div class=\"alert alert-danger fade in\">" +
-                    "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
-                    "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + ex.Message +
-                    "</label></div>";
-                }
-            }
+        //protected void DDLPaymentTypes_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    if(DDLPaymentTypes.SelectedValue == "")
+        //    {
+        //        TXTPaymentTypes.Text = "";
+        //    }
+        //    else
+        //    {
+        //        DataAction dataAction = new DataAction();
+        //        try
+        //        {
+        //            DataTable dt = dataAction.GetPaymentTypeByID(int.Parse(DDLPaymentTypes.SelectedValue.ToString()));
+        //            foreach (DataRow aRow in dt.Rows)
+        //            {
+        //                TXTPaymentTypes.Text = aRow["PaymentDescription"].ToString();
+        //            }
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            AlertDiv.InnerHtml = "<div class=\"alert alert-danger fade in\">" +
+        //            "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+        //            "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + ex.Message +
+        //            "</label></div>";
+        //        }
+        //    }
 
-        }
+        //}
     }
 }

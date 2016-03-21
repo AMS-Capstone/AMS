@@ -178,29 +178,31 @@
     <div class=" col-xs-12">
     </div>
     <div class="control group">
-          
-    <label class="control-label col-xs-2" for="DDLPaymentTypes" >Payment Types:</label>
-        <div class="col-xs-10">
-    <asp:DropDownList class="form-control" ID="DDLPaymentTypes" runat="server" AutoPostBack="true" OnSelectedIndexChanged="DDLPaymentTypes_SelectedIndexChanged"  ></asp:DropDownList>
-            </div>
+   <asp:GridView ID="GRDPaymentTypes" runat="server" AutoGenerateColumns="false">
+            <Columns>
+                <asp:TemplateField HeaderText="PaymentTypeID" visible="false">
+                    <ItemTemplate>
+                        <asp:Label ID="lblPaymentTypeID" runat="server" Text='<%# Eval("PaymentTypeId") %>'></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField HeaderText="Type">
+                            <ItemTemplate>
+                                <asp:TextBox ID="txtPaymentType"   AutoPostBack="true" runat="server"
+                                    Text='<%# Eval("PaymentDescription") %>' OnTextChanged="txtPaymentType_TextChanged"  ></asp:TextBox>
+                               
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                    
+               <%--    <asp:TemplateField HeaderText="Status">
+                            <ItemTemplate>
+                                <asp:TextBox ID="txtCondtionDescription"   AutoPostBack="true" runat="server"
+                                    Text='<%# Eval("Status") %>' ></asp:TextBox>
+                               
+                            </ItemTemplate>
+                        </asp:TemplateField>--%>
+            </Columns>
+        </asp:GridView>
     </div>
-    <div class=" col-xs-12">
-    
-    </div> 
-    <div class=" col-xs-12">
-    </div>
-    <div class="control group">
-          
-    <label class="control-label col-xs-2" for="TXTPaymentTypes" >Type:</label>
-        <div class="col-xs-10">
-    <asp:TextBox ID="TXTPaymentTypes" runat="server" Width="127px" ></asp:TextBox>
-                </div>
-    </div>
-    <div class=" col-xs-12">
-    
-    </div> 
-      
-    <div class="btn-group col-xs-12">
-    <asp:Button ID="BTNSavePaymentType" runat="server" CssClass="btn btn-primary" Text="Save" OnClick="BTNSavePaymentType_Click"  />
-    </div>
+
 </asp:Content>
