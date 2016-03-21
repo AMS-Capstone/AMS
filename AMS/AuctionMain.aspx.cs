@@ -18,24 +18,26 @@ namespace AMS
         AuctionMainDAL auctionService = new AuctionMainDAL();
         DataAction dataAction = new DataAction();
         int auctionID = 0;
+        int counter = 0;
 
         BuyerDAL buyerService = new AMS.App_Code.BuyerDAL();
         DataSet buyers = new DataSet();
 
-        //protected override void Render(System.Web.UI.HtmlTextWriter writer)
-        //{
-        //    foreach (GridViewRow row in GVAuction.Rows)
-        //    {
-        //        if (row.RowType == DataControlRowType.DataRow &&
-        //            row.RowState.HasFlag(DataControlRowState.Edit) == false)
-        //        {
-        //            // enable click on row to enter edit mode
-        //            row.Attributes["onclick"] =
-        //                ClientScript.GetPostBackClientHyperlink(GVAuction, "Edit$" + row.DataItemIndex, true);
-        //        }
-        //    }
-        //    base.Render(writer);
-        //}
+        protected override void Render(System.Web.UI.HtmlTextWriter writer)
+        {
+            foreach (GridViewRow row in GVAuction.Rows)
+            {
+                if (row.RowType == DataControlRowType.DataRow &&
+                    row.RowState.HasFlag(DataControlRowState.Edit) == false)
+                {
+                    // enable click on row to enter edit mode
+                    row.Attributes["onclick"] =
+                        ClientScript.GetPostBackClientHyperlink(GVAuction, "Edit$" + row.DataItemIndex, true);
+
+                }
+            }
+            base.Render(writer);
+        }
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -108,6 +110,7 @@ namespace AMS
                     //DataRowView dr = e.Row.DataItem as DataRowView;
                     String value1 = (e.Row.FindControl("lblBidderNumber") as Label).Text;
                     DDLBidderNumbers.Items.FindByValue(value1).Selected = true;
+                    (e.Row.FindControl("lblBidderNumber2") as Label).Text = DDLBidderNumbers.SelectedItem.Text;
 
 
                     DropDownList DDLSaleStatuses = (DropDownList)e.Row.FindControl("DDLSaleStatuses");
@@ -121,6 +124,7 @@ namespace AMS
                     //DataRowView dr2 = e.Row.DataItem as DataRowView;
                     String value2 = (e.Row.FindControl("lblSaleStatus") as Label).Text;
                     DDLSaleStatuses.Items.FindByValue(value2).Selected = true;
+                    (e.Row.FindControl("lblSaleStatus2") as Label).Text = DDLSaleStatuses.SelectedItem.Text;
 
                     //DropDownList DDLSaleStatuses = (DropDownList)e.Row.FindControl("DDLSaleStatuses");
 
@@ -148,6 +152,16 @@ namespace AMS
 
         protected void gv_RowEditing(object sender, GridViewEditEventArgs e)
         {
+            //AlertDiv.InnerHtml = "<div class=\"alert alert-warning fade in\">" +
+            //       "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+            //       "<strong>Warning!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "Counter: " + counter.ToString() +
+            //       "</label></div>";
+            //counter += 1;
+            AlertDiv.InnerHtml = "<div class=\"alert alert-warning fade in\">" +
+                   "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                   "<strong>Warning!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "Row Editing" +
+                   "</label></div>";
+
             GVAuction.EditIndex = e.NewEditIndex;
             try
             {
@@ -168,16 +182,33 @@ namespace AMS
         {
 
 
-            //AlertDiv.InnerHtml = "<div class=\"alert alert-warning fade in\">" +
-            //       "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
-            //       "<strong>Warning!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "Test" +
-            //       "</label></div>";
+            AlertDiv.InnerHtml = "<div class=\"alert alert-warning fade in\">" +
+                   "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                   "<strong>Warning!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "Row updating" +
+                   "</label></div>";
+        
+        }
+
+        protected void gv_RowUpdated(object sender, GridViewUpdatedEventArgs e)
+        {
+
+
+            AlertDiv.InnerHtml = "<div class=\"alert alert-warning fade in\">" +
+                   "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                   "<strong>Warning!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "Row updated" +
+                   "</label></div>";
         }
 
         protected void gv_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {
-            GVAuction.EditIndex = -1;
-            DataBind();
+            //GVAuction.EditIndex = -1;
+            //DataBind();
+
+
+            AlertDiv.InnerHtml = "<div class=\"alert alert-warning fade in\">" +
+                   "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                   "<strong>Warning!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "Row update cancelled" +
+                   "</label></div>";
         }
 
         protected void DDLBidderNumbers_SelectedIndexChanged(object sender, EventArgs e)
