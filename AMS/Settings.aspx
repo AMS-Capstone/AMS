@@ -41,10 +41,33 @@
     <h1>Condition status</h1>
     <div class=" col-xs-12"></div>
     <div class="control group">
-    <label class="control-label col-xs-2" for="DDLConditionStatus" >Condition Status:</label>
+        <asp:GridView ID="GRDConditionStatus" runat="server" AutoGenerateColumns="false">
+            <Columns>
+                <asp:TemplateField HeaderText="ConditionID" visible="false">
+                    <ItemTemplate>
+                        <asp:Label ID="lblCondtionID" runat="server" Text='<%# Eval("ConditionID") %>'></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField HeaderText="Condition Code">
+                            <ItemTemplate>
+                                <asp:TextBox ID="txtConditionCode"   AutoPostBack="true" runat="server"
+                                    Text='<%# Eval("ConditionCode") %>'></asp:TextBox>
+                               
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                   <asp:TemplateField HeaderText="Condition Description">
+                            <ItemTemplate>
+                                <asp:TextBox ID="txtCondtionDescription"   AutoPostBack="true" runat="server"
+                                    Text='<%# Eval("CondidtionDescription") %>'></asp:TextBox>
+                               
+                            </ItemTemplate>
+                        </asp:TemplateField>
+            </Columns>
+        </asp:GridView>
+   <%-- <label class="control-label col-xs-2" for="DDLConditionStatus" >Condition Status:</label>
         <div class="col-xs-10">
             <asp:DropDownList class="form-control" ID="DDLConditionStatus" runat="server" AutoPostBack="true" OnSelectedIndexChanged="DDLConditionStatus_SelectedIndexChanged"></asp:DropDownList>
-        </div>
+        </div>--%>
     </div>
     
     <div class=" col-xs-12"></div> 

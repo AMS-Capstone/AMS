@@ -29,11 +29,8 @@ namespace AMS
                     //Load All Condition Statuses
 
                     dt = dataAction.GetConditionStatus();
-                    DDLConditionStatus.DataSource = dt;
-                    DDLConditionStatus.DataValueField = dt.Columns["ConditionID"].ToString();
-                    DDLConditionStatus.DataTextField = dt.Columns["Description"].ToString();
-                    DDLConditionStatus.DataBind();
-                    DDLConditionStatus.Items.Insert(0, new ListItem(String.Empty, String.Empty));
+                    GRDConditionStatus.DataSource = dt;
+                    GRDConditionStatus.DataBind();
 
                     //Load All Fee Types
                 
@@ -160,25 +157,25 @@ namespace AMS
 
         protected void BTNSaveConditionStatus_Click(object sender, EventArgs e)
         {
-            DataAction dataAction = new DataAction();
-            try
-            {
-                if(DDLConditionStatus.SelectedValue == "")
-                {
-                    dataAction.CreateConditionStatus(TXTConditionCode.Text.Trim(), TXTConditionDescription.Text.Trim());
-                }
-                else
-                {
-                    dataAction.UpdateConditionStatus(int.Parse(DDLConditionStatus.SelectedValue.ToString().Trim()), TXTConditionDescription.Text.Trim(), TXTConditionCode.Text.Trim());
-                }
-            }
-            catch (Exception ex)
-            {
-                AlertDiv.InnerHtml = "<div class=\"alert alert-danger fade in\">" +
-                "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
-                "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + ex.Message +
-                "</label></div>";
-            }
+            //DataAction dataAction = new DataAction();
+            //try
+            //{
+            //    if(DDLConditionStatus.SelectedValue == "")
+            //    {
+            //        dataAction.CreateConditionStatus(TXTConditionCode.Text.Trim(), TXTConditionDescription.Text.Trim());
+            //    }
+            //    else
+            //    {
+            //        dataAction.UpdateConditionStatus(int.Parse(DDLConditionStatus.SelectedValue.ToString().Trim()), TXTConditionDescription.Text.Trim(), TXTConditionCode.Text.Trim());
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    AlertDiv.InnerHtml = "<div class=\"alert alert-danger fade in\">" +
+            //    "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+            //    "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + ex.Message +
+            //    "</label></div>";
+            //}
         }
 
         protected void BTNSaveFeeType_Click(object sender, EventArgs e)
@@ -227,33 +224,33 @@ namespace AMS
             }
         }
 
-        protected void DDLConditionStatus_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if(DDLConditionStatus.SelectedValue == "")
-            {
-                TXTConditionCode.Text = "";
-                TXTConditionDescription.Text = "";
-            }
-            else
-            {
-                DataAction dataAction = new DataAction();
-                try{
-                    DataTable dt = dataAction.GetConditionStatusByID(int.Parse(DDLConditionStatus.SelectedValue.ToString().Trim()));
-                    foreach (DataRow aRow in dt.Rows)
-                    {
-                        TXTConditionDescription.Text = aRow["ConditionDescription"].ToString();
-                        TXTConditionCode.Text = aRow["ConditionCode"].ToString();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    AlertDiv.InnerHtml = "<div class=\"alert alert-danger fade in\">" +
-                    "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
-                    "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + ex.Message +
-                    "</label></div>";
-                }
-            }
-        }
+        //protected void DDLConditionStatus_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    if(DDLConditionStatus.SelectedValue == "")
+        //    {
+        //        TXTConditionCode.Text = "";
+        //        TXTConditionDescription.Text = "";
+        //    }
+        //    else
+        //    {
+        //        DataAction dataAction = new DataAction();
+        //        try{
+        //            DataTable dt = dataAction.GetConditionStatusByID(int.Parse(DDLConditionStatus.SelectedValue.ToString().Trim()));
+        //            foreach (DataRow aRow in dt.Rows)
+        //            {
+        //                TXTConditionDescription.Text = aRow["ConditionDescription"].ToString();
+        //                TXTConditionCode.Text = aRow["ConditionCode"].ToString();
+        //            }
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            AlertDiv.InnerHtml = "<div class=\"alert alert-danger fade in\">" +
+        //            "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+        //            "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + ex.Message +
+        //            "</label></div>";
+        //        }
+        //    }
+        //}
 
         protected void DDLFeeTypes_SelectedIndexChanged(object sender, EventArgs e)
         {
