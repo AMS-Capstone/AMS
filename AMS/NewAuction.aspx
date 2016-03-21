@@ -1,7 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="NewAuction.aspx.cs" Inherits="AMS.NewAuction" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h1>New Auction</h1>
-    <div class=" col-xs-12" id="AlertDiv" runat="server"></div>
+    <div class=" col-xs-12" id="AlertDiv" runat="server">
+    </div>
     <div class=" col-xs-6" id="ProgressBar" runat="server">
         <%--<div class="progress progress-striped">
             <div class="progress-bar progress-bar-info" style="width: 0%">
@@ -18,7 +19,7 @@
                     <div class='col-sm-4'>
                         <div class="form-group">
                             <div class='input-group date' id='datetimepicker1'>
-                                <asp:TextBox type='text' class="form-control dp" readonly id="TXTDate" runat="server" />
+                                <asp:TextBox type='text' class="form-control dp" id="TXTDate" runat="server" />
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
@@ -43,6 +44,7 @@
                             $('.datepicker').click();
                         });
 
+                        //window.setTimeout(function () { $(".alert").alert('close'); }, 10000);
                     </script>
                 </div>
             </div>
