@@ -91,7 +91,7 @@ Create Table Buyer
     BuyerCity text,
     BuyerProvince text,
     BuyerPostalCode text,
-    -- BuyerCountry Text,
+    BuyerLicense Text,
     BuyerPhone Text,
     Permanent boolean default false,
     Banned boolean default false,
@@ -238,7 +238,7 @@ INSERT INTO `buyer`
 `Banned`,
 `Notes` )
 VALUES
-("","","","","AB","","", 0,TRUE, FALSE, "");
+("","","","","Alberta","","", 0,TRUE, FALSE, "");
 
 INSERT INTO `conditionstatus` (`ConditionCode`) VALUES ('Not Sold');
 INSERT INTO `conditionstatus` (`ConditionCode`) VALUES ('Conditional');
@@ -446,6 +446,7 @@ Create FUNCTION sp_createBuyer (
     N_BuyerProvince text,
     N_BuyerPostalCode text,
     N_BuyerPhone text,
+    N_BuyerLicense text,
     N_BuyerBidderNumber integer,
     N_BuyerPermanent boolean,
     N_BuyerBanned boolean,
@@ -460,6 +461,7 @@ begin
 `BuyerProvince`,
 `BuyerPostalCode`,
 `BuyerPhone`,
+`BuyerLicense`,
 `BidderNumber`,
 `Permanent`,
 `Banned`,
@@ -473,6 +475,7 @@ VALUES
     N_BuyerProvince,
     N_BuyerPostalCode,
     N_BuyerPhone,
+    N_BuyerLicense,
     N_BuyerBidderNumber,
     N_BuyerPermanent,
     N_BuyerBanned,
@@ -492,6 +495,7 @@ CREATE PROCEDURE sp_updateBuyer(
     N_BuyerProvince text,
     N_BuyerPostalCode text,
     N_BuyerPhone text,
+    N_BuyerLicense text,
     N_BuyerBidderNumber integer,
     N_BuyerPermanent boolean,
     N_BuyerBanned boolean,
@@ -506,6 +510,7 @@ begin
 		`BuyerProvince` = N_BuyerProvince,
 		`BuyerPostalCode` = N_BuyerPostalCode,
 		`BuyerPhone` = N_BuyerPhone,
+		`BuyerLicense` = N_BuyerLicense,
 		`BidderNumber` = N_BuyerBidderNumber,
 		`Banned` = N_BuyerBanned,
 		`Notes` = N_BuyerNotes
@@ -534,6 +539,7 @@ BuyerCity,
 BuyerProvince,
 BuyerPostalCode,
 BuyerPhone,
+BuyerLicense,
 IF(BidderNumber = 0 , "", BidderNumber) as BidderNumber,
 Permanent,
 Banned,

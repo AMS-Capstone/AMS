@@ -153,7 +153,7 @@ namespace AMS
             DDLProvince.SelectedValue = buyers.Tables["Buyers"].Rows[selectedIndex]["BuyerProvince"].ToString();//
             TXTPostal.Text = buyers.Tables["Buyers"].Rows[selectedIndex]["BuyerPostalCode"].ToString();
             TXTPhone.Text = buyers.Tables["Buyers"].Rows[selectedIndex]["BuyerPhone"].ToString();
-            TXTDLicense.Text = buyers.Tables["Buyers"].Rows[selectedIndex]["BuyerPhone"].ToString();
+            TXTDLicense.Text = buyers.Tables["Buyers"].Rows[selectedIndex]["BuyerLicense"].ToString();
             CHKBanned.Checked = Convert.ToBoolean(buyers.Tables["Buyers"].Rows[selectedIndex]["Banned"].ToString());
             TXTNotes.Text = buyers.Tables["Buyers"].Rows[selectedIndex]["Notes"].ToString();
 
