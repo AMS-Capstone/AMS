@@ -22,20 +22,20 @@ namespace AMS
         BuyerDAL buyerService = new AMS.App_Code.BuyerDAL();
         DataSet buyers = new DataSet();
 
-        protected override void Render(System.Web.UI.HtmlTextWriter writer)
-        {
-            foreach (GridViewRow row in GVAuction.Rows)
-            {
-                if (row.RowType == DataControlRowType.DataRow &&
-                    row.RowState.HasFlag(DataControlRowState.Edit) == false)
-                {
-                    // enable click on row to enter edit mode
-                    row.Attributes["onclick"] =
-                        ClientScript.GetPostBackClientHyperlink(GVAuction, "Edit$" + row.DataItemIndex, true);
-                }
-            }
-            base.Render(writer);
-        }
+        //protected override void Render(System.Web.UI.HtmlTextWriter writer)
+        //{
+        //    foreach (GridViewRow row in GVAuction.Rows)
+        //    {
+        //        if (row.RowType == DataControlRowType.DataRow &&
+        //            row.RowState.HasFlag(DataControlRowState.Edit) == false)
+        //        {
+        //            // enable click on row to enter edit mode
+        //            row.Attributes["onclick"] =
+        //                ClientScript.GetPostBackClientHyperlink(GVAuction, "Edit$" + row.DataItemIndex, true);
+        //        }
+        //    }
+        //    base.Render(writer);
+        //}
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -60,13 +60,18 @@ namespace AMS
             {
                 try
                 {
+                    AlertDiv.InnerHtml = "";
                     buyers = buyerService.GetBuyers();
                     paymentTypes = auctionService.GetPaymentTypes();
                     ConditionStatuses.Tables.Add(dataAction.GetConditionStatus());
 
-                    auctionData = auctionService.GetAuctionData(auctionID);
-                    GVAuction.DataSource = auctionData.Tables[0].DefaultView;
-                    GVAuction.DataBind();
+                    if (!IsPostBack)
+                    {
+
+                        auctionData = auctionService.GetAuctionData(auctionID);
+                        GVAuction.DataSource = auctionData.Tables[0].DefaultView;
+                        GVAuction.DataBind();
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -163,10 +168,10 @@ namespace AMS
         {
 
 
-            AlertDiv.InnerHtml = "<div class=\"alert alert-warning fade in\">" +
-                   "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
-                   "<strong>Warning!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "Test" +
-                   "</label></div>";
+            //AlertDiv.InnerHtml = "<div class=\"alert alert-warning fade in\">" +
+            //       "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+            //       "<strong>Warning!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "Test" +
+            //       "</label></div>";
         }
 
         protected void gv_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
@@ -177,7 +182,7 @@ namespace AMS
 
         protected void DDLBidderNumbers_SelectedIndexChanged(object sender, EventArgs e)
         {
-           
+            //ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "openPaymentModal();", true);
         }
 
         protected void DDLSaleStatuses_SelectedIndexChanged(object sender, EventArgs e)
@@ -190,9 +195,17 @@ namespace AMS
 
         }
 
-         //AlertDiv.InnerHtml = "<div class=\"alert alert-warning fade in\">" +
-         //       "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
-         //       "<strong>Warning!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "Test" +
-         //       "</label></div>";
+        protected void btnAddPayment_Click(object sender, EventArgs e)
+        {
+            AlertDiv.InnerHtml = "<div class=\"alert alert-warning fade in\">" +
+                   "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                   "<strong>Warning!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "Payment Submitted" +
+                   "</label></div>";
+        }
+
+        //AlertDiv.InnerHtml = "<div class=\"alert alert-warning fade in\">" +
+        //       "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+        //       "<strong>Warning!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "Test" +
+        //       "</label></div>";
     }
 }
