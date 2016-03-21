@@ -8,7 +8,7 @@
         AutoGenerateColumns="False" OnRowDataBound="RowDataBound" OnRowEditing="gv_RowEditing" 
         OnRowUpdating="gv_RowUpdating" OnRowCancelingEdit="gv_RowCancelingEdit">
         <Columns>
-            <asp:CommandField ShowEditButton="True" Visible="False"/>
+            <asp:CommandField ShowEditButton="True"/>
             <asp:TemplateField  HeaderText="Con Code">
                 <ItemTemplate>
                     <asp:Label ID="lblSellerCode" runat="server" Text='<%# Eval("SellerCode") %>' Visible="true" />
@@ -71,11 +71,11 @@
             <asp:TemplateField  HeaderText="Payments">
                 <ItemTemplate>
                     <asp:Label ID="lblPayments1" runat="server" Text='<%# Eval("Payments", "{0:c}") %>' DataFormatString="{0:c}" Visible="true" />
-                    <%--<asp:Button ID="btnAddPayment" runat="server" Text="Add" data-target="#paymentModal" OnClick="btnAddPayment_Click"/>--%>
                 </ItemTemplate>
                 <EditItemTemplate>
                     <asp:Label ID="lblPayments2" runat="server" Text='<%# Eval("Payments", "{0:c}") %>' DataFormatString="{0:c}" Visible="true" />
                     <button type="button" class="btn btn-xs" data-toggle="modal" title="Add Payment" data-target="#paymentModal">Add Payment</button>
+                    <%--<asp:Button ID="btnAddPayment" runat="server" Text="Add" OnClick="btnAddPayment_Click"/>--%>
                 </EditItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField  HeaderText="Surcharges">
@@ -98,33 +98,103 @@
         function openPaymentModal() {
             $('#paymentModal').modal('show');
         }
-        
-        function openPaymentModal() {
-            $('#paymentModal').modal('show');
-        }
-
-        function openDepositModal() {
-            $('#depositModal').modal('show');
-        }
 
         jQuery('.numbersOnly').keyup(function () {
             this.value = this.value.replace(/[^0-9\.]/g, '');
         });
     </script>
+    <style>
+        .modal-body .form-horizontal .col-sm-2,
+        .modal-body .form-horizontal .col-sm-10 {
+            width: 100%
+        }
+
+        .modal-body .form-horizontal .control-label {
+            text-align: left;
+        }
+        .modal-body .form-horizontal .col-sm-offset-2 {
+            margin-left: 15px;
+        }
+    </style>
+
     <!-- Modals -->
+
     <div id="paymentModal" class="modal fade" role="dialog">
-        <div class="modal-dialog <%--modal-sm--%>">
+        <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Add Payment Form</h4>
                 </div>
-                <div class="modal-body">
-                    <p>Some text in the modal.</p>
+                <div class="modal-body row">
+                    <div id="ULContainer" runat="server"></div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="txtPayment">Payment</label>
+                        <div class="col-sm-9">
+                            <asp:TextBox runat="server" CssClass="form-control numbersOnly TXTPayment" ID="TXTPayment" DataFormatString="{0:c}" placeholder="Payment"/>                        
+                            <script type="text/javascript">
+                                jQuery('.numbersOnly').keyup(function () {
+                                    this.value = this.value.replace(/[^0-9\.]/g, '');
+                                });
+
+                                $('.TXTPayment').on('change', function () {
+                                    $(".hiddenList").each(function (index) {
+                                        $percent = $(this).text();
+                                        if (index == $(".DDLPaymentTypes").prop('selectedIndex')) {
+                                            $(".TXTSurcharge").val(format($percent * $('.TXTPayment').val()));
+                                        }
+                                    });
+                                });
+
+                                var format = function (num) {
+                                    var str = num.toString().replace("$", ""), parts = false, output = [], i = 1, formatted = null;
+                                    if (str.indexOf(".") > 0) {
+                                        parts = str.split(".");
+                                        str = parts[0];
+                                    }
+                                    str = str.split("").reverse();
+                                    for (var j = 0, len = str.length; j < len; j++) {
+                                        if (str[j] != ",") {
+                                            output.push(str[j]);
+                                            if (i % 3 == 0 && j < (len - 1)) {
+                                                output.push(",");
+                                            }
+                                            i++;
+                                        }
+                                    }
+                                    formatted = output.reverse().join("");
+                                    return ("$" + formatted + ((parts) ? "." + parts[1].substr(0, 2) : ""));
+                                };
+                            </script>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="DDLPaymentTypes">Payment Type</label>
+                        <div class="col-sm-9">
+                            <asp:DropDownList ID="DDLPaymentTypes" CssClass="form-control DDLPaymentTypes" runat="server"></asp:DropDownList>                       
+                            <script type="text/javascript">
+                                $('.DDLPaymentTypes').on('change', function () {
+                                    $(".hiddenList").each(function (index) {
+                                        $percent = $(this).text();
+                                        if (index == $(".DDLPaymentTypes").prop('selectedIndex')) {
+                                            $(".TXTSurcharge").val(format($percent * $('.TXTPayment').val()));
+                                        }
+                                    });
+                                });
+                            </script>
+                            <asp:Label ID="LBLSurchargeInPercent" runat="server"></asp:Label>
+                        </div>
+                    </div>                
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="lblSurcharge">Surcharge</label>
+                        <div class="col-sm-9">
+                            <asp:TextBox ID="TXTSurcharge" CssClass="form-control numbersOnly TXTSurcharge" ReadOnly="true" runat="server"></asp:TextBox>                
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <asp:Button ID="btnAddPayment" runat="server" CssClass="btn btn-primary" Text="Add Payment" OnClick="btnAddPayment_Click" />
+                    <asp:Button ID="btnAddPayment" runat="server" class="btn btn-primary" Text="Add Payment" OnClick="btnAddPayment_Click" />
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>

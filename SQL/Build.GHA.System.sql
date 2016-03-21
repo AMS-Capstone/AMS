@@ -76,6 +76,7 @@ Create Table GST
 Create Table PaymentType
 (
 	PaymentTypeID integer primary key AUTO_INCREMENT,
+    SurchargeInPercent double,
     PaymentDescription text
 );
 
@@ -245,10 +246,10 @@ INSERT INTO  `conditionstatus` (`ConditionCode`) VALUES ('Refused');
 INSERT INTO  `conditionstatus` (`ConditionCode`) VALUES ('Sold');
 INSERT INTO  `conditionstatus` (`ConditionCode`) VALUES ('Paid');
 
-INSERT INTO `paymenttype` (`PaymentDescription`) VALUES ('Cash');
-INSERT INTO `paymenttype` (`PaymentDescription`) VALUES ('Cheque');
-INSERT INTO `paymenttype` (`PaymentDescription`) VALUES ('Credit Card');
-INSERT INTO `paymenttype` (`PaymentDescription`) VALUES ('Debit');
+INSERT INTO `paymenttype` (`PaymentDescription`, `SurchargeInPercent`) VALUES ('Cash', 0.00);
+INSERT INTO `paymenttype` (`PaymentDescription`, `SurchargeInPercent`) VALUES ('Cheque', 0.00);
+INSERT INTO `paymenttype` (`PaymentDescription`, `SurchargeInPercent`) VALUES ('Credit Card', 0.04);
+INSERT INTO `paymenttype` (`PaymentDescription`, `SurchargeInPercent`) VALUES ('Debit', 0.00);
 
 INSERT INTO `feetype` (`FeeType`) VALUES ('Towing');
 INSERT INTO `feetype` (`FeeType`) VALUES ('Cleaning');
@@ -898,7 +899,7 @@ END//
 DROP PROCEDURE IF EXISTS sp_viewPaymentTypes //
 CREATE PROCEDURE sp_viewPaymentTypes()
 BEGIN	
-	Select PaymentTypeID, PaymentDescription
+	Select PaymentTypeID, PaymentDescription, SurchargeInPercent
 	FROM PaymentType;
 END//
 

@@ -14,7 +14,7 @@
         <div class=" col-xs-12"></div>
         <div class="control-group">
             <div class="col-xs-3">
-                <asp:ListBox ID="LBAuctionList" CssClass="form-control"  runat="server"></asp:ListBox>
+                <asp:ListBox ID="LBAuctionList" CssClass="form-control"  runat="server" Rows="10"></asp:ListBox>
             </div>
         </div>
         

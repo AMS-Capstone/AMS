@@ -110,7 +110,7 @@ namespace AMS.App_Code
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Connection = conn;
                 da.SelectCommand = cmd;
-                da.Fill(ds, "PaymentTypes");
+                da.Fill(ds);
             }
             catch (Exception ex)
             {
