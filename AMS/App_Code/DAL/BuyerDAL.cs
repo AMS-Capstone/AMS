@@ -65,6 +65,7 @@ namespace AMS.App_Code
                 cmd.Parameters.Add(new MySqlParameter("@N_BuyerProvince", buyer.BuyerProvince));
                 cmd.Parameters.Add(new MySqlParameter("@N_BuyerPostalCode", buyer.BuyerPostalCode));
                 cmd.Parameters.Add(new MySqlParameter("@N_BuyerPhone", buyer.BuyerPhone));
+                cmd.Parameters.Add(new MySqlParameter("@N_BuyerLicense", buyer.BuyerDriverLicense));
                 cmd.Parameters.Add(new MySqlParameter("@N_BuyerBidderNumber", buyer.BidderNum));
                 cmd.Parameters.Add(new MySqlParameter("@N_BuyerPermanent", buyer.BuyerIsPermanent));
                 cmd.Parameters.Add(new MySqlParameter("@N_BuyerBanned", buyer.IsBanned));
@@ -111,6 +112,7 @@ namespace AMS.App_Code
                 cmd.Parameters.Add(new MySqlParameter("@N_BuyerProvince", buyer.BuyerProvince));
                 cmd.Parameters.Add(new MySqlParameter("@N_BuyerPostalCode", buyer.BuyerPostalCode));
                 cmd.Parameters.Add(new MySqlParameter("@N_BuyerPhone", buyer.BuyerPhone));
+                cmd.Parameters.Add(new MySqlParameter("@N_BuyerLicense", buyer.BuyerDriverLicense));
                 cmd.Parameters.Add(new MySqlParameter("@N_BuyerBidderNumber", buyer.BidderNum));
                 cmd.Parameters.Add(new MySqlParameter("@N_BuyerPermanent", buyer.BuyerIsPermanent));
                 cmd.Parameters.Add(new MySqlParameter("@N_BuyerBanned", buyer.IsBanned));

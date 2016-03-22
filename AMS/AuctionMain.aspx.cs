@@ -23,21 +23,21 @@ namespace AMS
         BuyerDAL buyerService = new AMS.App_Code.BuyerDAL();
         DataSet buyers = new DataSet();
 
-        protected override void Render(System.Web.UI.HtmlTextWriter writer)
-        {
-            foreach (GridViewRow row in GVAuction.Rows)
-            {
-                if (row.RowType == DataControlRowType.DataRow &&
-                    row.RowState.HasFlag(DataControlRowState.Edit) == false)
-                {
-                    // enable click on row to enter edit mode
-                    row.Attributes["onclick"] =
-                        ClientScript.GetPostBackClientHyperlink(GVAuction, "Edit$" + row.DataItemIndex, true);
+        //protected override void Render(System.Web.UI.HtmlTextWriter writer)
+        //{
+        //    foreach (GridViewRow row in GVAuction.Rows)
+        //    {
+        //        if (row.RowType == DataControlRowType.DataRow &&
+        //            row.RowState.HasFlag(DataControlRowState.Edit) == false)
+        //        {
+        //            // enable click on row to enter edit mode
+        //            row.Attributes["onclick"] =
+        //                ClientScript.GetPostBackClientHyperlink(GVAuction, "Edit$" + row.DataItemIndex, true);
 
-                }
-            }
-            base.Render(writer);
-        }
+        //        }
+        //    }
+        //    base.Render(writer);
+        //}
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -64,8 +64,33 @@ namespace AMS
                 {
                     AlertDiv.InnerHtml = "";
                     buyers = buyerService.GetBuyers();
-                    paymentTypes = auctionService.GetPaymentTypes();
                     ConditionStatuses.Tables.Add(dataAction.GetConditionStatus());
+                    
+                    paymentTypes = auctionService.GetPaymentTypes();
+
+                    if (paymentTypes.Tables.Count > 0)
+                    {
+                        if (DDLPaymentTypes != null)
+                        {
+                            //Providing payment types for the modal popup
+                            DDLPaymentTypes.DataSource = paymentTypes.Tables[0];
+                            DDLPaymentTypes.DataTextField = "PaymentDescription";
+                            DDLPaymentTypes.DataValueField = "PaymentTypeID";
+                            DDLPaymentTypes.DataBind();
+
+
+                        }
+
+                        //Here we will provide surcharges for the modal popup
+                        ULContainer.InnerHtml = "<ul style=\"display: none\">";
+                        foreach (DataRow row in paymentTypes.Tables[0].Rows)
+                        {
+                            ULContainer.InnerHtml += "<li class=\"hiddenList\">" + row["SurchargeInPercent"].ToString() + "</li>";
+                        }                        
+
+                        //Closing the UL container
+                        ULContainer.InnerHtml += "</ul>";
+                    }
 
                     if (!IsPostBack)
                     {
@@ -128,10 +153,10 @@ namespace AMS
 
                     //DropDownList DDLSaleStatuses = (DropDownList)e.Row.FindControl("DDLSaleStatuses");
 
-                    //DDLSaleStatuses.DataSource = paymentTypes.Tables[0];
-                    //DDLSaleStatuses.DataTextField = "PaymentDescription";
-                    //DDLSaleStatuses.DataValueField = "PaymentTypeID";
-                    //DDLSaleStatuses.DataBind();
+                    //DDLPaymentTypes.DataSource = paymentTypes.Tables[0];
+                    //DDLPaymentTypes.DataTextField = "PaymentDescription";
+                    //DDLPaymentTypes.DataValueField = "PaymentTypeID";
+                    //DDLPaymentTypes.DataBind();
 
                     ////DataRowView dr3 = e.Row.DataItem as DataRowView;
                     //String value3 = (e.Row.FindControl("lblSaleStatus") as Label).Text;
@@ -157,10 +182,8 @@ namespace AMS
             //       "<strong>Warning!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "Counter: " + counter.ToString() +
             //       "</label></div>";
             //counter += 1;
-            AlertDiv.InnerHtml = "<div class=\"alert alert-warning fade in\">" +
-                   "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
-                   "<strong>Warning!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "Row Editing" +
-                   "</label></div>";
+
+            //Save auction sale ID to the session
 
             GVAuction.EditIndex = e.NewEditIndex;
             try
@@ -201,25 +224,32 @@ namespace AMS
 
         protected void gv_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {
-            //GVAuction.EditIndex = -1;
-            //DataBind();
+            GVAuction.EditIndex = -1;
+            auctionData = auctionService.GetAuctionData(auctionID);
+            GVAuction.DataSource = auctionData.Tables[0].DefaultView;
+            DataBind();
 
 
-            AlertDiv.InnerHtml = "<div class=\"alert alert-warning fade in\">" +
-                   "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
-                   "<strong>Warning!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "Row update cancelled" +
-                   "</label></div>";
+            //AlertDiv.InnerHtml = "<div class=\"alert alert-warning fade in\">" +
+            //       "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+            //       "<strong>Warning!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "Row update cancelled" +
+            //       "</label></div>";
         }
 
         protected void DDLBidderNumbers_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "openPaymentModal();", true);
+            
         }
 
         protected void DDLSaleStatuses_SelectedIndexChanged(object sender, EventArgs e)
         {
             
         }
+
+        //protected void DDLPaymentTypes_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+
+        //}
 
         protected void BTNTotals_Click(object sender, EventArgs e)
         {
@@ -228,15 +258,52 @@ namespace AMS
 
         protected void btnAddPayment_Click(object sender, EventArgs e)
         {
-            AlertDiv.InnerHtml = "<div class=\"alert alert-warning fade in\">" +
-                   "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
-                   "<strong>Warning!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "Payment Submitted" +
-                   "</label></div>";
+            //Create and add payment here
+            Payment payment = new Payment();
+            payment.AuctionSaleID = 0;
+            payment.PaymentAmount = Convert.ToDouble(TXTPayment.Text);
+            payment.PaymentDate = DateTime.Now;
+            payment.PaymentTypeID = Convert.ToInt32(DDLPaymentTypes.SelectedValue.ToString());
+            String surcharge = TXTSurcharge.Text;
+            surcharge.Replace("$", "");
+            surcharge.Replace(",", "");
+            if (surcharge != null && surcharge != "")
+            {
+                payment.Surcharges = Convert.ToDouble(surcharge);
+            }
+            else
+            {
+                payment.Surcharges = 0.00;
+            }
+
+            //createPayment(payment);
+
+            //Recalculate the totals
+
+            //Success message
+            AlertDiv.InnerHtml = "<div class=\"alert alert-success fade in\">" +
+            "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+            "<strong>Success!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "New Payment was added!" + TXTSurcharge.Text +
+            "</label></div>";
+            
+            GVAuction.EditIndex = -1;
+            auctionData = auctionService.GetAuctionData(auctionID);
+            GVAuction.DataSource = auctionData.Tables[0].DefaultView;
+            DataBind();
+        }
+
+        protected void txtPayment_TextChanged(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "openPaymentModal();", true);
+            
         }
 
         //AlertDiv.InnerHtml = "<div class=\"alert alert-warning fade in\">" +
         //       "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
         //       "<strong>Warning!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "Test" +
         //       "</label></div>";
+
+
+        //ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "openPaymentModal();", true);
     }
 }
