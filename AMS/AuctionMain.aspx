@@ -74,7 +74,7 @@
                 </ItemTemplate>
                 <EditItemTemplate>
                     <asp:Label ID="lblPayments2" runat="server" Text='<%# Eval("Payments", "{0:c}") %>' DataFormatString="{0:c}" Visible="true" />
-                    <button type="button" class="btn btn-xs" data-toggle="modal" title="Add Payment" data-target="#paymentModal">Add Payment</button>
+                    <button type="button" class="btn btn-xs" data-toggle="modal" title="Add Payment" data-target="#paymentModal">Add</button>
                     <%--<asp:Button ID="btnAddPayment" runat="server" Text="Add" OnClick="btnAddPayment_Click"/>--%>
                 </EditItemTemplate>
             </asp:TemplateField>
