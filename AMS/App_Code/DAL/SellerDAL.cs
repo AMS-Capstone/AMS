@@ -137,5 +137,33 @@ namespace AMS.App_Code
                 conn.Close();
             }
         }
+
+        //Delete Seller
+        public void DeleteSeller(int SellerID)
+        {
+            MySqlConnection conn = new MySqlConnection(connectionString);
+            conn.Open();
+
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.CommandText = "sp_deleteSeller";
+                cmd.Parameters.Add(new MySqlParameter("@N_SellerID", SellerID));
+
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = conn;
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                //Panic
+                throw ex;
+            }
+            finally
+            {
+                //Tie the loose ends here
+                conn.Close();
+            }
+        }
     }
 }
