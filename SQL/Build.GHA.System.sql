@@ -324,15 +324,14 @@ BEGIN
 END//
 
 DROP PROCEDURE IF EXISTS sp_updateConditionStatus //
-CREATE PROCEDURE sp_updateConditionStatus(IN pConditionId integer, IN pConditionDescription text, pConditionCode tinyText, IN pStatus boolean)
+CREATE PROCEDURE sp_updateConditionStatus(IN pConditionId integer, IN pConditionDescription text, pConditionCode tinyText)
 
 BEGIN
 
 	UPDATE conditionstatus
 	SET
 	ConditionCode = pConditionCode,
-	ConditionDescription = pConditionDescription,
-    status = pStatus 
+	ConditionDescription = pConditionDescription
 	WHERE ConditionID = pConditionId;
 END//
 
@@ -365,8 +364,7 @@ BEGIN
 	UPDATE FeeType
 	SET
 	FeeCost = pFeeCost,
-	FeeType = pFeeType, 
-    Status = pStatus
+	FeeType = pFeeType
 	WHERE FeeId = pFeeId;
 END//
 
@@ -400,7 +398,7 @@ BEGIN
 	SET
 	PaymentDescription = pPaymentDescription,
     SurchargeInPercent = pSurchargeInPercent
-	WHERE PaymentTypeId = PaymentTypeId;
+	WHERE PaymentTypeId = pPaymentID;
 END //
 
 DROP PROCEDURE IF EXISTS sp_getGSTByID //
