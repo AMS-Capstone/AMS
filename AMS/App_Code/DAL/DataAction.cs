@@ -495,7 +495,7 @@ namespace AMS.App_Code
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("pPaymentID", paymentID);
                     cmd.Parameters.AddWithValue("pPaymentDescription", paymentDescription);
-                    cmd.Parameters.AddWithValue("pSurchargeInPercent", paymentDescription);
+                    cmd.Parameters.AddWithValue("pSurchargeInPercent", surcharge);
                     
 
 
