@@ -484,7 +484,7 @@ namespace AMS.App_Code
 
 
 //Update PaymentType
-        public void UpdatePaymentType(int paymentID, string paymentDescription)
+        public void UpdatePaymentType(int paymentID, string paymentDescription, double surcharge)
         {
             try
             {
@@ -495,7 +495,10 @@ namespace AMS.App_Code
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("pPaymentID", paymentID);
                     cmd.Parameters.AddWithValue("pPaymentDescription", paymentDescription);
-                
+                    cmd.Parameters.AddWithValue("pSurchargeInPercent", paymentDescription);
+                    
+
+
                     conn.Open();
                     cmd.ExecuteNonQuery();
                 }

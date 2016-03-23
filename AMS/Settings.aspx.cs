@@ -128,12 +128,22 @@ namespace AMS
         {
             //Get the ID update the value
             string id = ((Label)((Control)sender).Parent.Parent.FindControl("lblPaymentTypeID")).Text;
-            string value = ((TextBox)sender).Text;
+            string surcharge = ((TextBox)((Control)sender).Parent.Parent.FindControl("txtSurcharge")).Text;
+            string description = ((TextBox)((Control)sender).Parent.Parent.FindControl("txtPaymentType")).Text;
             DataAction dataAction = new DataAction();
-            dataAction.UpdatePaymentType(int.Parse(id), value);
+            dataAction.UpdatePaymentType(int.Parse(id), description, double.Parse(surcharge));
 
         }
+        protected void txtSurcharge_TextChanged(object sender, EventArgs e)
+        {
+            //Get the ID update the value
+            string id = ((Label)((Control)sender).Parent.Parent.FindControl("lblPaymentTypeID")).Text;
+            string surcharge =  ((TextBox)((Control)sender).Parent.Parent.FindControl("txtSurcharge")).Text;
+            string description = ((TextBox)((Control)sender).Parent.Parent.FindControl("txtPaymentType")).Text;
+            DataAction dataAction = new DataAction();
+            dataAction.UpdatePaymentType(int.Parse(id), description, double.Parse(surcharge));
 
+        }
         protected void txtFeeCost_TextChanged(object sender, EventArgs e)
         {
             //Get the ID update the value

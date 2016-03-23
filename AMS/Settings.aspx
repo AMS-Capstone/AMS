@@ -43,6 +43,7 @@
     <div class="control group">
         <asp:GridView ID="GRDConditionStatus" runat="server" AutoGenerateColumns="false">
             <Columns>
+                <asp:CommandField ShowEditButton="true" />
                 <asp:TemplateField HeaderText="ConditionID" visible="false">
                     <ItemTemplate>
                         <asp:Label ID="lblCondtionID" runat="server" Text='<%# Eval("ConditionID") %>'></asp:Label>
@@ -189,6 +190,13 @@
                             <ItemTemplate>
                                 <asp:TextBox ID="txtPaymentType"   AutoPostBack="true" runat="server"
                                     Text='<%# Eval("PaymentDescription") %>' OnTextChanged="txtPaymentType_TextChanged"  ></asp:TextBox>
+                               
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                 <asp:TemplateField HeaderText="Surcharge">
+                            <ItemTemplate>
+                                <asp:TextBox ID="txtSurcharge"   AutoPostBack="true" runat="server"
+                                    Text='<%# Eval("SurchargeInPercent") %>' OnTextChanged="txtSurcharge_TextChanged"   ></asp:TextBox>
                                
                             </ItemTemplate>
                         </asp:TemplateField>
