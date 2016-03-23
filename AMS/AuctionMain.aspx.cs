@@ -184,6 +184,7 @@ namespace AMS
             //counter += 1;
 
             //Save auction sale ID to the session
+            
 
             GVAuction.EditIndex = e.NewEditIndex;
             try

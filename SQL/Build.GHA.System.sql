@@ -677,7 +677,7 @@ BEGIN
 	select date_format(auctiondate, '%M %e %Y') As AuctionDate, AuctionID, AuctionTotal 
     from AUCTION
     where YEAR(AUCTION.AUCTIONDATE) = pAuctionYear
-    order by AuctionDate desc;
+    order by AuctionDate asc;
 END //
 
 DROP FUNCTION IF EXISTS sp_createAuction // 
@@ -1069,6 +1069,7 @@ END//
 DROP PROCEDURE IF EXISTS sp_deleteBuyer // 
 CREATE PROCEDURE sp_deleteBuyer(N_BuyerID integer)
 BEGIN
-DELETE FROM buyer
-WHERE BuyerID = N_BuyerID;
-END //
+	DELETE 
+    FROM buyer
+	WHERE BuyerID = N_BuyerID;
+END//

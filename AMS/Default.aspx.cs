@@ -29,21 +29,22 @@ namespace AMS
                         DDLAuctionYear.DataSource = auctionYear;
                         DDLAuctionYear.DataBind();
 
+                        DataSet auctions = auctionService.findAuctions(DDLAuctionYear.SelectedValue);
+                        if (auctions.Tables[0].Rows.Count > 0)
+                        {
+
+                            LBAuctionList.DataTextField = "AuctionDate";
+                            LBAuctionList.DataValueField = "AuctionId";
+                            LBAuctionList.DataSource = auctions;
+                            LBAuctionList.DataBind();
+
+
+                            //LBAuctionList.SelectedIndex = 0;
+                        }
                     }
                 }
 
-                DataSet auctions = auctionService.findAuctions(DDLAuctionYear.SelectedValue);
-                if (auctions.Tables[0].Rows.Count > 0)
-                {
-
-                    LBAuctionList.DataTextField = "AuctionDate";
-                    LBAuctionList.DataValueField = "AuctionId";
-                    LBAuctionList.DataSource = auctions;
-                    LBAuctionList.DataBind();
-
-
-                    LBAuctionList.SelectedIndex = 0;
-                }
+                
             }
             catch (Exception ex)
             {
@@ -56,23 +57,25 @@ namespace AMS
 
         protected void BTNSubmit_Click(object sender, EventArgs e)
         {
+            if (LBAuctionList.SelectedValue == null || LBAuctionList.SelectedValue == "")
+            {
+                LBAuctionList.SelectedIndex = 0;
+            }
             Response.Redirect("~/AuctionMain?AuctionID=" + LBAuctionList.SelectedValue);
         }
 
         protected void DDLAuctionYear_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //DataSet auctions = auctionService.findAuctions(DDLAuctionYear.SelectedValue);
-            //if (auctions.Tables[0].Rows.Count > 0)
-            //{
+            DataSet auctions = auctionService.findAuctions(DDLAuctionYear.SelectedValue);
+            if (auctions.Tables[0].Rows.Count > 0)
+            {
 
-            //    LBAuctionList.DataSource = auctions;
-            //    LBAuctionList.DataTextField = "AuctionDate";
-            //    LBAuctionList.DataValueField = "AuctionId";
-            //    LBAuctionList.DataBind();
-
-
-            //    LBAuctionList.SelectedIndex = 0;
-            //}
+                LBAuctionList.DataSource = auctions;
+                LBAuctionList.DataTextField = "AuctionDate";
+                LBAuctionList.DataValueField = "AuctionId";
+                LBAuctionList.DataBind();
+                //LBAuctionList.SelectedIndex = 0;
+            }
         }
 
 
