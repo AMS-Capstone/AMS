@@ -9,6 +9,21 @@
         OnRowUpdating="gv_RowUpdating" OnRowCancelingEdit="gv_RowCancelingEdit">
         <Columns>
             <asp:CommandField ShowEditButton="True"/>
+            <asp:TemplateField  HeaderText="AuctionSaleID" Visible="false">
+                <ItemTemplate>
+                    <asp:Label ID="lblAuctionSaleID" runat="server" Text='<%# Eval("AuctionSaleID") %>'/>
+                </ItemTemplate>
+                <EditItemTemplate>
+                    <asp:Label ID="lblAuctionSaleID" runat="server" Text='<%# Eval("AuctionSaleID") %>'/>
+                </EditItemTemplate>
+            <asp:TemplateField  HeaderText="VehicleID" Visible="false">
+                <ItemTemplate>
+                    <asp:Label ID="lblVehicleID" runat="server" Text='<%# Eval("VehicleID") %>'/>
+                </ItemTemplate>
+                <EditItemTemplate>
+                    <asp:Label ID="lblVehicleID" runat="server" Text='<%# Eval("VehicleID") %>'/>
+                </EditItemTemplate>
+            </asp:TemplateField>
             <asp:TemplateField  HeaderText="Con Code">
                 <ItemTemplate>
                     <asp:Label ID="lblSellerCode" runat="server" Text='<%# Eval("SellerCode") %>' Visible="true" />
@@ -22,30 +37,45 @@
             <asp:TemplateField HeaderText="Bidder #">
                 <ItemTemplate>
                     <asp:Label ID="lblBidderNumber2" runat="server"/>
-                    <asp:Label ID="lblBidderNumber" runat="server" Text='<%# Eval("BuyerID") %>' Visible="false" />
+                    <asp:Label ID="lblBuyerID" runat="server" Text='<%# Eval("BuyerID") %>' Visible="false" />
                     <asp:DropDownList ID="DDLBidderNumbers" runat="server"  OnSelectedIndexChanged="DDLBidderNumbers_SelectedIndexChanged" AutoPostBack="true" Visible="false"></asp:DropDownList>
                 </ItemTemplate>
                 <EditItemTemplate>
                     <asp:Label ID="lblBidderNumber2" runat="server" Visible="false" />
-                    <asp:Label ID="lblBidderNumber" runat="server" Text='<%# Eval("BuyerID") %>' Visible="false" />
+                    <asp:Label ID="lblBuyerID" runat="server" Text='<%# Eval("BuyerID") %>' Visible="false" />
                     <asp:DropDownList ID="DDLBidderNumbers" runat="server"  OnSelectedIndexChanged="DDLBidderNumbers_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
                 </EditItemTemplate>
             </asp:TemplateField>                   
             <asp:TemplateField  HeaderText="Sale Status">
                 <ItemTemplate>
                     <asp:Label ID="lblSaleStatus2" runat="server"/>
-                    <asp:Label ID="lblSaleStatus" runat="server" Text='<%# Eval("ConditionID") %>' Visible="false" />
+                    <asp:Label ID="lblConditionID" runat="server" Text='<%# Eval("ConditionID") %>' Visible="false" />
                     <asp:DropDownList ID="DDLSaleStatuses" runat="server" OnSelectedIndexChanged="DDLSaleStatuses_SelectedIndexChanged" AutoPostBack="true" Visible="false"></asp:DropDownList>
                 </ItemTemplate>
                 <EditItemTemplate>
                     <asp:Label ID="lblSaleStatus2" runat="server" Visible="false"/>
-                    <asp:Label ID="lblSaleStatus" runat="server" Text='<%# Eval("ConditionID") %>' Visible="false" />
+                    <asp:Label ID="lblConditionID" runat="server" Text='<%# Eval("ConditionID") %>' Visible="false" />
                     <asp:DropDownList ID="DDLSaleStatuses" runat="server" OnSelectedIndexChanged="DDLSaleStatuses_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
                 </EditItemTemplate>
             </asp:TemplateField>   
-            <asp:BoundField HeaderText="Selling Price" DataField="SellingPrice" DataFormatString="{0:c}" />
-            <asp:BoundField HeaderText="AuctionSaleID" DataField="AuctionSaleID" Visible="false"/>
-            <asp:BoundField HeaderText="Buyer's Fee" DataField="BuyersFee" DataFormatString="{0:c}" />
+            <%--<asp:BoundField HeaderText="Selling Price" DataField="SellingPrice" DataFormatString="{0:c}" />--%>
+            <asp:TemplateField  HeaderText="Selling Price">
+                <ItemTemplate>
+                    <asp:Label ID="lblSellingPrice" runat="server" Text='<%# Eval("SellingPrice", "{0:c}") %>'/>
+                </ItemTemplate>
+                <EditItemTemplate>
+                    <asp:TextBox ID="txtSellingPrice" runat="server" Text='<%# Eval("SellingPrice") %>'/>
+                </EditItemTemplate>
+            </asp:TemplateField> 
+            <%--<asp:BoundField HeaderText="Buyer's Fee" DataField="BuyersFee" DataFormatString="{0:c}" />--%>
+            <asp:TemplateField  HeaderText="Buyer's Fee">
+                <ItemTemplate>
+                    <asp:Label ID="lblBuyersFee" runat="server" Text='<%# Eval("BuyersFee", "{0:c}") %>'/>
+                </ItemTemplate>
+                <EditItemTemplate>
+                    <asp:TextBox ID="txtBuyersFee" runat="server" Text='<%# Eval("BuyersFee") %>'/>
+                </EditItemTemplate>
+            </asp:TemplateField> 
             <asp:TemplateField  HeaderText="GST">
                 <ItemTemplate>
                     <asp:Label ID="lblGST" runat="server" Text='<%# Eval("GST", "{0:c}") %>' DataFormatString="{0:c}" Visible="true" />

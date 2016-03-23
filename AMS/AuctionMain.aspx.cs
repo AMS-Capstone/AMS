@@ -131,7 +131,7 @@ namespace AMS
                     //DDLBidderNumbers.AutoPostBack = true;
 
                     //DataRowView dr = e.Row.DataItem as DataRowView;
-                    String value1 = (e.Row.FindControl("lblBidderNumber") as Label).Text;
+                    String value1 = (e.Row.FindControl("lblBuyerID") as Label).Text;
                     DDLBidderNumbers.Items.FindByValue(value1).Selected = true;
                     (e.Row.FindControl("lblBidderNumber2") as Label).Text = DDLBidderNumbers.SelectedItem.Text;
 
@@ -145,7 +145,7 @@ namespace AMS
                     //DDLSaleStatuses.AutoPostBack = true;
 
                     //DataRowView dr2 = e.Row.DataItem as DataRowView;
-                    String value2 = (e.Row.FindControl("lblSaleStatus") as Label).Text;
+                    String value2 = (e.Row.FindControl("lblConditionID") as Label).Text;
                     DDLSaleStatuses.Items.FindByValue(value2).Selected = true;
                     (e.Row.FindControl("lblSaleStatus2") as Label).Text = DDLSaleStatuses.SelectedItem.Text;
 
@@ -205,12 +205,34 @@ namespace AMS
 
         protected void gv_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
+            //Assemble AuctionSale from the updated data in DataRow
+            AuctionSale sale = new AuctionSale();
+            DropDownList DDLBidderNumbers = (DropDownList)GVAuction.Rows[e.RowIndex].FindControl("DDLBidderNumbers");
+            sale.BuyerID = Convert.ToInt32(DDLBidderNumbers.SelectedValue.ToString());
 
+            DropDownList DDLSaleStatuses = (DropDownList)GVAuction.Rows[e.RowIndex].FindControl("DDLSaleStatuses");
+            sale.ConditionID = Convert.ToInt32(DDLSaleStatuses.SelectedValue.ToString());
 
-            AlertDiv.InnerHtml = "<div class=\"alert alert-warning fade in\">" +
-                   "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
-                   "<strong>Warning!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "Row updating" +
-                   "</label></div>";
+            TextBox txtSellingPrice = (TextBox)GVAuction.Rows[e.RowIndex].FindControl("txtSellingPrice");
+            sale.SellingPrice = Convert.ToInt32(txtSellingPrice.Text.ToString());
+
+            TextBox txtBuyersFee = (TextBox)GVAuction.Rows[e.RowIndex].FindControl("txtBuyersFee");
+            sale.BuyersFee = Convert.ToInt32(txtBuyersFee.Text.ToString());
+
+            Label VehicleID = (Label)GVAuction.Rows[e.RowIndex].FindControl("lblVehicleID");
+            sale.VehicleID = Convert.ToInt32(VehicleID.Text.ToString());
+
+            sale.SaleDate = DateTime.Now;
+
+            GVAuction.EditIndex = -1;
+            auctionData = auctionService.GetAuctionData(auctionID);
+            GVAuction.DataSource = auctionData.Tables[0].DefaultView;
+            DataBind();
+
+            //AlertDiv.InnerHtml = "<div class=\"alert alert-warning fade in\">" +
+            //       "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+            //       "<strong>Warning!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "Row updating" +
+            //       "</label></div>";
         
         }
 
