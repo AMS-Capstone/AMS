@@ -77,8 +77,6 @@ namespace AMS
                             DDLPaymentTypes.DataTextField = "PaymentDescription";
                             DDLPaymentTypes.DataValueField = "PaymentTypeID";
                             DDLPaymentTypes.DataBind();
-
-
                         }
 
                         //Here we will provide surcharges for the modal popup
@@ -86,7 +84,7 @@ namespace AMS
                         foreach (DataRow row in paymentTypes.Tables[0].Rows)
                         {
                             ULContainer.InnerHtml += "<li class=\"hiddenList\">" + row["SurchargeInPercent"].ToString() + "</li>";
-                        }                        
+                        } 
 
                         //Closing the UL container
                         ULContainer.InnerHtml += "</ul>";
@@ -192,6 +190,9 @@ namespace AMS
                 auctionData = auctionService.GetAuctionData(auctionID);
                 GVAuction.DataSource = auctionData.Tables[0].DefaultView;
                 GVAuction.DataBind();
+
+                DataRow row = auctionData.Tables[0].Rows[e.NewEditIndex];
+                Session["AuctionSaleID"] = row["AuctionSaleID"].ToString();
             }
             catch (Exception ex)
             {
@@ -262,12 +263,17 @@ namespace AMS
             //Create and add payment here
             Payment payment = new Payment();
             payment.AuctionSaleID = 0;
+            String auctionSaleIDString = Session["AuctionSaleID"].ToString();
+            if (auctionSaleIDString != null && auctionSaleIDString != "")
+            {
+                payment.AuctionSaleID = Convert.ToInt32(auctionSaleIDString);
+            }
             payment.PaymentAmount = Convert.ToDouble(TXTPayment.Text);
             payment.PaymentDate = DateTime.Now;
             payment.PaymentTypeID = Convert.ToInt32(DDLPaymentTypes.SelectedValue.ToString());
             String surcharge = TXTSurcharge.Text;
-            surcharge.Replace("$", "");
-            surcharge.Replace(",", "");
+            surcharge = surcharge.Replace("$", "");
+            surcharge = surcharge.Replace(",", "");
             if (surcharge != null && surcharge != "")
             {
                 payment.Surcharges = Convert.ToDouble(surcharge);
@@ -277,14 +283,24 @@ namespace AMS
                 payment.Surcharges = 0.00;
             }
 
-            //createPayment(payment);
+            if (payment.AuctionSaleID == 0)
+            {
+                AlertDiv.InnerHtml = "<div class=\"alert alert-warning fade in\">" +
+                       "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                       "<strong>Warning!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "Could not retrieve AuctionSaleID" +
+                       "</label></div>";
+            }
+            else
+            {
+                createPayment(payment);
+            }
 
             //Recalculate the totals
 
             //Success message
             AlertDiv.InnerHtml = "<div class=\"alert alert-success fade in\">" +
             "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
-            "<strong>Success!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "New Payment was added!" + TXTSurcharge.Text +
+            "<strong>Success!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "New Payment was added! " + TXTSurcharge.Text +
             "</label></div>";
             
             GVAuction.EditIndex = -1;

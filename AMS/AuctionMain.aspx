@@ -189,7 +189,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label" for="lblSurcharge">Surcharge</label>
                         <div class="col-sm-9">
-                            <asp:TextBox ID="TXTSurcharge" CssClass="form-control numbersOnly TXTSurcharge" ReadOnly="true" runat="server"></asp:TextBox>                
+                            <asp:TextBox ID="TXTSurcharge" CssClass="form-control numbersOnly TXTSurcharge" runat="server"></asp:TextBox>                
                         </div>
                     </div>
                 </div>
