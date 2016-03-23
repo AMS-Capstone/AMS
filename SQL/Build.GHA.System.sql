@@ -372,12 +372,12 @@ END//
 
 DROP PROCEDURE IF EXISTS sp_createPaymentType //	
 CREATE PROCEDURE sp_createPaymentType
-(IN pPaymentDescription text)
+(IN pPaymentDescription text, IN pSurchargeInPercent double)
 
 BEGIN
 	
-	INSERT INTO PaymentType (PaymentDescription, Status)
-	VALUES (pPaymentDescription);
+	INSERT INTO PaymentType (PaymentDescription, SurchargeInPercent)
+	VALUES (pPaymentDescription, pSurchargeInPercent);
 
 END //
 
@@ -386,19 +386,20 @@ CREATE PROCEDURE sp_viewPaymentType()
 
 BEGIN
 	
-	Select PaymentTypeId, PaymentDescription
+	Select PaymentTypeId, PaymentDescription, SurchargeInPercent
 	FROM PaymentType;
 
 END//
 
 DROP PROCEDURE IF EXISTS sp_updatePaymentType //
-CREATE PROCEDURE sp_updatePaymentType(IN pPaymentId integer, IN pPaymentDescription text)
+CREATE PROCEDURE sp_updatePaymentType(IN pPaymentId integer, IN pPaymentDescription text, IN pSurchargeInPercent double)
 
 BEGIN
 
 	UPDATE PaymentType
 	SET
-	PaymentDescription = pPaymentDescription
+	PaymentDescription = pPaymentDescription,
+    SurchargeInPercent = pSurchargeInPercent
 	WHERE PaymentTypeId = PaymentTypeId;
 END //
 
@@ -1072,3 +1073,13 @@ BEGIN
 DELETE FROM buyer
 WHERE BuyerID = N_BuyerID;
 END //
+
+DROP PROCEDURE IF EXISTS sp_getFeeTypes //
+CREATE PROCEDURE sp_getFeeTypes()
+
+BEGIN
+	
+	Select FeeId, FeeCost, FeeType
+	FROM FeeType;
+
+END//
