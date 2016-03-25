@@ -39,7 +39,7 @@ namespace AMS.App_Code
              catch (Exception ex)
              {
                  //Panic
-                 throw ex;
+                 throw;
              }
              finally
              {
@@ -68,7 +68,7 @@ namespace AMS.App_Code
             catch (Exception ex)
             {
                 //Panic
-                throw ex;
+                throw;
             }
             finally
             {
@@ -96,7 +96,7 @@ namespace AMS.App_Code
             catch (Exception ex)
             {
                 //Panic
-                throw ex;
+                throw;
             }
             finally
             {
@@ -137,7 +137,7 @@ namespace AMS.App_Code
             catch (Exception ex)
             {
                 //Panic
-                throw ex;
+                throw;
             }
             finally
             {
@@ -184,7 +184,7 @@ namespace AMS.App_Code
             catch (Exception ex)
             {
                 //Panic
-                throw ex;
+                throw;
             }
             finally
             {

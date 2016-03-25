@@ -32,7 +32,7 @@ namespace AMS.App_Code
                 catch (Exception ex)
                 {
                     //Panic
-                    throw ex;
+                    throw;
                 }
                 finally
                 {
@@ -60,7 +60,7 @@ namespace AMS.App_Code
                 catch (Exception ex)
                 {
                     //Panic
-                    throw ex;
+                    throw;
                 }
                 finally
                 {
@@ -93,7 +93,7 @@ namespace AMS.App_Code
                 catch (Exception ex)
                 {
                     //Panic
-                    throw ex;
+                    throw;
                 }
                 finally
                 {
@@ -126,7 +126,7 @@ namespace AMS.App_Code
                 catch (Exception ex)
                 {
                     //Panic
-                    throw ex;
+                    throw;
                 }
                 finally
                 {
@@ -154,7 +154,7 @@ namespace AMS.App_Code
             catch (Exception ex)
             {
                 //Panic
-                throw ex;
+                throw;
             }
             finally
             {
@@ -181,7 +181,7 @@ namespace AMS.App_Code
             catch (Exception ex)
             {
                 //Panic
-                throw ex;
+                throw;
             }
             finally
             {
@@ -214,7 +214,7 @@ namespace AMS.App_Code
                 catch (Exception ex)
                 {
                     //Panic
-                    throw ex;
+                    throw;
                 }
                 finally
                 {
@@ -247,7 +247,7 @@ namespace AMS.App_Code
                 catch (Exception ex)
                 {
                     //Panic
-                    throw ex;
+                    throw;
                 }
                 finally
                 {
@@ -282,7 +282,7 @@ namespace AMS.App_Code
                 catch (Exception ex)
                 {
                     //Panic
-                    throw ex;
+                    throw;
                 }
                 finally
                 {
@@ -312,7 +312,7 @@ namespace AMS.App_Code
             catch (Exception ex)
             {
                 //Panic
-                throw ex;
+                throw;
             }
             finally
             {
@@ -346,7 +346,7 @@ namespace AMS.App_Code
                 catch (Exception ex)
                 {
                     //Panic
-                    throw ex;
+                    throw;
                 }
                 finally
                 {
@@ -376,7 +376,7 @@ namespace AMS.App_Code
             catch (Exception ex)
             {
                 //Panic
-                throw ex;
+                throw;
             }
             finally
             {
@@ -409,7 +409,7 @@ namespace AMS.App_Code
                 catch (Exception ex)
                 {
                     //Panic
-                    throw ex;
+                    throw;
                 }
                 finally
                 {
@@ -439,7 +439,7 @@ namespace AMS.App_Code
             catch (Exception ex)
             {
                 //Panic
-                throw ex;
+                throw;
             }
             finally
             {
@@ -468,7 +468,7 @@ namespace AMS.App_Code
             catch (Exception ex)
             {
                 //Panic
-                throw ex;
+                throw;
             }
             finally
             {
@@ -501,7 +501,7 @@ namespace AMS.App_Code
                 catch (Exception ex)
                 {
                     //Panic
-                    throw ex;
+                    throw;
                 }
                 finally
                 {
@@ -539,7 +539,7 @@ namespace AMS.App_Code
                 catch (Exception ex)
                 {
                     //Panic
-                    throw ex;
+                    throw;
                 }
                 finally
                 {
@@ -574,7 +574,7 @@ namespace AMS.App_Code
                 catch (Exception ex)
                 {
                     //Panic
-                    throw ex;
+                    throw;
                 }
                 finally
                 {
@@ -624,7 +624,7 @@ namespace AMS.App_Code
                 catch (Exception ex)
                 {
                     //Panic
-                    throw ex;
+                    throw;
                 }
                 finally
                 {
@@ -668,12 +668,12 @@ namespace AMS.App_Code
                 cmd.ExecuteNonQuery();
 
                 id = Convert.ToInt32(returnParameter.Value.ToString());
-                conn.Close();
+                //conn.Close();
             }
             catch (Exception ex)
             {
                 //Panic
-                throw ex;
+                throw;
             }
             finally
             {
@@ -707,12 +707,12 @@ namespace AMS.App_Code
                         cmd.ExecuteNonQuery();
 
                         id = Convert.ToInt32(returnParameter.Value.ToString());
-                        conn.Close();
+                        //conn.Close();
                     }
                     catch (Exception ex)
                     {
                         //Panic
-                        throw ex;
+                        throw;
                     }
                     finally
                     {
@@ -743,7 +743,7 @@ namespace AMS.App_Code
             catch (Exception ex)
             {
                 //Panic
-                throw ex;
+                throw;
             }
             finally
             {
