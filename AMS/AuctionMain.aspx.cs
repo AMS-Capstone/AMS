@@ -219,10 +219,16 @@ namespace AMS
             TextBox txtBuyersFee = (TextBox)GVAuction.Rows[e.RowIndex].FindControl("txtBuyersFee");
             sale.BuyersFee = Convert.ToInt32(txtBuyersFee.Text.ToString());
 
-            Label VehicleID = (Label)GVAuction.Rows[e.RowIndex].FindControl("lblVehicleID");
-            sale.VehicleID = Convert.ToInt32(VehicleID.Text.ToString());
+            Label lblVehicleID = (Label)GVAuction.Rows[e.RowIndex].FindControl("lblVehicleID");
+            sale.VehicleID = Convert.ToInt32(lblVehicleID.Text.ToString());
+
+            Label lblAuctionSaleID = (Label)GVAuction.Rows[e.RowIndex].FindControl("lblAuctionSaleID");
+            sale.AuctionSaleID = Convert.ToInt32(lblAuctionSaleID.Text.ToString());
 
             sale.SaleDate = DateTime.Now;
+
+            sale.AuctionID = auctionID = Convert.ToInt16(Request["AuctionID"]);
+
 
             GVAuction.EditIndex = -1;
             auctionData = auctionService.GetAuctionData(auctionID);

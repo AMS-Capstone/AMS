@@ -16,6 +16,7 @@
                 <EditItemTemplate>
                     <asp:Label ID="lblAuctionSaleID" runat="server" Text='<%# Eval("AuctionSaleID") %>'/>
                 </EditItemTemplate>
+            </asp:TemplateField>
             <asp:TemplateField  HeaderText="VehicleID" Visible="false">
                 <ItemTemplate>
                     <asp:Label ID="lblVehicleID" runat="server" Text='<%# Eval("VehicleID") %>'/>
