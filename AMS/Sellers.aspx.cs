@@ -138,6 +138,9 @@ namespace AMS
 
         protected void DDLSellerName_SelectedIndexChanged(object sender, EventArgs e)
         {
+            //Cleaning up messages
+            AlertDiv.InnerHtml = "";
+
             DDLSellerName.SelectedIndex = selectedIndex;
 
             TXTCode.Text = sellers.Tables["Sellers"].Rows[selectedIndex]["SellerCode"].ToString();
@@ -160,8 +163,12 @@ namespace AMS
                 BTNSubmit.CssClass = "btn btn-primary hidden";
                 BTNUpdate.Enabled = true;
                 BTNUpdate.CssClass = "btn btn-primary";
-                BTNDelete.Enabled = true;
-                BTNDelete.CssClass = "btn btn-primary";
+                bool allowed = sellerService.CheckIfSellerIsDeletable(Convert.ToInt32(DDLSellerName.SelectedValue));
+                if (allowed)
+                {
+                    BTNDelete.Enabled = true;
+                    BTNDelete.CssClass = "btn btn-primary";
+                }
             }
             else
             {
@@ -215,7 +222,35 @@ namespace AMS
 
         protected void BTNDelete_Click(object sender, EventArgs e)
         {
+            bool allowed = sellerService.CheckIfSellerIsDeletable(Convert.ToInt32(DDLSellerName.SelectedValue));
+            if (allowed)
+            {
+                try
+                {
+                    sellerService.DeleteSeller(Convert.ToInt32(DDLSellerName.SelectedValue));
 
+                    //Success message
+                    AlertDiv.InnerHtml = "<div class=\"alert alert-success fade in\">" +
+                    "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                    "<strong>Success!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "Seller was deleted successfully" +
+                    "</label></div>";
+                }
+                catch (Exception ex)
+                {
+                    AlertDiv.InnerHtml = "<div class=\"alert alert-danger fade in\">" +
+                    "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                    "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + ex.Message +
+                    "</label></div>";
+                }
+            }
+            else
+            {
+                //Denied message
+                AlertDiv.InnerHtml = "<div class=\"alert alert-success fade in\">" +
+                "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                "<strong>Success!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "Could not delete Seller, because there are cars associated with them." +
+                "</label></div>";
+            }
         }
     }
 }

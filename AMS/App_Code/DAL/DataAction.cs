@@ -32,7 +32,7 @@ namespace AMS.App_Code
                 catch (Exception ex)
                 {
                     //Panic
-                    throw ex;
+                    throw;
                 }
                 finally
                 {
@@ -60,7 +60,7 @@ namespace AMS.App_Code
                 catch (Exception ex)
                 {
                     //Panic
-                    throw ex;
+                    throw;
                 }
                 finally
                 {
@@ -93,7 +93,7 @@ namespace AMS.App_Code
                 catch (Exception ex)
                 {
                     //Panic
-                    throw ex;
+                    throw;
                 }
                 finally
                 {
@@ -126,7 +126,7 @@ namespace AMS.App_Code
                 catch (Exception ex)
                 {
                     //Panic
-                    throw ex;
+                    throw;
                 }
                 finally
                 {
@@ -154,7 +154,7 @@ namespace AMS.App_Code
             catch (Exception ex)
             {
                 //Panic
-                throw ex;
+                throw;
             }
             finally
             {
@@ -181,7 +181,7 @@ namespace AMS.App_Code
             catch (Exception ex)
             {
                 //Panic
-                throw ex;
+                throw;
             }
             finally
             {
@@ -214,7 +214,7 @@ namespace AMS.App_Code
                 catch (Exception ex)
                 {
                     //Panic
-                    throw ex;
+                    throw;
                 }
                 finally
                 {
@@ -282,7 +282,7 @@ namespace AMS.App_Code
                 catch (Exception ex)
                 {
                     //Panic
-                    throw ex;
+                    throw;
                 }
                 finally
                 {
@@ -317,7 +317,7 @@ namespace AMS.App_Code
                 catch (Exception ex)
                 {
                     //Panic
-                    throw ex;
+                    throw;
                 }
                 finally
                 {
@@ -347,7 +347,7 @@ namespace AMS.App_Code
             catch (Exception ex)
             {
                 //Panic
-                throw ex;
+                throw;
             }
             finally
             {
@@ -381,7 +381,7 @@ namespace AMS.App_Code
                 catch (Exception ex)
                 {
                     //Panic
-                    throw ex;
+                    throw;
                 }
                 finally
                 {
@@ -411,7 +411,7 @@ namespace AMS.App_Code
             catch (Exception ex)
             {
                 //Panic
-                throw ex;
+                throw;
             }
             finally
             {
@@ -444,7 +444,7 @@ namespace AMS.App_Code
                 catch (Exception ex)
                 {
                     //Panic
-                    throw ex;
+                    throw;
                 }
                 finally
                 {
@@ -474,7 +474,7 @@ namespace AMS.App_Code
             catch (Exception ex)
             {
                 //Panic
-                throw ex;
+                throw;
             }
             finally
             {
@@ -506,7 +506,7 @@ namespace AMS.App_Code
             catch (Exception ex)
             {
                 //Panic
-                throw ex;
+                throw;
             }
             finally
             {
@@ -539,7 +539,7 @@ namespace AMS.App_Code
                 catch (Exception ex)
                 {
                     //Panic
-                    throw ex;
+                    throw;
                 }
                 finally
                 {
@@ -577,7 +577,7 @@ namespace AMS.App_Code
                 catch (Exception ex)
                 {
                     //Panic
-                    throw ex;
+                    throw;
                 }
                 finally
                 {
@@ -612,7 +612,7 @@ namespace AMS.App_Code
                 catch (Exception ex)
                 {
                     //Panic
-                    throw ex;
+                    throw;
                 }
                 finally
                 {
@@ -637,7 +637,7 @@ namespace AMS.App_Code
                     {
                         conn.Open();
                         cmd.CommandText = "sp_getVehicleByID";
-                        cmd.Parameters.AddWithValue("N_vehicleID", vehicleID);
+                        cmd.Parameters.AddWithValue("pvehicleID", vehicleID);
                         cmd.CommandType = CommandType.StoredProcedure;
                         using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
                         {
@@ -662,7 +662,7 @@ namespace AMS.App_Code
                 catch (Exception ex)
                 {
                     //Panic
-                    throw ex;
+                    throw;
                 }
                 finally
                 {
@@ -706,12 +706,12 @@ namespace AMS.App_Code
                 cmd.ExecuteNonQuery();
 
                 id = Convert.ToInt32(returnParameter.Value.ToString());
-                conn.Close();
+                //conn.Close();
             }
             catch (Exception ex)
             {
                 //Panic
-                throw ex;
+                throw;
             }
             finally
             {
@@ -745,12 +745,12 @@ namespace AMS.App_Code
                         cmd.ExecuteNonQuery();
 
                         id = Convert.ToInt32(returnParameter.Value.ToString());
-                        conn.Close();
+                        //conn.Close();
                     }
                     catch (Exception ex)
                     {
                         //Panic
-                        throw ex;
+                        throw;
                     }
                     finally
                     {
@@ -772,7 +772,7 @@ namespace AMS.App_Code
             {
                 MySqlCommand cmd = new MySqlCommand();
                 cmd.CommandText = "sp_getVehiclePicturesByVehicleID";
-                cmd.Parameters.Add(new MySqlParameter("@N_VehicleID", vehicleID));
+                cmd.Parameters.Add(new MySqlParameter("@pVehicleID", vehicleID));
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Connection = conn;
                 da.SelectCommand = cmd;
@@ -781,7 +781,7 @@ namespace AMS.App_Code
             catch (Exception ex)
             {
                 //Panic
-                throw ex;
+                throw;
             }
             finally
             {
