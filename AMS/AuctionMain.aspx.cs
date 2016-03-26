@@ -94,8 +94,20 @@ namespace AMS
                     {
 
                         auctionData = auctionService.GetAuctionData(auctionID);
-                        GVAuction.DataSource = auctionData.Tables[0].DefaultView;
-                        GVAuction.DataBind();
+
+                        if (auctionData.Tables.Count > 0 && auctionData.Tables[0].Rows.Count > 0)
+                        {
+                            GVAuction.DataSource = auctionData.Tables[0].DefaultView;
+                            GVAuction.DataBind();
+                        }
+                        else
+                        {
+                            //Alert about no cars belonging to an auction
+                            AlertDiv.InnerHtml = "<div class=\"alert alert-warning fade in\">" +
+                            "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                            "<strong>Warning!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "No cars assigned to the auction at the moment!" +
+                            "</label></div>";
+                        }
                     }
                 }
                 catch (Exception ex)
