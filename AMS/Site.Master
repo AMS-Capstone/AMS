@@ -6,7 +6,7 @@
 <head runat="server">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%: Page.Title %> - My ASP.NET Application</title>
+    <title><%: Page.Title %> - AMS</title>
 
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/bundles/modernizr") %>
@@ -82,7 +82,7 @@
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>
             <footer>
-                <div class=" col-xs-12">
+                <div class="col-xs-12 col-md-12 col-sm-12">
                     <hr />
                     <p>&copy; <%: DateTime.Now.Year %> - AMS Team</p>
                 </div>

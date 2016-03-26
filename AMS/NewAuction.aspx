@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="NewAuction.aspx.cs" Inherits="AMS.NewAuction" %>
+﻿<%@ Page Title="New Auction" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="NewAuction.aspx.cs" Inherits="AMS.NewAuction" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h1>New Auction</h1>
     <div class=" col-xs-12" id="AlertDiv" runat="server">
@@ -13,13 +13,13 @@
     </div>
     <div class="col-xs-12"></div>
     <div class="control-group">
-        <label class="control-label col-xs-2" for="TXTDate">New Auction Date:</label>
+        <label class="control-label col-xs-12 col-sm-3 col-md-3 col-lg-2" for="TXTDate">New Auction Date:</label>
             <div class="container">
                 <div class="row">
-                    <div class='col-sm-4'>
+                    <div class=' col-xs-12 col-sm-7 col-md-7 col-lg-5'>
                         <div class="form-group">
                             <div class='input-group date' id='datetimepicker1'>
-                                <asp:TextBox type='text' class="form-control dp" id="TXTDate" runat="server" />
+                                <input type='text' class="form-control dp" id="TXTDate" runat="server" />
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
@@ -35,15 +35,14 @@
                             });
                         });
 
+                        $(document).ready(function () {
+                            $("#datetimepicker1").attr('readonly', 'readonly');
+                        });
+
                         $('.dp').on('change', function () {
                             $('.datepicker').hide();
                         });
-
-
-                        $('.dp').click(function () {
-                            $('.datepicker').click();
-                        });
-
+                        
                         //window.setTimeout(function () { $(".alert").alert('close'); }, 10000);
                     </script>
                 </div>
@@ -52,8 +51,8 @@
     </div>
     <div class=" col-xs-12"></div>
     <div class="control-group">
-        <label class="control-label col-xs-2" for="LVAuctionCars">Auction Cars:</label>
-        <div class="col-xs-4 row-fluid">
+        <label class="control-label col-xs-12 col-sm-3 col-md-3 col-lg-2" for="LVAuctionCars">Auction Cars:</label>
+        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-5">
             <asp:ListBox ID="LBAuctionCars" CssClass="form-control" runat="server" SelectionMode="Multiple"></asp:ListBox>
             <%--<asp:ListView ID="LVAuctionCars" runat="server">
                 <ItemTemplate>

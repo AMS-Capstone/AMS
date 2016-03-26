@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Sellers.aspx.cs" Inherits="AMS.Sellers" %>
+﻿<%@ Page Title="Sellers" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Sellers.aspx.cs" Inherits="AMS.Sellers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h1>Sellers</h1>
     <div class=" col-xs-12" id="AlertDiv" runat="server"></div>
@@ -110,7 +110,7 @@
         <asp:Button ID="BTNClear" runat="server" class="btn btn-warning" Text="Clear Form" OnClick="BTNClear_Click" />
     </div>
     <div class=" col-xs-12"><hr /></div>
-    <div class="btn-group col-xs-12">
+    <div class="control-group col-xs-12">
         <asp:Button ID="BTNSubmit" runat="server" CssClass="btn btn-primary" Text="Create" OnClick="BTNSubmit_Click" />
         <asp:Button ID="BTNUpdate" runat="server" CssClass="btn btn-primary hidden"  Text="Update" OnClick="BTNUpdate_Click" />
         <asp:Button ID="BTNDelete" runat="server" CssClass="btn btn-primary hidden" Text="Delete" OnClick="BTNDelete_Click" />
