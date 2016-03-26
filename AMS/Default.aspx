@@ -5,15 +5,15 @@
         <h2>Auction Listing</h2>
         <div class=" col-xs-12" id="AlertDiv" runat="server"></div>
         <div class="control-group">
-            <asp:Label ID="Label1" class="control-label col-xs-1" runat="server" Text="Year:"></asp:Label>            
-            <div class="col-xs-2">
+            <asp:Label ID="Label1" class="control-label col-xs-6 col-md-1 col-sm-1" runat="server" Text="Year:"></asp:Label>            
+            <div class="col-xs-6 col-md-3 col-sm-4">
                 <asp:DropDownList ID="DDLAuctionYear" CssClass="form-control" runat="server" OnSelectedIndexChanged="DDLAuctionYear_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
             </div>
         </div>
        
         <div class=" col-xs-12"></div>
         <div class="control-group">
-            <div class="col-xs-3">
+            <div class="col-xs-12 col-md-4 col-sm-5">
                 <asp:ListBox ID="LBAuctionList" CssClass="form-control"  runat="server" Rows="10"></asp:ListBox>
             </div>
         </div>
