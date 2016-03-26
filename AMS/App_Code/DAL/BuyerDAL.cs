@@ -94,6 +94,42 @@ namespace AMS.App_Code
             return id;
         }
 
+        //Check if buyer is deletable
+        public bool CheckIfBuyerIsDeletable(int buyerID)
+        {
+            bool allowed = false;
+            MySqlConnection conn = new MySqlConnection(connectionString);
+            conn.Open();
+
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.CommandText = "sp_checkIfBuyerIsDeletable";
+                cmd.Parameters.Add(new MySqlParameter("@pBuyerID", buyerID));
+
+                MySqlParameter returnParameter = new MySqlParameter();
+                returnParameter.Direction = System.Data.ParameterDirection.ReturnValue;
+
+                cmd.Parameters.Add(returnParameter);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = conn;
+                cmd.ExecuteNonQuery();
+
+                allowed = Convert.ToBoolean(returnParameter.Value.ToString());
+            }
+            catch (Exception ex)
+            {
+                //Panic
+                throw;
+            }
+            finally
+            {
+                //Tie the loose ends here
+                conn.Close();
+            }
+            return allowed;
+        }
+
         //Update a buyer
         public void UpdateBuyer(Buyer buyer)
         {
