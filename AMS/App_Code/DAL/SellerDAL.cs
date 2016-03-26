@@ -117,7 +117,7 @@ namespace AMS.App_Code
                 cmd.Connection = conn;
                 cmd.ExecuteNonQuery();
 
-                allowed = Convert.ToBoolean(returnParameter.Value.ToString());
+                allowed = Convert.ToBoolean(returnParameter.Value);
             }
             catch (Exception ex)
             {
