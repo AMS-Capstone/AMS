@@ -34,7 +34,7 @@ namespace AMS.App_Code
             {
                 MySqlCommand cmd = new MySqlCommand();
                 cmd.CommandText = "sp_getAuctionData";
-                cmd.Parameters.Add(new MySqlParameter("@N_AuctionID", auctionID));
+                cmd.Parameters.Add(new MySqlParameter("@pAuctionID", auctionID));
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Connection = conn;
                 da.SelectCommand = cmd;
@@ -170,18 +170,18 @@ namespace AMS.App_Code
             {
                 MySqlCommand cmd = new MySqlCommand();
                 cmd.CommandText = "sp_createAuctionSale";
-                cmd.Parameters.Add(new MySqlParameter("@N_AuctionID", auctionSale.AuctionID));
-                cmd.Parameters.Add(new MySqlParameter("@N_VehicleID", auctionSale.VehicleID));
-                cmd.Parameters.Add(new MySqlParameter("@N_BuyerID", auctionSale.BuyerID));
-                cmd.Parameters.Add(new MySqlParameter("@N_BidderNumber", 0));
-                cmd.Parameters.Add(new MySqlParameter("@N_SellingPrice", auctionSale.SellingPrice));
-                cmd.Parameters.Add(new MySqlParameter("@N_BuyersFee", auctionSale.BuyersFee));
-                cmd.Parameters.Add(new MySqlParameter("@N_Deposit", auctionSale.Deposit));
-                cmd.Parameters.Add(new MySqlParameter("@N_ConditionID", auctionSale.ConditionID));
-                cmd.Parameters.Add(new MySqlParameter("@N_GSTID", auctionSale.GstID));
-                cmd.Parameters.Add(new MySqlParameter("@N_Total", auctionSale.Total));
-                cmd.Parameters.Add(new MySqlParameter("@N_Saledate", auctionSale.SaleDate));
-                cmd.Parameters.Add(new MySqlParameter("@N_Notes", auctionSale.Notes));
+                cmd.Parameters.Add(new MySqlParameter("@pAuctionID", auctionSale.AuctionID));
+                cmd.Parameters.Add(new MySqlParameter("@pVehicleID", auctionSale.VehicleID));
+                cmd.Parameters.Add(new MySqlParameter("@pBuyerID", auctionSale.BuyerID));
+                cmd.Parameters.Add(new MySqlParameter("@pBidderNumber", 0));
+                cmd.Parameters.Add(new MySqlParameter("@pSellingPrice", auctionSale.SellingPrice));
+                cmd.Parameters.Add(new MySqlParameter("@pBuyersFee", auctionSale.BuyersFee));
+                cmd.Parameters.Add(new MySqlParameter("@pDeposit", auctionSale.Deposit));
+                cmd.Parameters.Add(new MySqlParameter("@pConditionID", auctionSale.ConditionID));
+                cmd.Parameters.Add(new MySqlParameter("@pGSTID", auctionSale.GstID));
+                cmd.Parameters.Add(new MySqlParameter("@pTotal", auctionSale.Total));
+                cmd.Parameters.Add(new MySqlParameter("@pSaledate", auctionSale.SaleDate));
+                cmd.Parameters.Add(new MySqlParameter("@pNotes", auctionSale.Notes));
 
                 MySqlParameter returnParameter = new MySqlParameter();
                 returnParameter.Direction = System.Data.ParameterDirection.ReturnValue;
@@ -220,19 +220,19 @@ namespace AMS.App_Code
             {
                 MySqlCommand cmd = new MySqlCommand();
                 cmd.CommandText = "sp_updateAuctionSale";
-                cmd.Parameters.Add(new MySqlParameter("@N_AuctionSaleID", auctionSale.AuctionSaleID));
-                cmd.Parameters.Add(new MySqlParameter("@N_AuctionID", auctionSale.AuctionID));
-                cmd.Parameters.Add(new MySqlParameter("@N_VehicleID", auctionSale.VehicleID));
-                cmd.Parameters.Add(new MySqlParameter("@N_BuyerID", auctionSale.BuyerID));
-                cmd.Parameters.Add(new MySqlParameter("@N_BidderNumber", 0));
-                cmd.Parameters.Add(new MySqlParameter("@N_SellingPrice", auctionSale.SellingPrice));
-                cmd.Parameters.Add(new MySqlParameter("@N_BuyersFee", auctionSale.BuyersFee));
-                cmd.Parameters.Add(new MySqlParameter("@N_Deposit", auctionSale.Deposit));
-                cmd.Parameters.Add(new MySqlParameter("@N_ConditionID", auctionSale.ConditionID));
-                cmd.Parameters.Add(new MySqlParameter("@N_GSTID", auctionSale.GstID));
-                cmd.Parameters.Add(new MySqlParameter("@N_Total", auctionSale.Total));
-                cmd.Parameters.Add(new MySqlParameter("@N_Saledate", auctionSale.SaleDate));
-                cmd.Parameters.Add(new MySqlParameter("@N_Notes", auctionSale.Notes));
+                cmd.Parameters.Add(new MySqlParameter("@pAuctionSaleID", auctionSale.AuctionSaleID));
+                cmd.Parameters.Add(new MySqlParameter("@pAuctionID", auctionSale.AuctionID));
+                cmd.Parameters.Add(new MySqlParameter("@pVehicleID", auctionSale.VehicleID));
+                cmd.Parameters.Add(new MySqlParameter("@pBuyerID", auctionSale.BuyerID));
+                cmd.Parameters.Add(new MySqlParameter("@pBidderNumber", 0));
+                cmd.Parameters.Add(new MySqlParameter("@pSellingPrice", auctionSale.SellingPrice));
+                cmd.Parameters.Add(new MySqlParameter("@pBuyersFee", auctionSale.BuyersFee));
+                cmd.Parameters.Add(new MySqlParameter("@pDeposit", auctionSale.Deposit));
+                cmd.Parameters.Add(new MySqlParameter("@pConditionID", auctionSale.ConditionID));
+                cmd.Parameters.Add(new MySqlParameter("@pGSTID", auctionSale.GstID));
+                cmd.Parameters.Add(new MySqlParameter("@pTotal", auctionSale.Total));
+                cmd.Parameters.Add(new MySqlParameter("@pSaledate", auctionSale.SaleDate));
+                cmd.Parameters.Add(new MySqlParameter("@pNotes", auctionSale.Notes));
 
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Connection = conn;
@@ -263,7 +263,7 @@ namespace AMS.App_Code
             {
                 MySqlCommand cmd = new MySqlCommand();
                 cmd.CommandText = "sp_deleteAuctionSale";
-                cmd.Parameters.Add(new MySqlParameter("@N_AuctionSaleID", auctionSaleID));
+                cmd.Parameters.Add(new MySqlParameter("@pAuctionSaleID", auctionSaleID));
                 
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Connection = conn;
@@ -296,11 +296,11 @@ namespace AMS.App_Code
             {
                 MySqlCommand cmd = new MySqlCommand();
                 cmd.CommandText = "sp_createPayment";
-                cmd.Parameters.Add(new MySqlParameter("@N_PaymentAmount", payment.PaymentAmount));
-                cmd.Parameters.Add(new MySqlParameter("@N_AuctionSaleID", payment.AuctionSaleID));
-                cmd.Parameters.Add(new MySqlParameter("@N_PaymentTypeID", payment.PaymentTypeID));
-                cmd.Parameters.Add(new MySqlParameter("@N_Surcharges", payment.Surcharges));
-                cmd.Parameters.Add(new MySqlParameter("@N_PaymentDate", payment.PaymentDate));
+                cmd.Parameters.Add(new MySqlParameter("@pPaymentAmount", payment.PaymentAmount));
+                cmd.Parameters.Add(new MySqlParameter("@pAuctionSaleID", payment.AuctionSaleID));
+                cmd.Parameters.Add(new MySqlParameter("@pPaymentTypeID", payment.PaymentTypeID));
+                cmd.Parameters.Add(new MySqlParameter("@pSurcharges", payment.Surcharges));
+                cmd.Parameters.Add(new MySqlParameter("@pPaymentDate", payment.PaymentDate));
 
                 MySqlParameter returnParameter = new MySqlParameter();
                 returnParameter.Direction = System.Data.ParameterDirection.ReturnValue;

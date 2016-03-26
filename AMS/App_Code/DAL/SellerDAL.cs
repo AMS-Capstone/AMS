@@ -58,20 +58,20 @@ namespace AMS.App_Code
             {
                 MySqlCommand cmd = new MySqlCommand();
                 cmd.CommandText = "sp_createSeller";
-                cmd.Parameters.Add(new MySqlParameter("@N_SellerCode", seller.SellerCode));
-                cmd.Parameters.Add(new MySqlParameter("@N_SellerName", seller.SellerName));
-                cmd.Parameters.Add(new MySqlParameter("@N_SellerAddress", seller.SellerAddress));
-                cmd.Parameters.Add(new MySqlParameter("@N_SellerCity", seller.SellerCity));
-                cmd.Parameters.Add(new MySqlParameter("@N_SellerProvince", seller.SellerProvince));
-                cmd.Parameters.Add(new MySqlParameter("@N_SellerPostalCode", seller.SellerPostalCode));
-                cmd.Parameters.Add(new MySqlParameter("@N_SellerPhone", seller.SellerPhone));
-                cmd.Parameters.Add(new MySqlParameter("@N_SellerOtherPhone", seller.SellerOtherPhone));
-                cmd.Parameters.Add(new MySqlParameter("@N_SellerFax", seller.SellerFax));
-                cmd.Parameters.Add(new MySqlParameter("@N_ContactFirstName", seller.ContactFirstName));
-                cmd.Parameters.Add(new MySqlParameter("@N_ContactLastName", seller.ContactLastName));
-                //cmd.Parameters.Add(new MySqlParameter("@N_SellerFileNumber", seller.ConFile));
-                cmd.Parameters.Add(new MySqlParameter("@N_SellerPrivate", seller.SellerIsPrivate));
-                cmd.Parameters.Add(new MySqlParameter("@N_GSTNumber", seller.SellerGSTNumber));
+                cmd.Parameters.Add(new MySqlParameter("@pSellerCode", seller.SellerCode));
+                cmd.Parameters.Add(new MySqlParameter("@pSellerName", seller.SellerName));
+                cmd.Parameters.Add(new MySqlParameter("@pSellerAddress", seller.SellerAddress));
+                cmd.Parameters.Add(new MySqlParameter("@pSellerCity", seller.SellerCity));
+                cmd.Parameters.Add(new MySqlParameter("@pSellerProvince", seller.SellerProvince));
+                cmd.Parameters.Add(new MySqlParameter("@pSellerPostalCode", seller.SellerPostalCode));
+                cmd.Parameters.Add(new MySqlParameter("@pSellerPhone", seller.SellerPhone));
+                cmd.Parameters.Add(new MySqlParameter("@pSellerOtherPhone", seller.SellerOtherPhone));
+                cmd.Parameters.Add(new MySqlParameter("@pSellerFax", seller.SellerFax));
+                cmd.Parameters.Add(new MySqlParameter("@pContactFirstName", seller.ContactFirstName));
+                cmd.Parameters.Add(new MySqlParameter("@pContactLastName", seller.ContactLastName));
+                //cmd.Parameters.Add(new MySqlParameter("@pSellerFileNumber", seller.ConFile));
+                cmd.Parameters.Add(new MySqlParameter("@pSellerPrivate", seller.SellerIsPrivate));
+                cmd.Parameters.Add(new MySqlParameter("@pGSTNumber", seller.SellerGSTNumber));
 
                 MySqlParameter returnParameter = new MySqlParameter();
                 returnParameter.Direction = System.Data.ParameterDirection.ReturnValue;
@@ -106,21 +106,21 @@ namespace AMS.App_Code
             {
                 MySqlCommand cmd = new MySqlCommand();
                 cmd.CommandText = "sp_updateSeller";
-                cmd.Parameters.Add(new MySqlParameter("@N_SellerID", seller.SellerID));
-                cmd.Parameters.Add(new MySqlParameter("@N_SellerCode", seller.SellerCode));
-                cmd.Parameters.Add(new MySqlParameter("@N_SellerName", seller.SellerName));
-                cmd.Parameters.Add(new MySqlParameter("@N_SellerAddress", seller.SellerAddress));
-                cmd.Parameters.Add(new MySqlParameter("@N_SellerCity", seller.SellerCity));
-                cmd.Parameters.Add(new MySqlParameter("@N_SellerProvince", seller.SellerProvince));
-                cmd.Parameters.Add(new MySqlParameter("@N_SellerPostalCode", seller.SellerPostalCode));
-                cmd.Parameters.Add(new MySqlParameter("@N_SellerPhone", seller.SellerPhone));
-                cmd.Parameters.Add(new MySqlParameter("@N_SellerOtherPhone", seller.SellerOtherPhone));
-                cmd.Parameters.Add(new MySqlParameter("@N_SellerFax", seller.SellerFax));
-                cmd.Parameters.Add(new MySqlParameter("@N_ContactFirstName", seller.ContactFirstName));
-                cmd.Parameters.Add(new MySqlParameter("@N_ContactLastName", seller.ContactLastName));
-                //cmd.Parameters.Add(new MySqlParameter("@N_SellerFileNumber", seller.ConFile));
-                cmd.Parameters.Add(new MySqlParameter("@N_SellerPrivate", seller.SellerIsPrivate));
-                cmd.Parameters.Add(new MySqlParameter("@N_GSTNumber", seller.SellerGSTNumber));
+                cmd.Parameters.Add(new MySqlParameter("@pSellerID", seller.SellerID));
+                cmd.Parameters.Add(new MySqlParameter("@pSellerCode", seller.SellerCode));
+                cmd.Parameters.Add(new MySqlParameter("@pSellerName", seller.SellerName));
+                cmd.Parameters.Add(new MySqlParameter("@pSellerAddress", seller.SellerAddress));
+                cmd.Parameters.Add(new MySqlParameter("@pSellerCity", seller.SellerCity));
+                cmd.Parameters.Add(new MySqlParameter("@pSellerProvince", seller.SellerProvince));
+                cmd.Parameters.Add(new MySqlParameter("@pSellerPostalCode", seller.SellerPostalCode));
+                cmd.Parameters.Add(new MySqlParameter("@pSellerPhone", seller.SellerPhone));
+                cmd.Parameters.Add(new MySqlParameter("@pSellerOtherPhone", seller.SellerOtherPhone));
+                cmd.Parameters.Add(new MySqlParameter("@pSellerFax", seller.SellerFax));
+                cmd.Parameters.Add(new MySqlParameter("@pContactFirstName", seller.ContactFirstName));
+                cmd.Parameters.Add(new MySqlParameter("@pContactLastName", seller.ContactLastName));
+                //cmd.Parameters.Add(new MySqlParameter("@pSellerFileNumber", seller.ConFile));
+                cmd.Parameters.Add(new MySqlParameter("@pSellerPrivate", seller.SellerIsPrivate));
+                cmd.Parameters.Add(new MySqlParameter("@pGSTNumber", seller.SellerGSTNumber));
 
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Connection = conn;
@@ -148,7 +148,7 @@ namespace AMS.App_Code
             {
                 MySqlCommand cmd = new MySqlCommand();
                 cmd.CommandText = "sp_deleteSeller";
-                cmd.Parameters.Add(new MySqlParameter("@N_SellerID", SellerID));
+                cmd.Parameters.Add(new MySqlParameter("@pSellerID", SellerID));
 
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Connection = conn;
