@@ -1073,3 +1073,19 @@ BEGIN
     FROM buyer
 	WHERE BuyerID = pBuyerID;
 END//
+
+DROP FUNCTION IF EXISTS sp_checkIfBuyerIsDeletable//
+CREATE FUNCTION sp_checkIfBuyerIsDeletable(pBuyerID integer) returns integer
+BEGIN
+	SET @counter := (SELECT COUNT(AuctionSaleID) from auctionsale where pBuyerID = buyerID);
+    SET @deletable := IF(@counter > 0, 0, 1);
+RETURN @deletable;
+END//
+
+DROP FUNCTION IF EXISTS sp_checkIfSellerIsDeletable//
+CREATE FUNCTION sp_checkIfSellerIsDeletable(pSellerID integer) returns integer
+BEGIN
+	SET @counter := (SELECT COUNT(VehicleID) from vehicle where pSellerID = sellerID);
+    SET @deletable := IF(@counter > 0, 0, 1);
+RETURN @deletable;
+END//
