@@ -1,7 +1,8 @@
 ﻿<%@ Page Title="Buyers" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Buyers.aspx.cs" Inherits="AMS.Buyers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h1>Buyers</h1>
-    <div class=" col-sm-12" id="AlertDiv" runat="server"></div>
+
+    <div CssClass="col-xs-12 col-sm-12" id="AlertDiv" runat="server"></div>
     <div class="form-group row">
         <label class="control-label col-xs-12 col-sm-2" for="DDLBuyerName">Select Buyer:</label>
         <div class="col-xs-12 col-sm-9">
@@ -24,16 +25,22 @@
         <label class="control-label col-xs-12 col-sm-2" for="TXTBidNum">Bidder #:</label>
         <div class="col-xs-12 col-sm-3">
             <asp:TextBox ID="TXTBidNum" runat="server" CssClass="form-control numbersOnly" placeholder="Bidder Number"/>
+            <script type="text/javascript">
+                jQuery('.numbersOnly').keyup(function () {
+                    this.value = this.value.replace(/[^0-9\.]/g, '');
+                });
+            </script>
+        </div>
+    </div>
+    
+    <div class="form-group row">        
+        <div class="col-xs-12 col-sm-3 col-sm-offset-2">
             <div class="checkbox">
                 <label><asp:CheckBox runat="server" id="CHKPermanent" Text="Permanent"></asp:CheckBox></label>
             </div>
         </div>
     </div>
-    <script type="text/javascript">
-        jQuery('.numbersOnly').keyup(function () {
-            this.value = this.value.replace(/[^0-9\.]/g, '');
-        });
-    </script>
+
     <div class="form-group row">
         <label class="control-label col-xs-12 col-sm-2" for="TXTAddress">Address:</label>
         <div class="col-xs-12 col-sm-9">
@@ -72,8 +79,8 @@
         </div>
     </div>
     
-    <div class="control-group row">        
-        <div class="col-xs-12 col-sm-3">            
+    <div class="form-group row">        
+        <div class="col-xs-12 col-sm-3 col-sm-offset-2">            
             <div class="checkbox">
                 <label><asp:CheckBox runat="server" id="CHKBanned" Text="Banned"></asp:CheckBox></label>
             </div>
@@ -87,15 +94,17 @@
         </div>
     </div>
     
-    
-    <div class="btn-group col-xs-12">
-        <asp:Button ID="BTNClear" runat="server" class="btn btn-warning" Text="Clear Form" OnClick="BTNClear_Click" />
+    <div class="form-group row">    
+        <div class="col-xs-12">
+            <asp:Button ID="BTNClear" runat="server" class="btn btn-warning" Text="Clear Form" OnClick="BTNClear_Click" />
+        </div>
     </div>
-
-    <div class="col-xs-12"><hr /></div>
-    <div class="form-group col-xs-12">
-        <asp:Button ID="BTNSubmit" runat="server" CssClass="btn btn-primary" Text="Create" OnClick="BTNSubmit_Click" />
-        <asp:Button ID="BTNUpdate" runat="server" CssClass="btn btn-primary hidden"  Text="Update" OnClick="BTNUpdate_Click" />
-        <asp:Button ID="BTNDelete" runat="server" CssClass="btn btn-primary hidden" Text="Delete" OnClick="BTNDelete_Click" />
+    <div class="row"><hr /></div>    
+    <div class="form-group row">
+        <div class="col-xs-12">
+            <asp:Button ID="BTNSubmit" runat="server" CssClass="btn btn-primary" Text="Create" OnClick="BTNSubmit_Click" />
+            <asp:Button ID="BTNUpdate" runat="server" CssClass="btn btn-primary hidden"  Text="Update" OnClick="BTNUpdate_Click" />
+            <asp:Button ID="BTNDelete" runat="server" CssClass="btn btn-primary hidden" Text="Delete" OnClick="BTNDelete_Click" />
+        </div>
     </div>
 </asp:Content>
