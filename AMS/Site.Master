@@ -6,7 +6,7 @@
 <head runat="server">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%: Page.Title %> - My ASP.NET Application</title>
+    <title><%: Page.Title %> - AMS</title>
 
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/bundles/modernizr") %>
@@ -17,8 +17,6 @@
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <style>
         body { padding-top: 70px; }
-        footer { padding-top: 150px; }
-        control-group {padding-top: 200px;}
     </style>
 </head>
 <body>
@@ -82,9 +80,11 @@
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>
             <footer>
-                <div class=" col-xs-12">
+                <div class="row">                    
                     <hr />
-                    <p>&copy; <%: DateTime.Now.Year %> - AMS Team</p>
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <p>&copy; <%: DateTime.Now.Year %> - AMS Team</p>
+                    </div>
                 </div>
             </footer>
         </div>

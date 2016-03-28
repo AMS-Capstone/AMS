@@ -49,7 +49,7 @@ namespace AMS
 
                 //Create Auction Object
                 Auction auction = new Auction();
-                auction.AuctionDate = Convert.ToDateTime(TXTDate.Text.ToString());
+                auction.AuctionDate = Convert.ToDateTime(TXTDate.Value.ToString());
                 auction.AuctionTotal = 0.00;
                 auction.Surcharges = 0.00;
                 auction.CashCharges = 0.00;
@@ -92,7 +92,7 @@ namespace AMS
                                 //Assembling AuctionSale object
                                 AuctionSale auctionSale = new AuctionSale();
                                 auctionSale.AuctionID = auctionID;
-                                auctionSale.SaleDate = Convert.ToDateTime(TXTDate.Text.ToString());
+                                auctionSale.SaleDate = Convert.ToDateTime(TXTDate.Value.ToString());
 
                                 //Not Sold Sale Status
                                 auctionSale.ConditionID = 1;

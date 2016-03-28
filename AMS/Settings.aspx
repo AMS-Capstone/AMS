@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Settings.aspx.cs" Inherits="AMS.Settings" %>
+﻿<%@ Page Title="Settings" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Settings.aspx.cs" Inherits="AMS.Settings" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     
@@ -41,13 +41,37 @@
     <h1>Condition status</h1>
     <div class=" col-xs-12"></div>
     <div class="control group">
-    <label class="control-label col-xs-2" for="DDLConditionStatus" >Condition Status:</label>
+        <asp:GridView ID="GRDConditionStatus" runat="server" AutoGenerateColumns="false">
+            <Columns>
+                <asp:CommandField ShowEditButton="true" />
+                <asp:TemplateField HeaderText="ConditionID" visible="false">
+                    <ItemTemplate>
+                        <asp:Label ID="lblCondtionID" runat="server" Text='<%# Eval("ConditionID") %>'></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField HeaderText="Description">
+                            <ItemTemplate>
+                                <asp:TextBox ID="txtConditionCode"   AutoPostBack="true" runat="server"
+                                    Text='<%# Eval("Description") %>' OnTextChanged="txtConditionCode_TextChanged"></asp:TextBox>
+                               
+                            </ItemTemplate>
+                        </asp:TemplateField>
+               <%--    <asp:TemplateField HeaderText="Status">
+                            <ItemTemplate>
+                                <asp:TextBox ID="txtCondtionDescription"   AutoPostBack="true" runat="server"
+                                    Text='<%# Eval("Status") %>' ></asp:TextBox>
+                               
+                            </ItemTemplate>
+                        </asp:TemplateField>--%>
+            </Columns>
+        </asp:GridView>
+   <%-- <label class="control-label col-xs-2" for="DDLConditionStatus" >Condition Status:</label>
         <div class="col-xs-10">
             <asp:DropDownList class="form-control" ID="DDLConditionStatus" runat="server" AutoPostBack="true" OnSelectedIndexChanged="DDLConditionStatus_SelectedIndexChanged"></asp:DropDownList>
-        </div>
+        </div>--%>
     </div>
     
-    <div class=" col-xs-12"></div> 
+ <%--   <div class=" col-xs-12"></div> 
     
 
     <div class=" col-xs-12"></div>
@@ -73,7 +97,7 @@
     <div class="btn-group col-xs-12">
         <asp:Button ID="BTNSaveConditionStatus" runat="server" CssClass="btn btn-primary" Text="Save" OnClick="BTNSaveConditionStatus_Click" />
     </div>
-  
+  --%>
 
 
 
@@ -83,13 +107,44 @@
     <h1>Fee Types:</h1>
     <div class=" col-xs-12"></div>
     <div class="control group">
-        <label class="control-label col-xs-2" for="DDLFeeTypes" >Fee Types:</label>
+        <asp:GridView ID="GRDFeeTypes" runat="server" AutoGenerateColumns="false">
+            <Columns>
+                <asp:TemplateField HeaderText="FeeID" visible="false">
+                    <ItemTemplate>
+                        <asp:Label ID="lblFeeID" runat="server" Text='<%# Eval("FeeID") %>'></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField HeaderText="Cost">
+                            <ItemTemplate>
+                                <asp:TextBox ID="txtFeeCost"   AutoPostBack="true" runat="server"
+                                    Text='<%# Eval("FeeCost") %>' OnTextChanged="txtFeeCost_TextChanged" ></asp:TextBox>
+                               
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="Description">
+                            <ItemTemplate>
+                                <asp:TextBox ID="txtFeeDescription"   AutoPostBack="true" runat="server"
+                                    Text='<%# Eval("FeeType") %>' OnTextChanged="txtFeeType_TextChanged" ></asp:TextBox>
+                               
+                            </ItemTemplate>
+                        </asp:TemplateField>
+               <%--    <asp:TemplateField HeaderText="Status">
+                            <ItemTemplate>
+                                <asp:TextBox ID="txtCondtionDescription"   AutoPostBack="true" runat="server"
+                                    Text='<%# Eval("Status") %>' ></asp:TextBox>
+                               
+                            </ItemTemplate>
+                        </asp:TemplateField>--%>
+            </Columns>
+        </asp:GridView>
+      <%--  <label class="control-label col-xs-2" for="DDLFeeTypes" >Fee Types:</label>
         <div class="col-xs-10">
             <asp:DropDownList class="form-control" ID="DDLFeeTypes" runat="server" AutoPostBack="true" OnSelectedIndexChanged="DDLFeeTypes_SelectedIndexChanged" ></asp:DropDownList>
-        </div>
+        </div>--%>
     </div>
 
-    <div class=" col-xs-12">
+   <%-- <div class=" col-xs-12">
     
     </div> 
 
@@ -116,7 +171,7 @@
     </div>
     <div class="btn-group col-xs-12">
     <asp:Button ID="BTNSaveFeeType" runat="server" CssClass="btn btn-primary" Text="Save" OnClick="BTNSaveFeeType_Click" />
-    </div>
+    </div>--%>
 
 
     <div class=" col-xs-12"><hr /></div>
@@ -124,29 +179,38 @@
     <div class=" col-xs-12">
     </div>
     <div class="control group">
-          
-    <label class="control-label col-xs-2" for="DDLPaymentTypes" >Payment Types:</label>
-        <div class="col-xs-10">
-    <asp:DropDownList class="form-control" ID="DDLPaymentTypes" runat="server" AutoPostBack="true" OnSelectedIndexChanged="DDLPaymentTypes_SelectedIndexChanged"  ></asp:DropDownList>
-            </div>
+   <asp:GridView ID="GRDPaymentTypes" runat="server" AutoGenerateColumns="false">
+            <Columns>
+                <asp:TemplateField HeaderText="PaymentTypeID" visible="false">
+                    <ItemTemplate>
+                        <asp:Label ID="lblPaymentTypeID" runat="server" Text='<%# Eval("PaymentTypeId") %>'></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField HeaderText="Type">
+                            <ItemTemplate>
+                                <asp:TextBox ID="txtPaymentType"   AutoPostBack="true" runat="server"
+                                    Text='<%# Eval("PaymentDescription") %>' OnTextChanged="txtPaymentType_TextChanged"  ></asp:TextBox>
+                               
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                 <asp:TemplateField HeaderText="Surcharge">
+                            <ItemTemplate>
+                                <asp:TextBox ID="txtSurcharge"   AutoPostBack="true" runat="server"
+                                    Text='<%# Eval("SurchargeInPercent") %>' OnTextChanged="txtSurcharge_TextChanged"   ></asp:TextBox>
+                               
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                    
+               <%--    <asp:TemplateField HeaderText="Status">
+                            <ItemTemplate>
+                                <asp:TextBox ID="txtCondtionDescription"   AutoPostBack="true" runat="server"
+                                    Text='<%# Eval("Status") %>' ></asp:TextBox>
+                               
+                            </ItemTemplate>
+                        </asp:TemplateField>--%>
+            </Columns>
+        </asp:GridView>
     </div>
-    <div class=" col-xs-12">
-    
-    </div> 
-    <div class=" col-xs-12">
-    </div>
-    <div class="control group">
-          
-    <label class="control-label col-xs-2" for="TXTPaymentTypes" >Type:</label>
-        <div class="col-xs-10">
-    <asp:TextBox ID="TXTPaymentTypes" runat="server" Width="127px" ></asp:TextBox>
-                </div>
-    </div>
-    <div class=" col-xs-12">
-    
-    </div> 
-      
-    <div class="btn-group col-xs-12">
-    <asp:Button ID="BTNSavePaymentType" runat="server" CssClass="btn btn-primary" Text="Save" OnClick="BTNSavePaymentType_Click"  />
-    </div>
+
 </asp:Content>

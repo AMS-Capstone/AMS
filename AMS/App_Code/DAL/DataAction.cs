@@ -223,6 +223,41 @@ namespace AMS.App_Code
             }
             return dt;
         }
+
+
+        public DataTable GetFeeTypes()
+        {
+            DataTable dt = new DataTable();
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    using (MySqlCommand cmd = conn.CreateCommand())
+                    {
+                        conn.Open();
+                        cmd.CommandText = "sp_getFeeTypes";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt);
+
+                        }
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //Panic
+                    throw;
+                }
+                finally
+                {
+                    //Tie the loose ends here
+                }
+            }
+            return dt;
+        }
         public DataTable GetConditionStatusByID(int conditionID)
         {
             DataTable dt = new DataTable();
@@ -449,7 +484,7 @@ namespace AMS.App_Code
 
 
 //Update PaymentType
-        public void UpdatePaymentType(int paymentID, string paymentDescription)
+        public void UpdatePaymentType(int paymentID, string paymentDescription, double surcharge)
         {
             try
             {
@@ -460,7 +495,10 @@ namespace AMS.App_Code
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("pPaymentID", paymentID);
                     cmd.Parameters.AddWithValue("pPaymentDescription", paymentDescription);
-                
+                    cmd.Parameters.AddWithValue("pSurchargeInPercent", surcharge);
+                    
+
+
                     conn.Open();
                     cmd.ExecuteNonQuery();
                 }

@@ -324,15 +324,14 @@ BEGIN
 END//
 
 DROP PROCEDURE IF EXISTS sp_updateConditionStatus //
-CREATE PROCEDURE sp_updateConditionStatus(IN pConditionId integer, IN pConditionDescription text, pConditionCode tinyText, IN pStatus boolean)
+CREATE PROCEDURE sp_updateConditionStatus(IN pConditionId integer, IN pConditionDescription text, pConditionCode tinyText)
 
 BEGIN
 
 	UPDATE conditionstatus
 	SET
 	ConditionCode = pConditionCode,
-	ConditionDescription = pConditionDescription,
-    status = pStatus 
+	ConditionDescription = pConditionDescription
 	WHERE ConditionID = pConditionId;
 END//
 
@@ -365,19 +364,18 @@ BEGIN
 	UPDATE FeeType
 	SET
 	FeeCost = pFeeCost,
-	FeeType = pFeeType, 
-    Status = pStatus
+	FeeType = pFeeType
 	WHERE FeeId = pFeeId;
 END//
 
 DROP PROCEDURE IF EXISTS sp_createPaymentType //	
 CREATE PROCEDURE sp_createPaymentType
-(IN pPaymentDescription text)
+(IN pPaymentDescription text, IN pSurchargeInPercent double)
 
 BEGIN
 	
-	INSERT INTO PaymentType (PaymentDescription, Status)
-	VALUES (pPaymentDescription);
+	INSERT INTO PaymentType (PaymentDescription, SurchargeInPercent)
+	VALUES (pPaymentDescription, pSurchargeInPercent);
 
 END //
 
@@ -386,20 +384,21 @@ CREATE PROCEDURE sp_viewPaymentType()
 
 BEGIN
 	
-	Select PaymentTypeId, PaymentDescription
+	Select PaymentTypeId, PaymentDescription, SurchargeInPercent
 	FROM PaymentType;
 
 END//
 
 DROP PROCEDURE IF EXISTS sp_updatePaymentType //
-CREATE PROCEDURE sp_updatePaymentType(IN pPaymentId integer, IN pPaymentDescription text)
+CREATE PROCEDURE sp_updatePaymentType(IN pPaymentId integer, IN pPaymentDescription text, IN pSurchargeInPercent double)
 
 BEGIN
 
 	UPDATE PaymentType
 	SET
-	PaymentDescription = pPaymentDescription
-	WHERE PaymentTypeId = PaymentTypeId;
+	PaymentDescription = pPaymentDescription,
+    SurchargeInPercent = pSurchargeInPercent
+	WHERE PaymentTypeId = pPaymentID;
 END //
 
 DROP PROCEDURE IF EXISTS sp_getGSTByID //
@@ -1072,6 +1071,13 @@ BEGIN
 	DELETE 
     FROM buyer
 	WHERE BuyerID = pBuyerID;
+END //
+
+DROP PROCEDURE IF EXISTS sp_getFeeTypes //
+CREATE PROCEDURE sp_getFeeTypes()
+BEGIN	
+	Select FeeId, FeeCost, FeeType
+	FROM FeeType;
 END//
 
 DROP FUNCTION IF EXISTS sp_checkIfBuyerIsDeletable//
