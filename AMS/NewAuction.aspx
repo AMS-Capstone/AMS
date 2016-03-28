@@ -2,7 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h1>New Auction</h1>
     <div class="col-xs-12" id="AlertDiv" runat="server"></div>
-    <div class="col-xs-6" id="ProgressBar" runat="server">
+    <div class="row" id="ProgressBar" runat="server">
         <%--<div class="progress progress-striped">
             <div class="progress-bar progress-bar-info" style="width: 0%">
                 Creating
