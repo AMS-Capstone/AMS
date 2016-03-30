@@ -108,6 +108,7 @@
         <div class="col-xs-12">
             <asp:GridView ID="GRDFeeTypes" runat="server" AutoGenerateColumns="false">
                 <Columns>
+                    <asp:CommandField ShowEditButton="true"/>
                     <asp:TemplateField HeaderText="FeeID" visible="false">
                         <ItemTemplate>
                             <asp:Label ID="lblFeeID" runat="server" Text='<%# Eval("FeeID") %>'></asp:Label>
@@ -182,6 +183,7 @@
         <div class="col-xs-12">
             <asp:GridView ID="GRDPaymentTypes" runat="server" AutoGenerateColumns="false">
                 <Columns>
+                    <asp:CommandField ShowEditButton="true"/>
                     <asp:TemplateField HeaderText="PaymentTypeID" visible="false">
                         <ItemTemplate>
                             <asp:Label ID="lblPaymentTypeID" runat="server" Text='<%# Eval("PaymentTypeId") %>'></asp:Label>
