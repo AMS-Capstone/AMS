@@ -5,7 +5,7 @@
     <div class="col-xs-12 col-sm-12" id="AlertDiv" runat="server"></div>
     <div class="form-group row">
         <label class="control-label col-xs-12 col-sm-2" for="DDLSeller">Select Consigner:</label>
-        <div class="col-xs-12 col-sm-12">
+        <div class="col-xs-12 col-sm-3">
             <asp:DropDownList ID="DDLSeller" CssClass="form-control" runat="server"></asp:DropDownList>
         </div>
     </div>

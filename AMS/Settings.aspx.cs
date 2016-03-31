@@ -23,7 +23,7 @@ namespace AMS
                     DDLGST.DataSource = dt;
             
                     DDLGST.DataValueField = dt.Columns["GSTID"].ToString();
-                        DDLGST.DataTextField = dt.Columns["GSTPercent"].ToString();
+                    DDLGST.DataTextField = dt.Columns["GSTPercent"].ToString();
                     DDLGST.DataBind();
                     DDLGST.Items.Insert(0, new ListItem(String.Empty, String.Empty));
                     //Load All Condition Statuses
@@ -61,6 +61,112 @@ namespace AMS
                     "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + ex.Message +
                     "</label></div>";
                 }
+            }
+        }
+
+        protected void gv_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            GridView gridView = (GridView)sender;
+            gridView.EditIndex = e.NewEditIndex;
+            try
+            {
+                //Load All GST
+                DataAction dataAction = new DataAction();
+                DataTable dt = dataAction.GetGST();
+
+                DDLGST.DataSource = dt;
+
+                DDLGST.DataValueField = dt.Columns["GSTID"].ToString();
+                DDLGST.DataTextField = dt.Columns["GSTPercent"].ToString();
+                DDLGST.DataBind();
+                DDLGST.Items.Insert(0, new ListItem(String.Empty, String.Empty));
+                //Load All Condition Statuses
+
+                dt = dataAction.GetConditionStatus();
+                GRDConditionStatus.DataSource = dt;
+                GRDConditionStatus.DataBind();
+
+                //Load All Fee Types
+
+                dt = dataAction.GetFeeTypes();
+                GRDFeeTypes.DataSource = dt;
+                GRDFeeTypes.DataBind();
+                //DDLFeeTypes.DataSource = dt;
+                //DDLFeeTypes.DataValueField = dt.Columns["FeeId"].ToString();
+                //DDLFeeTypes.DataTextField = dt.Columns["description"].ToString();
+                //DDLFeeTypes.DataBind();
+                //DDLFeeTypes.Items.Insert(0, new ListItem(String.Empty, String.Empty));
+
+                //Load All Payment Types
+                dt = dataAction.GetPaymentType();
+                GRDPaymentTypes.DataSource = dt;
+                GRDPaymentTypes.DataBind();
+                //DDLPaymentTypes.DataSource = dt;
+                //DDLPaymentTypes.DataValueField = dt.Columns["PaymentTypeID"].ToString();
+                //DDLPaymentTypes.DataTextField = dt.Columns["PaymentDescription"].ToString();
+                //DDLPaymentTypes.DataBind();
+                //DDLPaymentTypes.Items.Insert(0, new ListItem(String.Empty, String.Empty));
+
+            }
+            catch (Exception ex)
+            {
+                AlertDiv.InnerHtml = "<div class=\"alert alert-danger fade in\">" +
+                "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + ex.Message +
+                "</label></div>";
+            }
+        }
+
+        protected void gv_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            GridView gridView = (GridView)sender;
+            gridView.EditIndex = -1;
+            try
+            {
+                //Load All GST
+                DataAction dataAction = new DataAction();
+                DataTable dt = dataAction.GetGST();
+
+                DDLGST.DataSource = dt;
+
+                DDLGST.DataValueField = dt.Columns["GSTID"].ToString();
+                DDLGST.DataTextField = dt.Columns["GSTPercent"].ToString();
+                DDLGST.DataBind();
+                DDLGST.Items.Insert(0, new ListItem(String.Empty, String.Empty));
+                //Load All Condition Statuses
+
+                dt = dataAction.GetConditionStatus();
+                GRDConditionStatus.DataSource = dt;
+                GRDConditionStatus.DataBind();
+
+                //Load All Fee Types
+
+                dt = dataAction.GetFeeTypes();
+                GRDFeeTypes.DataSource = dt;
+                GRDFeeTypes.DataBind();
+                //DDLFeeTypes.DataSource = dt;
+                //DDLFeeTypes.DataValueField = dt.Columns["FeeId"].ToString();
+                //DDLFeeTypes.DataTextField = dt.Columns["description"].ToString();
+                //DDLFeeTypes.DataBind();
+                //DDLFeeTypes.Items.Insert(0, new ListItem(String.Empty, String.Empty));
+
+                //Load All Payment Types
+                dt = dataAction.GetPaymentType();
+                GRDPaymentTypes.DataSource = dt;
+                GRDPaymentTypes.DataBind();
+                //DDLPaymentTypes.DataSource = dt;
+                //DDLPaymentTypes.DataValueField = dt.Columns["PaymentTypeID"].ToString();
+                //DDLPaymentTypes.DataTextField = dt.Columns["PaymentDescription"].ToString();
+                //DDLPaymentTypes.DataBind();
+                //DDLPaymentTypes.Items.Insert(0, new ListItem(String.Empty, String.Empty));
+
+            }
+            catch (Exception ex)
+            {
+                AlertDiv.InnerHtml = "<div class=\"alert alert-danger fade in\">" +
+                "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + ex.Message +
+                "</label></div>";
             }
         }
 
@@ -115,7 +221,8 @@ namespace AMS
                 "</label></div>";
             }
         }
-        protected void txtConditionCode_TextChanged(object sender, EventArgs e)
+
+        protected void GRDConditionStatus_Updating(object sender, EventArgs e)
         {
             //Get the ID update the value
             string id = ((Label)((Control)sender).Parent.Parent.FindControl("lblCondtionID")).Text;
@@ -124,7 +231,21 @@ namespace AMS
             dataAction.UpdateConditionStatus(int.Parse(id), value, "");
           
         }
-        protected void txtPaymentType_TextChanged(object sender, EventArgs e)
+
+        protected void GRDFeeTypes_Updating(object sender, EventArgs e)
+        {
+            //Get the ID update the value
+            string id = ((Label)((Control)sender).Parent.Parent.FindControl("lblFeeID")).Text;
+
+            string cost = ((TextBox)((Control)sender).Parent.Parent.FindControl("txtFeeCost")).Text;
+            string type = ((TextBox)((Control)sender).Parent.Parent.FindControl("txtFeeDescription")).Text;
+
+            DataAction dataAction = new DataAction();
+            dataAction.UpdateFeeType(int.Parse(id), double.Parse(cost), type);
+
+        }
+
+        protected void GRDPaymentTypes_Updating(object sender, EventArgs e)
         {
             //Get the ID update the value
             string id = ((Label)((Control)sender).Parent.Parent.FindControl("lblPaymentTypeID")).Text;
@@ -132,41 +253,6 @@ namespace AMS
             string description = ((TextBox)((Control)sender).Parent.Parent.FindControl("txtPaymentType")).Text;
             DataAction dataAction = new DataAction();
             dataAction.UpdatePaymentType(int.Parse(id), description, double.Parse(surcharge));
-
-        }
-        protected void txtSurcharge_TextChanged(object sender, EventArgs e)
-        {
-            //Get the ID update the value
-            string id = ((Label)((Control)sender).Parent.Parent.FindControl("lblPaymentTypeID")).Text;
-            string surcharge =  ((TextBox)((Control)sender).Parent.Parent.FindControl("txtSurcharge")).Text;
-            string description = ((TextBox)((Control)sender).Parent.Parent.FindControl("txtPaymentType")).Text;
-            DataAction dataAction = new DataAction();
-            dataAction.UpdatePaymentType(int.Parse(id), description, double.Parse(surcharge));
-
-        }
-        protected void txtFeeCost_TextChanged(object sender, EventArgs e)
-        {
-            //Get the ID update the value
-            string id = ((Label)((Control)sender).Parent.Parent.FindControl("lblFeeID")).Text;
-
-            string cost = ((TextBox)((Control)sender).Parent.Parent.FindControl("txtFeeCost")).Text;
-            string type = ((TextBox)((Control)sender).Parent.Parent.FindControl("txtFeeDescription")).Text;
-        
-            DataAction dataAction = new DataAction();
-            dataAction.UpdateFeeType(int.Parse(id), double.Parse(cost), type);
-
-        }
-
-        protected void txtFeeType_TextChanged(object sender, EventArgs e)
-        {
-            //Get the ID update the value
-            string id = ((Label)((Control)sender).Parent.Parent.FindControl("lblFeeID")).Text;
-
-            string cost = ((Label)((Control)sender).Parent.Parent.FindControl("txtFeeCost")).Text;
-            string type = ((Label)((Control)sender).Parent.Parent.FindControl("txtFeeDescription")).Text;
-
-            DataAction dataAction = new DataAction();
-            dataAction.UpdateFeeType(int.Parse(id), double.Parse(cost), type);
 
         }
 

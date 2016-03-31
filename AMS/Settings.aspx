@@ -37,8 +37,8 @@
     <div class="col-xs-12"><hr/></div>
     <h1>Condition status</h1>    
     <div class="form-group row">        
-        <div class="col-xs-12">
-            <asp:GridView ID="GRDConditionStatus" runat="server" AutoGenerateColumns="false">
+        <div class="col-xs-12 col-sm-4">
+            <asp:GridView ID="GRDConditionStatus" runat="server" CssClass="table table-hover" AutoGenerateColumns="false" OnRowEditing="gv_RowEditing" OnRowUpdating="GRDConditionStatus_Updating" OnRowCancelingEdit="gv_RowCancelingEdit">
                 <Columns>
                     <asp:CommandField ShowEditButton="true"/>
                     <asp:TemplateField HeaderText="ConditionID" visible="false">
@@ -48,10 +48,13 @@
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Description">
                         <ItemTemplate>
-                            <asp:TextBox ID="txtConditionCode"   AutoPostBack="true" runat="server" CssClass="form-control col-xs-6"
-                                Text='<%# Eval("Description") %>' OnTextChanged="txtConditionCode_TextChanged">
-                            </asp:TextBox>                               
+                            <asp:Label ID="lblConditionCode" runat="server" Text='<%# Eval("Description") %>'></asp:Label>
                         </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txtConditionCode" runat="server" CssClass="form-control col-xs-6"
+                                Text='<%# Eval("Description") %>'>
+                            </asp:TextBox>                               
+                        </EditItemTemplate>
                     </asp:TemplateField>
                    <%--    <asp:TemplateField HeaderText="Status">
                                 <ItemTemplate>
@@ -105,29 +108,34 @@
     <h1>Fee Types:</h1>
     
     <div class="form-group row">        
-        <div class="col-xs-12">
-            <asp:GridView ID="GRDFeeTypes" runat="server" AutoGenerateColumns="false">
+        <div class="col-xs-12 col-sm-4">
+            <asp:GridView ID="GRDFeeTypes" runat="server" CssClass="table table-hover" AutoGenerateColumns="false" OnRowEditing="gv_RowEditing" OnRowUpdating="GRDFeeTypes_Updating" OnRowCancelingEdit="gv_RowCancelingEdit">
                 <Columns>
+                    <asp:CommandField ShowEditButton="true"/>
                     <asp:TemplateField HeaderText="FeeID" visible="false">
                         <ItemTemplate>
                             <asp:Label ID="lblFeeID" runat="server" Text='<%# Eval("FeeID") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Cost">
-                                <ItemTemplate>
-                                    <asp:TextBox ID="txtFeeCost"   AutoPostBack="true" runat="server" CssClass="form-control col-xs-6 numbersOnly"
-                                        Text='<%# Eval("FeeCost") %>' OnTextChanged="txtFeeCost_TextChanged" ></asp:TextBox>
-                               
-                                </ItemTemplate>
-                            </asp:TemplateField>
+                        <ItemTemplate>
+                            <asp:Label ID="lblFeeCost" runat="server" Text='<%# Eval("FeeCost") %>'></asp:Label>
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txtFeeCost" runat="server" CssClass="form-control col-xs-6 numbersOnly"
+                                Text='<%# Eval("FeeCost") %>' ></asp:TextBox>                               
+                        </EditItemTemplate>
+                    </asp:TemplateField>
 
-                            <asp:TemplateField HeaderText="Description">
-                                <ItemTemplate>
-                                    <asp:TextBox ID="txtFeeDescription"   AutoPostBack="true" runat="server" CssClass="form-control col-xs-6"
-                                        Text='<%# Eval("FeeType") %>' OnTextChanged="txtFeeType_TextChanged" ></asp:TextBox>
-                               
-                                </ItemTemplate>
-                            </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Description">
+                        <ItemTemplate>
+                            <asp:Label ID="lblFeeDescription" runat="server" Text='<%# Eval("FeeType") %>'></asp:Label>
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txtFeeDescription" runat="server" CssClass="form-control col-xs-6"
+                                Text='<%# Eval("FeeType") %>' ></asp:TextBox>                               
+                        </EditItemTemplate>
+                    </asp:TemplateField>
                    <%--    <asp:TemplateField HeaderText="Status">
                                 <ItemTemplate>
                                     <asp:TextBox ID="txtCondtionDescription"   AutoPostBack="true" runat="server"
@@ -179,9 +187,10 @@
     <div class="col-xs-12">
     </div>
     <div class="form-group row">
-        <div class="col-xs-12">
-            <asp:GridView ID="GRDPaymentTypes" runat="server" AutoGenerateColumns="false">
+        <div class="col-xs-12 col-sm-4">
+            <asp:GridView ID="GRDPaymentTypes" runat="server" CssClass="table table-hover" AutoGenerateColumns="false" OnRowEditing="gv_RowEditing" OnRowUpdating="GRDPaymentTypes_Updating" OnRowCancelingEdit="gv_RowCancelingEdit">
                 <Columns>
+                    <asp:CommandField ShowEditButton="true"/>
                     <asp:TemplateField HeaderText="PaymentTypeID" visible="false">
                         <ItemTemplate>
                             <asp:Label ID="lblPaymentTypeID" runat="server" Text='<%# Eval("PaymentTypeId") %>'></asp:Label>
@@ -189,15 +198,21 @@
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Type">
                         <ItemTemplate>
-                            <asp:TextBox ID="txtPaymentType"   AutoPostBack="true" runat="server" CssClass="form-control col-xs-6"
-                                Text='<%# Eval("PaymentDescription") %>' OnTextChanged="txtPaymentType_TextChanged"  ></asp:TextBox>                               
+                            <asp:Label ID="lblPaymentType" runat="server" Text='<%# Eval("PaymentDescription") %>'></asp:Label>
                         </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txtPaymentType" runat="server" CssClass="form-control col-xs-6"
+                                Text='<%# Eval("PaymentDescription") %>'></asp:TextBox>                             
+                        </EditItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Surcharge">
                         <ItemTemplate>
-                            <asp:TextBox ID="txtSurcharge"  AutoPostBack="true" runat="server" CssClass="form-control col-xs-6 numbersOnly"
-                                Text='<%# Eval("SurchargeInPercent") %>' OnTextChanged="txtSurcharge_TextChanged"   ></asp:TextBox>                               
+                            <asp:Label ID="lblSurcharge" runat="server" Text='<%# Eval("SurchargeInPercent") %>'></asp:Label>
                         </ItemTemplate>
+                        <EditItemTemplate>
+                            <asp:TextBox ID="txtSurcharge" runat="server" CssClass="form-control col-xs-6 numbersOnly"
+                                Text='<%# Eval("SurchargeInPercent") %>'></asp:TextBox>                               
+                        </EditItemTemplate>
                     </asp:TemplateField>
 
                     
