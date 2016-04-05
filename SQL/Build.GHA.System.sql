@@ -1040,7 +1040,7 @@ CREATE PROCEDURE sp_viewVehiclesForSale()
 BEGIN
 	SELECT `vehicle`.`VehicleID`, CONCAT(`LotNumber`, " - ", `Year`, " ", `Color`, " ", `Make`, " ", `Model`) as `DisplayInfo`
     FROM `vehicle`, `vehiclecondnreqs`
-    WHERE `vehiclecondnreqs`.`VehicleID` = `vehicle`.`VehicleID`;
+    WHERE `vehiclecondnreqs`.`VehicleID` = `vehicle`.`VehicleID` and `vehiclecondnreqs`.`ForSale` = 1;
 END//
 
 DROP PROCEDURE IF EXISTS sp_viewAuctionSalePayments//
@@ -1094,4 +1094,16 @@ BEGIN
 	SET @counter := (SELECT COUNT(VehicleID) from vehicle where pSellerID = sellerID);
     SET @deletable := IF(@counter > 0, 0, 1);
 RETURN @deletable;
+END//
+
+DROP PROCEDURE IF EXISTS sp_viewInventoryVehicles//
+CREATE PROCEDURE sp_viewInventoryVehicles()
+BEGIN
+	SELECT `vehicle`.`VehicleID`, CONCAT(`LotNumber`, " - ", `Year`, " ", `Color`, " ", `Make`, " ", `Model`) as `DisplayInfo`
+    FROM `vehicle`, `vehiclecondnreqs`
+    WHERE `vehiclecondnreqs`.`VehicleID` = `vehicle`.`VehicleID` and `vehiclecondnreqs`.`ForSale` = 1
+    union
+    SELECT `vehicle`.`VehicleID`, CONCAT(`LotNumber`, " - ", `Year`, " ", `Color`, " ", `Make`, " ", `Model`, " - Not For Sale") as `DisplayInfo`
+    FROM `vehicle`, `vehiclecondnreqs`
+    WHERE `vehiclecondnreqs`.`VehicleID` = `vehicle`.`VehicleID` and `vehiclecondnreqs`.`ForSale` = 0;
 END//
