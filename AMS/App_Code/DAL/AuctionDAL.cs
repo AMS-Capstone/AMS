@@ -77,6 +77,7 @@ namespace AMS.App_Code
             return ds;
         }
 
+        //Retrieves only vehicles that are for sale
         public DataSet viewVehiclesForSale()
         {
             DataSet ds = new DataSet("Auctions");
