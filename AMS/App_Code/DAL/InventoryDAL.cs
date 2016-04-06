@@ -21,7 +21,7 @@ namespace AMS.App_Code.DAL
         }
 
         //Retrieves only vehicles that are for sale
-        public DataSet viewIventoryVehicles()
+        public DataSet viewInventoryVehicles()
         {
             DataSet ds = new DataSet("Auctions");
             MySqlConnection conn = new MySqlConnection(connectionString);

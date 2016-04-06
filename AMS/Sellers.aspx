@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="Sellers" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Sellers.aspx.cs" Inherits="AMS.Sellers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h1>Sellers</h1>
-    <div class=" col-xs-12" id="AlertDiv" runat="server"></div>
+    <div class="row" id="AlertDiv" runat="server"></div>
     
     <div class="form-group row">
         <label class="control-label col-xs-12 col-sm-2" for="DDLSellerName">Select Seller:</label>

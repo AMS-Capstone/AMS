@@ -1,8 +1,8 @@
 ﻿<%@ Page Title="Buyers" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Buyers.aspx.cs" Inherits="AMS.Buyers" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h1>Buyers</h1>
-
-    <div CssClass="col-xs-12 col-sm-12" id="AlertDiv" runat="server"></div>
+    
+    <div class="row" id="AlertDiv" runat="server"></div>
     <div class="form-group row">
         <label class="control-label col-xs-12 col-sm-2" for="DDLBuyerName">Select Buyer:</label>
         <div class="col-xs-12 col-sm-5">

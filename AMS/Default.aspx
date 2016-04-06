@@ -3,7 +3,7 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <div>
         <h2>Auction Listing</h2>
-        <div class="col-xs-12 col-sm-12" id="AlertDiv" runat="server"></div>
+        <div class="row" id="AlertDiv" runat="server"></div>
 
         <div class="form-group row">
             <label class="control-label col-xs-6 col-md-1 col-sm-1" for="DDLAuctionYear">Year:</label>            

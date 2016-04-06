@@ -2,7 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     
-    <div class="col-xs-12" id="AlertDiv" runat="server"></div>
+    <div class="row" id="AlertDiv" runat="server"></div>
     <h1>GST</h1>
     
     <div class="form-group row">          

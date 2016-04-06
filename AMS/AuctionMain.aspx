@@ -2,7 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h1>Auction: </h1>
     
-    <div class=" col-xs-12" id="AlertDiv" runat="server"></div>
+    <div class="row" id="AlertDiv" runat="server"></div>
 
     <div class="row">
         <div class="form-group col-xs-12">
