@@ -5,6 +5,7 @@ using System.Web;
 using System.Data;
 using MySql.Data.MySqlClient;
 using System.Configuration;
+using AMS.App_Code.SuppportClasses;
 
 namespace AMS.App_Code.DAL
 {
@@ -23,7 +24,7 @@ namespace AMS.App_Code.DAL
         //Retrieves only vehicles that are for sale
         public DataSet viewInventoryVehicles()
         {
-            DataSet ds = new DataSet("Auctions");
+            DataSet ds = new DataSet();
             MySqlConnection conn = new MySqlConnection(connectionString);
             MySqlDataAdapter da = new MySqlDataAdapter();
 
@@ -47,6 +48,76 @@ namespace AMS.App_Code.DAL
                 //Tie the loose ends here
             }
             return ds;
+        }
+
+
+        //Retrieves only vehicles that are for sale
+        public DataSet getInventoryVehicles(int vehicleConditionRequirementID)
+        {
+            DataSet ds = new DataSet();
+            MySqlConnection conn = new MySqlConnection(connectionString);
+            MySqlDataAdapter da = new MySqlDataAdapter();
+
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.CommandText = "sp_getVehicleFees";
+                cmd.Parameters.Add(new MySqlParameter("@pVehicleConReqID", vehicleConditionRequirementID));
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = conn;
+                da.SelectCommand = cmd;
+                da.Fill(ds, "VehicleFees");
+
+            }
+            catch (Exception ex)
+            {
+                //Panic
+                throw;
+            }
+            finally
+            {
+                //Tie the loose ends here
+            }
+            return ds;
+        }
+
+
+        //Create a new vehicle fee
+        public int CreateVehicleFee(VehicleFee vehicleFee)
+        {
+            int id = 0;
+            MySqlConnection conn = new MySqlConnection(connectionString);
+            conn.Open();
+
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.CommandText = "sp_createVehicleFee";
+                cmd.Parameters.Add(new MySqlParameter("@pVehicleConReqID", vehicleFee.VehicleConditionRequirementID));
+                cmd.Parameters.Add(new MySqlParameter("@pFeeID", vehicleFee.FeeID));
+                cmd.Parameters.Add(new MySqlParameter("@pVehicleFeeCost", vehicleFee.VehicleFeeCost));
+
+                MySqlParameter returnParameter = new MySqlParameter();
+                returnParameter.Direction = System.Data.ParameterDirection.ReturnValue;
+
+                cmd.Parameters.Add(returnParameter);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = conn;
+                cmd.ExecuteNonQuery();
+
+                id = Convert.ToInt32(returnParameter.Value.ToString());
+            }
+            catch (Exception ex)
+            {
+                //Panic
+                throw;
+            }
+            finally
+            {
+                //Tie the loose ends here
+                conn.Close();
+            }
+            return id;
         }
     }
 }

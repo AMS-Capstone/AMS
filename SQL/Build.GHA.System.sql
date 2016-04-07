@@ -188,7 +188,8 @@ Create Table VehicleFee
     constraint FK_VehicleConReqID foreign key (VehicleConReqID) references VehicleCondnReqs(VehicleConReqID),
     FeeID integer,
     constraint FK_VehicleFee_FeeID foreign key(FeeID) references FeeType(FeeID),
-    VehiclFeeCost double
+    VehiclFeeCost double,
+    CreatedOn TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Create Table Payment
@@ -1106,4 +1107,37 @@ BEGIN
     SELECT `vehicle`.`VehicleID`, CONCAT(`LotNumber`, " - ", `Year`, " ", `Color`, " ", `Make`, " ", `Model`, " - Not For Sale") as `DisplayInfo`
     FROM `vehicle`, `vehiclecondnreqs`
     WHERE `vehiclecondnreqs`.`VehicleID` = `vehicle`.`VehicleID` and `vehiclecondnreqs`.`ForSale` = 0;
+END//
+
+DROP PROCEDURE IF EXISTS sp_getVehicleFees//
+CREATE PROCEDURE sp_getVehicleFees(pVehicleConReqID int)
+BEGIN
+	SELECT `vehiclefee`.`VehicleFeeID`,
+    `vehiclefee`.`VehicleConReqID`,
+    `vehiclefee`.`FeeID`,
+    `vehiclefee`.`VehiclFeeCost`,
+    `vehiclefee`.`CreatedOn`
+	FROM `vehiclefee`
+    WHERE `vehiclefee`.`VehicleConReqID` = pVehicleConReqID;
+END//
+
+DROP FUNCTION IF EXISTS sp_createVehicleFee//
+CREATE FUNCTION sp_createVehicleFee(pVehicleConReqID int, pFeeID int, pVehicleFeeCost double) returns int
+BEGIN
+	INSERT INTO `gha`.`vehiclefee`
+	(
+		`VehicleConReqID`,
+		`FeeID`,
+		`VehiclFeeCost`,
+        `CreatedOn`
+	)
+	VALUES
+	(
+		pVehicleConReqID,
+		pFeeID,
+		pVehicleFeeCost,
+        NOW()
+	);
+
+    RETURN LAST_INSERT_ID();
 END//
