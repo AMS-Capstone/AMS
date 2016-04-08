@@ -33,12 +33,5 @@ namespace AMS.App_Code.SuppportClasses
             get { return vehicleFeeCost; }
             set { vehicleFeeCost = value; }
         }
-        private DateTime createdOn;
-
-        public DateTime CreatedOn
-        {
-            get { return createdOn; }
-            set { createdOn = value; }
-        }
     }
 }
