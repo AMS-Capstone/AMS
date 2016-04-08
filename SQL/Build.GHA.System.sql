@@ -1124,7 +1124,7 @@ END//
 DROP FUNCTION IF EXISTS sp_createVehicleFee//
 CREATE FUNCTION sp_createVehicleFee(pVehicleConReqID int, pFeeID int, pVehicleFeeCost double) returns int
 BEGIN
-	INSERT INTO `gha`.`vehiclefee`
+	INSERT INTO `vehiclefee`
 	(
 		`VehicleConReqID`,
 		`FeeID`,

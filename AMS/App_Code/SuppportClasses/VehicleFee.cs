@@ -12,6 +12,13 @@ namespace AMS.App_Code.SuppportClasses
 
         }
 
+        private int id;
+
+        public int Id
+        {
+            get { return id; }
+            set { id = value; }
+        }
         private int vehicleConditionRequirementID;
 
         public int VehicleConditionRequirementID
