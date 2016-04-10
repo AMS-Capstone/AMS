@@ -229,7 +229,14 @@
                                 Text='<%# Eval("SurchargeInPercent") %>'></asp:TextBox>                               
                         </EditItemTemplate>
                     </asp:TemplateField>
-
+                      <asp:TemplateField HeaderText="Status">
+                                <ItemTemplate>
+                                    <asp:CheckBox id="cbStatus" runat="server" Enabled="false" AutoPostBack="false" Checked='<%# Eval("Status") %>'/>
+                                </ItemTemplate>
+                       <EditItemTemplate>
+                           <asp:CheckBox id="cbStatus" runat="server" AutoPostBack="false" Checked='<%# Eval("Status") %>'/>
+                       </EditItemTemplate>
+                            </asp:TemplateField>
                     
                     <%--    <asp:TemplateField HeaderText="Status">
                                 <ItemTemplate>

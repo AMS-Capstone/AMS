@@ -279,12 +279,18 @@ namespace AMS
 
         protected void GRDPaymentTypes_Updating(object sender, EventArgs e)
         {
+
+            Label alabel = (Label)GRDPaymentTypes.Rows[GRDPaymentTypes.EditIndex].FindControl("lblPaymentTypeID");
             //Get the ID update the value
-            string id = ((Label)((Control)sender).Parent.Parent.FindControl("lblPaymentTypeID")).Text;
-            string surcharge = ((TextBox)((Control)sender).Parent.Parent.FindControl("txtSurcharge")).Text;
-            string description = ((TextBox)((Control)sender).Parent.Parent.FindControl("txtPaymentType")).Text;
+            string id = alabel.Text;
+            TextBox atextbox = (TextBox)GRDPaymentTypes.Rows[GRDPaymentTypes.EditIndex].FindControl("txtSurcharge");
+            string surcharge = atextbox.Text;
+            atextbox = (TextBox)GRDPaymentTypes.Rows[GRDPaymentTypes.EditIndex].FindControl("txtPaymentType");
+            string description = atextbox.Text;
+            CheckBox acb = (CheckBox)GRDPaymentTypes.Rows[GRDPaymentTypes.EditIndex].FindControl("cbStatus");
+            bool status = acb.Checked;
             DataAction dataAction = new DataAction();
-            dataAction.UpdatePaymentType(int.Parse(id), description, double.Parse(surcharge));
+            dataAction.UpdatePaymentType(int.Parse(id), description, double.Parse(surcharge), status);
 
         }
 
