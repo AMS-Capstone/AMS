@@ -260,7 +260,7 @@ namespace AMS.App_Code
             }
         }
 
-        public  void UpdateConditionStatus(int conditionID, string conditionDescription, string conditionCode)
+        public  void UpdateConditionStatus(int conditionID, string conditionDescription, string conditionCode, bool status)
         {
             try
             {
@@ -272,6 +272,7 @@ namespace AMS.App_Code
                     cmd.Parameters.AddWithValue("pConditionID", conditionID);
                     cmd.Parameters.AddWithValue("pConditionDescription", conditionDescription);
                     cmd.Parameters.AddWithValue("pConditionCode", conditionCode);
+                    cmd.Parameters.AddWithValue("pStatus", status);
                     conn.Open();
                     cmd.ExecuteNonQuery();
                 }
@@ -490,7 +491,7 @@ namespace AMS.App_Code
         }
 
         //Update Fee Type
-        public void UpdateFeeType(int feeID, double feeCost, string feeType)
+        public void UpdateFeeType(int feeID, double feeCost, string feeType, bool status)
         {
             try
             {
@@ -502,6 +503,7 @@ namespace AMS.App_Code
                     cmd.Parameters.AddWithValue("pFeeId", feeID);
                     cmd.Parameters.AddWithValue("pFeeType", feeType);
                     cmd.Parameters.AddWithValue("pFeeCost", feeCost);
+                    cmd.Parameters.AddWithValue("pStatus", status);
                     conn.Open();
                     cmd.ExecuteNonQuery();
                 }

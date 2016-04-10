@@ -56,6 +56,7 @@ namespace AMS
                     //Load All Condition Statuses
 
                     dt = dataAction.GetConditionStatus();
+                
                     GRDConditionStatus.DataSource = dt;
                     GRDConditionStatus.DataBind();
 
@@ -104,6 +105,7 @@ namespace AMS
                 //Load All Condition Statuses
 
                 dt = dataAction.GetConditionStatus();
+             
                 GRDConditionStatus.DataSource = dt;
                 GRDConditionStatus.DataBind();
 
@@ -245,24 +247,33 @@ namespace AMS
 
         protected void GRDConditionStatus_Updating(object sender, EventArgs e)
         {
+
+          Label alabel = (Label)GRDConditionStatus.Rows[GRDConditionStatus.EditIndex].FindControl("lblCondtionID"); 
+            TextBox atextbox = (TextBox)GRDConditionStatus.Rows[GRDConditionStatus.EditIndex].FindControl("txtConditionCode");
+            CheckBox acb = (CheckBox)GRDConditionStatus.Rows[GRDConditionStatus.EditIndex].FindControl("cbStatus");
             //Get the ID update the value
-            string id = ((Label)((Control)sender).Parent.Parent.FindControl("lblCondtionID")).Text;
-            string value = ((TextBox)sender).Text;
+            string id = alabel.Text;
+            string value = atextbox.Text;
+            bool cbValue = acb.Checked;
             DataAction dataAction = new DataAction();
-            dataAction.UpdateConditionStatus(int.Parse(id), value, "");
+            dataAction.UpdateConditionStatus(int.Parse(id), value, "", cbValue);
           
         }
 
         protected void GRDFeeTypes_Updating(object sender, EventArgs e)
         {
             //Get the ID update the value
-            string id = ((Label)((Control)sender).Parent.Parent.FindControl("lblFeeID")).Text;
-
-            string cost = ((TextBox)((Control)sender).Parent.Parent.FindControl("txtFeeCost")).Text;
-            string type = ((TextBox)((Control)sender).Parent.Parent.FindControl("txtFeeDescription")).Text;
+            Label alabel = (Label)GRDFeeTypes.Rows[GRDFeeTypes.EditIndex].FindControl("lblFeeID");
+            string id = alabel.Text;
+            TextBox atextbox = (TextBox)GRDFeeTypes.Rows[GRDFeeTypes.EditIndex].FindControl("txtFeeCost");
+            string cost = atextbox.Text;
+            atextbox = (TextBox)GRDFeeTypes.Rows[GRDFeeTypes.EditIndex].FindControl("txtFeeDescription");
+            string type = atextbox.Text;
+            CheckBox acb = (CheckBox)GRDFeeTypes.Rows[GRDFeeTypes.EditIndex].FindControl("cbStatus");
+            bool status = acb.Checked;
 
             DataAction dataAction = new DataAction();
-            dataAction.UpdateFeeType(int.Parse(id), double.Parse(cost), type);
+            dataAction.UpdateFeeType(int.Parse(id), double.Parse(cost), type, status);
 
         }
 
