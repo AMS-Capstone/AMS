@@ -42,6 +42,104 @@ namespace AMS.App_Code
         }
 
         //Update a GST Code
+
+        public DataTable CheckConditionStatus()
+        {
+            DataTable dt = new DataTable();
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    using (MySqlCommand cmd = conn.CreateCommand())
+                    {
+                        conn.Open();
+                        cmd.CommandText = "sp_checkConditionStatus";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt);
+
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //Panic
+                    throw;
+                }
+                finally
+                {
+                    //Tie the loose ends here
+                }
+            }
+            return dt;
+        }
+
+        public DataTable CheckPaymentTypes()
+        {
+            DataTable dt = new DataTable();
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    using (MySqlCommand cmd = conn.CreateCommand())
+                    {
+                        conn.Open();
+                        cmd.CommandText = "sp_checkPaymentType";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt);
+
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //Panic
+                    throw;
+                }
+                finally
+                {
+                    //Tie the loose ends here
+                }
+            }
+            return dt;
+        }
+        public DataTable CheckFeeTypes()
+        {
+            DataTable dt = new DataTable();
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    using (MySqlCommand cmd = conn.CreateCommand())
+                    {
+                        conn.Open();
+                        cmd.CommandText = "sp_checkFeeTypes";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt);
+
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //Panic
+                    throw;
+                }
+                finally
+                {
+                    //Tie the loose ends here
+                }
+            }
+            return dt;
+        }
         public void UpdateGSTEntry(int gstId, double gstPercent, bool status)
         {
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
@@ -456,7 +554,7 @@ namespace AMS.App_Code
 
 
         //Create Payment Type
-        public void CreatePaymentType(string paymentDescription)
+        public void CreatePaymentType(string paymentDescription, double surchargeInPercent)
         {
             try
             {
@@ -466,7 +564,7 @@ namespace AMS.App_Code
                     MySqlCommand cmd = new MySqlCommand("sp_createPaymentType", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("pPaymentDescription", paymentDescription);
-
+                    cmd.Parameters.AddWithValue("pSurchargeInPercent", surchargeInPercent);
                     conn.Open();
                     cmd.ExecuteNonQuery();
                 }
