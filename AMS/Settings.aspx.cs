@@ -25,7 +25,7 @@ namespace AMS
                     if (dt.Rows.Count == 0)
                     {
                         //Create a new blank row entry
-                        dataAction.CreateConditionStatus(null, null);
+                        dataAction.CreateConditionStatus(null, null, false);
 
 
                     }
@@ -37,13 +37,13 @@ namespace AMS
                     dt =  dataAction.CheckFeeTypes();
                     if (dt.Rows.Count == 0)
                     {
-                        dataAction.CreateFeeType(double.Parse(""), null);
+                        dataAction.CreateFeeType(double.Parse(""), null, false);
                     }
 
                     dt = dataAction.CheckPaymentTypes();
                     if (dt.Rows.Count == 0)
                     {
-                        dataAction.CreatePaymentType(null, 0);
+                        dataAction.CreatePaymentType(null, 0, false);
                     }
 
                     dt = dataAction.GetGST();

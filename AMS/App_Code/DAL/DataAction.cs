@@ -234,7 +234,7 @@ namespace AMS.App_Code
             return dt;
         }
         //Create condition status
-        public void CreateConditionStatus(string conditionCode, string conditionDescription)
+        public void CreateConditionStatus(string conditionCode, string conditionDescription, bool status)
         {
             try
             {
@@ -245,6 +245,7 @@ namespace AMS.App_Code
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("pConditionCode", conditionCode);
                     cmd.Parameters.AddWithValue("pConditionDescription", conditionDescription);
+                    cmd.Parameters.AddWithValue("pStatus", status);
                     conn.Open();
                     cmd.ExecuteNonQuery();
                 }
@@ -427,7 +428,7 @@ namespace AMS.App_Code
         }
 
 
-        public void CreateFeeType(double feeCost, string feeType)
+        public void CreateFeeType(double feeCost, string feeType, bool status)
         {
             try
             {
@@ -438,7 +439,7 @@ namespace AMS.App_Code
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("pFeeCost", feeCost);
                     cmd.Parameters.AddWithValue("pFeeType", feeType);
-                
+                    cmd.Parameters.AddWithValue("pStatus", status);
                     conn.Open();
                     cmd.ExecuteNonQuery();
                 }
@@ -556,7 +557,7 @@ namespace AMS.App_Code
 
 
         //Create Payment Type
-        public void CreatePaymentType(string paymentDescription, double surchargeInPercent)
+        public void CreatePaymentType(string paymentDescription, double surchargeInPercent, bool status)
         {
             try
             {
@@ -567,6 +568,7 @@ namespace AMS.App_Code
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("pPaymentDescription", paymentDescription);
                     cmd.Parameters.AddWithValue("pSurchargeInPercent", surchargeInPercent);
+                    cmd.Parameters.AddWithValue("pStatus", status);
                     conn.Open();
                     cmd.ExecuteNonQuery();
                 }
