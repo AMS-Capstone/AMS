@@ -193,6 +193,7 @@
     <Compile Include="App_Code\DAL\AuctionDAL.cs" />
     <Compile Include="App_Code\DAL\InventoryDAL.cs" />
     <Compile Include="App_Code\SuppportClasses\AuctionSale.cs" />
+    <Compile Include="App_Code\SuppportClasses\VehicleConditionsRequirements.cs" />
     <Compile Include="App_Code\SuppportClasses\VehicleFee.cs" />
     <Compile Include="DocumentHandler.ashx.cs">
       <DependentUpon>DocumentHandler.ashx</DependentUpon>
