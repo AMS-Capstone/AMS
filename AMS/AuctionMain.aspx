@@ -246,7 +246,10 @@
             <asp:TextBox ID="TXTNotes" TextMode="MultiLine" runat="server" CssClass="form-control" placeholder="Notes"/>
         </div>
     </div>--%>
-    <div class="btn-group col-xs-12">
-        <asp:Button ID="BTNTotals" runat="server" CssClass="btn btn-primary pull-right" Text="Calculate Auction Totals" OnClick="BTNTotals_Click" />
+    
+    <div class="btn-group row col-xs-12 ">
+        <asp:Button ID="BTNGenerateAuctionCarList" runat="server" CssClass="btn btn-default " Text="Print Auction Car List" OnClick="BTNGenerateAuctionCarList_Click" />
+        <asp:Button ID="BTNTotals" runat="server" CssClass="btn btn-primary" Text="Calculate Auction Totals" OnClick="BTNTotals_Click" />
     </div>
+    
 </asp:Content>
