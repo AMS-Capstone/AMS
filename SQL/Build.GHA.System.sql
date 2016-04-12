@@ -999,7 +999,6 @@ END//
 
 DROP FUNCTION IF EXISTS sp_createVehicleCondnReqs//
 CREATE FUNCTION sp_createVehicleCondnReqs(
-`pVehicleConReqID` int,
 `pVehicleID` int,
 `pReserve` double,
 `pRecord` boolean,
@@ -1011,7 +1010,7 @@ CREATE FUNCTION sp_createVehicleCondnReqs(
 ) returns int
 BEGIN
 INSERT INTO `vehiclecondnreqs`
-(`VehicleConReqID`,
+(
 `VehicleID`,
 `Reserve`,
 `Record`,
@@ -1022,7 +1021,6 @@ INSERT INTO `vehiclecondnreqs`
 `ForSale`)
 VALUES
 (
-`pVehicleConReqID`,
 `pVehicleID`,
 `pReserve`,
 `pRecord`,
@@ -1140,4 +1138,20 @@ BEGIN
 	);
 
     RETURN LAST_INSERT_ID();
+END//
+
+DROP PROCEDURE IF EXISTS sp_getVehicleCondnReqs//
+CREATE PROCEDURE sp_getVehicleCondnReqs(pVehicleConReqID int)
+BEGIN
+	SELECT `vehiclecondnreqs`.`VehicleConReqID`,
+    `vehiclecondnreqs`.`VehicleID`,
+    `vehiclecondnreqs`.`Reserve`,
+    `vehiclecondnreqs`.`Record`,
+    `vehiclecondnreqs`.`CallOnHigh`,
+    `vehiclecondnreqs`.`Comments`,
+    `vehiclecondnreqs`.`EstValue`,
+    `vehiclecondnreqs`.`dateIn`,
+    `vehiclecondnreqs`.`ForSale`
+	FROM `vehiclecondnreqs`
+    WHERE `vehiclecondnreqs`.`VehicleConReqID` = pVehicleConReqID;
 END//
