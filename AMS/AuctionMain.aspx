@@ -8,9 +8,9 @@
         <div class="form-group col-xs-12">
             <asp:GridView ID="GVAuction" runat="server" CssClass="table table-hover col-xs-12" 
                 AutoGenerateColumns="False" OnRowDataBound="RowDataBound" OnRowEditing="gv_RowEditing" 
-                OnRowUpdating="gv_RowUpdating" OnRowCancelingEdit="gv_RowCancelingEdit">
+                OnRowUpdating="gv_RowUpdating" OnRowCancelingEdit="gv_RowCancelingEdit" OnRowDeleting="gv_RowDeleting">
                 <Columns>
-                    <asp:CommandField ShowEditButton="True"/>
+                    <asp:CommandField ShowEditButton="True" ShowDeleteButton="True"/>
                     <asp:TemplateField  HeaderText="AuctionSaleID" Visible="false">
                         <ItemTemplate>
                             <asp:Label ID="lblAuctionSaleID" runat="server" Text='<%# Eval("AuctionSaleID") %>'/>
@@ -39,24 +39,24 @@
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Bidder #">
                         <ItemTemplate>
-                            <asp:Label ID="lblBidderNumber2" runat="server"/>
+                            <asp:Label ID="lblBidderNumber" runat="server"/>
                             <asp:Label ID="lblBuyerID" runat="server" Text='<%# Eval("BuyerID") %>' Visible="false" />
                             <asp:DropDownList ID="DDLBidderNumbers" runat="server"  OnSelectedIndexChanged="DDLBidderNumbers_SelectedIndexChanged" AutoPostBack="true" Visible="false"></asp:DropDownList>
                         </ItemTemplate>
                         <EditItemTemplate>
-                            <asp:Label ID="lblBidderNumber2" runat="server" Visible="false" />
+                            <asp:Label ID="lblBidderNumber" runat="server" Visible="false" />
                             <asp:Label ID="lblBuyerID" runat="server" Text='<%# Eval("BuyerID") %>' Visible="false" />
                             <asp:DropDownList ID="DDLBidderNumbers" runat="server"  OnSelectedIndexChanged="DDLBidderNumbers_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
                         </EditItemTemplate>
                     </asp:TemplateField>                   
                     <asp:TemplateField  HeaderText="Sale Status">
                         <ItemTemplate>
-                            <asp:Label ID="lblSaleStatus2" runat="server"/>
+                            <asp:Label ID="lblSaleStatus" runat="server"/>
                             <asp:Label ID="lblConditionID" runat="server" Text='<%# Eval("ConditionID") %>' Visible="false" />
                             <asp:DropDownList ID="DDLSaleStatuses" runat="server" OnSelectedIndexChanged="DDLSaleStatuses_SelectedIndexChanged" AutoPostBack="true" Visible="false"></asp:DropDownList>
                         </ItemTemplate>
                         <EditItemTemplate>
-                            <asp:Label ID="lblSaleStatus2" runat="server" Visible="false"/>
+                            <asp:Label ID="lblSaleStatus" runat="server" Visible="false"/>
                             <asp:Label ID="lblConditionID" runat="server" Text='<%# Eval("ConditionID") %>' Visible="false" />
                             <asp:DropDownList ID="DDLSaleStatuses" runat="server" OnSelectedIndexChanged="DDLSaleStatuses_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
                         </EditItemTemplate>
@@ -103,10 +103,10 @@
                     </asp:TemplateField>--%>
                     <asp:TemplateField  HeaderText="Payments">
                         <ItemTemplate>
-                            <asp:Label ID="lblPayments1" runat="server" Text='<%# Eval("Payments", "{0:c}") %>' DataFormatString="{0:c}" Visible="true" />
+                            <asp:Label ID="lblPayments" runat="server" Text='<%# Eval("Payments", "{0:c}") %>' DataFormatString="{0:c}" Visible="true" />
                         </ItemTemplate>
                         <EditItemTemplate>
-                            <asp:Label ID="lblPayments2" runat="server" Text='<%# Eval("Payments", "{0:c}") %>' DataFormatString="{0:c}" Visible="true" />
+                            <asp:Label ID="lblPayments" runat="server" Text='<%# Eval("Payments", "{0:c}") %>' DataFormatString="{0:c}" Visible="true" />
                             <button type="button" class="btn btn-xs" data-toggle="modal" title="Add Payment" data-target="#paymentModal">Add</button>
                             <%--<asp:Button ID="btnAddPayment" runat="server" Text="Add" OnClick="btnAddPayment_Click"/>--%>
                         </EditItemTemplate>

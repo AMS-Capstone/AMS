@@ -145,7 +145,7 @@ namespace AMS
                     //DataRowView dr = e.Row.DataItem as DataRowView;
                     String value1 = (e.Row.FindControl("lblBuyerID") as Label).Text;
                     DDLBidderNumbers.Items.FindByValue(value1).Selected = true;
-                    (e.Row.FindControl("lblBidderNumber2") as Label).Text = DDLBidderNumbers.SelectedItem.Text;
+                    (e.Row.FindControl("lblBidderNumber") as Label).Text = DDLBidderNumbers.SelectedItem.Text;
 
 
                     DropDownList DDLSaleStatuses = (DropDownList)e.Row.FindControl("DDLSaleStatuses");
@@ -159,7 +159,7 @@ namespace AMS
                     //DataRowView dr2 = e.Row.DataItem as DataRowView;
                     String value2 = (e.Row.FindControl("lblConditionID") as Label).Text;
                     DDLSaleStatuses.Items.FindByValue(value2).Selected = true;
-                    (e.Row.FindControl("lblSaleStatus2") as Label).Text = DDLSaleStatuses.SelectedItem.Text;
+                    (e.Row.FindControl("lblSaleStatus") as Label).Text = DDLSaleStatuses.SelectedItem.Text;
 
                     //DropDownList DDLSaleStatuses = (DropDownList)e.Row.FindControl("DDLSaleStatuses");
 
@@ -293,9 +293,11 @@ namespace AMS
 
         //}
 
+
+        //This code will calculate auction totals and auction details
         protected void BTNTotals_Click(object sender, EventArgs e)
         {
-
+            
         }
 
         protected void btnAddPayment_Click(object sender, EventArgs e)
@@ -340,7 +342,7 @@ namespace AMS
             //Success message
             AlertDiv.InnerHtml = "<div class=\"alert alert-success fade in\">" +
             "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
-            "<strong>Success!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "New Payment was added! " + TXTSurcharge.Text +
+            "<strong>Success!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "New Payment was added! " +
             "</label></div>";
             
             GVAuction.EditIndex = -1;
@@ -353,6 +355,46 @@ namespace AMS
         {
             ScriptManager.RegisterStartupScript(this, this.GetType(), "Pop", "openPaymentModal();", true);
             
+        }
+
+
+        protected void gv_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            //Check if there are payments against this sale, and if there aren't any, delete the sale.
+            Label lblPayments = (Label)GVAuction.Rows[e.RowIndex].FindControl("lblPayments");
+            Double payments = Convert.ToDouble(lblPayments.Text.ToString().Replace("$",""));
+
+            if (payments > 0)
+            {
+                AlertDiv.InnerHtml = "<div class=\"alert alert-danger fade in\">" +
+                "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "Could not delete sale because payments were already made against it" +
+                "</label></div>";
+            }
+            else
+            {
+                Label lblAuctionSaleID = (Label)GVAuction.Rows[e.RowIndex].FindControl("lblAuctionSaleID");
+                int auctionSaleID = Convert.ToInt32(lblAuctionSaleID.Text.ToString());
+
+                try
+                {
+                    auctionService.DeleteAuctionSale(auctionSaleID);
+
+                    //Success message
+                    AlertDiv.InnerHtml = "<div class=\"alert alert-success fade in\">" +
+                    "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                    "<strong>Success!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "Vehicle Sale record was successfully deleted! " +
+                    "</label></div>";
+                }
+                catch (Exception ex)
+                {
+                    AlertDiv.InnerHtml = "<div class=\"alert alert-danger fade in\">" +
+                    "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                    "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + ex.Message +
+                    "</label></div>";
+                }
+                
+            }
         }
 
         //AlertDiv.InnerHtml = "<div class=\"alert alert-warning fade in\">" +

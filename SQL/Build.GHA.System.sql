@@ -234,12 +234,13 @@ INSERT INTO `buyer`
 `BuyerProvince`,
 `BuyerPostalCode`,
 `BuyerPhone`,
+`BuyerLicense`,
 `BidderNumber`,
 `Permanent`,
 `Banned`,
 `Notes` )
 VALUES
-("","","","","Alberta","","", 0,TRUE, FALSE, "");
+("","","","","Alberta","","", "", 0,TRUE, FALSE, "");
 
 INSERT INTO `conditionstatus` (`ConditionCode`) VALUES ('Not Sold');
 INSERT INTO `conditionstatus` (`ConditionCode`) VALUES ('Conditional');
