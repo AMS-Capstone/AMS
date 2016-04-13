@@ -1156,3 +1156,17 @@ BEGIN
 	FROM `vehiclecondnreqs`
     WHERE `vehiclecondnreqs`.`VehicleConReqID` = pVehicleConReqID;
 END//
+
+DROP PROCEDURE IF EXISTS sp_getAuction //
+CREATE PROCEDURE sp_getAuction(`pAuctionID` int)
+BEGIN
+	SELECT `auction`.`AuctionID`,
+    `auction`.`AuctionDate`,
+    `auction`.`AuctionTotal`,
+    `auction`.`SurCharges`,
+    `auction`.`CashCharges`,
+    `auction`.`ChequeCharges`,
+    `auction`.`CreditCardCharges`
+	FROM `auction`
+	WHERE `AuctionID` = `pAuctionID`;
+END//

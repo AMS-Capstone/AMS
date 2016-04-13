@@ -20,33 +20,62 @@ namespace AMS.App_Code
             }
         }
 
-         public DataSet findAuctions(String auctionYear)
-         {
-             DataSet ds = new DataSet("Auctions");
-             MySqlConnection conn = new MySqlConnection(connectionString);
-             MySqlDataAdapter da = new MySqlDataAdapter();
+        public DataSet findAuctions(String auctionYear)
+        {
+            DataSet ds = new DataSet("Auctions");
+            MySqlConnection conn = new MySqlConnection(connectionString);
+            MySqlDataAdapter da = new MySqlDataAdapter();
 
-             try
-             {
+            try
+            {
+            MySqlCommand cmd = new MySqlCommand();
+            cmd.CommandText = "sp_findAuction";
+            cmd.Parameters.Add(new MySqlParameter("@pAuctionYear", auctionYear));
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = conn;
+            da.SelectCommand = cmd;
+            da.Fill(ds, "Auctions");
+        }
+            catch (Exception ex)
+            {
+                //Panic
+                throw;
+            }
+            finally
+            {
+                //Tie the loose ends here
+            }
+            return ds;
+        }
+
+
+        public DataSet getAuction(int auctionID)
+        {
+            DataSet ds = new DataSet();
+            MySqlConnection conn = new MySqlConnection(connectionString);
+            MySqlDataAdapter da = new MySqlDataAdapter();
+
+            try
+            {
                 MySqlCommand cmd = new MySqlCommand();
-                cmd.CommandText = "sp_findAuction";
-                cmd.Parameters.Add(new MySqlParameter("@pAuctionYear", auctionYear));
+                cmd.CommandText = "sp_getAuction";
+                cmd.Parameters.Add(new MySqlParameter("@pAuctionID", auctionID));
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Connection = conn;
                 da.SelectCommand = cmd;
-                da.Fill(ds, "Auctions");
+                da.Fill(ds);
             }
-             catch (Exception ex)
-             {
-                 //Panic
-                 throw;
-             }
-             finally
-             {
-                 //Tie the loose ends here
-             }
-             return ds;
-         }
+            catch (Exception ex)
+            {
+                //Panic
+                throw;
+            }
+            finally
+            {
+                //Tie the loose ends here
+            }
+            return ds;
+        }
 
 
         public DataSet getAuctionYears()
