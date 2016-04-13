@@ -86,12 +86,32 @@
             <asp:Button ID="BTNUpload" runat="server" CssClass="btn btn-primary" Text="Upload" OnClick="BTNUpload_Click"  />
         </div>
 
-        <div class="col-xs-12 col-sm-12">
-            <asp:Image runat="server" ID="ImagePreview" />
-        </div>        
-        <div class="col-xs-12 col-sm-12" id="ImageDiv" runat="server"></div>
+                
+        <%--<div class="col-xs-12 col-sm-12" id="ImageDiv" runat="server"></div>--%>
     </div>
-   
+    <style>
+        .carousel-inner > .item > img,
+        .carousel-inner > .item > a > img {
+            width: 70%;
+            height: auto;
+            margin: auto;
+        }
+    </style>
+    <div class="row"></div>
+    <div class="col-xs-12 col-sm-5 col-lg=3">
+        <div class="carousel slide" data-ride="carousel" id="actualCarousel">
+            <div class="carousel-inner" role="listbox" id="imageCarousel" runat="server">
+            </div>
+            <a class="left carousel-control" href="#actualCarousel" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#actualCarousel" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
     <div class="col-xs-12 col-sm-12"><hr /></div>
 
     <div class="form-group row">        

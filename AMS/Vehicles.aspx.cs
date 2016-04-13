@@ -109,18 +109,52 @@ namespace AMS
 
             if (ds.Tables[0].Rows.Count > 0)
             {
+                int rowCounter = 0;
                 foreach (DataRow row in ds.Tables[0].Rows)
                 {
                     //byteArray.Add(row["Image"]);
 
-                    Session["ImageBytes"] = row["Image"];
-                    Image tempImage = new Image();
-                    ImageDiv.Controls.Add(tempImage);
-                    tempImage.ImageUrl = "~/DocumentHandler.ashx";
+                    //Session["ImageBytes"] = row["Image"];
+                    //Image tempImage = new Image();
+                    //ImageDiv.Controls.Add(tempImage);
+                    //tempImage.ImageUrl = "~/DocumentHandler.ashx";
+                    String imageString = Convert.ToBase64String((byte[])row["Image"]);
+                    if (rowCounter == 0)
+                    {
+                        imageCarousel.InnerHtml =
+                        "<div class=\"item active\">" +
+                        "<img src=\"data:image/jpeg;base64," + imageString + "\" alt=\"ImageName\" width=\"400\" height=\"300\">" +
+                        "<div class=\"carousel-caption\">" +
+                        "<p>Image Description</p>" +
+                        "</div>" +
+                        "</div>";
+                    }
+                    else
+                    {
+                        imageCarousel.InnerHtml +=
+                        "<div class=\"item\">" +
+                        "<img src=\"data:image/jpeg;base64," + imageString + "\" alt=\"ImageName\" width=\"400\" height=\"300\">" +
+                        "<div class=\"carousel-caption\">" +
+                        "<p>Image Description</p>" +
+                        "</div>" +
+                        "</div>";
+                    }
+                    rowCounter += 1;
+                    
                 }
 
                 //byte[][] byteImages = (byte[][])byteArray.ToArray(typeof(byte[]));
 
+            }
+            else
+            {
+                imageCarousel.InnerHtml =
+                        "<div class=\"item active`\">" +
+                        "<img src=\"" + "no_picture.jpg" + "\" alt=\"ImageName\" width=\"400\" height=\"300\">" +
+                        "<div class=\"carousel-caption\">" +
+                        "<p>Image Description</p>" +
+                        "</div>" +
+                        "</div>";
             }
 
 
