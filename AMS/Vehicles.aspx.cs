@@ -124,9 +124,9 @@ namespace AMS
                         imageCarousel.InnerHtml =
                         "<div class=\"item active\">" +
                         "<img src=\"data:image/jpeg;base64," + imageString + "\" alt=\"ImageName\" width=\"400\" height=\"300\">" +
-                        "<div class=\"carousel-caption\">" +
-                        "<p>Image Description</p>" +
-                        "</div>" +
+                        //"<div class=\"carousel-caption\">" +
+                        //"<p>Image Description</p>" +
+                        //"</div>" +
                         "</div>";
                     }
                     else
@@ -134,9 +134,9 @@ namespace AMS
                         imageCarousel.InnerHtml +=
                         "<div class=\"item\">" +
                         "<img src=\"data:image/jpeg;base64," + imageString + "\" alt=\"ImageName\" width=\"400\" height=\"300\">" +
-                        "<div class=\"carousel-caption\">" +
-                        "<p>Image Description</p>" +
-                        "</div>" +
+                        //"<div class=\"carousel-caption\">" +
+                        //"<p>Image Description</p>" +
+                        //"</div>" +
                         "</div>";
                     }
                     rowCounter += 1;
@@ -151,9 +151,9 @@ namespace AMS
                 imageCarousel.InnerHtml =
                         "<div class=\"item active`\">" +
                         "<img src=\"" + "no_picture.jpg" + "\" alt=\"ImageName\" width=\"400\" height=\"300\">" +
-                        "<div class=\"carousel-caption\">" +
-                        "<p>Image Description</p>" +
-                        "</div>" +
+                        //"<div class=\"carousel-caption\">" +
+                        //"<p>Image Description</p>" +
+                        //"</div>" +
                         "</div>";
             }
 
