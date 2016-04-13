@@ -49,9 +49,10 @@ namespace AMS.App_Code
         }
 
 
-        public DataSet getAuction(int auctionID)
+        public Auction getAuction(int auctionID)
         {
             DataSet ds = new DataSet();
+            Auction auction = new Auction();
             MySqlConnection conn = new MySqlConnection(connectionString);
             MySqlDataAdapter da = new MySqlDataAdapter();
 
@@ -64,6 +65,14 @@ namespace AMS.App_Code
                 cmd.Connection = conn;
                 da.SelectCommand = cmd;
                 da.Fill(ds);
+
+                auction.AuctionID = auctionID;
+                auction.AuctionDate = Convert.ToDateTime(ds.Tables[0].Rows[0]["AuctionDate"].ToString());
+                auction.AuctionTotal = Convert.ToDouble(ds.Tables[0].Rows[0]["AuctionTotal"].ToString());
+                auction.Surcharges = Convert.ToDouble(ds.Tables[0].Rows[0]["Surcharges"].ToString());
+                auction.CashCharges = Convert.ToDouble(ds.Tables[0].Rows[0]["CashCharges"].ToString());
+                auction.ChequeCharges = Convert.ToDouble(ds.Tables[0].Rows[0]["ChequeCharges"].ToString());
+                auction.CreditCardCharges = Convert.ToDouble(ds.Tables[0].Rows[0]["CreditCardCharges"].ToString());                
             }
             catch (Exception ex)
             {
@@ -74,7 +83,7 @@ namespace AMS.App_Code
             {
                 //Tie the loose ends here
             }
-            return ds;
+            return auction;
         }
 
 

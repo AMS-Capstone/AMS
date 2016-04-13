@@ -16,7 +16,7 @@ namespace AMS
         DataSet auctionData = new DataSet();
         DataSet paymentTypes = new DataSet();
         DataSet ConditionStatuses = new DataSet();
-        AuctionMainDAL auctionService = new AuctionMainDAL();
+        AuctionMainDAL auctionMainService = new AuctionMainDAL();
         DataAction dataAction = new DataAction();
         int auctionID = 0;
         int counter = 0;
@@ -67,7 +67,7 @@ namespace AMS
                     buyers = buyerService.GetBuyers();
                     ConditionStatuses.Tables.Add(dataAction.GetConditionStatus());
                     
-                    paymentTypes = auctionService.GetPaymentTypes();
+                    paymentTypes = auctionMainService.GetPaymentTypes();
 
                     if (paymentTypes.Tables.Count > 0)
                     {
@@ -94,7 +94,7 @@ namespace AMS
                     if (!IsPostBack)
                     {
 
-                        auctionData = auctionService.GetAuctionData(auctionID);
+                        auctionData = auctionMainService.GetAuctionData(auctionID);
 
                         if (auctionData.Tables.Count > 0 && auctionData.Tables[0].Rows.Count > 0)
                         {
@@ -178,12 +178,12 @@ namespace AMS
 
         private void updateAuctionSale(AuctionSale auctionSale)
         {
-            auctionService.UpdateAuctionSale(auctionSale);
+            auctionMainService.UpdateAuctionSale(auctionSale);
         }
 
         private void createPayment(Payment payment)
         {
-            auctionService.CreatePayment(payment);
+            auctionMainService.CreatePayment(payment);
         }
 
         protected void gv_RowEditing(object sender, GridViewEditEventArgs e)
@@ -200,7 +200,7 @@ namespace AMS
             GVAuction.EditIndex = e.NewEditIndex;
             try
             {
-                auctionData = auctionService.GetAuctionData(auctionID);
+                auctionData = auctionMainService.GetAuctionData(auctionID);
                 GVAuction.DataSource = auctionData.Tables[0].DefaultView;
                 GVAuction.DataBind();
 
@@ -244,7 +244,7 @@ namespace AMS
 
 
             GVAuction.EditIndex = -1;
-            auctionData = auctionService.GetAuctionData(auctionID);
+            auctionData = auctionMainService.GetAuctionData(auctionID);
             GVAuction.DataSource = auctionData.Tables[0].DefaultView;
             DataBind();
 
@@ -268,7 +268,7 @@ namespace AMS
         protected void gv_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {
             GVAuction.EditIndex = -1;
-            auctionData = auctionService.GetAuctionData(auctionID);
+            auctionData = auctionMainService.GetAuctionData(auctionID);
             GVAuction.DataSource = auctionData.Tables[0].DefaultView;
             DataBind();
 
@@ -298,14 +298,23 @@ namespace AMS
         //This code will calculate auction totals and auction details
         protected void BTNTotals_Click(object sender, EventArgs e)
         {
-            auctionData = auctionService.GetAuctionData(auctionID);
-            Auction auction = new Auction();
+            auctionData = auctionMainService.GetAuctionData(auctionID);
+            AuctionDAL auctionService = new AuctionDAL();
+            Auction auction = auctionService.getAuction(auctionID);
+            String report = ""; //Lot, sale status, buyer name, buyer phone, selling price, grand total
+            // Totals: Total Selling Prices, Total in Fees, Total in GST, Surcharges, Gross Total (Sum of all previous), Deposits and Payments (Together with Surcharges), Receivables (difference between gross total and deposits and payments)
+
             if (auctionData.Tables.Count > 0 && auctionData.Tables[0].Rows.Count > 0)
             {
                 
                 foreach (DataRow row in auctionData.Tables[0].Rows)
                 {
-
+                    auction.AuctionTotal += Convert.ToDouble(auctionData.Tables[0].Rows[0]["Total"].ToString());
+                    //auction.AuctionTotal += Convert.ToDouble(auctionData.Tables[0].Rows[0]["Payments"].ToString()); //No payments tracking within auction class atm
+                    auction.Surcharges += Convert.ToDouble(auctionData.Tables[0].Rows[0]["Surcharges"].ToString());
+                    //auction.CashCharges += Convert.ToDouble(auctionData.Tables[0].Rows[0]["CashCharges"].ToString()); //No Cash charges tracking within dataset atm
+                    //auction.ChequeCharges += Convert.ToDouble(auctionData.Tables[0].Rows[0]["ChequeCharges"].ToString()); //No Cheque Charges tracking within dataset atm
+                    //auction.CreditCardCharges += Convert.ToDouble(auctionData.Tables[0].Rows[0]["CreditCardCharges"].ToString()); //No Credit Card Charges tracking within dataset atm
                 }
             }
             else
@@ -364,7 +373,7 @@ namespace AMS
             "</label></div>";
             
             GVAuction.EditIndex = -1;
-            auctionData = auctionService.GetAuctionData(auctionID);
+            auctionData = auctionMainService.GetAuctionData(auctionID);
             GVAuction.DataSource = auctionData.Tables[0].DefaultView;
             DataBind();
         }
@@ -396,7 +405,7 @@ namespace AMS
 
                 try
                 {
-                    auctionService.DeleteAuctionSale(auctionSaleID);
+                    auctionMainService.DeleteAuctionSale(auctionSaleID);
 
                     //Success message
                     AlertDiv.InnerHtml = "<div class=\"alert alert-success fade in\">" +
