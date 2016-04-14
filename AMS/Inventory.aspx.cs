@@ -135,7 +135,31 @@ namespace AMS
 
         protected void BTNUpdate_Click(object sender, EventArgs e)
         {
-            //TODO: Implement
+            try
+            {
+                VehicleConditionsRequirements vcr = new VehicleConditionsRequirements();
+
+                vcr.DateIn = Convert.ToDateTime(TXTDate.Value);
+                vcr.EstValue = Convert.ToDouble(TXTEstValue.Text);
+                vcr.Reserve = Convert.ToDouble(TXTReserve.Text);
+                vcr.Comments = TXTComments.Text;
+                vcr.CallOnHigh = CHKCallOnHigh.Checked;
+                vcr.ForSale = CHKForSale.Checked;
+                vcr.Record = CHKRecord.Checked;
+
+                //Success message
+                AlertDiv.InnerHtml = "<div class=\"alert alert-success fade in\">" +
+                "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                "<strong>Success!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "requirements successfully updated! " +
+                "</label></div>";
+            }
+            catch (Exception ex)
+            {
+                AlertDiv.InnerHtml = "<div class=\"alert alert-danger fade in\">" +
+                "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + ex.Message +
+                "</label></div>";
+            }
         }
 
 
