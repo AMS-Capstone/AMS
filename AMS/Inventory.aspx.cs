@@ -20,10 +20,10 @@ namespace AMS
         protected void Page_Load(object sender, EventArgs e)
         {
             //Checking if the vehicles are to be added to the auction
-            String addingVehiclesString = "";
+            Boolean addingVehicles = false;
             try
             {
-                addingVehiclesString = Request["AddingVehicles"];
+                addingVehicles = CheckIfAddingCars();
             }
             catch (Exception ex) 
             {
@@ -32,14 +32,11 @@ namespace AMS
                 "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + ex.Message +
                 "</label></div>";
             }
-
-            if (addingVehiclesString != null)
-            {
-                addingVehicles = Convert.ToBoolean(addingVehiclesString);
-            }
             if (addingVehicles == true)
             {
                 LBCarList.SelectionMode = ListSelectionMode.Multiple;
+                
+                ConcealDiv.InnerHtml = "";
 
                 //Retrieving inventory vehicles
                 try
@@ -65,7 +62,7 @@ namespace AMS
             }
             else
             {
-                //Retrieving inventory vehicles
+                //Retrieving vehicles for sale
                 try
                 {
 
@@ -100,7 +97,18 @@ namespace AMS
 
         protected void LBCarList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+            //This code pulls up a list of fees accrued by the car and the conditions and requirements object from the database
+            try
+            {
+                //TODO: Implement
+            }
+            catch (Exception ex)
+            {
+                AlertDiv.InnerHtml = "<div class=\"alert alert-danger fade in\">" +
+                "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + ex.Message +
+                "</label></div>";
+            }
         }
 
         protected void BTNEditCarDetails_Click(object sender, EventArgs e)
@@ -114,12 +122,20 @@ namespace AMS
 
         protected void BTNUpdate_Click(object sender, EventArgs e)
         {
-
+            //TODO: Implement
         }
 
-        protected void BTNDelete_Click(object sender, EventArgs e)
-        {
 
+        private Boolean CheckIfAddingCars()
+        {
+            String addingCarsString = "";
+            bool addingCars = false;
+            addingCarsString = Request["AddingCars"];
+            if (addingCarsString != null)
+            {
+                addingCars = Convert.ToBoolean(addingCarsString);
+            }
+            return addingCars;
         }
     }
 }

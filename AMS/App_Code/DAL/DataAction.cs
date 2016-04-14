@@ -824,6 +824,52 @@ namespace AMS.App_Code
             return id;
         }
 
+
+        public void UpdateVehicle(Vehicle vehicle)
+        {
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
+            
+            MySqlConnection conn = new MySqlConnection(connectionString);
+            MySqlCommand cmd = new MySqlCommand("sp_updateVehicle", conn);
+            cmd.Parameters.AddWithValue("pVehicleID", vehicle.VehicleID);
+            cmd.Parameters.AddWithValue("pLotNumber", vehicle.LotNumber);
+            cmd.Parameters.AddWithValue("pYear", vehicle.Year);
+            cmd.Parameters.AddWithValue("pMake", vehicle.Make);
+            cmd.Parameters.AddWithValue("pModel", vehicle.Model);
+            cmd.Parameters.AddWithValue("pVin", vehicle.Vin);
+            cmd.Parameters.AddWithValue("pColor", vehicle.Color);
+            cmd.Parameters.AddWithValue("pMileage", vehicle.Mileage);
+            cmd.Parameters.AddWithValue("pProvince", vehicle.Province);
+            cmd.Parameters.AddWithValue("pUnits", vehicle.Units);
+            cmd.Parameters.AddWithValue("pTransmission", vehicle.Transmission);
+            cmd.Parameters.AddWithValue("pSellerID", vehicle.SellerID);
+            cmd.Parameters.AddWithValue("pOptions", vehicle.Options);
+
+            MySqlParameter returnParameter = new MySqlParameter();
+            returnParameter.Direction = System.Data.ParameterDirection.ReturnValue;
+            cmd.Parameters.Add(returnParameter);
+
+            try
+            {
+                conn.Open();
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = conn;
+                cmd.ExecuteNonQuery();
+
+            }
+            catch (Exception ex)
+            {
+                //Panic
+                throw;
+            }
+            finally
+            {
+                //Tie the loose ends here
+                conn.Close();
+
+            }
+        }
+
         public int CreateImage(byte[] data, int vehicleID )
         {
             int id = 0;

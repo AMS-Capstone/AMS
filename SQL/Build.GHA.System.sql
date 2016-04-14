@@ -1071,7 +1071,7 @@ BEGIN
 
 
 DROP PROCEDURE IF EXISTS sp_checkFeeTypes//
-Create PROCEDURE sp_sp_checkFeeTypes()
+Create PROCEDURE sp_checkFeeTypes()
 BEGIN
 	Select FeeID from feetype 
     where FeeCost = 0 AND FeeType is NULL;
@@ -1224,5 +1224,26 @@ SET
 `ForSale` = pForSale
 WHERE `VehicleConReqID` = `pVehicleConReqID`;
 
+
+END//
+
+DROP PROCEDURE IF EXISTS sp_updateVehicle //
+CREATE PROCEDURE sp_updateVehicle(pVehicleId integer, pLotNumber text,  pYear text,  pMake text,  pModel text,  pVin text,  pColor text,  pMileage integer,  pUnits text,  pProvince text,  pTransmission text,  pSellerID int,  pOptions text)
+BEGIN
+	Update `vehicle`
+	SET
+	`LotNumber` = pLotNumber,
+	`Year` = pYear,
+	`Make` = pMake, 
+	`Model` = pModel,
+	`VIN` = pVIN, 
+	`Color` = pColor, 
+	`Mileage` = pMileage, 
+	`Units` = pUnits,
+	`Province` = pProvince, 
+	`Transmission` = pTransmission, 
+	`VehicleOptions` = pVehicleOptions, 
+	`SellerID` = pSellerID 
+	where vehicleId = pVehicleId;
 
 END//
