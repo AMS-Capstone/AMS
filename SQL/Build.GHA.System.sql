@@ -1170,7 +1170,7 @@ BEGIN
 END//
 
 DROP PROCEDURE IF EXISTS sp_getVehicleCondnReqs//
-CREATE PROCEDURE sp_getVehicleCondnReqs(pVehicleConReqID int)
+CREATE PROCEDURE sp_getVehicleCondnReqs(pVehicleID int)
 BEGIN
 	SELECT `vehiclecondnreqs`.`VehicleConReqID`,
     `vehiclecondnreqs`.`VehicleID`,
@@ -1182,7 +1182,8 @@ BEGIN
     `vehiclecondnreqs`.`dateIn`,
     `vehiclecondnreqs`.`ForSale`
 	FROM `vehiclecondnreqs`
-    WHERE `vehiclecondnreqs`.`VehicleConReqID` = pVehicleConReqID;
+    WHERE `vehiclecondnreqs`.`VehicleID` = pVehicleID
+    ORDER BY `VehicleConReqID` DESC;    
 END//
 
 DROP PROCEDURE IF EXISTS sp_getAuction //
