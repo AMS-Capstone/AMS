@@ -10,6 +10,7 @@ using System.IO;
 using MySql.Data.MySqlClient;
 using AMS.App_Code.SuppportClasses;
 using System.Collections;
+using AMS.App_Code.DAL;
 
 namespace AMS
 {
@@ -43,10 +44,9 @@ namespace AMS
 
 
                     int vehicleID = getVehicleIDfromParameters();
-
                     if (vehicleID != 0)
                     {
-                        Session["vehicleID"] = vehicleID.ToString();
+                        Session["VehicleID"] = vehicleID.ToString();
                         Vehicle vehicle = new Vehicle();
                         vehicle = dataAction.GetVehicleByID(vehicleID);
                         populateVehicle(vehicle);
@@ -67,7 +67,7 @@ namespace AMS
         {
             String vehicleIDString = "";
             int vehicleID = 0;
-            vehicleIDString = Request["vehicleID"];
+            vehicleIDString = Request["VehicleID"];
             if (vehicleIDString != null)
             {
                 vehicleID = Convert.ToInt32(vehicleIDString);
@@ -80,7 +80,7 @@ namespace AMS
         {
             String vehicleIDString = "";
             int vehicleID = 0;
-            vehicleIDString = Session["vehicleID"].ToString();
+            vehicleIDString = Session["VehicleID"].ToString();
             if (vehicleIDString != null)
             {
                 vehicleID = Convert.ToInt32(vehicleIDString);
@@ -199,7 +199,14 @@ namespace AMS
                 DataAction dataAction = new DataAction();
                 Vehicle vehicle = new Vehicle(TXTLotNumber.Text.ToString(), TXTYear.Text.Trim(), TXTMake.Text.Trim(), TXTModel.Text.Trim(), TXTVin.Text.Trim(), TXTColor.Text.Trim(), int.Parse(TXTMileage.Text.ToString()), DDLUnits.SelectedValue, TXTTransmission.Text.Trim(), int.Parse(DDLSeller.SelectedValue), TXTOptions.Text.ToString());
                 int vehicleID = dataAction.CreateVehicle(vehicle);
-                                
+
+                VehicleConditionsRequirements vehicleCondnReqs = new VehicleConditionsRequirements();
+                vehicleCondnReqs.VehicleID = vehicleID;
+                vehicleCondnReqs.DateIn = DateTime.Now;
+
+                InventoryDAL inventoryService = new InventoryDAL();
+                inventoryService.CreateVehicleConditionsRequirements(vehicleCondnReqs);
+
                 //Success message
                 AlertDiv.InnerHtml = "<div class=\"alert alert-success fade in\">" +
                 "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
@@ -225,8 +232,6 @@ namespace AMS
 
             int vehicleID = getVehicleIDfromSession();
             vehicle.VehicleID = vehicleID;
-
-
         }
 
         protected void BTNDelete_Click(object sender, EventArgs e)
