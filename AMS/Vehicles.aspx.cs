@@ -227,18 +227,32 @@ namespace AMS
 
         protected void BTNUpdate_Click(object sender, EventArgs e)
         {
-            DataAction dataAction = new DataAction();
-            Vehicle vehicle = new Vehicle(TXTLotNumber.Text.ToString(), TXTYear.Text.Trim(), TXTMake.Text.Trim(), TXTModel.Text.Trim(), TXTVin.Text.Trim(), TXTColor.Text.Trim(), int.Parse(TXTMileage.Text.ToString()), DDLUnits.SelectedValue, TXTTransmission.Text.Trim(), int.Parse(DDLSeller.SelectedValue), TXTOptions.Text.ToString());
+            try
+            {
+                DataAction dataAction = new DataAction();
+                Vehicle vehicle = new Vehicle(TXTLotNumber.Text.ToString(), TXTYear.Text.Trim(), TXTMake.Text.Trim(), TXTModel.Text.Trim(), TXTVin.Text.Trim(), TXTColor.Text.Trim(), int.Parse(TXTMileage.Text.ToString()), DDLUnits.SelectedValue, TXTTransmission.Text.Trim(), int.Parse(DDLSeller.SelectedValue), TXTOptions.Text.ToString());
 
-            int vehicleID = getVehicleIDfromSession();
-            vehicle.VehicleID = vehicleID;
+                int vehicleID = getVehicleIDfromSession();
+                vehicle.VehicleID = vehicleID;
+
+                //Insert UpdateVehicle code here
+                dataAction.UpdateVehicle(vehicle);
+                //Success message
+                AlertDiv.InnerHtml = "<div class=\"alert alert-success fade in\">" +
+                "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                "<strong>Success!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "Vehicle Updated!" +
+                "</label></div>";
+
+             }
+            catch (Exception ex)
+            {
+                AlertDiv.InnerHtml = "<div class=\"alert alert-danger fade in\">" +
+                "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + ex.Message +
+                "</label></div>";
+            }
         }
-
-        protected void BTNDelete_Click(object sender, EventArgs e)
-        {
-
-        }
-
+        
         protected void BTNUpload_Click(object sender, EventArgs e)
         {
             if (FUVehicle.HasFile)
