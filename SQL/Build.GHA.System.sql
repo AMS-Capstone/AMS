@@ -54,7 +54,7 @@ Create Table conditionstatus
 	ConditionID integer primary key AUTO_INCREMENT,
     ConditionCode tinytext,
     ConditionDescription text,
-    Status boolean
+    Status boolean default true
 );
 
 -- Create Table FeeType
@@ -63,7 +63,7 @@ Create Table FeeType
 	FeeID integer primary key AUTO_INCREMENT,
     FeeCost double,
     FeeType text,
-    Status boolean
+    Status boolean default true
 );
 
 -- Create Table GST
@@ -80,7 +80,7 @@ Create Table PaymentType
 	PaymentTypeID integer primary key AUTO_INCREMENT,
     SurchargeInPercent double,
     PaymentDescription text,
-    Status boolean
+    Status boolean default true
 );
 
 -- Create the Buyer table
