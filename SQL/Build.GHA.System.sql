@@ -1247,3 +1247,14 @@ BEGIN
 	where vehicleId = pVehicleId;
 
 END//
+
+DROP PROCEDURE IF EXISTS sp_viewAvailableVehiclesForSale//
+CREATE PROCEDURE sp_viewAvailableVehiclesForSale(`pAuctionID` int)
+BEGIN
+	SELECT `vehicle`.`VehicleID`, CONCAT(`LotNumber`, " - ", `Year`, " ", `Color`, " ", `Make`, " ", `Model`) as `DisplayInfo`
+    FROM `vehicle`, `vehiclecondnreqs`, `auctionsale`
+    WHERE `vehiclecondnreqs`.`VehicleID` = `vehicle`.`VehicleID` and `vehiclecondnreqs`.`ForSale` = 1 and `vehicle`.`VehicleID` NOT IN 
+	(SELECT `vehicle`.`VehicleID`
+    FROM `vehicle`, `vehiclecondnreqs`, `auctionsale`
+    WHERE `vehiclecondnreqs`.`VehicleID` = `vehicle`.`VehicleID` and `vehiclecondnreqs`.`ForSale` = 1 and `vehicle`.`VehicleID` = `auctionsale`.`VehicleID` and `auctionsale`.`AuctionID` = `pAuctionID`);
+END//
