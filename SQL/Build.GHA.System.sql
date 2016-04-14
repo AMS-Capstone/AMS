@@ -1170,3 +1170,31 @@ BEGIN
 	FROM `auction`
 	WHERE `AuctionID` = `pAuctionID`;
 END//
+
+DROP PROCEDURE IF EXISTS sp_updateVehicleCondnReqs//
+CREATE PROCEDURE sp_updateVehicleCondnReqs(
+`pVehicleConReqID` int,
+`pVehicleID` int,
+`pReserve` double,
+`pRecord` boolean,
+`pCallOnHigh` boolean,
+`pComments` text,
+`pEstValue` double,
+`pdateIn` date,
+`pForSale` boolean
+)
+BEGIN
+UPDATE `gha`.`vehiclecondnreqs`
+SET
+`VehicleID` = pVehicleID,
+`Reserve` = `pReserve`,
+`Record` = pRecord,
+`CallOnHigh` = pCallOnHigh,
+`Comments` = pComments,
+`EstValue` = pEstValue,
+`dateIn` = pdateIn,
+`ForSale` = pForSale
+WHERE `VehicleConReqID` = `pVehicleConReqID`;
+
+
+END//

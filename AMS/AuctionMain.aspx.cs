@@ -428,7 +428,7 @@ namespace AMS
         {
             try
             {
-                String carList = File.ReadAllText(".\\App_LocalResources\\Log Sheet.txt");
+                String carList = ""; //File.ReadAllText(".\\App_LocalResources\\Log Sheet.txt");
 
                 AlertDiv.InnerHtml = "<div class=\"alert alert-danger fade in\">" +
                 "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +

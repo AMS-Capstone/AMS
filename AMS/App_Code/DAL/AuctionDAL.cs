@@ -144,6 +144,32 @@ namespace AMS.App_Code
             return ds;
         }
 
+        //Resets non-permanent bidder numbers
+        public void ResetBidderNumbers()
+        {
+            MySqlConnection conn = new MySqlConnection(connectionString);
+
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.CommandText = "sp_resetBuyerBidnums";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = conn;
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                //Panic
+                throw;
+            }
+            finally
+            {
+                //Tie the loose ends here
+                conn.Close();
+            }
+        }
+
 
         //Create a new Auction
         public int createAuction(Auction auction)

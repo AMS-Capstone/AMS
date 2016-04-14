@@ -191,5 +191,44 @@ namespace AMS.App_Code.DAL
             }
             return id;
         }
+
+        public void UpdateVehicleConditionsRequirements(VehicleConditionsRequirements vehicleCondnReqs)
+        {
+            MySqlConnection conn = new MySqlConnection(connectionString);
+            conn.Open();
+
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.CommandText = "sp_updateVehicleCondnReqs";
+                cmd.Parameters.Add(new MySqlParameter("@pVehicleConReqID", vehicleCondnReqs.Id));
+                cmd.Parameters.Add(new MySqlParameter("@pVehicleID", vehicleCondnReqs.VehicleID));
+                cmd.Parameters.Add(new MySqlParameter("@pReserve", vehicleCondnReqs.Reserve));
+                cmd.Parameters.Add(new MySqlParameter("@pRecord", vehicleCondnReqs.Record));
+                cmd.Parameters.Add(new MySqlParameter("@pCallOnHigh", vehicleCondnReqs.CallOnHigh));
+                cmd.Parameters.Add(new MySqlParameter("@pComments", vehicleCondnReqs.Comments));
+                cmd.Parameters.Add(new MySqlParameter("@pEstValue", vehicleCondnReqs.EstValue));
+                cmd.Parameters.Add(new MySqlParameter("@pdateIn", vehicleCondnReqs.DateIn));
+                cmd.Parameters.Add(new MySqlParameter("@pForSale", vehicleCondnReqs.ForSale));
+
+                MySqlParameter returnParameter = new MySqlParameter();
+                returnParameter.Direction = System.Data.ParameterDirection.ReturnValue;
+
+                cmd.Parameters.Add(returnParameter);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = conn;
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                //Panic
+                throw;
+            }
+            finally
+            {
+                //Tie the loose ends here
+                conn.Close();
+            }
+        }
     }
 }

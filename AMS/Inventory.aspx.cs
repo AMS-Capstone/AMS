@@ -88,7 +88,7 @@ namespace AMS
                 }
             }
 
-            if (inventory.Tables[0].Rows.Count < 1)
+            if (inventory.Tables.Count > 0 && inventory.Tables[0].Rows.Count < 1)
             {
                 //Alert about no cars to display
                 AlertDiv.InnerHtml = "<div class=\"alert alert-warning fade in\">" +
@@ -96,6 +96,30 @@ namespace AMS
                 "<strong>Warning!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "No cars to display!" +
                 "</label></div>";
             }
+        }
+
+        protected void LBCarList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        protected void BTNEditCarDetails_Click(object sender, EventArgs e)
+        {
+            if (LBCarList.SelectedValue == null || LBCarList.SelectedValue == "")
+            {
+                LBCarList.SelectedIndex = 0;
+            }
+            Response.Redirect("~/Vehicles?VehicleID=" + LBCarList.SelectedValue);
+        }
+
+        protected void BTNUpdate_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void BTNDelete_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

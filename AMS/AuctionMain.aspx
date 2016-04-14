@@ -1,7 +1,11 @@
 ﻿<%@ Page Title="Auction" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AuctionMain.aspx.cs" Inherits="AMS.AuctionMain" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h1>Auction: </h1>
-    
+    <style type="text/css" media="print">
+        .NonPrintable{
+            display: none;
+        }
+    </style>
     <div class="row" id="AlertDiv" runat="server"></div>
 
     <div class="row">
@@ -237,6 +241,22 @@
         </div>
     </div>
 
+    <div id="carListModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add Payment Form</h4>
+                </div>
+                <div class="modal-body row">
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-success nonPrintable" href="javascript:window.print()">PRINT</a> <%--This code will launch print preview mode for the modal--%>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- End of Modals -->
 
     <div class=" col-xs-12"></div>
@@ -247,9 +267,11 @@
         </div>
     </div>--%>
     
-    <div class="btn-group row col-xs-12 ">
+    <div class="btn-group row col-xs-12">
+        <a class="btn btn-success nonPrintable" href="javascript:window.print()">Calculate Auction Totals</a> <%--This code will launch current page into page preview mode--%>
         <asp:Button ID="BTNGenerateAuctionCarList" runat="server" CssClass="btn btn-default " Text="Print Auction Car List" OnClick="BTNGenerateAuctionCarList_Click" />
         <asp:Button ID="BTNTotals" runat="server" CssClass="btn btn-primary" Text="Calculate Auction Totals" OnClick="BTNTotals_Click" />
+        <button type="button" class="btn btn-xs" data-toggle="modal" title="Car List Modal" data-target="#carListModal">CarListModal</button>
     </div>
     
 </asp:Content>
