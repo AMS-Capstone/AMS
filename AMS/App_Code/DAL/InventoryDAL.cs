@@ -162,7 +162,7 @@ namespace AMS.App_Code.DAL
             {
                 MySqlCommand cmd = new MySqlCommand();
                 cmd.CommandText = "sp_getVehicleCondnReqs";
-                cmd.Parameters.Add(new MySqlParameter("@pVehicleConReqID", vehicleConditionRequirementID));
+                cmd.Parameters.Add(new MySqlParameter("@pVehicleID", vehicleConditionRequirementID));
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Connection = conn;
                 da.SelectCommand = cmd;
