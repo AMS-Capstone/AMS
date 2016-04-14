@@ -35,6 +35,7 @@ namespace AMS
             if (addingVehicles == true)
             {
                 LBCarList.SelectionMode = ListSelectionMode.Multiple;
+                
                 ConcealDiv.InnerHtml = "";
 
                 //Retrieving inventory vehicles
@@ -99,7 +100,7 @@ namespace AMS
             //This code pulls up a list of fees accrued by the car and the conditions and requirements object from the database
             try
             {
-
+                //TODO: Implement
             }
             catch (Exception ex)
             {
@@ -121,12 +122,7 @@ namespace AMS
 
         protected void BTNUpdate_Click(object sender, EventArgs e)
         {
-
-        }
-
-        protected void BTNDelete_Click(object sender, EventArgs e)
-        {
-
+            //TODO: Implement
         }
 
 
