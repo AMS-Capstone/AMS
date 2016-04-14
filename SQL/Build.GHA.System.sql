@@ -1061,6 +1061,27 @@ BEGIN
 	FROM `payment`
     WHERE `AuctionSaleID` = pAuctionSaleID;
 END//
+DROP PROCEDURE IF EXISTS sp_checkConditionStatus
+CREATE PROCEDURE sp_checkConditionStatus()
+BEGIN
+	Select ConditionID from ConditionStatus 
+    where ConditionCode is NULL AND ConditionDescription is NULL;
+    END//
+
+
+DROP PROCEDURE IF EXISTS sp_checkFeeTypes()
+Create PROCEDURE sp_sp_checkFeeTypes()
+BEGIN
+BEGIN
+	Select FeeID from feetype 
+    where FeeCost = 0 AND FeeType is NULL;
+END//
+
+DROP PROCEDURE IF EXISTS sp_checkPaymentType
+CREATE PROCEDURE sp_checkPaymentType()
+	Select PaymentTypeID from paymenttype 
+    where SurchargeInPercent = 0 AND PaymentDescription is NULL;
+END//
 
 DROP PROCEDURE IF EXISTS sp_getVehiclePicturesByVehicleID//
 CREATE PROCEDURE sp_getVehiclePicturesByVehicleID(pVehicleID int)
