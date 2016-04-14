@@ -104,26 +104,6 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_LocalResources\ACCEPT-REJECT.txt" />
-    <Content Include="App_LocalResources\ACCEPT-REJECT_files\filelist.xml" />
-    <Content Include="App_LocalResources\ACCEPT-REJECT_files\header.htm" />
-    <Content Include="App_LocalResources\ACCEPT-REJECT_files\image001.jpg" />
-    <Content Include="App_LocalResources\ACCEPT-REJECT_files\image002.png" />
-    <Content Include="App_LocalResources\ACCEPT-REJECT_files\image003.png" />
-    <Content Include="App_LocalResources\Acceptance-Rejection Notice.txt" />
-    <Content Include="App_LocalResources\AuctionDetails.txt" />
-    <Content Include="App_LocalResources\AuctionSummary.txt" />
-    <Content Include="App_LocalResources\Bidder%27s Acknowledgement.txt" />
-    <Content Include="App_LocalResources\Bill of Sale.txt" />
-    <Content Include="App_LocalResources\Bill of Sale_files\colorschememapping.xml" />
-    <Content Include="App_LocalResources\Bill of Sale_files\filelist.xml" />
-    <Content Include="App_LocalResources\Bill of Sale_files\image001.jpg" />
-    <Content Include="App_LocalResources\Bill of Sale_files\image002.jpg" />
-    <Content Include="App_LocalResources\Bill of Sale_files\image003.jpg" />
-    <Content Include="App_LocalResources\Bill of Sale_files\image004.jpg" />
-    <Content Include="App_LocalResources\Consignment Agreement.txt" />
-    <Content Include="App_LocalResources\Log Sheet.txt" />
-    <Content Include="App_LocalResources\no_picture.jpg" />
     <Content Include="AuctionMain.aspx" />
     <Content Include="Buyers.aspx" />
     <Content Include="Content\bootstrap-datetimepicker.css" />
@@ -145,7 +125,6 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="DocumentHandler.ashx" />
-    <Content Include="App_LocalResources\Bill of Sale_files\themedata.thmx" />
     <None Include="Properties\PublishProfiles\AMS.pubxml" />
     <None Include="Properties\PublishProfiles\ASP Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\Google VM Publish.pubxml" />
