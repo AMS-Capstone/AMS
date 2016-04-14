@@ -377,7 +377,7 @@ END//
 
 DROP PROCEDURE IF EXISTS sp_createPaymentType //	
 CREATE PROCEDURE sp_createPaymentType
-(IN pPaymentDescription text, IN pSurchargeInPercent double, In Status boolean)
+(IN pPaymentDescription text, IN pSurchargeInPercent double, In pStatus boolean)
 
 BEGIN
 	
