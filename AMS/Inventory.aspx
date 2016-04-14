@@ -8,7 +8,11 @@
                 <asp:ListBox ID="LBCarList" CssClass="form-control"  runat="server" Rows="10" OnSelectedIndexChanged="LBCarList_SelectedIndexChanged" AutoPostBack="true"></asp:ListBox>
             </div>
         </div>
-
+        <div class="form-group row" id="ConcealAddDiv" runat="server">
+            <div class="col-xs-12">
+                <asp:Button ID="BTNAddVehicles" runat="server" CssClass="btn btn-primary" Text="Add Vehicles to the Auction" OnClick="BTNAddVehicles_Click" />
+            </div>
+        </div>
         <div id="ConcealDiv" runat="server">
             <div class="form-group row">
                 <div class="col-xs-12">

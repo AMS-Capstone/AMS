@@ -20,6 +20,9 @@ namespace AMS
         DataAction dataAction = new DataAction();
         int auctionID = 0;
         int counter = 0;
+        
+        Auction auction = new Auction();
+        AuctionDAL auctionService = new AuctionDAL();
 
         BuyerDAL buyerService = new AMS.App_Code.BuyerDAL();
         DataSet buyers = new DataSet();
@@ -66,6 +69,7 @@ namespace AMS
                     AlertDiv.InnerHtml = "";
                     buyers = buyerService.GetBuyers();
                     ConditionStatuses.Tables.Add(dataAction.GetConditionStatus());
+                    auction = auctionService.getAuction(auctionID);
                     
                     paymentTypes = auctionMainService.GetPaymentTypes();
 
@@ -430,10 +434,7 @@ namespace AMS
             {
                 String carList = ""; //File.ReadAllText(".\\App_LocalResources\\Log Sheet.txt");
 
-                AlertDiv.InnerHtml = "<div class=\"alert alert-danger fade in\">" +
-                "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
-                "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + carList +
-                "</label></div>";
+                
             }
             catch (Exception ex)
             {
@@ -442,6 +443,12 @@ namespace AMS
                 "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + ex.Message +
                 "</label></div>";
             }
+        }
+
+        protected void BTNAddCarsToAuction_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Inventory?AuctionID=" + auctionID.ToString() + "&AddingVehicles=true" + "&AuctionDate=" + auction.AuctionDate.ToString());
+            
         }
 
         //AlertDiv.InnerHtml = "<div class=\"alert alert-warning fade in\">" +

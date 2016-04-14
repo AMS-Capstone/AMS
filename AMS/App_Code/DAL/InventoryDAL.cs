@@ -50,6 +50,36 @@ namespace AMS.App_Code.DAL
             return ds;
         }
 
+        //Retrieves only vehicles that are for sale
+        public DataSet viewAvailableInventoryVehicles(int AuctionID)
+        {
+            DataSet ds = new DataSet();
+            MySqlConnection conn = new MySqlConnection(connectionString);
+            MySqlDataAdapter da = new MySqlDataAdapter();
+
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.CommandText = "sp_viewAvailableVehiclesForSale";
+                cmd.Parameters.Add(new MySqlParameter("@pAuctionID", AuctionID));
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = conn;
+                da.SelectCommand = cmd;
+                da.Fill(ds, "Vehicles");
+
+            }
+            catch (Exception ex)
+            {
+                //Panic
+                throw;
+            }
+            finally
+            {
+                //Tie the loose ends here
+            }
+            return ds;
+        }
+
 
         //Retrieves only vehicles that are for sale
         public DataSet getInventoryVehicles(int vehicleConditionRequirementID)
