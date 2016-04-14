@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using System.Data;
 using AMS.App_Code;
 using AMS.App_Code.DAL;
+using AMS.App_Code.SuppportClasses;
 
 namespace AMS
 {
@@ -103,6 +104,16 @@ namespace AMS
             try
             {
                 //TODO: Implement
+                VehicleConditionsRequirements vcr = new VehicleConditionsRequirements();
+                vcr = inventoryService.GetVehicleConditionsRequirements(Convert.ToInt32(LBCarList.SelectedValue.ToString()));
+
+                TXTDate.Value = vcr.DateIn.ToString();
+                TXTEstValue.Text = vcr.EstValue.ToString();
+                TXTReserve.Text = vcr.Reserve.ToString();
+                TXTComments.Text = vcr.Comments;
+                CHKCallOnHigh.Checked = vcr.CallOnHigh;
+                CHKForSale.Checked = vcr.ForSale;
+                CHKRecord.Checked = vcr.Record;
             }
             catch (Exception ex)
             {

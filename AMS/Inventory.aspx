@@ -92,6 +92,13 @@
                     </div>
                 </div>
             </div>
+            
+            <div class="form-group row">
+                <label class="control-label col-xs-12 col-sm-2" for="TXTComments">Comments</label>
+                <div class="col-xs-12 col-sm-5">
+                    <asp:TextBox ID="TXTComments" runat="server" CssClass="form-control" TextMode="MultiLine" ></asp:TextBox>
+                </div>
+            </div>
 
             <div class="row"><hr /></div>    
             <div class="form-group row">

@@ -21,9 +21,9 @@ namespace AMS.App_Code.SuppportClasses
             get { return vehicleID; }
             set { vehicleID = value; }
         }
-        private bool reserve;
+        private Double reserve;
 
-        public bool Reserve
+        public Double Reserve
         {
             get { return reserve; }
             set { reserve = value; }
