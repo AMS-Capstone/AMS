@@ -10,7 +10,7 @@
 namespace AMS {
     
     
-    public partial class AuctionMain {
+    public partial class Inventory {
         
         /// <summary>
         /// AlertDiv control.
@@ -22,84 +22,93 @@ namespace AMS {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl AlertDiv;
         
         /// <summary>
-        /// GVAuction control.
+        /// LBCarList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GVAuction;
+        protected global::System.Web.UI.WebControls.ListBox LBCarList;
         
         /// <summary>
-        /// ULContainer control.
+        /// BTNEditCarDetails control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ULContainer;
+        protected global::System.Web.UI.WebControls.Button BTNEditCarDetails;
         
         /// <summary>
-        /// TXTPayment control.
+        /// CHKForSale control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TXTPayment;
+        protected global::System.Web.UI.WebControls.CheckBox CHKForSale;
         
         /// <summary>
-        /// DDLPaymentTypes control.
+        /// TXTDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DDLPaymentTypes;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText TXTDate;
         
         /// <summary>
-        /// LBLSurchargeInPercent control.
+        /// TXTReserve control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LBLSurchargeInPercent;
+        protected global::System.Web.UI.WebControls.TextBox TXTReserve;
         
         /// <summary>
-        /// TXTSurcharge control.
+        /// TXTEstValue control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TXTSurcharge;
+        protected global::System.Web.UI.WebControls.TextBox TXTEstValue;
         
         /// <summary>
-        /// btnAddPayment control.
+        /// CHKRecord control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAddPayment;
+        protected global::System.Web.UI.WebControls.CheckBox CHKRecord;
         
         /// <summary>
-        /// BTNGenerateAuctionCarList control.
+        /// CHKCallOnHigh control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BTNGenerateAuctionCarList;
+        protected global::System.Web.UI.WebControls.CheckBox CHKCallOnHigh;
         
         /// <summary>
-        /// BTNTotals control.
+        /// BTNUpdate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BTNTotals;
+        protected global::System.Web.UI.WebControls.Button BTNUpdate;
+        
+        /// <summary>
+        /// BTNDelete control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BTNDelete;
     }
 }

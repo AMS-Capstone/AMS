@@ -2,45 +2,45 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h1>Vehicles</h1>
     
-    <div class="col-xs-12 col-sm-12" id="AlertDiv" runat="server"></div>
+    <div class="row" id="AlertDiv" runat="server"></div>
     <div class="form-group row">
         <label class="control-label col-xs-12 col-sm-2" for="DDLSeller">Select Consigner:</label>
-        <div class="col-xs-12 col-sm-3">
+        <div class="col-xs-12 col-sm-5">
             <asp:DropDownList ID="DDLSeller" CssClass="form-control" runat="server"></asp:DropDownList>
         </div>
     </div>
 
     <div class="form-group row">
         <label class="control-label col-xs-12 col-sm-2" for="TXTLotNumber">Lot #:</label>
-        <div class="col-xs-12 col-sm-3">
+        <div class="col-xs-12 col-sm-5">
             <asp:TextBox ID="TXTLotNumber" runat="server" CssClass="form-control"></asp:TextBox>
         </div>
     </div>
 
     <div class="form-group row">
         <label class="control-label col-xs-12 col-sm-2" for="TXTYear">Year:</label>
-        <div class="col-xs-12 col-sm-3">
+        <div class="col-xs-12 col-sm-5">
             <asp:TextBox ID="TXTYear" runat="server" CssClass="form-control numbersOnly"></asp:TextBox>
         </div>
     </div>
 
     <div class="form-group row">
         <label class="control-label col-xs-12 col-sm-2" for="TXTMake">Make:</label>
-        <div class="col-xs-12 col-sm-3">
+        <div class="col-xs-12 col-sm-5">
             <asp:TextBox ID="TXTMake" runat="server" CssClass="form-control"></asp:TextBox>
         </div>
     </div>
 
     <div class="form-group row">
         <label class="control-label col-xs-12 col-sm-2" for="TXTModel">Model:</label>
-        <div class="col-xs-12 col-sm-3">
+        <div class="col-xs-12 col-sm-5">
             <asp:TextBox ID="TXTModel" runat="server" CssClass="form-control"></asp:TextBox>
         </div>
   </div>
 
     <div class="form-group row">
         <label class="control-label col-xs-12 col-sm-2" for="TXTVin">VIN:</label>
-        <div class="col-xs-12 col-sm-3">
+        <div class="col-xs-12 col-sm-5">
             <asp:TextBox ID="TXTVin" runat="server" CssClass="form-control"></asp:TextBox>
         </div>
     </div>
@@ -56,22 +56,22 @@
     </div>
 
     <div class="form-group row">
-        <label class="control-label col-xs-12 col-sm-2" for="TXTTransmission" CssClass="form-control">Transmission</label>
-        <div class="col-xs-12 col-sm-3">
+        <label class="control-label col-xs-12 col-sm-2" for="TXTTransmission">Transmission</label>
+        <div class="col-xs-12 col-sm-5">
             <asp:TextBox ID="TXTTransmission" runat="server" CssClass="form-control"></asp:TextBox>
         </div>
     </div>
 
     <div class="form-group row">
-        <label class="control-label col-xs-12 col-sm-2" for="TXTColor" CssClass="form-control">Color</label>
-        <div class="col-xs-12 col-sm-3">
+        <label class="control-label col-xs-12 col-sm-2" for="TXTColor">Color</label>
+        <div class="col-xs-12 col-sm-5">
             <asp:TextBox ID="TXTColor" runat="server" CssClass="form-control"></asp:TextBox>
         </div>
     </div>
 
     <div class="form-group row">
-        <label class="control-label col-xs-12 col-sm-2" for="TXTOptions" CssClass="form-control">Options</label>
-        <div class="col-xs-12 col-sm-3">
+        <label class="control-label col-xs-12 col-sm-2" for="TXTOptions">Options</label>
+        <div class="col-xs-12 col-sm-5">
             <asp:TextBox ID="TXTOptions" runat="server" CssClass="form-control" TextMode="MultiLine" ></asp:TextBox>
         </div>
     </div>    
@@ -86,12 +86,32 @@
             <asp:Button ID="BTNUpload" runat="server" CssClass="btn btn-primary" Text="Upload" OnClick="BTNUpload_Click"  />
         </div>
 
-        <div class="col-xs-12 col-sm-12">
-            <asp:Image runat="server" ID="ImagePreview" />
-        </div>        
-        <div class="col-xs-12 col-sm-12" id="ImageDiv" runat="server"></div>
+                
+        <%--<div class="col-xs-12 col-sm-12" id="ImageDiv" runat="server"></div>--%>
     </div>
-   
+    <style>
+        .carousel-inner > .item > img,
+        .carousel-inner > .item > a > img {
+            width: 70%;
+            height: auto;
+            margin: auto;
+        }
+    </style>
+    <div class="row"></div>
+    <div class="col-xs-12 col-sm-5 col-lg=3">
+        <div class="carousel slide" data-ride="carousel" id="actualCarousel">
+            <div class="carousel-inner" role="listbox" id="imageCarousel" runat="server">
+            </div>
+            <a class="left carousel-control" href="#actualCarousel" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#actualCarousel" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
     <div class="col-xs-12 col-sm-12"><hr /></div>
 
     <div class="form-group row">        

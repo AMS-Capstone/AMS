@@ -1,16 +1,20 @@
 ﻿<%@ Page Title="Auction" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AuctionMain.aspx.cs" Inherits="AMS.AuctionMain" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h1>Auction: </h1>
-    
-    <div class=" col-xs-12" id="AlertDiv" runat="server"></div>
+    <style type="text/css" media="print">
+        .NonPrintable{
+            display: none;
+        }
+    </style>
+    <div class="row" id="AlertDiv" runat="server"></div>
 
     <div class="row">
         <div class="form-group col-xs-12">
             <asp:GridView ID="GVAuction" runat="server" CssClass="table table-hover col-xs-12" 
                 AutoGenerateColumns="False" OnRowDataBound="RowDataBound" OnRowEditing="gv_RowEditing" 
-                OnRowUpdating="gv_RowUpdating" OnRowCancelingEdit="gv_RowCancelingEdit">
+                OnRowUpdating="gv_RowUpdating" OnRowCancelingEdit="gv_RowCancelingEdit" OnRowDeleting="gv_RowDeleting">
                 <Columns>
-                    <asp:CommandField ShowEditButton="True"/>
+                    <asp:CommandField ShowEditButton="True" ShowDeleteButton="True"/>
                     <asp:TemplateField  HeaderText="AuctionSaleID" Visible="false">
                         <ItemTemplate>
                             <asp:Label ID="lblAuctionSaleID" runat="server" Text='<%# Eval("AuctionSaleID") %>'/>
@@ -39,24 +43,24 @@
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Bidder #">
                         <ItemTemplate>
-                            <asp:Label ID="lblBidderNumber2" runat="server"/>
+                            <asp:Label ID="lblBidderNumber" runat="server"/>
                             <asp:Label ID="lblBuyerID" runat="server" Text='<%# Eval("BuyerID") %>' Visible="false" />
                             <asp:DropDownList ID="DDLBidderNumbers" runat="server"  OnSelectedIndexChanged="DDLBidderNumbers_SelectedIndexChanged" AutoPostBack="true" Visible="false"></asp:DropDownList>
                         </ItemTemplate>
                         <EditItemTemplate>
-                            <asp:Label ID="lblBidderNumber2" runat="server" Visible="false" />
+                            <asp:Label ID="lblBidderNumber" runat="server" Visible="false" />
                             <asp:Label ID="lblBuyerID" runat="server" Text='<%# Eval("BuyerID") %>' Visible="false" />
                             <asp:DropDownList ID="DDLBidderNumbers" runat="server"  OnSelectedIndexChanged="DDLBidderNumbers_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
                         </EditItemTemplate>
                     </asp:TemplateField>                   
                     <asp:TemplateField  HeaderText="Sale Status">
                         <ItemTemplate>
-                            <asp:Label ID="lblSaleStatus2" runat="server"/>
+                            <asp:Label ID="lblSaleStatus" runat="server"/>
                             <asp:Label ID="lblConditionID" runat="server" Text='<%# Eval("ConditionID") %>' Visible="false" />
                             <asp:DropDownList ID="DDLSaleStatuses" runat="server" OnSelectedIndexChanged="DDLSaleStatuses_SelectedIndexChanged" AutoPostBack="true" Visible="false"></asp:DropDownList>
                         </ItemTemplate>
                         <EditItemTemplate>
-                            <asp:Label ID="lblSaleStatus2" runat="server" Visible="false"/>
+                            <asp:Label ID="lblSaleStatus" runat="server" Visible="false"/>
                             <asp:Label ID="lblConditionID" runat="server" Text='<%# Eval("ConditionID") %>' Visible="false" />
                             <asp:DropDownList ID="DDLSaleStatuses" runat="server" OnSelectedIndexChanged="DDLSaleStatuses_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
                         </EditItemTemplate>
@@ -103,10 +107,10 @@
                     </asp:TemplateField>--%>
                     <asp:TemplateField  HeaderText="Payments">
                         <ItemTemplate>
-                            <asp:Label ID="lblPayments1" runat="server" Text='<%# Eval("Payments", "{0:c}") %>' DataFormatString="{0:c}" Visible="true" />
+                            <asp:Label ID="lblPayments" runat="server" Text='<%# Eval("Payments", "{0:c}") %>' DataFormatString="{0:c}" Visible="true" />
                         </ItemTemplate>
                         <EditItemTemplate>
-                            <asp:Label ID="lblPayments2" runat="server" Text='<%# Eval("Payments", "{0:c}") %>' DataFormatString="{0:c}" Visible="true" />
+                            <asp:Label ID="lblPayments" runat="server" Text='<%# Eval("Payments", "{0:c}") %>' DataFormatString="{0:c}" Visible="true" />
                             <button type="button" class="btn btn-xs" data-toggle="modal" title="Add Payment" data-target="#paymentModal">Add</button>
                             <%--<asp:Button ID="btnAddPayment" runat="server" Text="Add" OnClick="btnAddPayment_Click"/>--%>
                         </EditItemTemplate>
@@ -237,6 +241,22 @@
         </div>
     </div>
 
+    <div id="carListModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add Payment Form</h4>
+                </div>
+                <div class="modal-body row">
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-success nonPrintable" href="javascript:window.print()">PRINT</a> <%--This code will launch print preview mode for the modal--%>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- End of Modals -->
 
     <div class=" col-xs-12"></div>
@@ -246,7 +266,12 @@
             <asp:TextBox ID="TXTNotes" TextMode="MultiLine" runat="server" CssClass="form-control" placeholder="Notes"/>
         </div>
     </div>--%>
-    <div class="btn-group col-xs-12">
-        <asp:Button ID="BTNTotals" runat="server" CssClass="btn btn-primary pull-right" Text="Calculate Auction Totals" OnClick="BTNTotals_Click" />
+    
+    <div class="btn-group row col-xs-12">
+        <a class="btn btn-success nonPrintable" href="javascript:window.print()">Calculate Auction Totals</a> <%--This code will launch current page into page preview mode--%>
+        <asp:Button ID="BTNGenerateAuctionCarList" runat="server" CssClass="btn btn-default " Text="Print Auction Car List" OnClick="BTNGenerateAuctionCarList_Click" />
+        <asp:Button ID="BTNTotals" runat="server" CssClass="btn btn-primary" Text="Calculate Auction Totals" OnClick="BTNTotals_Click" />
+        <button type="button" class="btn btn-xs" data-toggle="modal" title="Car List Modal" data-target="#carListModal">CarListModal</button>
     </div>
+    
 </asp:Content>

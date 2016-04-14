@@ -40,6 +40,15 @@ namespace AMS {
         protected global::System.Web.UI.WebControls.ListBox LBAuctionList;
         
         /// <summary>
+        /// BTNReset control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BTNReset;
+        
+        /// <summary>
         /// btnSelectAuction control.
         /// </summary>
         /// <remarks>

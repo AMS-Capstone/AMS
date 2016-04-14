@@ -20,33 +20,71 @@ namespace AMS.App_Code
             }
         }
 
-         public DataSet findAuctions(String auctionYear)
-         {
-             DataSet ds = new DataSet("Auctions");
-             MySqlConnection conn = new MySqlConnection(connectionString);
-             MySqlDataAdapter da = new MySqlDataAdapter();
+        public DataSet findAuctions(String auctionYear)
+        {
+            DataSet ds = new DataSet("Auctions");
+            MySqlConnection conn = new MySqlConnection(connectionString);
+            MySqlDataAdapter da = new MySqlDataAdapter();
 
-             try
-             {
+            try
+            {
+            MySqlCommand cmd = new MySqlCommand();
+            cmd.CommandText = "sp_findAuction";
+            cmd.Parameters.Add(new MySqlParameter("@pAuctionYear", auctionYear));
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = conn;
+            da.SelectCommand = cmd;
+            da.Fill(ds, "Auctions");
+        }
+            catch (Exception ex)
+            {
+                //Panic
+                throw;
+            }
+            finally
+            {
+                //Tie the loose ends here
+            }
+            return ds;
+        }
+
+
+        public Auction getAuction(int auctionID)
+        {
+            DataSet ds = new DataSet();
+            Auction auction = new Auction();
+            MySqlConnection conn = new MySqlConnection(connectionString);
+            MySqlDataAdapter da = new MySqlDataAdapter();
+
+            try
+            {
                 MySqlCommand cmd = new MySqlCommand();
-                cmd.CommandText = "sp_findAuction";
-                cmd.Parameters.Add(new MySqlParameter("@pAuctionYear", auctionYear));
+                cmd.CommandText = "sp_getAuction";
+                cmd.Parameters.Add(new MySqlParameter("@pAuctionID", auctionID));
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Connection = conn;
                 da.SelectCommand = cmd;
-                da.Fill(ds, "Auctions");
+                da.Fill(ds);
+
+                auction.AuctionID = auctionID;
+                auction.AuctionDate = Convert.ToDateTime(ds.Tables[0].Rows[0]["AuctionDate"].ToString());
+                auction.AuctionTotal = Convert.ToDouble(ds.Tables[0].Rows[0]["AuctionTotal"].ToString());
+                auction.Surcharges = Convert.ToDouble(ds.Tables[0].Rows[0]["Surcharges"].ToString());
+                auction.CashCharges = Convert.ToDouble(ds.Tables[0].Rows[0]["CashCharges"].ToString());
+                auction.ChequeCharges = Convert.ToDouble(ds.Tables[0].Rows[0]["ChequeCharges"].ToString());
+                auction.CreditCardCharges = Convert.ToDouble(ds.Tables[0].Rows[0]["CreditCardCharges"].ToString());                
             }
-             catch (Exception ex)
-             {
-                 //Panic
-                 throw;
-             }
-             finally
-             {
-                 //Tie the loose ends here
-             }
-             return ds;
-         }
+            catch (Exception ex)
+            {
+                //Panic
+                throw;
+            }
+            finally
+            {
+                //Tie the loose ends here
+            }
+            return auction;
+        }
 
 
         public DataSet getAuctionYears()
@@ -77,6 +115,7 @@ namespace AMS.App_Code
             return ds;
         }
 
+        //Retrieves only vehicles that are for sale
         public DataSet viewVehiclesForSale()
         {
             DataSet ds = new DataSet("Auctions");
@@ -103,6 +142,32 @@ namespace AMS.App_Code
                 //Tie the loose ends here
             }
             return ds;
+        }
+
+        //Resets non-permanent bidder numbers
+        public void ResetBidderNumbers()
+        {
+            MySqlConnection conn = new MySqlConnection(connectionString);
+
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.CommandText = "sp_resetBuyerBidnums";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = conn;
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                //Panic
+                throw;
+            }
+            finally
+            {
+                //Tie the loose ends here
+                conn.Close();
+            }
         }
 
 
