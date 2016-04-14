@@ -37,7 +37,7 @@ namespace AMS
                     dt =  dataAction.CheckFeeTypes();
                     if (dt.Rows.Count == 0)
                     {
-                        dataAction.CreateFeeType(double.Parse(""), null, false);
+                        dataAction.CreateFeeType(0, null, false);
                     }
 
                     dt = dataAction.CheckPaymentTypes();
@@ -51,6 +51,7 @@ namespace AMS
             
                     DDLGST.DataValueField = dt.Columns["GSTID"].ToString();
                     DDLGST.DataTextField = dt.Columns["GSTPercent"].ToString();
+
                     DDLGST.DataBind();
                     DDLGST.Items.Insert(0, new ListItem(String.Empty, String.Empty));
                     //Load All Condition Statuses
