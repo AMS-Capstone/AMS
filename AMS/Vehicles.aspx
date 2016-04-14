@@ -83,7 +83,7 @@
             <asp:FileUpload ID="FUVehicle" CssClass="fileupload fileupload-new" runat="server" />
         </div>
         <div class="col-xs-12 col-sm-3">
-            <asp:Button ID="BTNUpload" runat="server" CssClass="btn btn-primary" Text="Upload" OnClick="BTNUpload_Click"  />
+            <asp:Button ID="BTNUpload" runat="server" CssClass="btn btn-primary" Text="Upload" OnClick="BTNUpload_Click" PostBackUrl="~/Vehicles.aspx" />
         </div>
 
                 

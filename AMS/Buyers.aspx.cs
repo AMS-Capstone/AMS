@@ -99,7 +99,29 @@ namespace AMS
             {
                 //Call DAL
                 int id = buyerService.CreateBuyer(buyer);
-
+                buyers = buyerService.GetBuyers();
+                if (buyers.Tables.Count > 0)
+                {
+                    if (buyers.Tables[0].Rows.Count > 0)
+                    {
+                        selectedIndex = DDLBuyerName.SelectedIndex;
+                        if (!IsPostBack)
+                        {
+                            DDLBuyerName.DataTextField = "BuyerName";
+                            DDLBuyerName.DataValueField = "BuyerID";
+                            DDLBuyerName.DataSource = buyers;
+                            DDLBuyerName.DataBind();
+                        }
+                    }
+                    else
+                    {
+                        //Alert about inability to connect to the server
+                        AlertDiv.InnerHtml = "<div class=\"alert alert-warning fade in\">" +
+                        "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                        "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "Could not retrieve any buyers from the server." +
+                        "</label></div>";
+                    }
+                }
                 //Success message
                 AlertDiv.InnerHtml = "<div class=\"alert alert-success fade in\">" +
                 "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +

@@ -252,6 +252,7 @@ namespace AMS
 
                     //Session["ImageBytes"] = FUVehicle.FileBytes;
                     //ImagePreview.ImageUrl = "~/DocumentHandler.ashx";
+                   
                 }
                 catch (Exception ex) 
                 {

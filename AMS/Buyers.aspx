@@ -104,7 +104,7 @@
         <div class="col-xs-12">
             <asp:Button ID="BTNSubmit" runat="server" CssClass="btn btn-primary" Text="Create" OnClick="BTNSubmit_Click" />
             <asp:Button ID="BTNUpdate" runat="server" CssClass="btn btn-primary hidden"  Text="Update" OnClick="BTNUpdate_Click" />
-            <asp:Button ID="BTNDelete" runat="server" CssClass="btn btn-primary hidden" Text="Delete" OnClick="BTNDelete_Click" />
+            <asp:Button ID="BTNDelete" runat="server" CssClass="btn btn-primary hidden" Text="Delete" OnClick="BTNDelete_Click"  />
         </div>
     </div>
 </asp:Content>
