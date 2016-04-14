@@ -54,7 +54,7 @@ Create Table conditionstatus
 	ConditionID integer primary key AUTO_INCREMENT,
     ConditionCode tinytext,
     ConditionDescription text,
-    Status boolean
+    Status boolean default true
 );
 
 -- Create Table FeeType
@@ -63,7 +63,7 @@ Create Table FeeType
 	FeeID integer primary key AUTO_INCREMENT,
     FeeCost double,
     FeeType text,
-    Status boolean
+    Status boolean default true
 );
 
 -- Create Table GST
@@ -80,7 +80,7 @@ Create Table PaymentType
 	PaymentTypeID integer primary key AUTO_INCREMENT,
     SurchargeInPercent double,
     PaymentDescription text,
-    Status boolean
+    Status boolean default true
 );
 
 -- Create the Buyer table
@@ -377,7 +377,7 @@ END//
 
 DROP PROCEDURE IF EXISTS sp_createPaymentType //	
 CREATE PROCEDURE sp_createPaymentType
-(IN pPaymentDescription text, IN pSurchargeInPercent double, In Status boolean)
+(IN pPaymentDescription text, IN pSurchargeInPercent double, In pStatus boolean)
 
 BEGIN
 	
@@ -1170,7 +1170,7 @@ BEGIN
 END//
 
 DROP PROCEDURE IF EXISTS sp_getVehicleCondnReqs//
-CREATE PROCEDURE sp_getVehicleCondnReqs(pVehicleConReqID int)
+CREATE PROCEDURE sp_getVehicleCondnReqs(pVehicleID int)
 BEGIN
 	SELECT `vehiclecondnreqs`.`VehicleConReqID`,
     `vehiclecondnreqs`.`VehicleID`,
@@ -1182,7 +1182,8 @@ BEGIN
     `vehiclecondnreqs`.`dateIn`,
     `vehiclecondnreqs`.`ForSale`
 	FROM `vehiclecondnreqs`
-    WHERE `vehiclecondnreqs`.`VehicleConReqID` = pVehicleConReqID;
+    WHERE `vehiclecondnreqs`.`VehicleID` = pVehicleID
+    ORDER BY `VehicleConReqID` DESC;    
 END//
 
 DROP PROCEDURE IF EXISTS sp_getAuction //

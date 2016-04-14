@@ -70,7 +70,7 @@ namespace AMS
 
                     if (!IsPostBack)
                     {
-                        inventory = auctionService.viewVehiclesForSale();
+                        inventory = inventoryService.viewInventoryVehicles();
 
                         LBCarList.DataTextField = "DisplayInfo";
                         LBCarList.DataValueField = "VehicleID";
