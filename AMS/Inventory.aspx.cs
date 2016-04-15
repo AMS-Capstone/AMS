@@ -114,6 +114,8 @@ namespace AMS
                 CHKCallOnHigh.Checked = vcr.CallOnHigh;
                 CHKForSale.Checked = vcr.ForSale;
                 CHKRecord.Checked = vcr.Record;
+                Session["vcrID"] = vcr.Id.ToString();
+                Session["vcrVID"] = vcr.VehicleID.ToString();
             }
             catch (Exception ex)
             {
@@ -146,11 +148,15 @@ namespace AMS
                 vcr.CallOnHigh = CHKCallOnHigh.Checked;
                 vcr.ForSale = CHKForSale.Checked;
                 vcr.Record = CHKRecord.Checked;
+                vcr.Id = Convert.ToInt32(Session["vcrID"].ToString());
+                vcr.VehicleID = Convert.ToInt32(Session["vcrVID"].ToString());
+
+                inventoryService.UpdateVehicleConditionsRequirements(vcr);
 
                 //Success message
                 AlertDiv.InnerHtml = "<div class=\"alert alert-success fade in\">" +
                 "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
-                "<strong>Success!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "requirements successfully updated! " +
+                "<strong>Success!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "Requirements successfully updated! " +
                 "</label></div>";
             }
             catch (Exception ex)

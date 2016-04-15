@@ -1127,7 +1127,7 @@ END//
 DROP PROCEDURE IF EXISTS sp_viewInventoryVehicles//
 CREATE PROCEDURE sp_viewInventoryVehicles()
 BEGIN
-	SELECT `vehicle`.`VehicleID`, CONCAT(`LotNumber`, " - ", `Year`, " ", `Color`, " ", `Make`, " ", `Model`) as `DisplayInfo`
+	SELECT DISTINCT `vehicle`.`VehicleID`, CONCAT(`LotNumber`, " - ", `Year`, " ", `Color`, " ", `Make`, " ", `Model`) as `DisplayInfo`
     FROM `vehicle`, `vehiclecondnreqs`
     WHERE `vehiclecondnreqs`.`VehicleID` = `vehicle`.`VehicleID` and `vehiclecondnreqs`.`ForSale` = 1
     union

@@ -145,6 +145,9 @@ namespace AMS
                     DDLBidderNumbers.DataTextField = "BidderNumber";
                     DDLBidderNumbers.DataValueField = "BuyerID";
                     DDLBidderNumbers.DataBind();
+                    foreach (ListItem ls in DDLBidderNumbers.Items)
+                    {
+                    }
                     //DDLBidderNumbers.AutoPostBack = true;
 
                     //DataRowView dr = e.Row.DataItem as DataRowView;

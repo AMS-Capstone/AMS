@@ -251,10 +251,6 @@ namespace AMS.App_Code.DAL
                 cmd.Parameters.Add(new MySqlParameter("@pdateIn", vehicleCondnReqs.DateIn));
                 cmd.Parameters.Add(new MySqlParameter("@pForSale", vehicleCondnReqs.ForSale));
 
-                MySqlParameter returnParameter = new MySqlParameter();
-                returnParameter.Direction = System.Data.ParameterDirection.ReturnValue;
-
-                cmd.Parameters.Add(returnParameter);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Connection = conn;
                 cmd.ExecuteNonQuery();

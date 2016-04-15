@@ -270,8 +270,8 @@
     <div class="btn-group row col-xs-12">
         <%--<a class="btn btn-success nonPrintable" href="javascript:window.print()">Calculate Auction Totals</a>--%> <%--This code will launch current page into page preview mode--%>
         <asp:Button ID="BTNAddCarsToAuction" runat="server" CssClass="btn btn-primary" Text="Add Cars to this Auction" OnClick="BTNAddCarsToAuction_Click" />
-        <asp:Button ID="BTNGenerateAuctionCarList" runat="server" CssClass="btn btn-default " Text="Print Auction Car List" OnClick="BTNGenerateAuctionCarList_Click" />
-        <asp:Button ID="BTNTotals" runat="server" CssClass="btn btn-primary" Text="Calculate Auction Totals" OnClick="BTNTotals_Click" />
+        <%--<asp:Button ID="BTNGenerateAuctionCarList" runat="server" CssClass="btn btn-default " Text="Print Auction Car List" OnClick="BTNGenerateAuctionCarList_Click" />--%>
+        <%--<asp:Button ID="BTNTotals" runat="server" CssClass="btn btn-primary" Text="Calculate Auction Totals" OnClick="BTNTotals_Click" />--%>
         <%--<button type="button" class="btn btn-primary" data-toggle="modal" title="Car List Modal" data-target="#carListModal">CarListModal</button>--%>
     </div>
     
