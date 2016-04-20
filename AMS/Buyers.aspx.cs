@@ -18,19 +18,19 @@ namespace AMS
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            provinces.Add("AB");
-            provinces.Add("BC");
-            provinces.Add("MB");
-            provinces.Add("NB");
-            provinces.Add("NL");
-            provinces.Add("NS");
-            provinces.Add("NT");
-            provinces.Add("NU");
-            provinces.Add("ON");
-            provinces.Add("PE");
-            provinces.Add("QC");
-            provinces.Add("SK");
-            provinces.Add("YT");
+            provinces.Add("Alberta");
+            provinces.Add("British Columbia");
+            provinces.Add("Manitoba");
+            provinces.Add("New Brunswick");
+            provinces.Add("Newfoundland and Labrador");
+            provinces.Add("Nova Scotia");
+            provinces.Add("Northwest Territories");
+            provinces.Add("Nunavut");
+            provinces.Add("Ontario");
+            provinces.Add("Prince Edward Island");
+            provinces.Add("Quebec");
+            provinces.Add("Saskatchewan");
+            provinces.Add("Yukon");
 
             DDLProvince.DataSource = provinces;
             DDLProvince.DataBind();
@@ -99,7 +99,29 @@ namespace AMS
             {
                 //Call DAL
                 int id = buyerService.CreateBuyer(buyer);
-
+                buyers = buyerService.GetBuyers();
+                if (buyers.Tables.Count > 0)
+                {
+                    if (buyers.Tables[0].Rows.Count > 0)
+                    {
+                        selectedIndex = DDLBuyerName.SelectedIndex;
+                        if (!IsPostBack)
+                        {
+                            DDLBuyerName.DataTextField = "BuyerName";
+                            DDLBuyerName.DataValueField = "BuyerID";
+                            DDLBuyerName.DataSource = buyers;
+                            DDLBuyerName.DataBind();
+                        }
+                    }
+                    else
+                    {
+                        //Alert about inability to connect to the server
+                        AlertDiv.InnerHtml = "<div class=\"alert alert-warning fade in\">" +
+                        "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                        "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "Could not retrieve any buyers from the server." +
+                        "</label></div>";
+                    }
+                }
                 //Success message
                 AlertDiv.InnerHtml = "<div class=\"alert alert-success fade in\">" +
                 "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
@@ -144,6 +166,9 @@ namespace AMS
 
         protected void DDLBuyerName_SelectedIndexChanged(object sender, EventArgs e)
         {
+            //Cleaning up messages
+            AlertDiv.InnerHtml = "";
+
             DDLBuyerName.SelectedIndex = selectedIndex;
 
             TXTFirstName.Text = buyers.Tables["Buyers"].Rows[selectedIndex]["BuyerFirstName"].ToString();
@@ -153,7 +178,7 @@ namespace AMS
             DDLProvince.SelectedValue = buyers.Tables["Buyers"].Rows[selectedIndex]["BuyerProvince"].ToString();//
             TXTPostal.Text = buyers.Tables["Buyers"].Rows[selectedIndex]["BuyerPostalCode"].ToString();
             TXTPhone.Text = buyers.Tables["Buyers"].Rows[selectedIndex]["BuyerPhone"].ToString();
-            TXTDLicense.Text = buyers.Tables["Buyers"].Rows[selectedIndex]["BuyerPhone"].ToString();
+            TXTDLicense.Text = buyers.Tables["Buyers"].Rows[selectedIndex]["BuyerLicense"].ToString();
             CHKBanned.Checked = Convert.ToBoolean(buyers.Tables["Buyers"].Rows[selectedIndex]["Banned"].ToString());
             TXTNotes.Text = buyers.Tables["Buyers"].Rows[selectedIndex]["Notes"].ToString();
 
@@ -165,8 +190,12 @@ namespace AMS
                 BTNSubmit.CssClass = "btn btn-primary hidden";
                 BTNUpdate.Enabled = true;
                 BTNUpdate.CssClass = "btn btn-primary";
-                BTNDelete.Enabled = true;
-                BTNDelete.CssClass = "btn btn-primary";
+                bool allowed = buyerService.CheckIfBuyerIsDeletable(Convert.ToInt32(DDLBuyerName.SelectedValue));
+                if (allowed)
+                {
+                    BTNDelete.Enabled = true;
+                    BTNDelete.CssClass = "btn btn-primary";
+                }
             }
             else
             {
@@ -247,7 +276,35 @@ namespace AMS
 
         protected void BTNDelete_Click(object sender, EventArgs e)
         {
+            bool allowed = buyerService.CheckIfBuyerIsDeletable(Convert.ToInt32(DDLBuyerName.SelectedValue));
+            if (allowed)
+            {
+                try
+                {
+                    buyerService.DeleteBuyer(Convert.ToInt32(DDLBuyerName.SelectedValue));
 
+                    //Success message
+                    AlertDiv.InnerHtml = "<div class=\"alert alert-success fade in\">" +
+                    "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                    "<strong>Success!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "Buyer was deleted successfully" +
+                    "</label></div>";
+                }
+                catch (Exception ex)
+                {
+                    AlertDiv.InnerHtml = "<div class=\"alert alert-danger fade in\">" +
+                    "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                    "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + ex.Message +
+                    "</label></div>";
+                }
+            }
+            else
+            {
+                //Denied message
+                AlertDiv.InnerHtml = "<div class=\"alert alert-success fade in\">" +
+                "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                "<strong>Success!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "Could not delete Buyer, because there are cars associated with them." +
+                "</label></div>";
+            }
         }
     }
 }

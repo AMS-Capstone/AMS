@@ -10,7 +10,7 @@
 namespace AMS {
     
     
-    public partial class Vehicles {
+    public partial class Inventory {
         
         /// <summary>
         /// AlertDiv control.
@@ -22,148 +22,112 @@ namespace AMS {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl AlertDiv;
         
         /// <summary>
-        /// DDLSeller control.
+        /// LBCarList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DDLSeller;
+        protected global::System.Web.UI.WebControls.ListBox LBCarList;
         
         /// <summary>
-        /// TXTLotNumber control.
+        /// ConcealAddDiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TXTLotNumber;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ConcealAddDiv;
         
         /// <summary>
-        /// TXTYear control.
+        /// BTNAddVehicles control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TXTYear;
+        protected global::System.Web.UI.WebControls.Button BTNAddVehicles;
         
         /// <summary>
-        /// TXTMake control.
+        /// ConcealDiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TXTMake;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ConcealDiv;
         
         /// <summary>
-        /// TXTModel control.
+        /// BTNEditCarDetails control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TXTModel;
+        protected global::System.Web.UI.WebControls.Button BTNEditCarDetails;
         
         /// <summary>
-        /// TXTVin control.
+        /// CHKForSale control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TXTVin;
+        protected global::System.Web.UI.WebControls.CheckBox CHKForSale;
         
         /// <summary>
-        /// TXTMileage control.
+        /// TXTDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TXTMileage;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText TXTDate;
         
         /// <summary>
-        /// DDLUnits control.
+        /// TXTReserve control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DDLUnits;
+        protected global::System.Web.UI.WebControls.TextBox TXTReserve;
         
         /// <summary>
-        /// TXTTransmission control.
+        /// TXTEstValue control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TXTTransmission;
+        protected global::System.Web.UI.WebControls.TextBox TXTEstValue;
         
         /// <summary>
-        /// TXTColor control.
+        /// CHKRecord control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TXTColor;
+        protected global::System.Web.UI.WebControls.CheckBox CHKRecord;
         
         /// <summary>
-        /// TXTOptions control.
+        /// CHKCallOnHigh control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TXTOptions;
+        protected global::System.Web.UI.WebControls.CheckBox CHKCallOnHigh;
         
         /// <summary>
-        /// FUVehicle control.
+        /// TXTComments control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload FUVehicle;
-        
-        /// <summary>
-        /// BTNUpload control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BTNUpload;
-        
-        /// <summary>
-        /// imageCarousel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl imageCarousel;
-        
-        /// <summary>
-        /// BTNClear control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BTNClear;
-        
-        /// <summary>
-        /// BTNSubmit control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BTNSubmit;
+        protected global::System.Web.UI.WebControls.TextBox TXTComments;
         
         /// <summary>
         /// BTNUpdate control.

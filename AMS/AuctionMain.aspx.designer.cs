@@ -31,21 +31,66 @@ namespace AMS {
         protected global::System.Web.UI.WebControls.GridView GVAuction;
         
         /// <summary>
-        /// TXTNotes control.
+        /// ULContainer control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TXTNotes;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ULContainer;
         
         /// <summary>
-        /// BTNTotals control.
+        /// TXTPayment control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BTNTotals;
+        protected global::System.Web.UI.WebControls.TextBox TXTPayment;
+        
+        /// <summary>
+        /// DDLPaymentTypes control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DDLPaymentTypes;
+        
+        /// <summary>
+        /// LBLSurchargeInPercent control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LBLSurchargeInPercent;
+        
+        /// <summary>
+        /// TXTSurcharge control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TXTSurcharge;
+        
+        /// <summary>
+        /// btnAddPayment control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAddPayment;
+        
+        /// <summary>
+        /// BTNAddCarsToAuction control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BTNAddCarsToAuction;
     }
 }

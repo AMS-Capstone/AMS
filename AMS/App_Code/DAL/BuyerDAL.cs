@@ -38,7 +38,7 @@ namespace AMS.App_Code
             catch (Exception ex)
             {
                 //Panic
-                throw ex;
+                throw;
             }
             finally
             {
@@ -58,17 +58,18 @@ namespace AMS.App_Code
             {
                 MySqlCommand cmd = new MySqlCommand();
                 cmd.CommandText = "sp_createBuyer";
-                cmd.Parameters.Add(new MySqlParameter("@N_BuyerFirstName", buyer.BuyerFirstName));
-                cmd.Parameters.Add(new MySqlParameter("@N_BuyerLastName", buyer.BuyerLastName));
-                cmd.Parameters.Add(new MySqlParameter("@N_BuyerAddress", buyer.BuyerAddress));
-                cmd.Parameters.Add(new MySqlParameter("@N_BuyerCity", buyer.BuyerCity));
-                cmd.Parameters.Add(new MySqlParameter("@N_BuyerProvince", buyer.BuyerProvince));
-                cmd.Parameters.Add(new MySqlParameter("@N_BuyerPostalCode", buyer.BuyerPostalCode));
-                cmd.Parameters.Add(new MySqlParameter("@N_BuyerPhone", buyer.BuyerPhone));
-                cmd.Parameters.Add(new MySqlParameter("@N_BuyerBidderNumber", buyer.BidderNum));
-                cmd.Parameters.Add(new MySqlParameter("@N_BuyerPermanent", buyer.BuyerIsPermanent));
-                cmd.Parameters.Add(new MySqlParameter("@N_BuyerBanned", buyer.IsBanned));
-                cmd.Parameters.Add(new MySqlParameter("@N_BuyerNotes", buyer.Notes));
+                cmd.Parameters.Add(new MySqlParameter("@pBuyerFirstName", buyer.BuyerFirstName));
+                cmd.Parameters.Add(new MySqlParameter("@pBuyerLastName", buyer.BuyerLastName));
+                cmd.Parameters.Add(new MySqlParameter("@pBuyerAddress", buyer.BuyerAddress));
+                cmd.Parameters.Add(new MySqlParameter("@pBuyerCity", buyer.BuyerCity));
+                cmd.Parameters.Add(new MySqlParameter("@pBuyerProvince", buyer.BuyerProvince));
+                cmd.Parameters.Add(new MySqlParameter("@pBuyerPostalCode", buyer.BuyerPostalCode));
+                cmd.Parameters.Add(new MySqlParameter("@pBuyerPhone", buyer.BuyerPhone));
+                cmd.Parameters.Add(new MySqlParameter("@pBuyerLicense", buyer.BuyerDriverLicense));
+                cmd.Parameters.Add(new MySqlParameter("@pBuyerBidderNumber", buyer.BidderNum));
+                cmd.Parameters.Add(new MySqlParameter("@pBuyerPermanent", buyer.BuyerIsPermanent));
+                cmd.Parameters.Add(new MySqlParameter("@pBuyerBanned", buyer.IsBanned));
+                cmd.Parameters.Add(new MySqlParameter("@pBuyerNotes", buyer.Notes));
 
                 MySqlParameter returnParameter = new MySqlParameter();
                 returnParameter.Direction = System.Data.ParameterDirection.ReturnValue;
@@ -83,7 +84,7 @@ namespace AMS.App_Code
             catch (Exception ex)
             {
                 //Panic
-                throw ex;
+                throw;
             }
             finally
             {
@@ -91,6 +92,42 @@ namespace AMS.App_Code
                 conn.Close();
             }
             return id;
+        }
+
+        //Check if buyer is deletable
+        public bool CheckIfBuyerIsDeletable(int buyerID)
+        {
+            bool allowed = false;
+            MySqlConnection conn = new MySqlConnection(connectionString);
+            conn.Open();
+
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.CommandText = "sp_checkIfBuyerIsDeletable";
+                cmd.Parameters.Add(new MySqlParameter("@pBuyerID", buyerID));
+
+                MySqlParameter returnParameter = new MySqlParameter();
+                returnParameter.Direction = System.Data.ParameterDirection.ReturnValue;
+
+                cmd.Parameters.Add(returnParameter);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = conn;
+                cmd.ExecuteNonQuery();
+
+                allowed = Convert.ToBoolean(returnParameter.Value);
+            }
+            catch (Exception ex)
+            {
+                //Panic
+                throw;
+            }
+            finally
+            {
+                //Tie the loose ends here
+                conn.Close();
+            }
+            return allowed;
         }
 
         //Update a buyer
@@ -103,18 +140,19 @@ namespace AMS.App_Code
             {
                 MySqlCommand cmd = new MySqlCommand();
                 cmd.CommandText = "sp_updateBuyer";
-                cmd.Parameters.Add(new MySqlParameter("@N_BuyerID", buyer.BuyerID));
-                cmd.Parameters.Add(new MySqlParameter("@N_BuyerFirstName", buyer.BuyerFirstName));
-                cmd.Parameters.Add(new MySqlParameter("@N_BuyerLastName", buyer.BuyerLastName));
-                cmd.Parameters.Add(new MySqlParameter("@N_BuyerAddress", buyer.BuyerAddress));
-                cmd.Parameters.Add(new MySqlParameter("@N_BuyerCity", buyer.BuyerCity));
-                cmd.Parameters.Add(new MySqlParameter("@N_BuyerProvince", buyer.BuyerProvince));
-                cmd.Parameters.Add(new MySqlParameter("@N_BuyerPostalCode", buyer.BuyerPostalCode));
-                cmd.Parameters.Add(new MySqlParameter("@N_BuyerPhone", buyer.BuyerPhone));
-                cmd.Parameters.Add(new MySqlParameter("@N_BuyerBidderNumber", buyer.BidderNum));
-                cmd.Parameters.Add(new MySqlParameter("@N_BuyerPermanent", buyer.BuyerIsPermanent));
-                cmd.Parameters.Add(new MySqlParameter("@N_BuyerBanned", buyer.IsBanned));
-                cmd.Parameters.Add(new MySqlParameter("@N_BuyerNotes", buyer.Notes));
+                cmd.Parameters.Add(new MySqlParameter("@pBuyerID", buyer.BuyerID));
+                cmd.Parameters.Add(new MySqlParameter("@pBuyerFirstName", buyer.BuyerFirstName));
+                cmd.Parameters.Add(new MySqlParameter("@pBuyerLastName", buyer.BuyerLastName));
+                cmd.Parameters.Add(new MySqlParameter("@pBuyerAddress", buyer.BuyerAddress));
+                cmd.Parameters.Add(new MySqlParameter("@pBuyerCity", buyer.BuyerCity));
+                cmd.Parameters.Add(new MySqlParameter("@pBuyerProvince", buyer.BuyerProvince));
+                cmd.Parameters.Add(new MySqlParameter("@pBuyerPostalCode", buyer.BuyerPostalCode));
+                cmd.Parameters.Add(new MySqlParameter("@pBuyerPhone", buyer.BuyerPhone));
+                cmd.Parameters.Add(new MySqlParameter("@pBuyerLicense", buyer.BuyerDriverLicense));
+                cmd.Parameters.Add(new MySqlParameter("@pBuyerBidderNumber", buyer.BidderNum));
+                cmd.Parameters.Add(new MySqlParameter("@pBuyerPermanent", buyer.BuyerIsPermanent));
+                cmd.Parameters.Add(new MySqlParameter("@pBuyerBanned", buyer.IsBanned));
+                cmd.Parameters.Add(new MySqlParameter("@pBuyerNotes", buyer.Notes));
 
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Connection = conn;
@@ -123,7 +161,35 @@ namespace AMS.App_Code
             catch (Exception ex)
             {
                 //Panic
-                throw ex;
+                throw;
+            }
+            finally
+            {
+                //Tie the loose ends here
+                conn.Close();
+            }
+        }
+
+        //Delete a buyer
+        public void DeleteBuyer(int BuyerID)
+        {
+            MySqlConnection conn = new MySqlConnection(connectionString);
+            conn.Open();
+
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.CommandText = "sp_deleteBuyer";
+                cmd.Parameters.Add(new MySqlParameter("@pBuyerID", BuyerID));
+
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = conn;
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                //Panic
+                throw;
             }
             finally
             {

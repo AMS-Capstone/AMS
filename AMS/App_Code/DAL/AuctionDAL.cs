@@ -20,33 +20,71 @@ namespace AMS.App_Code
             }
         }
 
-         public DataSet findAuctions(String auctionYear)
-         {
-             DataSet ds = new DataSet("Auctions");
-             MySqlConnection conn = new MySqlConnection(connectionString);
-             MySqlDataAdapter da = new MySqlDataAdapter();
+        public DataSet findAuctions(String auctionYear)
+        {
+            DataSet ds = new DataSet("Auctions");
+            MySqlConnection conn = new MySqlConnection(connectionString);
+            MySqlDataAdapter da = new MySqlDataAdapter();
 
-             try
-             {
+            try
+            {
+            MySqlCommand cmd = new MySqlCommand();
+            cmd.CommandText = "sp_findAuction";
+            cmd.Parameters.Add(new MySqlParameter("@pAuctionYear", auctionYear));
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = conn;
+            da.SelectCommand = cmd;
+            da.Fill(ds, "Auctions");
+        }
+            catch (Exception ex)
+            {
+                //Panic
+                throw;
+            }
+            finally
+            {
+                //Tie the loose ends here
+            }
+            return ds;
+        }
+
+
+        public Auction getAuction(int auctionID)
+        {
+            DataSet ds = new DataSet();
+            Auction auction = new Auction();
+            MySqlConnection conn = new MySqlConnection(connectionString);
+            MySqlDataAdapter da = new MySqlDataAdapter();
+
+            try
+            {
                 MySqlCommand cmd = new MySqlCommand();
-                cmd.CommandText = "sp_findAuction";
-                cmd.Parameters.Add(new MySqlParameter("@pAuctionYear", auctionYear));
+                cmd.CommandText = "sp_getAuction";
+                cmd.Parameters.Add(new MySqlParameter("@pAuctionID", auctionID));
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Connection = conn;
                 da.SelectCommand = cmd;
-                da.Fill(ds, "Auctions");
+                da.Fill(ds);
+
+                auction.AuctionID = auctionID;
+                auction.AuctionDate = Convert.ToDateTime(ds.Tables[0].Rows[0]["AuctionDate"].ToString());
+                auction.AuctionTotal = Convert.ToDouble(ds.Tables[0].Rows[0]["AuctionTotal"].ToString());
+                auction.Surcharges = Convert.ToDouble(ds.Tables[0].Rows[0]["Surcharges"].ToString());
+                auction.CashCharges = Convert.ToDouble(ds.Tables[0].Rows[0]["CashCharges"].ToString());
+                auction.ChequeCharges = Convert.ToDouble(ds.Tables[0].Rows[0]["ChequeCharges"].ToString());
+                auction.CreditCardCharges = Convert.ToDouble(ds.Tables[0].Rows[0]["CreditCardCharges"].ToString());                
             }
-             catch (Exception ex)
-             {
-                 //Panic
-                 throw ex;
-             }
-             finally
-             {
-                 //Tie the loose ends here
-             }
-             return ds;
-         }
+            catch (Exception ex)
+            {
+                //Panic
+                throw;
+            }
+            finally
+            {
+                //Tie the loose ends here
+            }
+            return auction;
+        }
 
 
         public DataSet getAuctionYears()
@@ -68,7 +106,7 @@ namespace AMS.App_Code
             catch (Exception ex)
             {
                 //Panic
-                throw ex;
+                throw;
             }
             finally
             {
@@ -77,6 +115,7 @@ namespace AMS.App_Code
             return ds;
         }
 
+        //Retrieves only vehicles that are for sale
         public DataSet viewVehiclesForSale()
         {
             DataSet ds = new DataSet("Auctions");
@@ -96,13 +135,39 @@ namespace AMS.App_Code
             catch (Exception ex)
             {
                 //Panic
-                throw ex;
+                throw;
             }
             finally
             {
                 //Tie the loose ends here
             }
             return ds;
+        }
+
+        //Resets non-permanent bidder numbers
+        public void ResetBidderNumbers()
+        {
+            MySqlConnection conn = new MySqlConnection(connectionString);
+
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.CommandText = "sp_resetBuyerBidnums";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = conn;
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                //Panic
+                throw;
+            }
+            finally
+            {
+                //Tie the loose ends here
+                conn.Close();
+            }
         }
 
 
@@ -137,7 +202,7 @@ namespace AMS.App_Code
             catch (Exception ex)
             {
                 //Panic
-                throw ex;
+                throw;
             }
             finally
             {
@@ -158,18 +223,18 @@ namespace AMS.App_Code
             {
                 MySqlCommand cmd = new MySqlCommand();
                 cmd.CommandText = "sp_createAuctionSale";
-                cmd.Parameters.Add(new MySqlParameter("@N_AuctionID", auctionSale.AuctionID));
-                cmd.Parameters.Add(new MySqlParameter("@N_VehicleID", auctionSale.VehicleID));
-                cmd.Parameters.Add(new MySqlParameter("@N_BuyerID", auctionSale.BuyerID));
-                cmd.Parameters.Add(new MySqlParameter("@N_BidderNumber", auctionSale.BidderNumber));
-                cmd.Parameters.Add(new MySqlParameter("@N_SellingPrice", auctionSale.SellingPrice));
-                cmd.Parameters.Add(new MySqlParameter("@N_BuyersFee", auctionSale.BuyersFee));
-                cmd.Parameters.Add(new MySqlParameter("@N_Deposit", auctionSale.Deposit));
-                cmd.Parameters.Add(new MySqlParameter("@N_ConditionID", auctionSale.ConditionID));
-                cmd.Parameters.Add(new MySqlParameter("@N_GSTID", auctionSale.GstID));
-                cmd.Parameters.Add(new MySqlParameter("@N_Total", auctionSale.Total));
-                cmd.Parameters.Add(new MySqlParameter("@N_Saledate", auctionSale.SaleDate));
-                cmd.Parameters.Add(new MySqlParameter("@N_Notes", auctionSale.Notes));
+                cmd.Parameters.Add(new MySqlParameter("@pAuctionID", auctionSale.AuctionID));
+                cmd.Parameters.Add(new MySqlParameter("@pVehicleID", auctionSale.VehicleID));
+                cmd.Parameters.Add(new MySqlParameter("@pBuyerID", auctionSale.BuyerID));
+                cmd.Parameters.Add(new MySqlParameter("@pBidderNumber", auctionSale.BidderNumber));
+                cmd.Parameters.Add(new MySqlParameter("@pSellingPrice", auctionSale.SellingPrice));
+                cmd.Parameters.Add(new MySqlParameter("@pBuyersFee", auctionSale.BuyersFee));
+                cmd.Parameters.Add(new MySqlParameter("@pDeposit", auctionSale.Deposit));
+                cmd.Parameters.Add(new MySqlParameter("@pConditionID", auctionSale.ConditionID));
+                cmd.Parameters.Add(new MySqlParameter("@pGSTID", auctionSale.GstID));
+                cmd.Parameters.Add(new MySqlParameter("@pTotal", auctionSale.Total));
+                cmd.Parameters.Add(new MySqlParameter("@pSaledate", auctionSale.SaleDate));
+                cmd.Parameters.Add(new MySqlParameter("@pNotes", auctionSale.Notes));
 
                 MySqlParameter returnParameter = new MySqlParameter();
                 returnParameter.Direction = System.Data.ParameterDirection.ReturnValue;
@@ -184,7 +249,7 @@ namespace AMS.App_Code
             catch (Exception ex)
             {
                 //Panic
-                throw ex;
+                throw;
             }
             finally
             {
