@@ -36,16 +36,18 @@ namespace AMS
                 "</label></div>";
             }
 
+            //Checking if the page was called to add vehicles to an auction
             if (addingVehicles == true)
             {
+                //Concealing irrelevant parts of the interface
                 ConcealDiv.InnerHtml = "";
+                //Enabling multiselect for the vehicle list
                 LBCarList.SelectionMode = ListSelectionMode.Multiple;
-                //Retrieving inventory vehicles
                 try
                 {
-
                     if (!IsPostBack)
                     {
+                        //Retrieving vehicles for sale, but not yet in the auction
                         inventory = inventoryService.viewAvailableInventoryVehicles(auctionID);
 
                         LBCarList.DataTextField = "DisplayInfo";
@@ -64,19 +66,22 @@ namespace AMS
             }
             else
             {
+                //Hiding the button for adding vehicles to an auction
                 ConcealAddDiv.InnerHtml = "";
-                //Retrieving vehicles for sale
                 try
                 {
-
                     if (!IsPostBack)
                     {
+                        //Retrieving all inventory vehicles
                         inventory = inventoryService.viewInventoryVehicles();
 
                         LBCarList.DataTextField = "DisplayInfo";
                         LBCarList.DataValueField = "VehicleID";
                         LBCarList.DataSource = inventory;
                         LBCarList.DataBind();
+
+                        //TODO: Add methods to retrieve Fee Types
+                        //TOOD: Databind Fee Types
                     }
                 }
                 catch (Exception ex)
@@ -103,7 +108,6 @@ namespace AMS
             //This code pulls up a list of fees accrued by the car and the conditions and requirements object from the database
             try
             {
-                //TODO: Implement
                 VehicleConditionsRequirements vcr = new VehicleConditionsRequirements();
                 vcr = inventoryService.GetVehicleConditionsRequirements(Convert.ToInt32(LBCarList.SelectedValue.ToString()));
 
@@ -116,6 +120,8 @@ namespace AMS
                 CHKRecord.Checked = vcr.Record;
                 Session["vcrID"] = vcr.Id.ToString();
                 Session["vcrVID"] = vcr.VehicleID.ToString();
+
+                //TODO: Implementent Retrieving of the fees for the car
             }
             catch (Exception ex)
             {
@@ -245,6 +251,11 @@ namespace AMS
 
             //This code will refresh the Car Listbox
             //Response.Redirect("~/Inventory?AuctionID=" + auctionID.ToString() + "&AddingVehicles=true" + "&AuctionDate=" + getAuctionDatefromParameters());
+        }
+
+        protected void BTNAdd_Click(object sender, EventArgs e)
+        {
+            //TODO: Implement addition of Fees
         }
     }
 }
