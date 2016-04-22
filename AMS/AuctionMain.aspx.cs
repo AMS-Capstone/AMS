@@ -20,6 +20,7 @@ namespace AMS
         DataAction dataAction = new DataAction();
         int auctionID = 0;
         int counter = 0;
+        GST gst = new GST();
         
         Auction auction = new Auction();
         AuctionDAL auctionService = new AuctionDAL();
@@ -57,6 +58,8 @@ namespace AMS
                 "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + ex.Message +
                 "</label></div>";
             }
+
+            gst = auctionMainService.GetActiveGST();
 
             if (auctionIDString != null)
             {
@@ -98,7 +101,8 @@ namespace AMS
                     if (!IsPostBack)
                     {
 
-                        auctionData = auctionMainService.GetAuctionData(auctionID);
+                        auctionData = postProcessAuctionData(auctionMainService.GetAuctionData(auctionID));
+
 
                         if (auctionData.Tables.Count > 0 && auctionData.Tables[0].Rows.Count > 0)
                         {
@@ -131,6 +135,25 @@ namespace AMS
                 "<strong>Warning!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "Could not retrieve any auction data from the server." +
                 "</label></div>";
             }
+        }
+
+        protected DataSet postProcessAuctionData(DataSet tempAuctionData)
+        {
+            DataSet newAuctionData = new DataSet();
+            DataTable tempTable = new DataTable();
+
+            foreach (DataRow row in tempAuctionData.Tables[0].Rows)
+            {
+                row["GST"] = Convert.ToDouble(gst.GSTPercent) / 100 * (Convert.ToDouble(row["SellingPrice"]) + Convert.ToDouble(row["BuyersFee"]));
+                row["Total"] = Convert.ToDouble(row["SellingPrice"]) + Convert.ToDouble(row["BuyersFee"]) + Convert.ToDouble(row["GST"]);
+
+                row["NetTotal"] = Convert.ToDouble(row["Total"]) - Convert.ToDouble(row["Deposit"]) - Convert.ToDouble(row["Payments"]);
+
+                //tempTable.Rows.Add(row);
+            }
+            //newAuctionData.Tables.Add(tempTable);
+
+            return tempAuctionData;
         }
 
         protected void RowDataBound(object sender, GridViewRowEventArgs e)
@@ -207,7 +230,7 @@ namespace AMS
             GVAuction.EditIndex = e.NewEditIndex;
             try
             {
-                auctionData = auctionMainService.GetAuctionData(auctionID);
+                auctionData = postProcessAuctionData(auctionMainService.GetAuctionData(auctionID));
                 GVAuction.DataSource = auctionData.Tables[0].DefaultView;
                 GVAuction.DataBind();
 
@@ -249,11 +272,22 @@ namespace AMS
 
             sale.AuctionID = auctionID = Convert.ToInt16(Request["AuctionID"]);
 
+            sale.GstID = gst.GSTID;
 
-            GVAuction.EditIndex = -1;
-            auctionData = auctionMainService.GetAuctionData(auctionID);
-            GVAuction.DataSource = auctionData.Tables[0].DefaultView;
-            DataBind();
+            try
+            {
+                updateAuctionSale(sale);
+
+                GVAuction.EditIndex = -1;
+                auctionData = postProcessAuctionData(auctionMainService.GetAuctionData(auctionID));
+                GVAuction.DataSource = auctionData.Tables[0].DefaultView;
+                DataBind();
+            }
+            catch
+            {
+
+            }
+            
 
             //AlertDiv.InnerHtml = "<div class=\"alert alert-warning fade in\">" +
             //       "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
@@ -275,7 +309,7 @@ namespace AMS
         protected void gv_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {
             GVAuction.EditIndex = -1;
-            auctionData = auctionMainService.GetAuctionData(auctionID);
+            auctionData = postProcessAuctionData(auctionMainService.GetAuctionData(auctionID));
             GVAuction.DataSource = auctionData.Tables[0].DefaultView;
             DataBind();
 
@@ -305,7 +339,7 @@ namespace AMS
         //This code will calculate auction totals and auction details
         protected void BTNTotals_Click(object sender, EventArgs e)
         {
-            auctionData = auctionMainService.GetAuctionData(auctionID);
+            auctionData = postProcessAuctionData(auctionMainService.GetAuctionData(auctionID));
             AuctionDAL auctionService = new AuctionDAL();
             Auction auction = auctionService.getAuction(auctionID);
             String report = ""; //Lot, sale status, buyer name, buyer phone, selling price, grand total
@@ -371,7 +405,7 @@ namespace AMS
                 createPayment(payment);
             }
 
-            //Recalculate the totals
+            //TODO: Recalculate the totals
 
             //Success message
             AlertDiv.InnerHtml = "<div class=\"alert alert-success fade in\">" +
@@ -380,7 +414,7 @@ namespace AMS
             "</label></div>";
             
             GVAuction.EditIndex = -1;
-            auctionData = auctionMainService.GetAuctionData(auctionID);
+            auctionData = postProcessAuctionData(auctionMainService.GetAuctionData(auctionID));
             GVAuction.DataSource = auctionData.Tables[0].DefaultView;
             DataBind();
         }
@@ -427,7 +461,6 @@ namespace AMS
                     "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + ex.Message +
                     "</label></div>";
                 }
-                
             }
         }
 
@@ -435,9 +468,10 @@ namespace AMS
         {
             try
             {
-                String carList = ""; //File.ReadAllText(".\\App_LocalResources\\Log Sheet.txt");
+                //String carList = ""; //File.ReadAllText(".\\App_LocalResources\\Log Sheet.txt");
 
-                
+                //TODO: Retrieve the template file
+                //TODO: Generate report
             }
             catch (Exception ex)
             {

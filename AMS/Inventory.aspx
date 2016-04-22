@@ -100,7 +100,41 @@
                 </div>
             </div>
 
-            <div class="row"><hr /></div>    
+            <%--<div class="form-group row">
+                <label class="control-label col-xs-12 col-sm-2" for="LBFees">Fees:</label>
+                <div class="col-xs-12 col-sm-5">
+                    <asp:ListBox ID="LBFees" CssClass="form-control"  runat="server" Rows="10"></asp:ListBox>
+                </div>
+            </div>--%>
+
+            <div class="form-group row">
+                <div class="col-xs-12 col-sm-10 col-sm-offset-2">
+                    
+                </div>
+            </div>
+
+            
+
+            <div id="addFeeModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Add Fee Form</h4>
+                        </div>
+                        <div class="modal-body row">
+                            <%-- TODO: Implement Fee Dropdown control
+                            TODO: implement Cost TextBox--%>
+                        </div>
+                        <div class="modal-footer">
+                            <asp:Button ID="BTNAdd" runat="server" CssClass="btn btn-primary"  Text="Add Fees" OnClick="BTNAdd_Click" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row"><hr /></div>
             <div class="form-group row">
                 <div class="col-xs-12">
                     <asp:Button ID="BTNUpdate" runat="server" CssClass="btn btn-primary"  Text="Update Conditions and Requirements" OnClick="BTNUpdate_Click" />
