@@ -323,7 +323,7 @@ CREATE PROCEDURE sp_viewConditionStatus()
 
 BEGIN
 	
-	Select ConditionId,CONCAT( ConditionCode , if (ConditionDescription is null, "", CONCAT( ' - ' , ConditionDescription))) as Description, Status
+	Select ConditionId,CONCAT( ConditionCode , if (ConditionDescription is null, "", CONCAT(ConditionDescription))) as Description, Status
 	FROM conditionstatus;
 
 END//
