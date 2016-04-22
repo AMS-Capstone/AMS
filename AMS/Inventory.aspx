@@ -100,12 +100,12 @@
                 </div>
             </div>
 
-            <div class="form-group row">
+            <%--<div class="form-group row">
                 <label class="control-label col-xs-12 col-sm-2" for="LBFees">Fees:</label>
                 <div class="col-xs-12 col-sm-5">
                     <asp:ListBox ID="LBFees" CssClass="form-control"  runat="server" Rows="10"></asp:ListBox>
                 </div>
-            </div>
+            </div>--%>
 
             <div class="form-group row">
                 <div class="col-xs-12 col-sm-10 col-sm-offset-2">
