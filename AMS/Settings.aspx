@@ -45,6 +45,11 @@
                         <ItemTemplate>
                             <asp:Label ID="lblCondtionID" runat="server" Text='<%# Eval("ConditionID") %>'></asp:Label>
                         </ItemTemplate>
+                        <EditItemTemplate>
+                          
+                            <asp:Label ID="lblCondtionID" runat="server" Text='<%# Eval("ConditionID") %>'></asp:Label>
+                       
+                        </EditItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Description">
                         <ItemTemplate>
@@ -56,13 +61,15 @@
                             </asp:TextBox>                               
                         </EditItemTemplate>
                     </asp:TemplateField>
-                   <%--    <asp:TemplateField HeaderText="Status">
+                    
+                   <asp:TemplateField HeaderText="Status">
                                 <ItemTemplate>
-                                    <asp:TextBox ID="txtCondtionDescription"   AutoPostBack="true" runat="server"
-                                        Text='<%# Eval("Status") %>' ></asp:TextBox>
-                               
+                                    <asp:CheckBox id="cbStatus" runat="server" Enabled="false" AutoPostBack="false" Checked='<%# Eval("Status") %>'/>
                                 </ItemTemplate>
-                            </asp:TemplateField>--%>
+                       <EditItemTemplate>
+                           <asp:CheckBox id="cbStatus" runat="server" AutoPostBack="false" Checked='<%# Eval("Status") %>'/>
+                       </EditItemTemplate>
+                            </asp:TemplateField>
                 </Columns>
             </asp:GridView>
         </div>
@@ -136,6 +143,14 @@
                                 Text='<%# Eval("FeeType") %>' ></asp:TextBox>                               
                         </EditItemTemplate>
                     </asp:TemplateField>
+                     <asp:TemplateField HeaderText="Status">
+                                <ItemTemplate>
+                                    <asp:CheckBox id="cbStatus" runat="server" Enabled="false" AutoPostBack="false" Checked='<%# Eval("Status") %>'/>
+                                </ItemTemplate>
+                       <EditItemTemplate>
+                           <asp:CheckBox id="cbStatus" runat="server" AutoPostBack="false" Checked='<%# Eval("Status") %>'/>
+                       </EditItemTemplate>
+                            </asp:TemplateField>
                    <%--    <asp:TemplateField HeaderText="Status">
                                 <ItemTemplate>
                                     <asp:TextBox ID="txtCondtionDescription"   AutoPostBack="true" runat="server"
@@ -214,7 +229,14 @@
                                 Text='<%# Eval("SurchargeInPercent") %>'></asp:TextBox>                               
                         </EditItemTemplate>
                     </asp:TemplateField>
-
+                      <asp:TemplateField HeaderText="Status">
+                                <ItemTemplate>
+                                    <asp:CheckBox id="cbStatus" runat="server" Enabled="false" AutoPostBack="false" Checked='<%# Eval("Status") %>'/>
+                                </ItemTemplate>
+                       <EditItemTemplate>
+                           <asp:CheckBox id="cbStatus" runat="server" AutoPostBack="false" Checked='<%# Eval("Status") %>'/>
+                       </EditItemTemplate>
+                            </asp:TemplateField>
                     
                     <%--    <asp:TemplateField HeaderText="Status">
                                 <ItemTemplate>

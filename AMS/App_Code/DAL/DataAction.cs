@@ -42,6 +42,104 @@ namespace AMS.App_Code
         }
 
         //Update a GST Code
+
+        public DataTable CheckConditionStatus()
+        {
+            DataTable dt = new DataTable();
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    using (MySqlCommand cmd = conn.CreateCommand())
+                    {
+                        conn.Open();
+                        cmd.CommandText = "sp_checkConditionStatus";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt);
+
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //Panic
+                    throw;
+                }
+                finally
+                {
+                    //Tie the loose ends here
+                }
+            }
+            return dt;
+        }
+
+        public DataTable CheckPaymentTypes()
+        {
+            DataTable dt = new DataTable();
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    using (MySqlCommand cmd = conn.CreateCommand())
+                    {
+                        conn.Open();
+                        cmd.CommandText = "sp_checkPaymentType";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt);
+
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //Panic
+                    throw;
+                }
+                finally
+                {
+                    //Tie the loose ends here
+                }
+            }
+            return dt;
+        }
+        public DataTable CheckFeeTypes()
+        {
+            DataTable dt = new DataTable();
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    using (MySqlCommand cmd = conn.CreateCommand())
+                    {
+                        conn.Open();
+                        cmd.CommandText = "sp_checkFeeTypes";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                        {
+                            da.Fill(dt);
+
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //Panic
+                    throw;
+                }
+                finally
+                {
+                    //Tie the loose ends here
+                }
+            }
+            return dt;
+        }
         public void UpdateGSTEntry(int gstId, double gstPercent, bool status)
         {
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
@@ -136,7 +234,7 @@ namespace AMS.App_Code
             return dt;
         }
         //Create condition status
-        public void CreateConditionStatus(string conditionCode, string conditionDescription)
+        public void CreateConditionStatus(string conditionCode, string conditionDescription, bool status)
         {
             try
             {
@@ -147,6 +245,7 @@ namespace AMS.App_Code
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("pConditionCode", conditionCode);
                     cmd.Parameters.AddWithValue("pConditionDescription", conditionDescription);
+                    cmd.Parameters.AddWithValue("pStatus", status);
                     conn.Open();
                     cmd.ExecuteNonQuery();
                 }
@@ -162,7 +261,7 @@ namespace AMS.App_Code
             }
         }
 
-        public  void UpdateConditionStatus(int conditionID, string conditionDescription, string conditionCode)
+        public  void UpdateConditionStatus(int conditionID, string conditionDescription, string conditionCode, bool status)
         {
             try
             {
@@ -174,6 +273,7 @@ namespace AMS.App_Code
                     cmd.Parameters.AddWithValue("pConditionID", conditionID);
                     cmd.Parameters.AddWithValue("pConditionDescription", conditionDescription);
                     cmd.Parameters.AddWithValue("pConditionCode", conditionCode);
+                    cmd.Parameters.AddWithValue("pStatus", status);
                     conn.Open();
                     cmd.ExecuteNonQuery();
                 }
@@ -328,7 +428,7 @@ namespace AMS.App_Code
         }
 
 
-        public void CreateFeeType(double feeCost, string feeType)
+        public void CreateFeeType(double feeCost, string feeType, bool status)
         {
             try
             {
@@ -339,7 +439,7 @@ namespace AMS.App_Code
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("pFeeCost", feeCost);
                     cmd.Parameters.AddWithValue("pFeeType", feeType);
-                
+                    cmd.Parameters.AddWithValue("pStatus", status);
                     conn.Open();
                     cmd.ExecuteNonQuery();
                 }
@@ -392,7 +492,7 @@ namespace AMS.App_Code
         }
 
         //Update Fee Type
-        public void UpdateFeeType(int feeID, double feeCost, string feeType)
+        public void UpdateFeeType(int feeID, double feeCost, string feeType, bool status)
         {
             try
             {
@@ -404,6 +504,7 @@ namespace AMS.App_Code
                     cmd.Parameters.AddWithValue("pFeeId", feeID);
                     cmd.Parameters.AddWithValue("pFeeType", feeType);
                     cmd.Parameters.AddWithValue("pFeeCost", feeCost);
+                    cmd.Parameters.AddWithValue("pStatus", status);
                     conn.Open();
                     cmd.ExecuteNonQuery();
                 }
@@ -456,7 +557,7 @@ namespace AMS.App_Code
 
 
         //Create Payment Type
-        public void CreatePaymentType(string paymentDescription)
+        public void CreatePaymentType(string paymentDescription, double surchargeInPercent, bool status)
         {
             try
             {
@@ -466,7 +567,8 @@ namespace AMS.App_Code
                     MySqlCommand cmd = new MySqlCommand("sp_createPaymentType", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("pPaymentDescription", paymentDescription);
-
+                    cmd.Parameters.AddWithValue("pSurchargeInPercent", surchargeInPercent);
+                    cmd.Parameters.AddWithValue("pStatus", status);
                     conn.Open();
                     cmd.ExecuteNonQuery();
                 }
@@ -484,7 +586,7 @@ namespace AMS.App_Code
 
 
 //Update PaymentType
-        public void UpdatePaymentType(int paymentID, string paymentDescription, double surcharge)
+        public void UpdatePaymentType(int paymentID, string paymentDescription, double surcharge, bool status)
         {
             try
             {
@@ -496,7 +598,7 @@ namespace AMS.App_Code
                     cmd.Parameters.AddWithValue("pPaymentID", paymentID);
                     cmd.Parameters.AddWithValue("pPaymentDescription", paymentDescription);
                     cmd.Parameters.AddWithValue("pSurchargeInPercent", surcharge);
-                    
+                    cmd.Parameters.AddWithValue("pStatus", status);
 
 
                     conn.Open();
@@ -637,7 +739,7 @@ namespace AMS.App_Code
                     {
                         conn.Open();
                         cmd.CommandText = "sp_getVehicleByID";
-                        cmd.Parameters.AddWithValue("N_VehicleID", vehicleID);
+                        cmd.Parameters.AddWithValue("pVehicleID", vehicleID);
                         cmd.CommandType = CommandType.StoredProcedure;
                         using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
                         {
@@ -722,6 +824,49 @@ namespace AMS.App_Code
             return id;
         }
 
+
+        public void UpdateVehicle(Vehicle vehicle)
+        {
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GaryHanna"].ConnectionString;
+            
+            MySqlConnection conn = new MySqlConnection(connectionString);
+            MySqlCommand cmd = new MySqlCommand("sp_updateVehicle", conn);
+            cmd.Parameters.AddWithValue("pVehicleID", vehicle.VehicleID);
+            cmd.Parameters.AddWithValue("pLotNumber", vehicle.LotNumber);
+            cmd.Parameters.AddWithValue("pYear", vehicle.Year);
+            cmd.Parameters.AddWithValue("pMake", vehicle.Make);
+            cmd.Parameters.AddWithValue("pModel", vehicle.Model);
+            cmd.Parameters.AddWithValue("pVin", vehicle.Vin);
+            cmd.Parameters.AddWithValue("pColor", vehicle.Color);
+            cmd.Parameters.AddWithValue("pMileage", vehicle.Mileage);
+            cmd.Parameters.AddWithValue("pProvince", vehicle.Province);
+            cmd.Parameters.AddWithValue("pUnits", vehicle.Units);
+            cmd.Parameters.AddWithValue("pTransmission", vehicle.Transmission);
+            cmd.Parameters.AddWithValue("pSellerID", vehicle.SellerID);
+            cmd.Parameters.AddWithValue("pVehicleOptions", vehicle.Options);
+
+
+            try
+            {
+                conn.Open();
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = conn;
+                cmd.ExecuteNonQuery();
+
+            }
+            catch (Exception ex)
+            {
+                //Panic
+                throw;
+            }
+            finally
+            {
+                //Tie the loose ends here
+                conn.Close();
+
+            }
+        }
+
         public int CreateImage(byte[] data, int vehicleID )
         {
             int id = 0;
@@ -772,7 +917,7 @@ namespace AMS.App_Code
             {
                 MySqlCommand cmd = new MySqlCommand();
                 cmd.CommandText = "sp_getVehiclePicturesByVehicleID";
-                cmd.Parameters.Add(new MySqlParameter("@N_VehicleID", vehicleID));
+                cmd.Parameters.Add(new MySqlParameter("@pVehicleID", vehicleID));
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Connection = conn;
                 da.SelectCommand = cmd;

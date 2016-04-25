@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using System.Data;
 using AMS.App_Code;
 using AMS.App_Code.DAL;
+using AMS.App_Code.SuppportClasses;
 
 namespace AMS
 {
@@ -15,15 +16,17 @@ namespace AMS
         DataSet inventory = new DataSet();
         InventoryDAL inventoryService = new InventoryDAL();
         AuctionDAL auctionService = new AuctionDAL();
-        bool addingVehicles = false;
+        Boolean addingVehicles = false;
+        GST activeGST = new AuctionMainDAL().GetActiveGST();
+        int auctionID = 0;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             //Checking if the vehicles are to be added to the auction
-            String addingVehiclesString = "";
             try
             {
-                addingVehiclesString = Request["AddingVehicles"];
+                addingVehicles = CheckIfAddingVehicles();
+                auctionID = getAuctionIDfromParameters();
             }
             catch (Exception ex) 
             {
@@ -33,21 +36,19 @@ namespace AMS
                 "</label></div>";
             }
 
-            if (addingVehiclesString != null)
-            {
-                addingVehicles = Convert.ToBoolean(addingVehiclesString);
-            }
+            //Checking if the page was called to add vehicles to an auction
             if (addingVehicles == true)
             {
+                //Concealing irrelevant parts of the interface
+                ConcealDiv.InnerHtml = "";
+                //Enabling multiselect for the vehicle list
                 LBCarList.SelectionMode = ListSelectionMode.Multiple;
-
-                //Retrieving inventory vehicles
                 try
                 {
-
                     if (!IsPostBack)
                     {
-                        inventory = inventoryService.viewInventoryVehicles();
+                        //Retrieving vehicles for sale, but not yet in the auction
+                        inventory = inventoryService.viewAvailableInventoryVehicles(auctionID);
 
                         LBCarList.DataTextField = "DisplayInfo";
                         LBCarList.DataValueField = "VehicleID";
@@ -65,18 +66,22 @@ namespace AMS
             }
             else
             {
-                //Retrieving inventory vehicles
+                //Hiding the button for adding vehicles to an auction
+                ConcealAddDiv.InnerHtml = "";
                 try
                 {
-
                     if (!IsPostBack)
                     {
-                        inventory = auctionService.viewVehiclesForSale();
+                        //Retrieving all inventory vehicles
+                        inventory = inventoryService.viewInventoryVehicles();
 
                         LBCarList.DataTextField = "DisplayInfo";
                         LBCarList.DataValueField = "VehicleID";
                         LBCarList.DataSource = inventory;
                         LBCarList.DataBind();
+
+                        //TODO: Add methods to retrieve Fee Types
+                        //TOOD: Databind Fee Types
                     }
                 }
                 catch (Exception ex)
@@ -100,7 +105,31 @@ namespace AMS
 
         protected void LBCarList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+            //This code pulls up a list of fees accrued by the car and the conditions and requirements object from the database
+            try
+            {
+                VehicleConditionsRequirements vcr = new VehicleConditionsRequirements();
+                vcr = inventoryService.GetVehicleConditionsRequirements(Convert.ToInt32(LBCarList.SelectedValue.ToString()));
+
+                TXTDate.Value = vcr.DateIn.ToString();
+                TXTEstValue.Text = vcr.EstValue.ToString();
+                TXTReserve.Text = vcr.Reserve.ToString();
+                TXTComments.Text = vcr.Comments;
+                CHKCallOnHigh.Checked = vcr.CallOnHigh;
+                CHKForSale.Checked = vcr.ForSale;
+                CHKRecord.Checked = vcr.Record;
+                Session["vcrID"] = vcr.Id.ToString();
+                Session["vcrVID"] = vcr.VehicleID.ToString();
+
+                //TODO: Implementent Retrieving of the fees for the car
+            }
+            catch (Exception ex)
+            {
+                AlertDiv.InnerHtml = "<div class=\"alert alert-danger fade in\">" +
+                "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + ex.Message +
+                "</label></div>";
+            }
         }
 
         protected void BTNEditCarDetails_Click(object sender, EventArgs e)
@@ -114,12 +143,119 @@ namespace AMS
 
         protected void BTNUpdate_Click(object sender, EventArgs e)
         {
+            try
+            {
+                VehicleConditionsRequirements vcr = new VehicleConditionsRequirements();
 
+                vcr.DateIn = Convert.ToDateTime(TXTDate.Value);
+                vcr.EstValue = Convert.ToDouble(TXTEstValue.Text);
+                vcr.Reserve = Convert.ToDouble(TXTReserve.Text);
+                vcr.Comments = TXTComments.Text;
+                vcr.CallOnHigh = CHKCallOnHigh.Checked;
+                vcr.ForSale = CHKForSale.Checked;
+                vcr.Record = CHKRecord.Checked;
+                vcr.Id = Convert.ToInt32(Session["vcrID"].ToString());
+                vcr.VehicleID = Convert.ToInt32(Session["vcrVID"].ToString());
+
+                inventoryService.UpdateVehicleConditionsRequirements(vcr);
+
+                //Success message
+                AlertDiv.InnerHtml = "<div class=\"alert alert-success fade in\">" +
+                "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                "<strong>Success!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "Requirements successfully updated! " +
+                "</label></div>";
+            }
+            catch (Exception ex)
+            {
+                AlertDiv.InnerHtml = "<div class=\"alert alert-danger fade in\">" +
+                "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + ex.Message +
+                "</label></div>";
+            }
         }
 
-        protected void BTNDelete_Click(object sender, EventArgs e)
-        {
 
+        private Boolean CheckIfAddingVehicles()
+        {
+            String addingVehiclesString = "";
+            bool addingVehicles = false;
+            addingVehiclesString = Request["AddingVehicles"];
+            if (addingVehiclesString != null)
+            {
+                addingVehicles = Convert.ToBoolean(addingVehiclesString);
+            }
+            return addingVehicles;
+        }
+
+        protected int getAuctionIDfromParameters()
+        {
+            String AuctionIDString = "";
+            int auctionID = 0;
+            AuctionIDString = Request["AuctionID"];
+            if (AuctionIDString != null)
+            {
+                auctionID = Convert.ToInt32(AuctionIDString);
+            }
+
+            return auctionID;
+        }
+
+        protected String getAuctionDatefromParameters()
+        {
+            String AuctionIDString = "";
+            AuctionIDString = Request["AuctionDate"];
+            return AuctionIDString;
+        }
+
+        protected void BTNAddVehicles_Click(object sender, EventArgs e)
+        {
+            int id = 0;
+            foreach (ListItem listItem in LBCarList.Items)
+            {
+                if (listItem.Selected)
+                {
+                    //Assembling AuctionSale object
+                    AuctionSale auctionSale = new AuctionSale();
+                    auctionSale.AuctionID = auctionID;
+                    auctionSale.SaleDate = Convert.ToDateTime(getAuctionDatefromParameters());
+
+                    //Not Sold Sale Status
+                    auctionSale.ConditionID = 1;
+                    auctionSale.VehicleID = Convert.ToInt32(listItem.Value);
+                    //Assigning an empty Buyer
+                    auctionSale.BuyerID = 1;
+                    auctionSale.SellingPrice = 0.00;
+                    auctionSale.BidderNumber = 0;
+                    //default buyer's fee for vehicles
+                    auctionSale.BuyersFee = 250.00;
+                    auctionSale.Deposit = 0.00;
+                    auctionSale.GstID = activeGST.GSTID;
+                    auctionSale.Notes = "";
+
+                    //Saving object to the database
+                    id = auctionService.createAuctionSale(auctionSale);
+                }
+            }
+
+            inventory = inventoryService.viewAvailableInventoryVehicles(auctionID);
+            LBCarList.DataTextField = "DisplayInfo";
+            LBCarList.DataValueField = "VehicleID";
+            LBCarList.DataSource = inventory;
+            LBCarList.DataBind();
+
+            //Success message
+            AlertDiv.InnerHtml = "<div class=\"alert alert-success fade in\">" +
+            "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+            "<strong>Success!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "Vehicles successfully added! " +
+            "</label></div>";
+
+            //This code will refresh the Car Listbox
+            //Response.Redirect("~/Inventory?AuctionID=" + auctionID.ToString() + "&AddingVehicles=true" + "&AuctionDate=" + getAuctionDatefromParameters());
+        }
+
+        protected void BTNAdd_Click(object sender, EventArgs e)
+        {
+            //TODO: Implement addition of Fees
         }
     }
 }

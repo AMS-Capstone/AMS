@@ -31,6 +31,33 @@ namespace AMS {
         protected global::System.Web.UI.WebControls.ListBox LBCarList;
         
         /// <summary>
+        /// ConcealAddDiv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ConcealAddDiv;
+        
+        /// <summary>
+        /// BTNAddVehicles control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BTNAddVehicles;
+        
+        /// <summary>
+        /// ConcealDiv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ConcealDiv;
+        
+        /// <summary>
         /// BTNEditCarDetails control.
         /// </summary>
         /// <remarks>
@@ -94,6 +121,24 @@ namespace AMS {
         protected global::System.Web.UI.WebControls.CheckBox CHKCallOnHigh;
         
         /// <summary>
+        /// TXTComments control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TXTComments;
+        
+        /// <summary>
+        /// BTNAdd control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BTNAdd;
+        
+        /// <summary>
         /// BTNUpdate control.
         /// </summary>
         /// <remarks>
@@ -101,14 +146,5 @@ namespace AMS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button BTNUpdate;
-        
-        /// <summary>
-        /// BTNDelete control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BTNDelete;
     }
 }

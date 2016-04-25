@@ -50,9 +50,39 @@ namespace AMS.App_Code.DAL
             return ds;
         }
 
+        //Retrieves only vehicles that are for sale
+        public DataSet viewAvailableInventoryVehicles(int AuctionID)
+        {
+            DataSet ds = new DataSet();
+            MySqlConnection conn = new MySqlConnection(connectionString);
+            MySqlDataAdapter da = new MySqlDataAdapter();
+
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.CommandText = "sp_viewAvailableVehiclesForSale";
+                cmd.Parameters.Add(new MySqlParameter("@pAuctionID", AuctionID));
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = conn;
+                da.SelectCommand = cmd;
+                da.Fill(ds, "Vehicles");
+
+            }
+            catch (Exception ex)
+            {
+                //Panic
+                throw;
+            }
+            finally
+            {
+                //Tie the loose ends here
+            }
+            return ds;
+        }
+
 
         //Retrieves only vehicles that are for sale
-        public DataSet getInventoryVehicles(int vehicleConditionRequirementID)
+        public DataSet getVehiclesFees(int vehicleConditionRequirementID)
         {
             DataSet ds = new DataSet();
             MySqlConnection conn = new MySqlConnection(connectionString);
@@ -121,22 +151,32 @@ namespace AMS.App_Code.DAL
         }
 
         //Retrieves only vehicles that are for sale
-        public DataSet GetVehicleConditionsRequirements(int vehicleConditionRequirementID)
+        public VehicleConditionsRequirements GetVehicleConditionsRequirements(int vehicleConditionRequirementID)
         {
             DataSet ds = new DataSet();
             MySqlConnection conn = new MySqlConnection(connectionString);
             MySqlDataAdapter da = new MySqlDataAdapter();
+            VehicleConditionsRequirements vcr = new VehicleConditionsRequirements();
 
             try
             {
                 MySqlCommand cmd = new MySqlCommand();
                 cmd.CommandText = "sp_getVehicleCondnReqs";
-                cmd.Parameters.Add(new MySqlParameter("@pVehicleConReqID", vehicleConditionRequirementID));
+                cmd.Parameters.Add(new MySqlParameter("@pVehicleID", vehicleConditionRequirementID));
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Connection = conn;
                 da.SelectCommand = cmd;
                 da.Fill(ds);
 
+                vcr.CallOnHigh = Convert.ToBoolean(ds.Tables[0].Rows[0]["CallOnHigh"].ToString());
+                vcr.Comments = ds.Tables[0].Rows[0]["Comments"].ToString();
+                vcr.DateIn = Convert.ToDateTime(ds.Tables[0].Rows[0]["DateIn"].ToString());
+                vcr.EstValue = Convert.ToDouble(ds.Tables[0].Rows[0]["EstValue"].ToString());
+                vcr.ForSale = Convert.ToBoolean(ds.Tables[0].Rows[0]["ForSale"].ToString());
+                vcr.Record = Convert.ToBoolean(ds.Tables[0].Rows[0]["Record"].ToString());
+                vcr.Reserve = Convert.ToDouble(ds.Tables[0].Rows[0]["Reserve"].ToString());
+                vcr.Id = Convert.ToInt32(ds.Tables[0].Rows[0]["VehicleConReqID"].ToString());
+                vcr.VehicleID = Convert.ToInt32(ds.Tables[0].Rows[0]["VehicleID"].ToString());
             }
             catch (Exception ex)
             {
@@ -147,7 +187,7 @@ namespace AMS.App_Code.DAL
             {
                 //Tie the loose ends here
             }
-            return ds;
+            return vcr;
         }
 
         public int CreateVehicleConditionsRequirements(VehicleConditionsRequirements vehicleCondnReqs)
@@ -211,10 +251,6 @@ namespace AMS.App_Code.DAL
                 cmd.Parameters.Add(new MySqlParameter("@pdateIn", vehicleCondnReqs.DateIn));
                 cmd.Parameters.Add(new MySqlParameter("@pForSale", vehicleCondnReqs.ForSale));
 
-                MySqlParameter returnParameter = new MySqlParameter();
-                returnParameter.Direction = System.Data.ParameterDirection.ReturnValue;
-
-                cmd.Parameters.Add(returnParameter);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Connection = conn;
                 cmd.ExecuteNonQuery();

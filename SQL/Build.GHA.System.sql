@@ -53,7 +53,8 @@ Create Table conditionstatus
 (
 	ConditionID integer primary key AUTO_INCREMENT,
     ConditionCode tinytext,
-    ConditionDescription text
+    ConditionDescription text,
+    Status boolean default true
 );
 
 -- Create Table FeeType
@@ -61,7 +62,8 @@ Create Table FeeType
 (
 	FeeID integer primary key AUTO_INCREMENT,
     FeeCost double,
-    FeeType text
+    FeeType text,
+    Status boolean default true
 );
 
 -- Create Table GST
@@ -77,7 +79,8 @@ Create Table PaymentType
 (
 	PaymentTypeID integer primary key AUTO_INCREMENT,
     SurchargeInPercent double,
-    PaymentDescription text
+    PaymentDescription text,
+    Status boolean default true
 );
 
 -- Create the Buyer table
@@ -310,8 +313,8 @@ CREATE PROCEDURE sp_createConditionStatus
 
 BEGIN
 	
-	INSERT INTO conditionstatus (ConditionCode,ConditionDescription)
-	VALUES (pConditionCode, pConditionDescription);
+	INSERT INTO conditionstatus (ConditionCode,ConditionDescription, Status)
+	VALUES (pConditionCode, pConditionDescription, pStatus);
 
 END//
 
@@ -320,20 +323,21 @@ CREATE PROCEDURE sp_viewConditionStatus()
 
 BEGIN
 	
-	Select ConditionId,CONCAT( ConditionCode , if (ConditionDescription is null, "", CONCAT( ' - ' , ConditionDescription))) as Description
+	Select ConditionId,CONCAT( ConditionCode , if (ConditionDescription is null, "", CONCAT(ConditionDescription))) as Description, Status
 	FROM conditionstatus;
 
 END//
 
 DROP PROCEDURE IF EXISTS sp_updateConditionStatus //
-CREATE PROCEDURE sp_updateConditionStatus(IN pConditionId integer, IN pConditionDescription text, pConditionCode tinyText)
+CREATE PROCEDURE sp_updateConditionStatus(IN pConditionId integer, IN pConditionDescription text, IN pConditionCode tinyText, in pStatus boolean)
 
 BEGIN
 
 	UPDATE conditionstatus
 	SET
 	ConditionCode = pConditionCode,
-	ConditionDescription = pConditionDescription
+	ConditionDescription = pConditionDescription,
+	Status = pStatus
 	WHERE ConditionID = pConditionId;
 END//
 
@@ -343,8 +347,8 @@ CREATE PROCEDURE sp_createFeeType
 
 BEGIN
 	
-	INSERT INTO FeeType (FeeCost,FeeType)
-	VALUES (pFeeCost, pFeeType);
+	INSERT INTO FeeType (FeeCost,FeeType, Status)
+	VALUES (pFeeCost, pFeeType, pStatus);
 
 END//
 
@@ -353,31 +357,32 @@ CREATE PROCEDURE sp_viewFeeTypes()
 
 BEGIN
 	
-	Select FeeId, CONCAT(FeeType, " - ", if(FeeCost is null, 0.00, FeeCost)) as description
+	Select FeeId, CONCAT(FeeType, " - ", if(FeeCost is null, 0.00, FeeCost)) as description, Status
 	FROM FeeType;
 
 END//
 
 DROP PROCEDURE IF EXISTS sp_updateFeeType //
-CREATE PROCEDURE sp_updateFeeType(IN pFeeId integer, IN pFeeType text, pFeeCost double)
+CREATE PROCEDURE sp_updateFeeType(IN pFeeId integer, IN pFeeType text, pFeeCost double, in pStatus boolean)
 
 BEGIN
 
 	UPDATE FeeType
 	SET
 	FeeCost = pFeeCost,
-	FeeType = pFeeType
+	FeeType = pFeeType,
+	Status = pStatus
 	WHERE FeeId = pFeeId;
 END//
 
 DROP PROCEDURE IF EXISTS sp_createPaymentType //	
 CREATE PROCEDURE sp_createPaymentType
-(IN pPaymentDescription text, IN pSurchargeInPercent double)
+(IN pPaymentDescription text, IN pSurchargeInPercent double, In pStatus boolean)
 
 BEGIN
 	
-	INSERT INTO PaymentType (PaymentDescription, SurchargeInPercent)
-	VALUES (pPaymentDescription, pSurchargeInPercent);
+	INSERT INTO PaymentType (PaymentDescription, SurchargeInPercent, Status)
+	VALUES (pPaymentDescription, pSurchargeInPercent, pStatus);
 
 END //
 
@@ -386,20 +391,21 @@ CREATE PROCEDURE sp_viewPaymentType()
 
 BEGIN
 	
-	Select PaymentTypeId, PaymentDescription, SurchargeInPercent
+	Select PaymentTypeId, PaymentDescription, SurchargeInPercent, Status
 	FROM PaymentType;
 
 END//
 
 DROP PROCEDURE IF EXISTS sp_updatePaymentType //
-CREATE PROCEDURE sp_updatePaymentType(IN pPaymentId integer, IN pPaymentDescription text, IN pSurchargeInPercent double)
+CREATE PROCEDURE sp_updatePaymentType(IN pPaymentId integer, IN pPaymentDescription text, IN pSurchargeInPercent double, In pStatus boolean)
 
 BEGIN
 
 	UPDATE PaymentType
 	SET
 	PaymentDescription = pPaymentDescription,
-    SurchargeInPercent = pSurchargeInPercent
+    SurchargeInPercent = pSurchargeInPercent,
+    Status = pStatus
 	WHERE PaymentTypeId = pPaymentID;
 END //
 
@@ -906,7 +912,7 @@ END//
 DROP PROCEDURE IF EXISTS sp_viewPaymentTypes //
 CREATE PROCEDURE sp_viewPaymentTypes()
 BEGIN	
-	Select PaymentTypeID, PaymentDescription, SurchargeInPercent
+	Select PaymentTypeID, PaymentDescription, SurchargeInPercent, Status
 	FROM PaymentType;
 END//
 
@@ -1056,6 +1062,28 @@ BEGIN
     WHERE `AuctionSaleID` = pAuctionSaleID;
 END//
 
+DROP PROCEDURE IF EXISTS sp_checkConditionStatus//
+CREATE PROCEDURE sp_checkConditionStatus()
+BEGIN
+	Select ConditionID from ConditionStatus 
+    where ConditionCode is NULL AND ConditionDescription is NULL;
+    END//
+
+
+DROP PROCEDURE IF EXISTS sp_checkFeeTypes//
+Create PROCEDURE sp_checkFeeTypes()
+BEGIN
+	Select FeeID from feetype 
+    where FeeCost = 0 AND FeeType is NULL;
+END//
+
+DROP PROCEDURE IF EXISTS sp_checkPaymentType//
+CREATE PROCEDURE sp_checkPaymentType()
+BEGIN
+	Select PaymentTypeID from paymenttype 
+    where SurchargeInPercent = 0 AND PaymentDescription is NULL;
+END//
+
 DROP PROCEDURE IF EXISTS sp_getVehiclePicturesByVehicleID//
 CREATE PROCEDURE sp_getVehiclePicturesByVehicleID(pVehicleID int)
 BEGIN
@@ -1076,7 +1104,7 @@ END //
 DROP PROCEDURE IF EXISTS sp_getFeeTypes //
 CREATE PROCEDURE sp_getFeeTypes()
 BEGIN	
-	Select FeeId, FeeCost, FeeType
+	Select FeeId, FeeCost, FeeType, Status
 	FROM FeeType;
 END//
 
@@ -1099,7 +1127,7 @@ END//
 DROP PROCEDURE IF EXISTS sp_viewInventoryVehicles//
 CREATE PROCEDURE sp_viewInventoryVehicles()
 BEGIN
-	SELECT `vehicle`.`VehicleID`, CONCAT(`LotNumber`, " - ", `Year`, " ", `Color`, " ", `Make`, " ", `Model`) as `DisplayInfo`
+	SELECT DISTINCT `vehicle`.`VehicleID`, CONCAT(`LotNumber`, " - ", `Year`, " ", `Color`, " ", `Make`, " ", `Model`) as `DisplayInfo`
     FROM `vehicle`, `vehiclecondnreqs`
     WHERE `vehiclecondnreqs`.`VehicleID` = `vehicle`.`VehicleID` and `vehiclecondnreqs`.`ForSale` = 1
     union
@@ -1142,7 +1170,7 @@ BEGIN
 END//
 
 DROP PROCEDURE IF EXISTS sp_getVehicleCondnReqs//
-CREATE PROCEDURE sp_getVehicleCondnReqs(pVehicleConReqID int)
+CREATE PROCEDURE sp_getVehicleCondnReqs(pVehicleID int)
 BEGIN
 	SELECT `vehiclecondnreqs`.`VehicleConReqID`,
     `vehiclecondnreqs`.`VehicleID`,
@@ -1154,7 +1182,8 @@ BEGIN
     `vehiclecondnreqs`.`dateIn`,
     `vehiclecondnreqs`.`ForSale`
 	FROM `vehiclecondnreqs`
-    WHERE `vehiclecondnreqs`.`VehicleConReqID` = pVehicleConReqID;
+    WHERE `vehiclecondnreqs`.`VehicleID` = pVehicleID
+    ORDER BY `VehicleConReqID` DESC;    
 END//
 
 DROP PROCEDURE IF EXISTS sp_getAuction //
@@ -1197,4 +1226,36 @@ SET
 WHERE `VehicleConReqID` = `pVehicleConReqID`;
 
 
+END//
+
+DROP PROCEDURE IF EXISTS sp_updateVehicle //
+CREATE PROCEDURE sp_updateVehicle(pVehicleId integer, pLotNumber text,  pYear text,  pMake text,  pModel text,  pVin text,  pColor text,  pMileage integer,  pUnits text,  pProvince text,  pTransmission text,  pSellerID int,  pOptions text)
+BEGIN
+	Update `vehicle`
+	SET
+	`LotNumber` = pLotNumber,
+	`Year` = pYear,
+	`Make` = pMake, 
+	`Model` = pModel,
+	`VIN` = pVIN, 
+	`Color` = pColor, 
+	`Mileage` = pMileage, 
+	`Units` = pUnits,
+	`Province` = pProvince, 
+	`Transmission` = pTransmission, 
+	`VehicleOptions` = pVehicleOptions, 
+	`SellerID` = pSellerID 
+	where vehicleId = pVehicleId;
+
+END//
+
+DROP PROCEDURE IF EXISTS sp_viewAvailableVehiclesForSale//
+CREATE PROCEDURE sp_viewAvailableVehiclesForSale(`pAuctionID` int)
+BEGIN
+	SELECT `vehicle`.`VehicleID`, CONCAT(`LotNumber`, " - ", `Year`, " ", `Color`, " ", `Make`, " ", `Model`) as `DisplayInfo`
+    FROM `vehicle`, `vehiclecondnreqs`, `auctionsale`
+    WHERE `vehiclecondnreqs`.`VehicleID` = `vehicle`.`VehicleID` and `vehiclecondnreqs`.`ForSale` = 1 and `vehicle`.`VehicleID` NOT IN 
+	(SELECT `vehicle`.`VehicleID`
+    FROM `vehicle`, `vehiclecondnreqs`, `auctionsale`
+    WHERE `vehiclecondnreqs`.`VehicleID` = `vehicle`.`VehicleID` and `vehiclecondnreqs`.`ForSale` = 1 and `vehicle`.`VehicleID` = `auctionsale`.`VehicleID` and `auctionsale`.`AuctionID` = `pAuctionID`);
 END//
