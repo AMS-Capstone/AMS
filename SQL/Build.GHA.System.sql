@@ -41,11 +41,11 @@ Create Table Auction
 (
 	AuctionID integer primary key AUTO_INCREMENT,
     AuctionDate DateTime,
-    AuctionTotal double,
-    SurCharges double,
-    CashCharges double,
-    ChequeCharges double,
-    CreditCardCharges double
+    AuctionTotal decimal(10,2),
+    SurCharges decimal(10,2),
+    CashCharges decimal(10,2),
+    ChequeCharges decimal(10,2),
+    CreditCardCharges decimal(10,2)
 );
     
 -- Create the conditionstatus table
@@ -61,7 +61,7 @@ Create Table conditionstatus
 Create Table FeeType
 (
 	FeeID integer primary key AUTO_INCREMENT,
-    FeeCost double,
+    FeeCost decimal(10,2),
     FeeType text,
     Status boolean default true
 );
@@ -70,7 +70,7 @@ Create Table FeeType
 Create Table GST 
 (
 	GSTID integer primary key AUTO_INCREMENT,
-    GSTPercent double,
+    GSTPercent decimal,
     GSTStatus boolean
 );
 
@@ -78,7 +78,7 @@ Create Table GST
 Create Table PaymentType
 (
 	PaymentTypeID integer primary key AUTO_INCREMENT,
-    SurchargeInPercent double,
+    SurchargeInPercent decimal,
     PaymentDescription text,
     Status boolean default true
 );
@@ -156,14 +156,14 @@ Create Table AuctionSale
     BuyerID integer,
     constraint FK_AuctionSale_BuyerID foreign key (BuyerID) references Buyer(BuyerID),
 	BidderNumber integer,
-    SellingPrice double, 
-    BuyersFee double, 
-    Deposit double,
+    SellingPrice decimal(10,2), 
+    BuyersFee decimal(10,2), 
+    Deposit decimal(10,2),
     ConditionID integer,
     constraint FK_AuctionSale_ConditionID foreign key (ConditionID) references conditionstatus(ConditionID),
     GSTID integer,
     constraint FK_AuctionSale_GSTID foreign key (GSTID) references GST(GSTID),
-    Total double, 
+    Total decimal(10,2), 
     Saledate date,
     Notes text
 );
@@ -174,11 +174,11 @@ Create Table VehicleCondnReqs
 	VehicleConReqID integer primary key AUTO_INCREMENT,
     VehicleID integer,
     constraint FK_VehicleCondnReqs_VehicleID foreign key (VehicleID) references Vehicle(VehicleID),
-	Reserve double,
+	Reserve decimal(10,2),
     Record boolean, 
     CallOnHigh boolean,
     Comments text,
-    EstValue double,
+    EstValue decimal(10,2),
     dateIn date,
     ForSale boolean
 );
@@ -191,7 +191,7 @@ Create Table VehicleFee
     constraint FK_VehicleConReqID foreign key (VehicleConReqID) references VehicleCondnReqs(VehicleConReqID),
     FeeID integer,
     constraint FK_VehicleFee_FeeID foreign key(FeeID) references FeeType(FeeID),
-    VehiclFeeCost double,
+    VehiclFeeCost decimal(10,2),
     CreatedOn TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -199,11 +199,11 @@ Create Table VehicleFee
 Create Table Payment
 (
 	PaymentID integer primary key AUTO_INCREMENT,
-    PaymentAmount double,
+    PaymentAmount decimal(10,2),
     AuctionSaleID integer,
     constraint FK_Payment_AuctionSaleID foreign key (AuctionSaleID) references AuctionSale(AuctionSaleID),
     PaymentTypeID integer,
-    Surcharges double,
+    Surcharges decimal(10,2),
     constraint FK_Payment_PaymentTypeID foreign key (PaymentTypeID) references PaymentType(PaymentTypeID),
     PaymentDate datetime
 );
@@ -343,7 +343,7 @@ END//
 
 DROP PROCEDURE IF EXISTS sp_createFeeType //
 CREATE PROCEDURE sp_createFeeType
-(IN pFeeCost double, IN pFeeType text, in pStatus boolean)
+(IN pFeeCost decimal, IN pFeeType text, in pStatus boolean)
 
 BEGIN
 	
@@ -363,7 +363,7 @@ BEGIN
 END//
 
 DROP PROCEDURE IF EXISTS sp_updateFeeType //
-CREATE PROCEDURE sp_updateFeeType(IN pFeeId integer, IN pFeeType text, pFeeCost double, in pStatus boolean)
+CREATE PROCEDURE sp_updateFeeType(IN pFeeId integer, IN pFeeType text, pFeeCost decimal, in pStatus boolean)
 
 BEGIN
 
@@ -377,7 +377,7 @@ END//
 
 DROP PROCEDURE IF EXISTS sp_createPaymentType //	
 CREATE PROCEDURE sp_createPaymentType
-(IN pPaymentDescription text, IN pSurchargeInPercent double, In pStatus boolean)
+(IN pPaymentDescription text, IN pSurchargeInPercent decimal, In pStatus boolean)
 
 BEGIN
 	
@@ -397,7 +397,7 @@ BEGIN
 END//
 
 DROP PROCEDURE IF EXISTS sp_updatePaymentType //
-CREATE PROCEDURE sp_updatePaymentType(IN pPaymentId integer, IN pPaymentDescription text, IN pSurchargeInPercent double, In pStatus boolean)
+CREATE PROCEDURE sp_updatePaymentType(IN pPaymentId integer, IN pPaymentDescription text, IN pSurchargeInPercent decimal, In pStatus boolean)
 
 BEGIN
 
@@ -688,7 +688,7 @@ BEGIN
 END //
 
 DROP FUNCTION IF EXISTS sp_createAuction // 
-CREATE FUNCTION `sp_createAuction`(pAuctionDate DATE, pAuctionTotal Double, pSurcharges Double, pCashCharges double, pChequeCharges double, pCreditCardCharges double) RETURNS int
+CREATE FUNCTION `sp_createAuction`(pAuctionDate DATE, pAuctionTotal decimal, pSurcharges decimal, pCashCharges decimal, pChequeCharges decimal, pCreditCardCharges decimal) RETURNS int
 begin
 	INSERT INTO auction
 		(AuctionDate,
@@ -775,12 +775,12 @@ CREATE FUNCTION sp_createAuctionSale(
 	`pVehicleID` int(11),
 	`pBuyerID` int(11),
 	`pBidderNumber` int(11),
-	`pSellingPrice` double,
-	`pBuyersFee` double,
-	`pDeposit` double,
+	`pSellingPrice` decimal,
+	`pBuyersFee` decimal,
+	`pDeposit` decimal,
 	`pConditionID` int(11),
 	`pGSTID` int(11),
-	`pTotal` double,
+	`pTotal` decimal,
 	`pSaledate` date,
 	`pNotes` text) returns int
 
@@ -825,12 +825,12 @@ CREATE PROCEDURE sp_updateAuctionSale(
 	`pVehicleID` int(11),
 	`pBuyerID` int(11),
 	`pBidderNumber` int(11),
-	`pSellingPrice` double,
-	`pBuyersFee` double,
-	`pDeposit` double,
+	`pSellingPrice` decimal,
+	`pBuyersFee` decimal,
+	`pDeposit` decimal,
 	`pConditionID` int(11),
 	`pGSTID` int(11),
-	`pTotal` double,
+	`pTotal` decimal,
 	`pSaledate` date,
 	`pNotes` text)
 
@@ -862,10 +862,10 @@ CREATE PROCEDURE sp_deleteAuctionSale(pAuctionSaleID integer)
 delimiter //
 DROP FUNCTION IF EXISTS sp_createPayment //
 CREATE FUNCTION sp_createPayment(
-  `pPaymentAmount` double,
+  `pPaymentAmount` decimal,
   `pAuctionSaleID` int(11),
   `pPaymentTypeID` int(11),
-  `pSurcharges` double,
+  `pSurcharges` decimal,
   `pPaymentDate` datetime
 ) returns int
 
@@ -892,10 +892,10 @@ delimiter //
 DROP PROCEDURE IF EXISTS sp_updatePayment //
 CREATE PROCEDURE sp_updatePayment(
  `pPaymentID` int(11),
-  `PaymentAmount` double,
+  `PaymentAmount` decimal,
   `AuctionSaleID` int(11),
   `PaymentTypeID` int(11),
-  `Surcharges` double,
+  `Surcharges` decimal,
   `PaymentDate` datetime
 )
 BEGIN
@@ -990,7 +990,7 @@ BEGIN
 END//
 
 DROP PROCEDURE IF EXISTS sp_updateAuction//
-CREATE PROCEDURE sp_updateAuction(pAuctionID int, pAuctionDate datetime, pAuctionTotal double, pSurCharges double, pCashCharges double, pChequeCharges double, pCreditCardCharges double)
+CREATE PROCEDURE sp_updateAuction(pAuctionID int, pAuctionDate datetime, pAuctionTotal decimal, pSurCharges decimal, pCashCharges decimal, pChequeCharges decimal, pCreditCardCharges decimal)
 BEGIN
 	UPDATE `auction`
 	SET
@@ -1007,11 +1007,11 @@ END//
 DROP FUNCTION IF EXISTS sp_createVehicleCondnReqs//
 CREATE FUNCTION sp_createVehicleCondnReqs(
 `pVehicleID` int,
-`pReserve` double,
+`pReserve` decimal,
 `pRecord` boolean,
 `pCallOnHigh` boolean,
 `pComments` text,
-`pEstValue` double,
+`pEstValue` decimal,
 `pdateIn` date,
 `pForSale` boolean
 ) returns int
@@ -1139,17 +1139,16 @@ END//
 DROP PROCEDURE IF EXISTS sp_getVehicleFees//
 CREATE PROCEDURE sp_getVehicleFees(pVehicleConReqID int)
 BEGIN
-	SELECT `vehiclefee`.`VehicleFeeID`,
-    `vehiclefee`.`VehicleConReqID`,
-    `vehiclefee`.`FeeID`,
-    `vehiclefee`.`VehiclFeeCost`,
+	SELECT 
+    `vehiclefee`.`VehicleFeeID`,
+    CONCAT(`feetype`.`FeeType`,' - $',`vehiclefee`.`VehiclFeeCost`) as `FeeInfo`,
     `vehiclefee`.`CreatedOn`
-	FROM `vehiclefee`
-    WHERE `vehiclefee`.`VehicleConReqID` = pVehicleConReqID;
+	FROM `vehiclefee`, `feetype`
+    WHERE `vehiclefee`.`FeeID` = `feetype`.`FeeID` AND `vehiclefee`.`VehicleConReqID` = pVehicleConReqID;
 END//
-
+   
 DROP FUNCTION IF EXISTS sp_createVehicleFee//
-CREATE FUNCTION sp_createVehicleFee(pVehicleConReqID int, pFeeID int, pVehicleFeeCost double) returns int
+CREATE FUNCTION sp_createVehicleFee(pVehicleConReqID int, pFeeID int, pVehicleFeeCost decimal) returns int
 BEGIN
 	INSERT INTO `vehiclefee`
 	(
@@ -1204,11 +1203,11 @@ DROP PROCEDURE IF EXISTS sp_updateVehicleCondnReqs//
 CREATE PROCEDURE sp_updateVehicleCondnReqs(
 `pVehicleConReqID` int,
 `pVehicleID` int,
-`pReserve` double,
+`pReserve` decimal,
 `pRecord` boolean,
 `pCallOnHigh` boolean,
 `pComments` text,
-`pEstValue` double,
+`pEstValue` decimal,
 `pdateIn` date,
 `pForSale` boolean
 )
