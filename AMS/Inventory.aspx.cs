@@ -14,11 +14,14 @@ namespace AMS
     public partial class Inventory : System.Web.UI.Page
     {
         DataSet inventory = new DataSet();
+        DataSet feeTypes = new DataSet();
+        DataAction feeService = new DataAction();
         InventoryDAL inventoryService = new InventoryDAL();
         AuctionDAL auctionService = new AuctionDAL();
         Boolean addingVehicles = false;
         GST activeGST = new AuctionMainDAL().GetActiveGST();
         int auctionID = 0;
+        VehicleConditionsRequirements vcr = new VehicleConditionsRequirements();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -80,8 +83,11 @@ namespace AMS
                         LBCarList.DataSource = inventory;
                         LBCarList.DataBind();
 
-                        //TODO: Add methods to retrieve Fee Types
-                        //TOOD: Databind Fee Types
+                        feeTypes.Tables.Add(feeService.GetFeeTypes());
+                        DDLFeeType.DataTextField = "FeeType";
+                        DDLFeeType.DataValueField = "FeeId";
+                        DDLFeeType.DataSource = feeTypes;
+                        DDLFeeType.DataBind();
                     }
                 }
                 catch (Exception ex)
@@ -91,6 +97,9 @@ namespace AMS
                     "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + ex.Message +
                     "</label></div>";
                 }
+
+                //TODO: Generate Bidder Acknowledgements
+                //TODO: Generate Bill of Sale
             }
 
             if (inventory.Tables.Count > 0 && inventory.Tables[0].Rows.Count < 1)
@@ -108,8 +117,9 @@ namespace AMS
             //This code pulls up a list of fees accrued by the car and the conditions and requirements object from the database
             try
             {
-                VehicleConditionsRequirements vcr = new VehicleConditionsRequirements();
-                vcr = inventoryService.GetVehicleConditionsRequirements(Convert.ToInt32(LBCarList.SelectedValue.ToString()));
+                int carId = Convert.ToInt32(LBCarList.SelectedValue.ToString());
+                
+                vcr = inventoryService.GetVehicleConditionsRequirements(carId);
 
                 TXTDate.Value = vcr.DateIn.ToString();
                 TXTEstValue.Text = vcr.EstValue.ToString();
@@ -121,7 +131,13 @@ namespace AMS
                 Session["vcrID"] = vcr.Id.ToString();
                 Session["vcrVID"] = vcr.VehicleID.ToString();
 
-                //TODO: Implementent Retrieving of the fees for the car
+                DataSet vehicleFees = inventoryService.getVehiclesFees(vcr.Id);
+                LBFees.DataTextField = "FeeInfo";
+                LBFees.DataValueField = "VehicleFeeID";
+                LBFees.DataSource = vehicleFees;
+                LBFees.DataBind();
+
+                BTNAddModal.Visible = true;
             }
             catch (Exception ex)
             {
@@ -255,7 +271,36 @@ namespace AMS
 
         protected void BTNAdd_Click(object sender, EventArgs e)
         {
-            //TODO: Implement addition of Fees
+            int vcrID = Convert.ToInt32(Session["vcrID"].ToString());
+            VehicleFee fee = new VehicleFee();
+            fee.VehicleFeeCost = Convert.ToDouble(TXTCost.Text.ToString());
+            fee.FeeID = Convert.ToInt32(DDLFeeType.SelectedValue.ToString());
+            fee.VehicleConditionRequirementID = vcrID;
+
+
+            try
+            {
+                inventoryService.CreateVehicleFee(fee);
+
+                DataSet vehicleFees = inventoryService.getVehiclesFees(vcrID);
+                LBFees.DataTextField = "FeeInfo";
+                LBFees.DataValueField = "VehicleFeeID";
+                LBFees.DataSource = vehicleFees;
+                LBFees.DataBind();
+                
+                //Success message
+                AlertDiv.InnerHtml = "<div class=\"alert alert-success fade in\">" +
+                "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                "<strong>Success!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "Fee successfully added!" +
+                "</label></div>";
+            }
+            catch (Exception ex)
+            {
+                AlertDiv.InnerHtml = "<div class=\"alert alert-danger fade in\">" +
+                "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + ex.Message +
+                "</label></div>";
+            }
         }
     }
 }

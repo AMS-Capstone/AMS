@@ -100,12 +100,18 @@
                 </div>
             </div>
 
-            <%--<div class="form-group row">
+            <div class="form-group row">
                 <label class="control-label col-xs-12 col-sm-2" for="LBFees">Fees:</label>
                 <div class="col-xs-12 col-sm-5">
                     <asp:ListBox ID="LBFees" CssClass="form-control"  runat="server" Rows="10"></asp:ListBox>
                 </div>
-            </div>--%>
+            </div>
+            
+            <div class="form-group row">
+                <div class="col-xs-12 col-sm-offset-2 col-sm-5">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" title="Add Fee" data-target="#addFeeModal" id="BTNAddModal" visible="false" runat="server">Add</button>
+                </div>         
+            </div>
 
             <div class="form-group row">
                 <div class="col-xs-12 col-sm-10 col-sm-offset-2">
@@ -123,9 +129,24 @@
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                             <h4 class="modal-title">Add Fee Form</h4>
                         </div>
-                        <div class="modal-body row">
+                        <div class="modal-body">
+                            <div class="row"></div>
                             <%-- TODO: Implement Fee Dropdown control
                             TODO: implement Cost TextBox--%>
+                            <div class="form-group row">
+                                <label class="control-label col-xs-12 col-sm-2" for="DDLFeeType">Fee Type:</label>
+                                <div class="col-xs-12 col-sm-5">
+                                    <asp:DropDownList class="form-control" ID="DDLFeeType" runat="server"></asp:DropDownList>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group row">
+                                <label class="control-label col-xs-12 col-sm-2" for="TXTCost">Cost:</label>
+                                <div class="col-xs-12 col-sm-5">
+                                    <asp:TextBox ID="TXTCost" runat="server" CssClass="form-control numbersOnly"></asp:TextBox>
+                                </div>
+                            </div>
+
                         </div>
                         <div class="modal-footer">
                             <asp:Button ID="BTNAdd" runat="server" CssClass="btn btn-primary"  Text="Add Fees" OnClick="BTNAdd_Click" />

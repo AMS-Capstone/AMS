@@ -339,6 +339,7 @@ namespace AMS
         //This code will calculate auction totals and auction details
         protected void BTNTotals_Click(object sender, EventArgs e)
         {
+            //TODO: Generate totals detailed report
             auctionData = postProcessAuctionData(auctionMainService.GetAuctionData(auctionID));
             AuctionDAL auctionService = new AuctionDAL();
             Auction auction = auctionService.getAuction(auctionID);
@@ -404,9 +405,7 @@ namespace AMS
             {
                 createPayment(payment);
             }
-
-            //TODO: Recalculate the totals
-
+            
             //Success message
             AlertDiv.InnerHtml = "<div class=\"alert alert-success fade in\">" +
             "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
@@ -471,7 +470,7 @@ namespace AMS
                 //String carList = ""; //File.ReadAllText(".\\App_LocalResources\\Log Sheet.txt");
 
                 //TODO: Retrieve the template file
-                //TODO: Generate report
+                //TODO: Generate Auction Car List
             }
             catch (Exception ex)
             {

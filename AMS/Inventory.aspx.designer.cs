@@ -130,6 +130,42 @@ namespace AMS {
         protected global::System.Web.UI.WebControls.TextBox TXTComments;
         
         /// <summary>
+        /// LBFees control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ListBox LBFees;
+        
+        /// <summary>
+        /// BTNAddModal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton BTNAddModal;
+        
+        /// <summary>
+        /// DDLFeeType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DDLFeeType;
+        
+        /// <summary>
+        /// TXTCost control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TXTCost;
+        
+        /// <summary>
         /// BTNAdd control.
         /// </summary>
         /// <remarks>
