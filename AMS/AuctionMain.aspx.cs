@@ -218,15 +218,7 @@ namespace AMS
 
         protected void gv_RowEditing(object sender, GridViewEditEventArgs e)
         {
-            //AlertDiv.InnerHtml = "<div class=\"alert alert-warning fade in\">" +
-            //       "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
-            //       "<strong>Warning!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "Counter: " + counter.ToString() +
-            //       "</label></div>";
-            //counter += 1;
-
             //Save auction sale ID to the session
-            
-
             GVAuction.EditIndex = e.NewEditIndex;
             try
             {
@@ -283,17 +275,13 @@ namespace AMS
                 GVAuction.DataSource = auctionData.Tables[0].DefaultView;
                 DataBind();
             }
-            catch
+            catch (Exception ex)
             {
-
-            }
-            
-
-            //AlertDiv.InnerHtml = "<div class=\"alert alert-warning fade in\">" +
-            //       "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
-            //       "<strong>Warning!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "Row updating" +
-            //       "</label></div>";
-        
+                AlertDiv.InnerHtml = "<div class=\"alert alert-danger fade in\">" +
+                "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
+                "<strong>Error!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + ex.Message +
+                "</label></div>";
+            }        
         }
 
         protected void gv_RowUpdated(object sender, GridViewUpdatedEventArgs e)
@@ -329,13 +317,7 @@ namespace AMS
         {
             
         }
-
-        //protected void DDLPaymentTypes_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-
-        //}
-
-
+        
         //This code will calculate auction totals and auction details
         protected void BTNTotals_Click(object sender, EventArgs e)
         {
@@ -343,7 +325,7 @@ namespace AMS
             auctionData = postProcessAuctionData(auctionMainService.GetAuctionData(auctionID));
             AuctionDAL auctionService = new AuctionDAL();
             Auction auction = auctionService.getAuction(auctionID);
-            String report = ""; //Lot, sale status, buyer name, buyer phone, selling price, grand total
+            String report = "<table>" + "<tr><td>" + "LOT#" + "</td><td>" + "STATUS" + "</td><td>" + "BUYER NAME" + "</td><td>" + "BUYER PHONE" + "</td><td>" + "SELLING PRICE    " + "</td><td align=right>" + "GRAND TOTAL" + "</td></tr>"; //Lot, sale status, buyer name, buyer phone, selling price, grand total
             // Totals: Total Selling Prices, Total in Fees, Total in GST, Surcharges, Gross Total (Sum of all previous), Deposits and Payments (Together with Surcharges), Receivables (difference between gross total and deposits and payments)
 
             if (auctionData.Tables.Count > 0 && auctionData.Tables[0].Rows.Count > 0)
@@ -351,6 +333,12 @@ namespace AMS
                 
                 foreach (DataRow row in auctionData.Tables[0].Rows)
                 {
+                    report += "<tr><td>" + row["LotNumber"].ToString();
+                    report += "</td><td>" + "SOLD";//row["SALE_STATUS"].ToString(); //TODO: Sale status needs to be a hidden column
+                    report += "</td><td>" + "John Doe";//row["BUYER_NAME"].ToString(); //TODO: Buyer name needs to be a hidden column
+                    report += "</td><td>" + "7807071016";//row["BUYER_PHONE"].ToString(); //TODO: Buyer phone needs to be a hidden column
+                    report += "</td><td align=right>" + row["SellingPrice"].ToString();
+                    report += "</td><td align=right>" + row["Total"].ToString();
                     auction.AuctionTotal += Convert.ToDouble(auctionData.Tables[0].Rows[0]["Total"].ToString());
                     //auction.AuctionTotal += Convert.ToDouble(auctionData.Tables[0].Rows[0]["Payments"].ToString()); //No payments tracking within auction class atm
                     auction.Surcharges += Convert.ToDouble(auctionData.Tables[0].Rows[0]["Surcharges"].ToString());
@@ -367,6 +355,9 @@ namespace AMS
                 "<strong>Warning!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "No cars assigned to the auction at the moment!" +
                 "</label></div>";
             }
+            report += "</table>";
+            Session["Report"] = report;
+            Response.Redirect("~/Documents/Report");
         }
 
         protected void btnAddPayment_Click(object sender, EventArgs e)

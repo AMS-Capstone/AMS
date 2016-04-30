@@ -132,6 +132,7 @@
     <None Include="Properties\PublishProfiles\IIS.pubxml" />
     <None Include="Properties\PublishProfiles\Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Documents\Report.aspx" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -259,6 +260,13 @@
       <DependentUpon>NewAuction.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Documents\Report.aspx.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Documents\Report.aspx.designer.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Sellers.aspx.cs">
       <DependentUpon>Sellers.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
