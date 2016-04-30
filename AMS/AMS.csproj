@@ -113,6 +113,16 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Default.aspx" />
+    <Content Include="Documents\BiddersAcknowledgement.aspx" />
+    <Content Include="Documents\Bill of Sale_files\colorschememapping.xml" />
+    <Content Include="Documents\Bill of Sale_files\filelist.xml" />
+    <Content Include="Documents\Bill of Sale_files\image001.jpg" />
+    <Content Include="Documents\Bill of Sale_files\image002.jpg" />
+    <Content Include="Documents\Bill of Sale_files\image003.jpg" />
+    <Content Include="Documents\Bill of Sale_files\image004.jpg" />
+    <Content Include="Documents\BillOfSale.aspx" />
+    <Content Include="Documents\Consignment.aspx" />
+    <Content Include="Documents\LogSheet.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Inventory.aspx" />
     <Content Include="MultiImageHandler.aspx" />
@@ -125,6 +135,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="DocumentHandler.ashx" />
+    <Content Include="Documents\Bill of Sale_files\themedata.thmx" />
     <None Include="Properties\PublishProfiles\AMS.pubxml" />
     <None Include="Properties\PublishProfiles\ASP Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\Google VM Publish.pubxml" />
@@ -236,6 +247,34 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Documents\BiddersAcknowledgement.aspx.cs">
+      <DependentUpon>BiddersAcknowledgement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Documents\BiddersAcknowledgement.aspx.designer.cs">
+      <DependentUpon>BiddersAcknowledgement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Documents\BillOfSale.aspx.cs">
+      <DependentUpon>BillOfSale.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Documents\BillOfSale.aspx.designer.cs">
+      <DependentUpon>BillOfSale.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Documents\Consignment.aspx.cs">
+      <DependentUpon>Consignment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Documents\Consignment.aspx.designer.cs">
+      <DependentUpon>Consignment.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Documents\LogSheet.aspx.cs">
+      <DependentUpon>LogSheet.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Documents\LogSheet.aspx.designer.cs">
+      <DependentUpon>LogSheet.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
