@@ -8,7 +8,7 @@ namespace AMS.App_Code.SuppportClasses
 {
     public class ContentReplacer
     {
-        public void ContentReplacer() 
+        public ContentReplacer() 
         { 
 
         }
@@ -31,12 +31,12 @@ namespace AMS.App_Code.SuppportClasses
             doc = doc.Replace("«AUCTION_DATE»", auctionDate.ToString());
 
             doc = doc.Replace("«SELLING_PRICE»", cur(dr["SELLING_PRICE"]));
-            //If extra Then
-            //    doc = doc.Replace("«SALE_DATE»", Today.ToShortDateString)
-            //Else
-            //    Dim sDate As DateTime = dr["SALE_DATE"]
-            //    doc = doc.Replace("«SALE_DATE»", sDate.ToString("MMMM dd, yyyy"))
-            //End If
+            if (extra) {
+                doc = doc.Replace("«SALE_DATE»", DateTime.Now.ToShortDateString());
+            }else{
+                DateTime sDate = Convert.ToDateTime(dr["SALE_DATE"].ToString());
+                doc = doc.Replace("«SALE_DATE»", sDate.ToString("MMMM dd, yyyy"));
+            }
 
             doc = doc.Replace("«OUT_OF_PROV»", dr["STATUS"].ToString());
             doc = doc.Replace("«STATUS»", dr["STATUS"].ToString());
