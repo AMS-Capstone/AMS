@@ -843,7 +843,7 @@ namespace AMS.App_Code
             cmd.Parameters.AddWithValue("pUnits", vehicle.Units);
             cmd.Parameters.AddWithValue("pTransmission", vehicle.Transmission);
             cmd.Parameters.AddWithValue("pSellerID", vehicle.SellerID);
-            cmd.Parameters.AddWithValue("pVehicleOptions", vehicle.Options);
+            cmd.Parameters.AddWithValue("pOptions", vehicle.Options);
 
 
             try

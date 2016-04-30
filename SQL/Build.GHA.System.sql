@@ -1242,7 +1242,7 @@ BEGIN
 	`Units` = pUnits,
 	`Province` = pProvince, 
 	`Transmission` = pTransmission, 
-	`VehicleOptions` = pVehicleOptions, 
+	`VehicleOptions` = pOptions, 
 	`SellerID` = pSellerID 
 	where vehicleId = pVehicleId;
 
