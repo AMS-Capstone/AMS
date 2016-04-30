@@ -356,8 +356,8 @@ namespace AMS
                 "</label></div>";
             }
             report += "</table>";
-            Session["Report"] = report;
-            Response.Redirect("~/Documents/Report");
+            Session["AuctionTotals"] = report;
+            Response.Redirect("~/Documents/AuctionTotals");
         }
 
         protected void btnAddPayment_Click(object sender, EventArgs e)

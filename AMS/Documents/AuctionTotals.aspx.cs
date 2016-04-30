@@ -13,7 +13,7 @@ namespace AMS
         {
             try
             {
-                String report = Session["Report"].ToString();
+                String report = Session["AuctionTotals"].ToString();
                 body.InnerHtml = report;
             }
             catch(Exception ex)

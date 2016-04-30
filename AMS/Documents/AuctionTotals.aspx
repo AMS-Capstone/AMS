@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Report.aspx.cs" Inherits="AMS.Report" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AuctionTotals.aspx.cs" Inherits="AMS.Report" %>
 
 <!DOCTYPE html>
 
