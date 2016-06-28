@@ -41,7 +41,7 @@
     <div class="form-group row">
         <label class="control-label col-xs-12 col-sm-2" for="DDLProvince">Province:</label>
         <div class="col-xs-12 col-sm-5">
-            <asp:DropDownList class="form-control" ID="DDLProvince" runat="server"></asp:DropDownList>
+            <asp:DropDownList class="form-control" ID="DDLProvince" runat="server" AutoPostBack="true"></asp:DropDownList>
         </div>         
     </div>
     

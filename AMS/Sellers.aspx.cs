@@ -18,23 +18,25 @@ namespace AMS
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                provinces.Add("Alberta");
+                provinces.Add("British Columbia");
+                provinces.Add("Manitoba");
+                provinces.Add("New Brunswick");
+                provinces.Add("Newfoundland and Labrador");
+                provinces.Add("Nova Scotia");
+                provinces.Add("Northwest Territories");
+                provinces.Add("Nunavut");
+                provinces.Add("Ontario");
+                provinces.Add("Prince Edward Island");
+                provinces.Add("Quebec");
+                provinces.Add("Saskatchewan");
+                provinces.Add("Yukon");
 
-            provinces.Add("Alberta");
-            provinces.Add("British Columbia");
-            provinces.Add("Manitoba");
-            provinces.Add("New Brunswick");
-            provinces.Add("Newfoundland and Labrador");
-            provinces.Add("Nova Scotia");
-            provinces.Add("Northwest Territories");
-            provinces.Add("Nunavut");
-            provinces.Add("Ontario");
-            provinces.Add("Prince Edward Island");
-            provinces.Add("Quebec");
-            provinces.Add("Saskatchewan");
-            provinces.Add("Yukon");
-
-            DDLProvince.DataSource = provinces;
-            DDLProvince.DataBind();
+                DDLProvince.DataSource = provinces;
+                DDLProvince.DataBind();
+            }
 
             try
             {
@@ -93,6 +95,7 @@ namespace AMS
             {
                 //Call DAL
                 int id = sellerService.CreateSeller(seller);
+                ClearSellerForm();
 
                 //Success message
                 AlertDiv.InnerHtml = "<div class=\"alert alert-success fade in\">" +
@@ -110,6 +113,11 @@ namespace AMS
         }
 
         protected void BTNClear_Click(object sender, EventArgs e)
+        {
+            ClearSellerForm();
+        }
+
+        private void ClearSellerForm()
         {
             DDLSellerName.SelectedIndex = 0;//Causes exception at no sellers
 

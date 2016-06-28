@@ -18,22 +18,25 @@ namespace AMS
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            provinces.Add("Alberta");
-            provinces.Add("British Columbia");
-            provinces.Add("Manitoba");
-            provinces.Add("New Brunswick");
-            provinces.Add("Newfoundland and Labrador");
-            provinces.Add("Nova Scotia");
-            provinces.Add("Northwest Territories");
-            provinces.Add("Nunavut");
-            provinces.Add("Ontario");
-            provinces.Add("Prince Edward Island");
-            provinces.Add("Quebec");
-            provinces.Add("Saskatchewan");
-            provinces.Add("Yukon");
+            if (!IsPostBack)
+            {
+                provinces.Add("Alberta");
+                provinces.Add("British Columbia");
+                provinces.Add("Manitoba");
+                provinces.Add("New Brunswick");
+                provinces.Add("Newfoundland and Labrador");
+                provinces.Add("Nova Scotia");
+                provinces.Add("Northwest Territories");
+                provinces.Add("Nunavut");
+                provinces.Add("Ontario");
+                provinces.Add("Prince Edward Island");
+                provinces.Add("Quebec");
+                provinces.Add("Saskatchewan");
+                provinces.Add("Yukon");
 
-            DDLProvince.DataSource = provinces;
-            DDLProvince.DataBind();
+                DDLProvince.DataSource = provinces;
+                DDLProvince.DataBind();
+            }
 
             try
             {
@@ -122,6 +125,7 @@ namespace AMS
                         "</label></div>";
                     }
                 }
+                ClearBuyerForm();
                 //Success message
                 AlertDiv.InnerHtml = "<div class=\"alert alert-success fade in\">" +
                 "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
@@ -138,6 +142,11 @@ namespace AMS
         }
 
         protected void BTNClear_Click(object sender, EventArgs e)
+        {
+            ClearBuyerForm();
+        }
+
+        private void ClearBuyerForm()
         {
             DDLBuyerName.SelectedIndex = 0;
             TXTBidNum.Text = "";
@@ -162,6 +171,7 @@ namespace AMS
                 BTNDelete.Enabled = false;
                 BTNDelete.CssClass = "btn btn-primary hidden";
             }
+
         }
 
         protected void DDLBuyerName_SelectedIndexChanged(object sender, EventArgs e)
