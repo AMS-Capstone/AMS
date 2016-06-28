@@ -249,10 +249,10 @@ namespace AMS
             sale.ConditionID = Convert.ToInt32(DDLSaleStatuses.SelectedValue.ToString());
 
             TextBox txtSellingPrice = (TextBox)GVAuction.Rows[e.RowIndex].FindControl("txtSellingPrice");
-            sale.SellingPrice = Convert.ToInt32(txtSellingPrice.Text.ToString());
+            sale.SellingPrice = Convert.ToDouble(txtSellingPrice.Text.ToString());
 
             TextBox txtBuyersFee = (TextBox)GVAuction.Rows[e.RowIndex].FindControl("txtBuyersFee");
-            sale.BuyersFee = Convert.ToInt32(txtBuyersFee.Text.ToString());
+            sale.BuyersFee = Convert.ToDouble(txtBuyersFee.Text.ToString());
 
             Label lblVehicleID = (Label)GVAuction.Rows[e.RowIndex].FindControl("lblVehicleID");
             sale.VehicleID = Convert.ToInt32(lblVehicleID.Text.ToString());
