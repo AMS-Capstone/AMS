@@ -551,7 +551,8 @@ IF(BidderNumber = 0 , "", BidderNumber) as BidderNumber,
 Permanent,
 Banned,
 Notes
-FROM `buyer` ;
+FROM `buyer` 
+ORDER BY BuyerName Asc;
 END //
 
 -- Sellers Stored procedures 
@@ -667,7 +668,8 @@ ContactFirstName,
 ContactLastName,
 SellerPrivate,
 GSTNumber
-FROM `seller`;
+FROM `seller`
+ORDER BY SellerName;
 END //
 
 -- DROP PROCEDURE IF EXISTS sp_getSellers //
