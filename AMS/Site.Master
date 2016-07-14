@@ -93,6 +93,8 @@
         <link href="Content/bootstrap-datetimepicker.css" rel="stylesheet" />
         <script src="Scripts/moment.js"></script>
         <script src="Scripts/bootstrap-datetimepicker.js"></script>
+
+        <script src="Scripts/jquery.maskedinput.min.js"></script>
         
     
         <script type="text/javascript">
