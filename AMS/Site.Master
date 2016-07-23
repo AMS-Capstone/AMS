@@ -101,6 +101,13 @@
             jQuery('.numbersOnly').keyup(function () {
                 this.value = this.value.replace(/[^0-9\.]/g, '');
             });
+
+            //This code introduces forced input masks to all the forms that have "TXTPostal", "TXTPhone" and "TXTFax" fields
+            jQuery(function ($) {
+                $("#MainContent_TXTPostal").mask("*** ***");
+                $("#MainContent_TXTPhone").mask("1.999.999.9999? EXT 99999");
+                $("#MainContent_TXTFax").mask("1.999.999.9999");
+            });
         </script>
         
         <div class="navbar navbar-inverse navbar-fixed-top">
