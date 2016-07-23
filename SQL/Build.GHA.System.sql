@@ -112,7 +112,7 @@ Create Table Seller
     SellerAddress text,
     SellerCity text,
     SellerProvince text,
-    SellerPostalCode char(6),
+    SellerPostalCode text,
     -- SellerCountry text,
     SellerPhone text,
     SellerOtherPhone text,
@@ -137,6 +137,8 @@ Create Table Vehicle
     VIN text,
     Color text,
     Mileage int,
+    MileageNA boolean,
+    MileageNAReason boolean,
     Units text,
     Province text,
     Transmission text, 
@@ -686,7 +688,7 @@ BEGIN
 	select date_format(auctiondate, '%M %e %Y') As AuctionDate, AuctionID, AuctionTotal 
     from AUCTION
     where YEAR(AUCTION.AUCTIONDATE) = pAuctionYear
-    order by AuctionDate asc;
+    order by auctiondate desc;
 END //
 
 DROP FUNCTION IF EXISTS sp_createAuction // 
