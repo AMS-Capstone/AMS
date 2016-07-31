@@ -50,13 +50,7 @@ namespace AMS
                 {
                     if (!IsPostBack)
                     {
-                        //Retrieving vehicles for sale, but not yet in the auction
-                        inventory = inventoryService.viewAvailableInventoryVehicles(auctionID);
-
-                        LBCarList.DataTextField = "DisplayInfo";
-                        LBCarList.DataValueField = "VehicleID";
-                        LBCarList.DataSource = inventory;
-                        LBCarList.DataBind();
+                        UpdateInventoryList();
                     }
                 }
                 catch (Exception ex)
@@ -75,13 +69,7 @@ namespace AMS
                 {
                     if (!IsPostBack)
                     {
-                        //Retrieving all inventory vehicles
-                        inventory = inventoryService.viewInventoryVehicles();
-
-                        LBCarList.DataTextField = "DisplayInfo";
-                        LBCarList.DataValueField = "VehicleID";
-                        LBCarList.DataSource = inventory;
-                        LBCarList.DataBind();
+                        UpdateInventoryList();
 
                         feeTypes.Tables.Add(feeService.GetFeeTypes());
                         DDLFeeType.DataTextField = "FeeType";
@@ -102,6 +90,7 @@ namespace AMS
                 //TODO: Generate Bill of Sale
             }
 
+
             if (inventory.Tables.Count > 0 && inventory.Tables[0].Rows.Count < 1)
             {
                 //Alert about no cars to display
@@ -109,6 +98,33 @@ namespace AMS
                 "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>" +
                 "<strong>Warning!&nbsp;</strong><label id=\"Alert\" runat=\"server\">" + "No cars to display!" +
                 "</label></div>";
+            }
+        }
+
+        /// <summary>
+        /// Updates the inventory list
+        /// </summary>
+        private void UpdateInventoryList()
+        {
+            if (addingVehicles == true)
+            {
+                //Retrieving vehicles for sale, but not yet in the auction
+                inventory = inventoryService.viewAvailableInventoryVehicles(auctionID);
+
+                LBCarList.DataTextField = "DisplayInfo";
+                LBCarList.DataValueField = "VehicleID";
+                LBCarList.DataSource = inventory;
+                LBCarList.DataBind();
+            }
+            else
+            {
+                //Retrieving all inventory vehicles
+                inventory = inventoryService.viewInventoryVehicles();
+
+                LBCarList.DataTextField = "DisplayInfo";
+                LBCarList.DataValueField = "VehicleID";
+                LBCarList.DataSource = inventory;
+                LBCarList.DataBind();
             }
         }
 
@@ -157,11 +173,24 @@ namespace AMS
             Response.Redirect("~/Vehicles?VehicleID=" + LBCarList.SelectedValue);
         }
 
+        private void NullCheckEstimatedAndReserveValues()
+        {
+            if (TXTEstValue.Text.ToString() == "" || TXTEstValue.Text.ToString() == null)
+            {
+                TXTEstValue.Text = "0.00";
+            }
+            if (TXTReserve.Text.ToString() == "" || TXTReserve.Text.ToString() == null)
+            {
+                TXTReserve.Text = "0.00";
+            }
+        }
+
         protected void BTNUpdate_Click(object sender, EventArgs e)
         {
             try
             {
                 VehicleConditionsRequirements vcr = new VehicleConditionsRequirements();
+                NullCheckEstimatedAndReserveValues();
 
                 vcr.DateIn = Convert.ToDateTime(TXTDate.Value);
                 vcr.EstValue = Convert.ToDouble(TXTEstValue.Text);
@@ -174,6 +203,8 @@ namespace AMS
                 vcr.VehicleID = Convert.ToInt32(Session["vcrVID"].ToString());
 
                 inventoryService.UpdateVehicleConditionsRequirements(vcr);
+
+                UpdateInventoryList();
 
                 //Success message
                 AlertDiv.InnerHtml = "<div class=\"alert alert-success fade in\">" +
