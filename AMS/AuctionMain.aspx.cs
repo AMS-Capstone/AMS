@@ -1,4 +1,5 @@
 ﻿using AMS.App_Code;
+using AMS.App_Code.SuppportClasses;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -17,6 +18,7 @@ namespace AMS
         DataSet paymentTypes = new DataSet();
         DataSet ConditionStatuses = new DataSet();
         AuctionMainDAL auctionMainService = new AuctionMainDAL();
+        //BuyerDAL buyerService = new BuyerDAL();
         DataAction dataAction = new DataAction();
         int auctionID = 0;
         int counter = 0;
@@ -317,6 +319,54 @@ namespace AMS
         {
             
         }
+
+        private Buyer GetBuyerByID(int buyerID)
+        {
+            DataTable buyers = buyerService.GetBuyers().Tables["Buyers"];
+            Buyer buyer = new Buyer();
+            buyer.BuyerID = buyerID;
+
+            foreach (DataRow r in buyers.Rows)
+            {
+                if (r["BuyerID"].ToString().Equals(buyerID.ToString()))
+                {
+                    buyer.BuyerFirstName = r["BuyerFirstName"].ToString();
+                    buyer.BuyerLastName = r["BuyerLastName"].ToString();
+                    buyer.BuyerAddress = r["BuyerAddress"].ToString();
+                    buyer.BuyerCity = r["BuyerCity"].ToString();
+                    buyer.BuyerProvince = r["BuyerProvince"].ToString();
+                    buyer.BuyerPostalCode = r["BuyerPostalCode"].ToString();
+                    buyer.BuyerPhone = r["BuyerPhone"].ToString();
+                    buyer.BuyerDriverLicense = r["BuyerLicense"].ToString();
+                    buyer.BidderNum = Convert.ToInt32(r["BidderNumber"].ToString());
+                    buyer.BuyerIsPermanent = Convert.ToBoolean(r["Permanent"].ToString());
+                    buyer.IsBanned = Convert.ToBoolean(r["Banned"].ToString());
+                    buyer.Notes = r["Notes"].ToString();
+
+                    return buyer;
+                }
+            }
+
+            throw new Exception("Error: Could not find select buyer by id: " + buyerID);
+        }
+
+        private ConditionStatus GetConditionStatusByID(int ConditionStatusID)
+        {
+            DataTable statuses = dataAction.GetConditionStatus();
+            ConditionStatus status = new ConditionStatus();
+            status.ConditionID = ConditionStatusID;
+            foreach (DataRow r in statuses.Rows)
+            {
+                if (r["ConditionId"].ToString().Equals(ConditionStatusID.ToString()))
+                {
+                    status.ConditionDescription = r["Description"].ToString();
+
+                    return status;
+                }
+            }
+
+            throw new Exception("Error: Could not find select sale status by id: " + ConditionStatusID);
+        }
         
         //This code will calculate auction totals and auction details
         protected void BTNTotals_Click(object sender, EventArgs e)
@@ -325,6 +375,14 @@ namespace AMS
             auctionData = postProcessAuctionData(auctionMainService.GetAuctionData(auctionID));
             AuctionDAL auctionService = new AuctionDAL();
             Auction auction = auctionService.getAuction(auctionID);
+
+            auction.TotalSellingPrices = 0;
+            auction.TotalFees = 0;
+            auction.TotalGST = 0;
+            auction.GrossTotal = 0;
+            auction.DepositsAndPayments = 0;
+            auction.Receivables = 0;
+
             String report = "<table>" + "<tr><td>" + "LOT#" + "</td><td>" + "STATUS" + "</td><td>" + "BUYER NAME" + "</td><td>" + "BUYER PHONE" + "</td><td>" + "SELLING PRICE    " + "</td><td align=right>" + "GRAND TOTAL" + "</td></tr>"; //Lot, sale status, buyer name, buyer phone, selling price, grand total
             // Totals: Total Selling Prices, Total in Fees, Total in GST, Surcharges, Gross Total (Sum of all previous), Deposits and Payments (Together with Surcharges), Receivables (difference between gross total and deposits and payments)
 
@@ -333,18 +391,37 @@ namespace AMS
                 
                 foreach (DataRow row in auctionData.Tables[0].Rows)
                 {
-                    report += "<tr><td>" + row["LotNumber"].ToString();
-                    report += "</td><td>" + "SOLD";//row["SALE_STATUS"].ToString(); //TODO: Sale status needs to be a hidden column
-                    report += "</td><td>" + "John Doe";//row["BUYER_NAME"].ToString(); //TODO: Buyer name needs to be a hidden column
-                    report += "</td><td>" + "7807071016";//row["BUYER_PHONE"].ToString(); //TODO: Buyer phone needs to be a hidden column
-                    report += "</td><td align=right>" + row["SellingPrice"].ToString();
-                    report += "</td><td align=right>" + row["Total"].ToString();
-                    auction.AuctionTotal += Convert.ToDouble(auctionData.Tables[0].Rows[0]["Total"].ToString());
-                    //auction.AuctionTotal += Convert.ToDouble(auctionData.Tables[0].Rows[0]["Payments"].ToString()); //No payments tracking within auction class atm
-                    auction.Surcharges += Convert.ToDouble(auctionData.Tables[0].Rows[0]["Surcharges"].ToString());
-                    //auction.CashCharges += Convert.ToDouble(auctionData.Tables[0].Rows[0]["CashCharges"].ToString()); //No Cash charges tracking within dataset atm
-                    //auction.ChequeCharges += Convert.ToDouble(auctionData.Tables[0].Rows[0]["ChequeCharges"].ToString()); //No Cheque Charges tracking within dataset atm
-                    //auction.CreditCardCharges += Convert.ToDouble(auctionData.Tables[0].Rows[0]["CreditCardCharges"].ToString()); //No Credit Card Charges tracking within dataset atm
+                    //Checking if the car was actually sold
+                    if (!(row["BuyerID"].ToString().Equals("1")))
+                    {
+                        if ((row["ConditionID"].ToString().Equals("4")) || (row["ConditionID"].ToString().Equals("5")))
+                        {
+                            //If the car is sold, adding it to the totals with the buyer
+                            //Get buyer info
+                            Buyer buyer = GetBuyerByID(Convert.ToInt32(row["BuyerID"].ToString()));
+                            ConditionStatus status = GetConditionStatusByID(Convert.ToInt32(row["ConditionID"].ToString()));
+
+                            report += "<tr><td>" + row["LotNumber"].ToString();
+                            report += "</td><td>" + status.ConditionDescription;//row["SALE_STATUS"].ToString(); //TODO: Sale status needs to be a hidden column
+                            report += "</td><td>" + buyer.BuyerFirstName + " " + buyer.BuyerLastName;//row["BUYER_NAME"].ToString(); //TODO: Buyer name needs to be a hidden column
+                            report += "</td><td>" + buyer.BuyerPhone;//row["BUYER_PHONE"].ToString(); //TODO: Buyer phone needs to be a hidden column
+                            report += "</td><td align=right>" + Convert.ToDouble(row["SellingPrice"]).ToString("C2");
+                            report += "</td><td align=right>" + Convert.ToDouble(row["Total"]).ToString("C2");
+                            auction.AuctionTotal += Convert.ToDouble(auctionData.Tables[0].Rows[0]["Total"].ToString());
+                            //auction.AuctionTotal += Convert.ToDouble(auctionData.Tables[0].Rows[0]["Payments"].ToString()); //No payments tracking within auction class atm
+                            auction.Surcharges += Convert.ToDouble(auctionData.Tables[0].Rows[0]["Surcharges"].ToString());
+                            //auction.CashCharges += Convert.ToDouble(auctionData.Tables[0].Rows[0]["CashCharges"].ToString()); //No Cash charges tracking within dataset atm
+                            //auction.ChequeCharges += Convert.ToDouble(auctionData.Tables[0].Rows[0]["ChequeCharges"].ToString()); //No Cheque Charges tracking within dataset atm
+                            //auction.CreditCardCharges += Convert.ToDouble(auctionData.Tables[0].Rows[0]["CreditCardCharges"].ToString()); //No Credit Card Charges tracking within dataset atm
+
+                            auction.TotalSellingPrices += Convert.ToDouble(row["SellingPrice"].ToString());
+                            auction.TotalFees += Convert.ToDouble(row["BuyersFee"].ToString());
+                            auction.TotalGST += Convert.ToDouble(row["GST"].ToString());
+                            auction.GrossTotal += Convert.ToDouble(row["Total"].ToString());
+                            auction.DepositsAndPayments += (Convert.ToDouble(row["Deposit"].ToString()) + Convert.ToDouble(row["Payments"].ToString()));
+                            auction.Receivables = auction.GrossTotal - auction.DepositsAndPayments;
+                        }
+                    }
                 }
             }
             else
@@ -357,6 +434,7 @@ namespace AMS
             }
             report += "</table>";
             Session["AuctionTotals"] = report;
+            Session["AuctionDetails"] = auction;
             Response.Redirect("~/Documents/AuctionTotals");
         }
 
@@ -453,15 +531,47 @@ namespace AMS
                 }
             }
         }
-
+        
         protected void BTNGenerateAuctionCarList_Click(object sender, EventArgs e)
         {
             try
             {
-                //String carList = ""; //File.ReadAllText(".\\App_LocalResources\\Log Sheet.txt");
+                auctionData = postProcessAuctionData(auctionMainService.GetAuctionData(auctionID));
 
-                //TODO: Retrieve the template file
+                String vehicleList = "<table border=\"1\">" + "<tr><td>" + "LOT#" + "</td><td>" + "YEAR" + "</td><td>" + "MAKE/MODEL" + "</td><td>" + "VIN" + "</td><td>" + "MILEAGE" + "</td><td>" 
+                + "OPTIONS           "
+                + "</td><td>" + "STATUS"
+                + "</td><td>" + "CONS"
+                + "</td><td>" + "APPRAISAL"
+                + "</td><td>" + "RESERVE"
+                + "</td><td>" + "PRICE"
+                + "</td><td>" + "BID #"
+                + "</td></tr>";
+                if (auctionData.Tables.Count > 0 && auctionData.Tables[0].Rows.Count > 0)
+                {
+                    foreach (DataRow row in auctionData.Tables[0].Rows)
+                    {
+                        Vehicle car = dataAction.GetVehicleByID(Convert.ToInt32(row["VehicleID"]));
+                        vehicleList += "<tr><td>" + car.LotNumber;
+                        vehicleList += "</td><td>" + car.Year;
+                        vehicleList += "</td><td>" + car.Make + " " + car.Model;
+                        vehicleList += "</td><td>" + car.Vin;
+                        vehicleList += "</td><td>" + car.Mileage;
+                        vehicleList += "</td><td>" + car.Options;
+                        vehicleList += "</td><td>" + car.Province;
+                        vehicleList += "</td><td>"; // + car.;//Cons
+                        vehicleList += "</td><td>"; // + car.;//appraisal
+                        vehicleList += "</td><td>"; // + car.;//Reserve
+                        vehicleList += "</td><td>"; // + car.;//Price sold at
+                        vehicleList += "</td><td>"; // + car.;//Bid #
+                        vehicleList += "</td></tr>";
+                    }
+                }
+
                 //TODO: Generate Auction Car List
+                Session["vehicleList"] = vehicleList;
+                Session["AuctionDetails"] = auction;
+                Response.Redirect("~/Documents/LogSheet");
             }
             catch (Exception ex)
             {
@@ -476,6 +586,11 @@ namespace AMS
         {
             Response.Redirect("~/Inventory?AuctionID=" + auctionID.ToString() + "&AddingVehicles=true" + "&AuctionDate=" + auction.AuctionDate.ToString());
             
+        }
+
+        protected void BTNBidderAcknowledgements_Click(object sender, EventArgs e)
+        {
+
         }
 
         //AlertDiv.InnerHtml = "<div class=\"alert alert-warning fade in\">" +

@@ -14,6 +14,22 @@
                 AutoGenerateColumns="False" OnRowDataBound="RowDataBound" OnRowEditing="gv_RowEditing" 
                 OnRowUpdating="gv_RowUpdating" OnRowCancelingEdit="gv_RowCancelingEdit" OnRowDeleting="gv_RowDeleting">
                 <Columns>
+                    <asp:TemplateField  HeaderText="Print" Visible="true">
+                        <ItemTemplate>
+                            <%--<asp:Button ID="Print" Text="Print Bill of Sale" CssClass="btn btn-xs" runat="server"/>--%>
+                            <a href="/Documents/LogSheet" class="btn btn-sm btn-default" onClick="window.print();return false">Bill of Sale</a>
+                        </ItemTemplate>
+                        <EditItemTemplate>
+                        </EditItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField  HeaderText="Print" Visible="true">
+                        <ItemTemplate>
+                            <%--<asp:Button ID="Print" Text="Print Bill of Sale" CssClass="btn btn-xs" runat="server"/>--%>
+                            <a href="/Documents/LogSheet" class="btn btn-sm btn-default" onClick="window.print();return false">Bidder's Acknowledgement</a>
+                        </ItemTemplate>                        
+                        <EditItemTemplate>
+                        </EditItemTemplate>
+                    </asp:TemplateField>
                     <asp:CommandField ShowEditButton="True"/>
                     <asp:TemplateField  HeaderText="AuctionSaleID" Visible="false">
                         <ItemTemplate>
@@ -270,8 +286,9 @@
     <div class="btn-group row col-xs-12">
         <%--<a class="btn btn-success nonPrintable" href="javascript:window.print()">Calculate Auction Totals</a>--%> <%--This code will launch current page into page preview mode--%>
         <asp:Button ID="BTNAddCarsToAuction" runat="server" CssClass="btn btn-primary" Text="Add Cars to this Auction" OnClick="BTNAddCarsToAuction_Click" />
-        <%--<asp:Button ID="BTNGenerateAuctionCarList" runat="server" CssClass="btn btn-default " Text="Print Auction Car List" OnClick="BTNGenerateAuctionCarList_Click" />--%>
+        <asp:Button ID="BTNGenerateAuctionCarList" runat="server" CssClass="btn btn-default " Text="Print Auction Car List" OnClick="BTNGenerateAuctionCarList_Click" />
         <asp:Button ID="BTNTotals" runat="server" CssClass="btn btn-primary" Text="Calculate Auction Totals" OnClick="BTNTotals_Click" />
+        <asp:Button ID="BTNBidderAcknowledgements" runat="server" CssClass="btn btn-default" Text="Print All Bidder Acknowledgements" OnClick="BTNBidderAcknowledgements_Click"/>
         <%--<button type="button" class="btn btn-primary" data-toggle="modal" title="Car List Modal" data-target="#carListModal">CarListModal</button>--%>
     </div>
     
