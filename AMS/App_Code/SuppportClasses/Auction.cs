@@ -58,6 +58,49 @@ namespace AMS.App_Code
             set { creditCardCharges = value; }
         }
 
+        private double totalSellingPrices;
+
+        public double TotalSellingPrices
+        {
+            get { return totalSellingPrices; }
+            set { totalSellingPrices = value; }
+        }
+        private double totalFees;
+
+        public double TotalFees
+        {
+            get { return totalFees; }
+            set { totalFees = value; }
+        }
+        private double totalGST;
+
+        public double TotalGST
+        {
+            get { return totalGST; }
+            set { totalGST = value; }
+        }
+        private double grossTotal;
+
+        public double GrossTotal
+        {
+            get { return grossTotal; }
+            set { grossTotal = value; }
+        }
+        private double depositsAndPayments;
+
+        public double DepositsAndPayments
+        {
+            get { return depositsAndPayments; }
+            set { depositsAndPayments = value; }
+        }
+        private double receivables;
+
+        public double Receivables
+        {
+            get { return receivables; }
+            set { receivables = value; }
+        }
+
         public Auction()
         {
 

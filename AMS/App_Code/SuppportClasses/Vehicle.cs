@@ -12,7 +12,7 @@ namespace AMS.App_Code.SuppportClasses
 
         }
 
-        public Vehicle(string pLotNumber, string pYear, string pMake, string pModel, string pVin, string pColor, int pMileage, string pUnits, string pTransmission, int pSellerID, string pOptions)
+        public Vehicle(string pLotNumber, string pYear, string pMake, string pModel, string pVin, string pColor, int pMileage, string pUnits, string pTransmission, int pSellerID, string pOptions, string pProvince, bool pMileageNA, string pMileageNAReason)
         {
             lotNumber = pLotNumber;
             year = pYear;
@@ -25,7 +25,10 @@ namespace AMS.App_Code.SuppportClasses
             transmission = pTransmission;
             sellerID = pSellerID;
             options = pOptions;
-            province = "AB";
+
+            province = pProvince;
+            mileageNA = pMileageNA;
+            mileageNAReason = pMileageNAReason;
         }
 
         private int sellerID;
@@ -119,5 +122,21 @@ namespace AMS.App_Code.SuppportClasses
             get { return options; }
             set { options = value; }
         }
+
+        private bool mileageNA;
+
+        public bool MileageNA
+        {
+            get { return mileageNA; }
+            set { mileageNA = value; }
+        }
+        private string mileageNAReason;
+
+        public string MileageNAReason
+        {
+            get { return mileageNAReason; }
+            set { mileageNAReason = value; }
+        }
+
     }
 }

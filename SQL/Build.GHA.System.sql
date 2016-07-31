@@ -138,7 +138,7 @@ Create Table Vehicle
     Color text,
     Mileage int,
     MileageNA boolean,
-    MileageNAReason boolean,
+    MileageNAReason text,
     Units text,
     Province text,
     Transmission text, 
