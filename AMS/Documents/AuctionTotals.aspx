@@ -22,6 +22,15 @@
         {
             width: 145px;
         }
+        .table {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        .cells {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 5px;
+        }
     </style>
 </head>
 <body>
@@ -36,11 +45,11 @@ font-family:"Arial","sans-serif";mso-bidi-font-family:"Times New Roman";'>Auctio
 
 <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US style=' text-align: center;font-size:16.0pt;mso-bidi-font-size:10.0pt;
 font-family:"Arial","sans-serif";mso-bidi-font-family:"Times New Roman";'>For 
-    Auction on «AUCTION_DATE»</span></p>
+    Auction on <a id="auctionDate" runat="server" >«AUCTION_DATE»</a></span></p>
     <p class=MsoNormal align=center style='text-align:left'>
     <span lang=EN-US style='font-size:8.0pt;mso-bidi-font-size:10.0pt;line-height:200%;font-family:
 "Arial","sans-serif";mso-bidi-font-family:"Times New Roman"'>
-    <span style='mso-no-proof:yes'>«CAR_DETAILS»</span></span></p>
+    <span style='mso-no-proof:yes'><div id="carDetails" runat="server" >«CAR_DETAILS»</div></span></span></p>
 
     <table style="width:100%;">
         <tr>
@@ -51,7 +60,7 @@ font-family:"Arial","sans-serif";mso-bidi-font-family:"Times New Roman";'>For
             <td class="style10" align="right">
     <span lang=EN-US style='font-size:8.0pt;mso-bidi-font-size:10.0pt;line-height:200%;font-family:
 "Arial","sans-serif";mso-bidi-font-family:"Times New Roman"'>
-    <span style='mso-no-proof:yes'>«TOTAL_SALES»  </span></span></td>
+    <span style='mso-no-proof:yes'><div id="totalSellingPrices" runat="server" >«TOTAL_SALES»</div>  </span></span></td>
             <td>
                 &nbsp;</td>
         </tr>
@@ -63,7 +72,7 @@ font-family:"Arial","sans-serif";mso-bidi-font-family:"Times New Roman";'>For
             <td class="style10" align="right">
                 <span lang="EN-US" style="font-size:8.0pt;mso-bidi-font-size:10.0pt;line-height:200%;font-family:
 &quot;Arial&quot;,&quot;sans-serif&quot;;mso-bidi-font-family:&quot;Times New Roman&quot;">
-                <span style="mso-no-proof:yes">«BFEE_TOTAL» </span></span></td>
+                <span style="mso-no-proof:yes"><div id="totalFees" runat="server" >«BFEE_TOTAL»</div> </span></span></td>
             <td>
                 &nbsp;</td>
         </tr>
@@ -75,7 +84,7 @@ font-family:"Arial","sans-serif";mso-bidi-font-family:"Times New Roman";'>For
             <td class="style10" align="right">
                 <span lang="EN-US" style="font-size:8.0pt;mso-bidi-font-size:10.0pt;line-height:200%;font-family:
 &quot;Arial&quot;,&quot;sans-serif&quot;;mso-bidi-font-family:&quot;Times New Roman&quot;">
-                <span style="mso-no-proof:yes">«FULL_GST» </span></span></td>
+                <span style="mso-no-proof:yes"><div id="totalGST" runat="server" >«FULL_GST»</div> </span></span></td>
             <td>
                 &nbsp;</td>
         </tr>
@@ -87,7 +96,7 @@ font-family:"Arial","sans-serif";mso-bidi-font-family:"Times New Roman";'>For
             <td class="style10" align="right">
                 <span lang="EN-US" style="font-size:8.0pt;mso-bidi-font-size:10.0pt;line-height:200%;font-family:
 &quot;Arial&quot;,&quot;sans-serif&quot;;mso-bidi-font-family:&quot;Times New Roman&quot;">
-                <span style="mso-no-proof:yes">«GROSS» </span></span></td>
+                <span style="mso-no-proof:yes"><div id="grossTotal" runat="server" >«GROSS»</div> </span></span></td>
             <td>
                 &nbsp;</td>
         </tr>
@@ -99,7 +108,7 @@ font-family:"Arial","sans-serif";mso-bidi-font-family:"Times New Roman";'>For
             <td class="style10" align="right">
                 <span lang="EN-US" style="font-size:8.0pt;mso-bidi-font-size:10.0pt;line-height:200%;font-family:
 &quot;Arial&quot;,&quot;sans-serif&quot;;mso-bidi-font-family:&quot;Times New Roman&quot;">
-                <span style="mso-no-proof:yes">«MONIES» </span></span></td>
+                <span style="mso-no-proof:yes"><div id="depositsAndPayments" runat="server" >«MONIES»</div> </span></span></td>
             <td>
                 &nbsp;</td>
         </tr>
@@ -111,7 +120,7 @@ font-family:"Arial","sans-serif";mso-bidi-font-family:"Times New Roman";'>For
             <td class="style10" align="right">
                 <span lang="EN-US" style="font-size:8.0pt;mso-bidi-font-size:10.0pt;line-height:200%;font-family:
 &quot;Arial&quot;,&quot;sans-serif&quot;;mso-bidi-font-family:&quot;Times New Roman&quot;">
-                <span style="mso-no-proof:yes">«NET»</span></span></td>
+                <span style="mso-no-proof:yes"><div id="receivables" runat="server" >«NET»</div></span></span></td>
             <td>
                 &nbsp;</td>
         </tr>
