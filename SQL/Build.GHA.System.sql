@@ -28,6 +28,7 @@ drop table if exists GST;
 drop table if exists FeeType;
 drop table if exists conditionstatus;
 drop table if exists Auction;
+drop table if exists AuctionBidders;
 
 -- [2][2]						[2][2] --
 -- [2][2]						[2][2] --
@@ -136,7 +137,7 @@ Create Table Vehicle
     Model text,
     VIN text,
     Color text,
-    Mileage int,
+    Mileage text,
     MileageNA boolean,
     MileageNAReason text,
     Units text,
@@ -218,6 +219,14 @@ Create Table VehiclePictures
      VehicleID integer, 
      constraint FK_VehiclePictures_VehicleID foreign key (VehicleID) references Vehicle(VehicleID) 
  ); 
+ 
+CREATE TABLE AuctionBidders
+(
+	BidderNumber integer,
+    AuctionID integer,
+    Primary key(BidderNumber, AuctionID),
+    BuyerID integer
+);
 
 -- Enabling foreign keys
 SET FOREIGN_KEY_CHECKS=1;
@@ -726,7 +735,7 @@ END //
 -- Vehicle Screen queries
 
 DROP FUNCTION IF EXISTS sp_createVehicle //
-CREATE FUNCTION sp_createVehicle(pLotNumber text,  pYear text,  pMake text,  pModel text,  pVin text,  pColor text,  pMileage integer,  pUnits text,  pProvince text,  pTransmission text,  pSellerID int,  pOptions text) returns int
+CREATE FUNCTION sp_createVehicle(pLotNumber text,  pYear text,  pMake text,  pModel text,  pVin text,  pColor text,  pMileage text,  pUnits text,  pProvince text,  pTransmission text,  pSellerID int,  pOptions text,  pMileageNA bool,  pMileageNAReason text) returns int
 BEGIN
 INSERT INTO  `vehicle`
 (
@@ -741,7 +750,9 @@ INSERT INTO  `vehicle`
 `Province`,
 `Transmission`,
 `VehicleOptions`,
-`SellerID`)
+`SellerID`,
+`MileageNA`,
+`MileageNAReason`)
 VALUES
 (
 pLotNumber,
@@ -755,7 +766,9 @@ pUnits,
 pProvince,
 pTransmission,
 pOptions,
-pSellerID);
+pSellerID,  
+pMileageNA,  
+pMileageNAReason);
 
 RETURN LAST_INSERT_ID();
 END//
@@ -866,7 +879,7 @@ CREATE PROCEDURE sp_deleteAuctionSale(pAuctionSaleID integer)
 delimiter //
 DROP FUNCTION IF EXISTS sp_createPayment //
 CREATE FUNCTION sp_createPayment(
-  `pPaymentAmount` decimal,
+  `pPaymentAmount` decimal(10,2),
   `pAuctionSaleID` int(11),
   `pPaymentTypeID` int(11),
   `pSurcharges` decimal,
@@ -988,7 +1001,9 @@ BEGIN
     `vehicle`.`Province`,
     `vehicle`.`Transmission`,
     `vehicle`.`VehicleOptions`,
-    `vehicle`.`SellerID`
+    `vehicle`.`SellerID`,
+    `vehicle`.`MileageNA`,
+    `vehicle`.`MileageNAReason`
 	FROM `vehicle`
 	WHERE `vehicle`.`VehicleID` = pVehicleID;
 END//
@@ -1050,7 +1065,8 @@ CREATE PROCEDURE sp_viewVehiclesForSale()
 BEGIN
 	SELECT `vehicle`.`VehicleID`, CONCAT(`LotNumber`, " - ", `Year`, " ", `Color`, " ", `Make`, " ", `Model`) as `DisplayInfo`
     FROM `vehicle`, `vehiclecondnreqs`
-    WHERE `vehiclecondnreqs`.`VehicleID` = `vehicle`.`VehicleID` and `vehiclecondnreqs`.`ForSale` = 1;
+    WHERE `vehiclecondnreqs`.`VehicleID` = `vehicle`.`VehicleID` and `vehiclecondnreqs`.`ForSale` = 1
+    order by `DisplayInfo`;
 END//
 
 DROP PROCEDURE IF EXISTS sp_viewAuctionSalePayments//
@@ -1137,7 +1153,8 @@ BEGIN
     union
     SELECT `vehicle`.`VehicleID`, CONCAT(`LotNumber`, " - ", `Year`, " ", `Color`, " ", `Make`, " ", `Model`, " - Not For Sale") as `DisplayInfo`
     FROM `vehicle`, `vehiclecondnreqs`
-    WHERE `vehiclecondnreqs`.`VehicleID` = `vehicle`.`VehicleID` and `vehiclecondnreqs`.`ForSale` = 0;
+    WHERE `vehiclecondnreqs`.`VehicleID` = `vehicle`.`VehicleID` and `vehiclecondnreqs`.`ForSale` = 0
+    order by `DisplayInfo`;
 END//
 
 DROP PROCEDURE IF EXISTS sp_getVehicleFees//
@@ -1232,7 +1249,7 @@ WHERE `VehicleConReqID` = `pVehicleConReqID`;
 END//
 
 DROP PROCEDURE IF EXISTS sp_updateVehicle //
-CREATE PROCEDURE sp_updateVehicle(pVehicleId integer, pLotNumber text,  pYear text,  pMake text,  pModel text,  pVin text,  pColor text,  pMileage integer,  pUnits text,  pProvince text,  pTransmission text,  pSellerID int,  pOptions text)
+CREATE PROCEDURE sp_updateVehicle(pVehicleId integer, pLotNumber text,  pYear text,  pMake text,  pModel text,  pVin text,  pColor text,  pMileage text,  pUnits text,  pProvince text,  pTransmission text,  pSellerID int,  pOptions text,  pMileageNA bool,  pMileageNAReason text)
 BEGIN
 	Update `vehicle`
 	SET
@@ -1247,7 +1264,9 @@ BEGIN
 	`Province` = pProvince, 
 	`Transmission` = pTransmission, 
 	`VehicleOptions` = pOptions, 
-	`SellerID` = pSellerID 
+	`SellerID` = pSellerID ,
+    `MileageNA` = pMileageNA,  
+    `MileageNAReason` = pMileageNAReason
 	where vehicleId = pVehicleId;
 
 END//
@@ -1255,10 +1274,63 @@ END//
 DROP PROCEDURE IF EXISTS sp_viewAvailableVehiclesForSale//
 CREATE PROCEDURE sp_viewAvailableVehiclesForSale(`pAuctionID` int)
 BEGIN
-	SELECT `vehicle`.`VehicleID`, CONCAT(`LotNumber`, " - ", `Year`, " ", `Color`, " ", `Make`, " ", `Model`) as `DisplayInfo`
+	SELECT DISTINCT `vehicle`.`VehicleID`, CONCAT(`LotNumber`, " - ", `Year`, " ", `Color`, " ", `Make`, " ", `Model`) as `DisplayInfo`
     FROM `vehicle`, `vehiclecondnreqs`, `auctionsale`
     WHERE `vehiclecondnreqs`.`VehicleID` = `vehicle`.`VehicleID` and `vehiclecondnreqs`.`ForSale` = 1 and `vehicle`.`VehicleID` NOT IN 
 	(SELECT `vehicle`.`VehicleID`
     FROM `vehicle`, `vehiclecondnreqs`, `auctionsale`
-    WHERE `vehiclecondnreqs`.`VehicleID` = `vehicle`.`VehicleID` and `vehiclecondnreqs`.`ForSale` = 1 and `vehicle`.`VehicleID` = `auctionsale`.`VehicleID` and `auctionsale`.`AuctionID` = `pAuctionID`);
+    WHERE `vehiclecondnreqs`.`VehicleID` = `vehicle`.`VehicleID` and `vehiclecondnreqs`.`ForSale` = 1 and `vehicle`.`VehicleID` = `auctionsale`.`VehicleID` and `auctionsale`.`AuctionID` = `pAuctionID`)
+    order by `DisplayInfo`;
+END//
+
+DROP PROCEDURE IF EXISTS sp_createBlankBuyer //
+CREATE PROCEDURE sp_createBlankBuyer(pBidderNumber integer)
+BEGIN
+INSERT INTO `gha`.`buyer` (`BidderNumber`, `BuyerFirstName`, `BuyerLastName`, `BuyerAddress`, `BuyerCity`, `BuyerProvince`, `BuyerPostalCode`, `BuyerLicense`, `BuyerPhone`, `Notes`) 
+VALUES (pBidderNumber, pBidderNumber, '', '', '', 'Alberta', '', '', '', '');
+END//
+
+DROP FUNCTION IF EXISTS sp_createAuctionBidder //
+CREATE FUNCTION sp_createAuctionBidder(
+	pBidderNumber integer,
+	pAuctionID integer) RETURNS INTEGER
+BEGIN
+INSERT INTO AuctionBidders(
+BidderNumber,
+AuctionID)
+VALUES(
+pBidderNumber,
+pAuctionID);
+
+RETURN LAST_INSERT_ID();
+END//
+
+DROP PROCEDURE IF EXISTS sp_editAuctionBidder //
+CREATE PROCEDURE sp_editAuctionBidder(
+	pBidderNumber integer,
+	pAuctionID integer,
+    pNewBidderNumber integer)
+BEGIN
+delete from AuctionBidders WHERE BidderNumber = pBidderNumber and AuctionID = pAuctionID;
+
+INSERT INTO AuctionBidders(
+BidderNumber,
+AuctionID)
+VALUES(
+pNewBidderNumber,
+pAuctionID);
+END//
+
+DROP PROCEDURE IF EXISTS sp_viewAuctionBidders //
+CREATE PROCEDURE sp_viewAuctionBidders(pAuctionID integer)
+BEGIN
+	select if(BidderNumber=0, "", BidderNumber) as 'BidderNumber' from buyer
+	union select BidderNumber from AuctionBidders where AuctionID = pAuctionID;
+END//
+
+DROP PROCEDURE IF EXISTS sp_createBlankBuyer //
+CREATE PROCEDURE sp_createBlankBuyer(pBidderNumber integer)
+BEGIN
+INSERT INTO `gha`.`buyer` (`BidderNumber`, `BuyerFirstName`, `BuyerLastName`, `BuyerAddress`, `BuyerCity`, `BuyerProvince`, `BuyerPostalCode`, `BuyerLicense`, `BuyerPhone`, `Notes`) 
+VALUES (pBidderNumber, pBidderNumber, '', '', '', 'Alberta', '', '', '', '');
 END//

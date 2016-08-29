@@ -54,6 +54,21 @@
             <asp:DropDownList runat="server" ID="DDLUnits" CssClass="form-control"></asp:DropDownList>
         </div>
     </div>
+    
+    <div class="form-group row">        
+        <div class="col-xs-12 col-sm-3 col-sm-offset-2">            
+            <div class="checkbox">
+                <label><asp:CheckBox runat="server" id="CHKMileageNA" Text="Mileage Missing" ></asp:CheckBox></label><%-- OnCheckedChanged="CHKMileageNA_CheckedChanged" AutoPostBack="true" --%>
+            </div>
+        </div>
+    </div>
+    
+    <div class="form-group row">
+        <label class="control-label col-xs-12 col-sm-2" for="TXTMileageNAReason">Reason:</label>
+        <div class="col-xs-7 col-sm-3">
+            <asp:TextBox ID="TXTMileageNAReason" runat="server" CssClass="form-control"></asp:TextBox>
+        </div>
+    </div>
 
     <div class="form-group row">
         <label class="control-label col-xs-12 col-sm-2" for="TXTTransmission">Transmission</label>
@@ -75,6 +90,15 @@
             <asp:TextBox ID="TXTOptions" runat="server" CssClass="form-control" TextMode="MultiLine" ></asp:TextBox>
         </div>
     </div>    
+
+    
+    <div class="form-group row">
+        <div class="col-xs-12 col-sm-12">
+            <asp:Button ID="BTNSubmit" runat="server" CssClass="btn btn-primary" Text="Create Vehicle Record" OnClick="BTNSubmit_Click" />
+            <asp:Button ID="BTNUpdate" runat="server" CssClass="btn btn-primary hidden"  Text="Update Vehicle Record" OnClick="BTNUpdate_Click" />
+            <asp:Button ID="BTNClear" runat="server" class="btn btn-warning" Text="Clear Form" OnClick="BTNClear_Click" />
+        </div>
+    </div>
         
     <div class="col-xs-12 col-sm-12"><hr /></div>
 
@@ -112,21 +136,15 @@
             </a>
         </div>
     </div>
-    <div class="col-xs-12 col-sm-12"><hr /></div>
+    <%--<div class="col-xs-12 col-sm-12"><hr /></div>
 
     <div class="form-group row">        
         <div class="col-xs-12 col-sm-12">
-            <asp:Button ID="BTNClear" runat="server" class="btn btn-warning" Text="Clear Form" OnClick="BTNClear_Click" />
+            
         </div>
     </div>
     <div class="col-xs-12 col-sm-12"><hr /></div>
-    
-    <div class="form-group row">
-        <div class="col-xs-12 col-sm-12">
-            <asp:Button ID="BTNSubmit" runat="server" CssClass="btn btn-primary" Text="Create" OnClick="BTNSubmit_Click" />
-            <asp:Button ID="BTNUpdate" runat="server" CssClass="btn btn-primary hidden"  Text="Update" OnClick="BTNUpdate_Click" />
-        </div>
-    </div>    
+    --%>
     <script type="text/javascript">
         jQuery('.numbersOnly').keyup(function () {
             this.value = this.value.replace(/[^0-9\.]/g, '');

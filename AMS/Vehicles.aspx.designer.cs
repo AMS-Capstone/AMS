@@ -94,6 +94,24 @@ namespace AMS {
         protected global::System.Web.UI.WebControls.DropDownList DDLUnits;
         
         /// <summary>
+        /// CHKMileageNA control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox CHKMileageNA;
+        
+        /// <summary>
+        /// TXTMileageNAReason control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TXTMileageNAReason;
+        
+        /// <summary>
         /// TXTTransmission control.
         /// </summary>
         /// <remarks>
@@ -121,6 +139,33 @@ namespace AMS {
         protected global::System.Web.UI.WebControls.TextBox TXTOptions;
         
         /// <summary>
+        /// BTNSubmit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BTNSubmit;
+        
+        /// <summary>
+        /// BTNUpdate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BTNUpdate;
+        
+        /// <summary>
+        /// BTNClear control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BTNClear;
+        
+        /// <summary>
         /// FUVehicle control.
         /// </summary>
         /// <remarks>
@@ -146,32 +191,5 @@ namespace AMS {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl imageCarousel;
-        
-        /// <summary>
-        /// BTNClear control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BTNClear;
-        
-        /// <summary>
-        /// BTNSubmit control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BTNSubmit;
-        
-        /// <summary>
-        /// BTNUpdate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BTNUpdate;
     }
 }
