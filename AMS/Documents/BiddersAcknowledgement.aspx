@@ -7,6 +7,7 @@
     <title></title>
 </head>
 <body>
+    <div class="row" id="AlertDiv" runat="server"></div>
     <form id="form1" runat="server">
     <div id="body" runat="server">
     <html xmlns:o="urn:schemas-microsoft-com:office:office"
@@ -200,10 +201,10 @@ font-weight:normal'><o:p></o:p></span></u></h1>
 "Times New Roman"'>Lot #<span style='mso-tab-count:1'>     </span><span
 style='mso-tab-count:1'>            </span></span><b style='mso-bidi-font-weight:
 normal'><u><span lang=EN-US style='font-size:14.0pt;mso-bidi-font-size:10.0pt;
-font-family:Arial;mso-bidi-font-family:"Times New Roman"'><span>«LOT»</span></span></u></b><span
+font-family:Arial;mso-bidi-font-family:"Times New Roman"'><span><a id="lot" runat="server" >«LOT»</a></span></span></u></b><span
 lang=EN-US style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><span
 style='mso-tab-count:1'>      </span><span style='mso-tab-count:1'>            </span>Bid
-#<u><span style='mso-tab-count:1'>  </span>«BID_»<span style='mso-tab-count:2'>       </span><o:p></o:p></u></span></p>
+#<u><span style='mso-tab-count:1'>  </span><a id="bidNum" runat="server" >«BID_»</a><span style='mso-tab-count:2'>       </span><o:p></o:p></u></span></p>
 
 <p class=MsoNormal><span lang=EN-US style='font-family:Arial;mso-bidi-font-family:
 "Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
@@ -213,7 +214,7 @@ style='mso-tab-count:1'>      </span><span style='mso-tab-count:1'>            <
 
 <p class=MsoNormal><span lang=EN-US style='font-family:Arial;mso-bidi-font-family:
 "Times New Roman"'>Year<span style='mso-tab-count:1'>     </span><span
-style='mso-tab-count:1'>            </span><u><span>«YEAR»</span></u><o:p></o:p></span></p>
+style='mso-tab-count:1'>            </span><u><span><a id="year" runat="server" >«YEAR»</a></span></u><o:p></o:p></span></p>
 
 <p class=MsoNormal><span lang=EN-US style='font-family:Arial;mso-bidi-font-family:
 "Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
@@ -223,8 +224,8 @@ style='mso-tab-count:1'>            </span><u><span>«YEAR»</span></u><o:p></o:p>
 
 <p class=MsoNormal><span lang=EN-US style='font-family:Arial;mso-bidi-font-family:
 "Times New Roman"'>Make/Model<span style='mso-tab-count:1'>            </span><u>
-    <span>«MAKE»</span> / <span
-style='mso-field-code:"MERGEFIELD MODEL"'>«MODEL»</span></u><o:p></o:p></span></p>
+    <span><a id="make" runat="server" >«MAKE»</a></span> / <span
+style='mso-field-code:"MERGEFIELD MODEL"'><a id="model" runat="server" >«MODEL»</a></span></u><o:p></o:p></span></p>
 
 <p class=MsoNormal><span lang=EN-US style='font-family:Arial;mso-bidi-font-family:
 "Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
@@ -234,7 +235,7 @@ style='mso-field-code:"MERGEFIELD MODEL"'>«MODEL»</span></u><o:p></o:p></span></
 
 <p class=MsoNormal><span lang=EN-US style='font-family:Arial;mso-bidi-font-family:
 "Times New Roman"'>VIN<span style='mso-tab-count:1'>       </span><span
-style='mso-tab-count:1'>            </span><u><span>«VIN»</span><br
+style='mso-tab-count:1'>            </span><u><span><a id="vin" runat="server" >«VIN»</a></span><br
 style='mso-special-character:line-break'>
 <![if !supportLineBreakNewLine]><br style='mso-special-character:line-break'>
 <![endif]><o:p></o:p></u></span></p>
@@ -243,7 +244,7 @@ style='mso-special-character:line-break'>
 
 <p class=MsoNormal><span lang=EN-US style='font-family:Arial;mso-bidi-font-family:
 "Times New Roman"'>Out of Prov.<span style='mso-tab-count:1'>            </span><u>
-    <span>«STATUS»</span><o:p></o:p></u></span></p>
+    <span><a id="status" runat="server" >«STATUS»</a></span><o:p></o:p></u></span></p>
 
 <p class=MsoNormal><span lang=EN-US style='font-family:Arial;mso-bidi-font-family:
 "Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
@@ -254,7 +255,7 @@ style='mso-special-character:line-break'>
 <p class=MsoNormal><span lang=EN-US style='font-family:Arial;mso-bidi-font-family:
 "Times New Roman"'>Price<span style='mso-tab-count:2'>                 </span><u><span
 style='mso-tab-count:2'>              </span><span style='mso-tab-count:
-2'>«TOTAL» </span><span style='mso-tab-count:2'>                        </span></u>
+2'><a id="total" runat="server" >«TOTAL»</a> </span><span style='mso-tab-count:2'>                        </span></u>
 (PLUS Buyers Fee and GST)<o:p></o:p></span></p>
 
 <p class=MsoNormal><span lang=EN-US style='font-family:Arial;mso-bidi-font-family:
@@ -265,9 +266,7 @@ style='mso-tab-count:2'>              </span><span style='mso-tab-count:
 
 <p class=MsoNormal><span lang=EN-US style='font-family:Arial;mso-bidi-font-family:
 "Times New Roman"'>Status<span style='mso-tab-count:2'>               </span><u><span
-style='mso-tab-count:1'>            </span>CONDITIONAL<span
-style="mso-spacerun: yes">  </span><span style="mso-spacerun:
-yes">  </span>/<span style="mso-spacerun: yes">    </span>SOLD<span
+style='mso-tab-count:1'>            </span><a id="saleStatus" runat="server" >CONDITIONAL / SOLD</a><span
 style='mso-tab-count:2'>               </span></u><o:p></o:p></span></p>
 
 <p class=MsoNormal><span lang=EN-US style='font-family:Arial;mso-bidi-font-family:
@@ -290,7 +289,7 @@ style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><![if !supportE
 style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
 
 <p class=MsoNormal style='text-align:justify'><span lang=EN-US
-style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'>DATED <u><span>«SALE_DATE»</span></u><o:p></o:p></span></p>
+style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'>DATED <u><span><a id="saleDate" runat="server" >«SALE_DATE»</a></span></u><o:p></o:p></span></p>
 
 <p class=MsoNormal style='text-align:justify'><span lang=EN-US
 style='font-family:Arial;mso-bidi-font-family:"Times New Roman"'><![if !supportEmptyParas]>&nbsp;<![endif]><o:p></o:p></span></p>
