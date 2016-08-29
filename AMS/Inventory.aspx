@@ -82,11 +82,8 @@
                     <div class="checkbox">
                         <label><asp:CheckBox runat="server" id="CHKRecord" Text="Record"></asp:CheckBox></label>
                     </div>
-                </div>
-            </div>
-                
-            <div class="form-group row">        
-                <div class="col-xs-12 col-sm-3 col-sm-offset-2">
+                </div>       
+                <div class="col-xs-12 col-sm-3">
                     <div class="checkbox">
                         <label><asp:CheckBox runat="server" id="CHKCallOnHigh" Text="Call On High"></asp:CheckBox></label>
                     </div>
@@ -103,7 +100,7 @@
             <div class="form-group row">
                 <label class="control-label col-xs-12 col-sm-2" for="LBFees">Fees:</label>
                 <div class="col-xs-12 col-sm-5">
-                    <asp:ListBox ID="LBFees" CssClass="form-control"  runat="server" Rows="10"></asp:ListBox>
+                    <asp:ListBox ID="LBFees" CssClass="form-control"  runat="server" Rows="5"></asp:ListBox>
                 </div>
             </div>
             
@@ -112,13 +109,7 @@
                     <button type="button" class="btn btn-primary" data-toggle="modal" title="Add Fee" data-target="#addFeeModal" id="BTNAddModal" visible="false" runat="server">Add</button>
                 </div>         
             </div>
-
-            <div class="form-group row">
-                <div class="col-xs-12 col-sm-10 col-sm-offset-2">
-                    
-                </div>
-            </div>
-
+            
             
 
             <div id="addFeeModal" class="modal fade" role="dialog">
@@ -155,7 +146,6 @@
                 </div>
             </div>
 
-            <div class="row"><hr /></div>
             <div class="form-group row">
                 <div class="col-xs-12">
                     <asp:Button ID="BTNUpdate" runat="server" CssClass="btn btn-primary"  Text="Update Conditions and Requirements" OnClick="BTNUpdate_Click" />
