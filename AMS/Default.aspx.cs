@@ -11,6 +11,7 @@ namespace AMS
 {
     public partial class _Default : Page
     {
+        //A lot of code below is duplicated in BidderRegistration page. Any changes made here will likely need to be made there as well.
         AuctionDAL auctionService = new AMS.App_Code.AuctionDAL();
 
         protected void Page_load(object sender, EventArgs e)
