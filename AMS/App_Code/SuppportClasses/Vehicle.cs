@@ -12,7 +12,7 @@ namespace AMS.App_Code.SuppportClasses
 
         }
 
-        public Vehicle(string pLotNumber, string pYear, string pMake, string pModel, string pVin, string pColor, int pMileage, string pUnits, string pTransmission, int pSellerID, string pOptions, string pProvince, bool pMileageNA, string pMileageNAReason)
+        public Vehicle(string pLotNumber, string pYear, string pMake, string pModel, string pVin, string pColor, string pMileage, string pUnits, string pTransmission, int pSellerID, string pOptions, string pProvince, bool pMileageNA, string pMileageNAReason)
         {
             lotNumber = pLotNumber;
             year = pYear;
@@ -87,9 +87,9 @@ namespace AMS.App_Code.SuppportClasses
             get { return color; }
             set { color = value; }
         }
-        private int mileage;
+        private string mileage;
 
-        public int Mileage
+        public string Mileage
         {
             get { return mileage; }
             set { mileage = value; }
