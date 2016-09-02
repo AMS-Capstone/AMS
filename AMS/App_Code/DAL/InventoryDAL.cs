@@ -151,7 +151,7 @@ namespace AMS.App_Code.DAL
         }
 
         //Retrieves only vehicles that are for sale
-        public VehicleConditionsRequirements GetVehicleConditionsRequirements(int vehicleConditionRequirementID)
+        public VehicleConditionsRequirements GetVehicleConditionsRequirements(int vehicleID)
         {
             DataSet ds = new DataSet();
             MySqlConnection conn = new MySqlConnection(connectionString);
@@ -162,7 +162,7 @@ namespace AMS.App_Code.DAL
             {
                 MySqlCommand cmd = new MySqlCommand();
                 cmd.CommandText = "sp_getVehicleCondnReqs";
-                cmd.Parameters.Add(new MySqlParameter("@pVehicleID", vehicleConditionRequirementID));
+                cmd.Parameters.Add(new MySqlParameter("@pVehicleID", vehicleID));
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Connection = conn;
                 da.SelectCommand = cmd;
