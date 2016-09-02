@@ -752,12 +752,15 @@ namespace AMS.App_Code
                             vehicle.Model = dt.Rows[0]["Model"].ToString();
                             vehicle.Vin = dt.Rows[0]["VIN"].ToString();
                             vehicle.Color = dt.Rows[0]["Color"].ToString();
-                            vehicle.Mileage = Convert.ToInt32(dt.Rows[0]["Mileage"].ToString());
+                            vehicle.Mileage = dt.Rows[0]["Mileage"].ToString();
                             vehicle.Units = dt.Rows[0]["Units"].ToString();
                             vehicle.Province = dt.Rows[0]["Province"].ToString();
                             vehicle.Transmission = dt.Rows[0]["Transmission"].ToString();
                             vehicle.Options = dt.Rows[0]["VehicleOptions"].ToString();
                             vehicle.SellerID = Convert.ToInt32(dt.Rows[0]["SellerID"].ToString());
+
+                            vehicle.MileageNA = Convert.ToBoolean(dt.Rows[0]["MileageNA"].ToString());
+                            vehicle.MileageNAReason = dt.Rows[0]["MileageNAReason"].ToString();
                         }
                     }
                 }
@@ -795,6 +798,9 @@ namespace AMS.App_Code
             cmd.Parameters.AddWithValue("pTransmission", vehicle.Transmission);
             cmd.Parameters.AddWithValue("pSellerID", vehicle.SellerID);
             cmd.Parameters.AddWithValue("pOptions", vehicle.Options);
+            
+            cmd.Parameters.AddWithValue("pMileageNA", vehicle.MileageNA);
+            cmd.Parameters.AddWithValue("pMileageNAReason", vehicle.MileageNAReason);
 
             MySqlParameter returnParameter = new MySqlParameter();
             returnParameter.Direction = System.Data.ParameterDirection.ReturnValue;
@@ -844,6 +850,9 @@ namespace AMS.App_Code
             cmd.Parameters.AddWithValue("pTransmission", vehicle.Transmission);
             cmd.Parameters.AddWithValue("pSellerID", vehicle.SellerID);
             cmd.Parameters.AddWithValue("pOptions", vehicle.Options);
+
+            cmd.Parameters.AddWithValue("pMileageNA", vehicle.MileageNA);
+            cmd.Parameters.AddWithValue("pMileageNAReason", vehicle.MileageNAReason);
 
 
             try
