@@ -105,6 +105,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AuctionMain.aspx" />
+    <Content Include="BidderRegistration.aspx" />
     <Content Include="Buyers.aspx" />
     <Content Include="Content\bootstrap-datetimepicker.css" />
     <Content Include="Content\bootstrap-datetimepicker.min.css" />
@@ -206,10 +207,18 @@
   <ItemGroup>
     <Compile Include="App_Code\DAL\AuctionDAL.cs" />
     <Compile Include="App_Code\DAL\InventoryDAL.cs" />
+    <Compile Include="App_Code\SuppportClasses\AuctionBidder.cs" />
     <Compile Include="App_Code\SuppportClasses\AuctionSale.cs" />
     <Content Include="App_Code\SuppportClasses\ContentReplacer.cs" />
     <Compile Include="App_Code\SuppportClasses\VehicleConditionsRequirements.cs" />
     <Compile Include="App_Code\SuppportClasses\VehicleFee.cs" />
+    <Compile Include="BidderRegistration.aspx.cs">
+      <DependentUpon>BidderRegistration.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BidderRegistration.aspx.designer.cs">
+      <DependentUpon>BidderRegistration.aspx</DependentUpon>
+    </Compile>
     <Compile Include="DocumentHandler.ashx.cs">
       <DependentUpon>DocumentHandler.ashx</DependentUpon>
     </Compile>
