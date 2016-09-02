@@ -1,4 +1,5 @@
 ﻿using AMS.App_Code;
+using AMS.App_Code.DAL;
 using AMS.App_Code.SuppportClasses;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,7 @@ namespace AMS
 
         BuyerDAL buyerService = new AMS.App_Code.BuyerDAL();
         DataSet buyers = new DataSet();
+        DataSet auctionBidders = new DataSet();
 
         //protected override void Render(System.Web.UI.HtmlTextWriter writer)
         //{
@@ -73,8 +75,10 @@ namespace AMS
                 {
                     AlertDiv.InnerHtml = "";
                     buyers = buyerService.GetBuyers();
+                    auctionBidders = auctionService.viewAuctionBidders(auctionID);
                     ConditionStatuses.Tables.Add(dataAction.GetConditionStatus());
                     auction = auctionService.getAuction(auctionID);
+                    lblAuctionDate.Text = auction.AuctionDate.ToString("MMMM dd, yyyy");
                     
                     paymentTypes = auctionMainService.GetPaymentTypes();
 
@@ -105,11 +109,11 @@ namespace AMS
 
                         auctionData = postProcessAuctionData(auctionMainService.GetAuctionData(auctionID));
 
-
                         if (auctionData.Tables.Count > 0 && auctionData.Tables[0].Rows.Count > 0)
                         {
                             GVAuction.DataSource = auctionData.Tables[0].DefaultView;
                             GVAuction.DataBind();
+                            Session["AuctionData"] = auctionData;
                         }
                         else
                         {
@@ -206,6 +210,14 @@ namespace AMS
                     //DDLSaleStatuses.Items.FindByValue(value3).Selected = true;
                 }
             }
+
+            if ((e.Row.RowState == DataControlRowState.Edit) || (e.Row.RowState == (DataControlRowState.Edit|DataControlRowState.Alternate)))
+            {
+                e.Row.Cells[0].Width = Unit.Pixel(35);
+                String row = e.Row.UniqueID;
+                String jsString = "javascript:if (event.keyCode == 13) { __doPostBack('" + GVAuction.UniqueID + "', 'Update$" + e.Row.RowIndex.ToString() + "'); return false; }";
+                e.Row.Attributes.Add("onkeypress", jsString);
+            } 
         }
 
         private void updateAuctionSale(AuctionSale auctionSale)
@@ -227,6 +239,7 @@ namespace AMS
                 auctionData = postProcessAuctionData(auctionMainService.GetAuctionData(auctionID));
                 GVAuction.DataSource = auctionData.Tables[0].DefaultView;
                 GVAuction.DataBind();
+                Session["AuctionData"] = auctionData;
 
                 DataRow row = auctionData.Tables[0].Rows[e.NewEditIndex];
                 Session["AuctionSaleID"] = row["AuctionSaleID"].ToString();
@@ -276,6 +289,7 @@ namespace AMS
                 auctionData = postProcessAuctionData(auctionMainService.GetAuctionData(auctionID));
                 GVAuction.DataSource = auctionData.Tables[0].DefaultView;
                 DataBind();
+                Session["AuctionData"] = auctionData;
             }
             catch (Exception ex)
             {
@@ -302,6 +316,7 @@ namespace AMS
             auctionData = postProcessAuctionData(auctionMainService.GetAuctionData(auctionID));
             GVAuction.DataSource = auctionData.Tables[0].DefaultView;
             DataBind();
+            Session["AuctionData"] = auctionData;
 
 
             //AlertDiv.InnerHtml = "<div class=\"alert alert-warning fade in\">" +
@@ -383,7 +398,7 @@ namespace AMS
             auction.DepositsAndPayments = 0;
             auction.Receivables = 0;
 
-            String report = "<table>" + "<tr><td>" + "LOT#" + "</td><td>" + "STATUS" + "</td><td>" + "BUYER NAME" + "</td><td>" + "BUYER PHONE" + "</td><td>" + "SELLING PRICE    " + "</td><td align=right>" + "GRAND TOTAL" + "</td></tr>"; //Lot, sale status, buyer name, buyer phone, selling price, grand total
+            String report = "<table class=\"table\">" + "<tr><td class=\"cells\">" + "LOT#" + "</td><td class=\"cells\">" + "STATUS" + "</td><td class=\"cells\">" + "BUYER NAME" + "</td><td class=\"cells\">" + "BUYER PHONE" + "</td><td class=\"cells\">" + "SELLING PRICE    " + "</td><td align=right class=\"cells\">" + "GRAND TOTAL" + "</td></tr>"; //Lot, sale status, buyer name, buyer phone, selling price, grand total
             // Totals: Total Selling Prices, Total in Fees, Total in GST, Surcharges, Gross Total (Sum of all previous), Deposits and Payments (Together with Surcharges), Receivables (difference between gross total and deposits and payments)
 
             if (auctionData.Tables.Count > 0 && auctionData.Tables[0].Rows.Count > 0)
@@ -401,11 +416,11 @@ namespace AMS
                             Buyer buyer = GetBuyerByID(Convert.ToInt32(row["BuyerID"].ToString()));
                             ConditionStatus status = GetConditionStatusByID(Convert.ToInt32(row["ConditionID"].ToString()));
 
-                            report += "<tr><td>" + row["LotNumber"].ToString();
-                            report += "</td><td>" + status.ConditionDescription;//row["SALE_STATUS"].ToString(); //TODO: Sale status needs to be a hidden column
-                            report += "</td><td>" + buyer.BuyerFirstName + " " + buyer.BuyerLastName;//row["BUYER_NAME"].ToString(); //TODO: Buyer name needs to be a hidden column
-                            report += "</td><td>" + buyer.BuyerPhone;//row["BUYER_PHONE"].ToString(); //TODO: Buyer phone needs to be a hidden column
-                            report += "</td><td align=right>" + Convert.ToDouble(row["SellingPrice"]).ToString("C2");
+                            report += "<tr><td class=\"cells\">" + row["LotNumber"].ToString();
+                            report += "</td><td class=\"cells\">" + status.ConditionDescription;//row["SALE_STATUS"].ToString(); //TODO: Sale status needs to be a hidden column
+                            report += "</td><td class=\"cells\">" + buyer.BuyerFirstName + " " + buyer.BuyerLastName;//row["BUYER_NAME"].ToString(); //TODO: Buyer name needs to be a hidden column
+                            report += "</td><td class=\"cells\">" + buyer.BuyerPhone;//row["BUYER_PHONE"].ToString(); //TODO: Buyer phone needs to be a hidden column
+                            report += "</td><td align=right class=\"cells\">" + Convert.ToDouble(row["SellingPrice"]).ToString("C2");
                             report += "</td><td align=right>" + Convert.ToDouble(row["Total"]).ToString("C2");
                             auction.AuctionTotal += Convert.ToDouble(auctionData.Tables[0].Rows[0]["Total"].ToString());
                             //auction.AuctionTotal += Convert.ToDouble(auctionData.Tables[0].Rows[0]["Payments"].ToString()); //No payments tracking within auction class atm
@@ -485,6 +500,7 @@ namespace AMS
             auctionData = postProcessAuctionData(auctionMainService.GetAuctionData(auctionID));
             GVAuction.DataSource = auctionData.Tables[0].DefaultView;
             DataBind();
+            Session["AuctionData"] = auctionData;
         }
 
         protected void txtPayment_TextChanged(object sender, EventArgs e)
@@ -536,14 +552,18 @@ namespace AMS
         {
             try
             {
+                InventoryDAL inventoryService = new InventoryDAL();
+                SellerDAL sellerService = new SellerDAL();
+
                 auctionData = postProcessAuctionData(auctionMainService.GetAuctionData(auctionID));
 
                 String vehicleList = "<table border=\"1\">" + "<tr><td>" + "LOT#" + "</td><td>" + "YEAR" + "</td><td>" + "MAKE/MODEL" + "</td><td>" + "VIN" + "</td><td>" + "MILEAGE" + "</td><td>" 
                 + "OPTIONS           "
                 + "</td><td>" + "STATUS"
-                + "</td><td>" + "CONS"
+                + "</td><td>" + "CON CODE"
                 + "</td><td>" + "APPRAISAL"
                 + "</td><td>" + "RESERVE"
+                + "</td><td>" + "SALE STATUS"
                 + "</td><td>" + "PRICE"
                 + "</td><td>" + "BID #"
                 + "</td></tr>";
@@ -551,7 +571,15 @@ namespace AMS
                 {
                     foreach (DataRow row in auctionData.Tables[0].Rows)
                     {
+                        
                         Vehicle car = dataAction.GetVehicleByID(Convert.ToInt32(row["VehicleID"]));
+                        VehicleConditionsRequirements condreq = inventoryService.GetVehicleConditionsRequirements(car.VehicleID);
+                        String callOnHigh = "";
+                        if (condreq.CallOnHigh == true)
+                        {
+                            callOnHigh = " CALL ON HIGH";
+                        }
+
                         vehicleList += "<tr><td>" + car.LotNumber;
                         vehicleList += "</td><td>" + car.Year;
                         vehicleList += "</td><td>" + car.Make + " " + car.Model;
@@ -559,11 +587,12 @@ namespace AMS
                         vehicleList += "</td><td>" + car.Mileage;
                         vehicleList += "</td><td>" + car.Options;
                         vehicleList += "</td><td>" + car.Province;
-                        vehicleList += "</td><td>"; // + car.;//Cons
-                        vehicleList += "</td><td>"; // + car.;//appraisal
-                        vehicleList += "</td><td>"; // + car.;//Reserve
-                        vehicleList += "</td><td>"; // + car.;//Price sold at
-                        vehicleList += "</td><td>"; // + car.;//Bid #
+                        vehicleList += "</td><td>" + row["SellerCode"].ToString();
+                        vehicleList += "</td><td>" + condreq.EstValue; //appraisal
+                        vehicleList += "</td><td>" + condreq.Reserve + callOnHigh; //Reserve
+                        vehicleList += "</td><td>"; //Sale status
+                        vehicleList += "</td><td>"; //Price sold at
+                        vehicleList += "</td><td>"; 
                         vehicleList += "</td></tr>";
                     }
                 }

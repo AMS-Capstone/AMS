@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="Auction" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="AuctionMain.aspx.cs" Inherits="AMS.AuctionMain" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <h1>Auction: </h1>
+    <h1>Auction: <asp:Label ID="lblAuctionDate" runat="server"></asp:Label></h1>
     <style type="text/css" media="print">
         .NonPrintable{
             display: none;
@@ -16,16 +16,18 @@
                 <Columns>
                     <asp:TemplateField  HeaderText="Print" Visible="true">
                         <ItemTemplate>
-                            <%--<asp:Button ID="Print" Text="Print Bill of Sale" CssClass="btn btn-xs" runat="server"/>--%>
-                            <a href="/Documents/LogSheet" class="btn btn-sm btn-default" onClick="window.print();return false">Bill of Sale</a>
+                            <%--<asp:Button ID="Print" Text="Bill of Sale" CssClass="btn btn-xs" runat="server"/>--%>
+                            <a href="/Documents/BillOfSale?SaleID=<%# Eval("AuctionSaleID") %>" class="btn btn-sm btn-default" >BOS</a>
+                            <%--<input type="button" id="Button45" name="BTNBillOfSale" class="btn btn-sm btn-default" onclick="javascript: __doPostBack('ButtonA', '')" value="Bill of Sale" />--%>
                         </ItemTemplate>
                         <EditItemTemplate>
                         </EditItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField  HeaderText="Print" Visible="true">
                         <ItemTemplate>
-                            <%--<asp:Button ID="Print" Text="Print Bill of Sale" CssClass="btn btn-xs" runat="server"/>--%>
-                            <a href="/Documents/LogSheet" class="btn btn-sm btn-default" onClick="window.print();return false">Bidder's Acknowledgement</a>
+                            <%--<asp:Button ID="Print" Text="Bidder's Acknowledgement" CssClass="btn btn-xs" runat="server"/>--%>
+                            <a href="/Documents/BiddersAcknowledgement?SaleID=<%# Eval("AuctionSaleID") %>" class="btn btn-sm btn-default" >BAK</a>
+                            <%--<a href="/Documents/LogSheet" class="btn btn-sm btn-default" onClick="window.print();return false">Bidder's Acknowledgement</a>--%>
                         </ItemTemplate>                        
                         <EditItemTemplate>
                         </EditItemTemplate>
@@ -141,6 +143,12 @@
                             <asp:Label ID="lblNetTotal" runat="server" Text='<%# Eval("NetTotal", "{0:c}") %>' DataFormatString="{0:c}" Visible="true" />
                         </ItemTemplate>
                     </asp:TemplateField>
+
+                    <%--<asp:TemplateField  HeaderText="HiddenUpdate">
+                        <EditItemTemplate>
+                            <asp:Button ID="BTNHiddenUpdate" runat="server" CssClass="btn btn-primary" Text="Hidden Update" OnClick="BTNAddCarsToAuction_Click" />
+                        </EditItemTemplate>
+                    </asp:TemplateField>--%>
                 </Columns>
             </asp:GridView>
         </div>
@@ -291,5 +299,4 @@
         <asp:Button ID="BTNBidderAcknowledgements" runat="server" CssClass="btn btn-default" Text="Print All Bidder Acknowledgements" OnClick="BTNBidderAcknowledgements_Click"/>
         <%--<button type="button" class="btn btn-primary" data-toggle="modal" title="Car List Modal" data-target="#carListModal">CarListModal</button>--%>
     </div>
-    
 </asp:Content>
