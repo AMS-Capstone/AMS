@@ -85,8 +85,7 @@ namespace AMS.App_Code
             }
             return auction;
         }
-
-
+        
         public DataSet getAuctionYears()
         {
             DataSet ds = new DataSet("Auctions");
@@ -212,6 +211,106 @@ namespace AMS.App_Code
             return id;
         }
 
+        //This procedure retrieves all BidderNumbers for a given Auction
+        public DataSet viewAuctionBidders(int auctionID)
+        {
+            DataSet ds = new DataSet("AuctionBidders");
+            MySqlConnection conn = new MySqlConnection(connectionString);
+            MySqlDataAdapter da = new MySqlDataAdapter();
+
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.CommandText = "sp_viewAuctionBidders";
+                cmd.Parameters.Add(new MySqlParameter("@pAuctionID", auctionID));
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = conn;
+                da.SelectCommand = cmd;
+                da.Fill(ds, "AuctionBidders");
+            }
+            catch (Exception ex)
+            {
+                //Panic
+                throw;
+            }
+            finally
+            {
+                //Tie the loose ends here
+            }
+            return ds;
+        }
+
+        //Create a new AuctionBidder
+        public int createAuctionBidder(AuctionBidder auctionBidder)
+        {
+            int id = 0;
+            MySqlConnection conn = new MySqlConnection(connectionString);
+            conn.Open();
+
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.CommandText = "sp_createAuctionBidder";
+                cmd.Parameters.Add(new MySqlParameter("@pAuctionID", auctionBidder.AuctionID));
+                cmd.Parameters.Add(new MySqlParameter("@pBidderNumber", auctionBidder.BidderNumber));
+
+                MySqlParameter returnParameter = new MySqlParameter();
+                returnParameter.Direction = System.Data.ParameterDirection.ReturnValue;
+
+                cmd.Parameters.Add(returnParameter);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = conn;
+                cmd.ExecuteNonQuery();
+
+                id = Convert.ToInt32(returnParameter.Value.ToString());
+            }
+            catch (Exception ex)
+            {
+                //Panic
+                throw;
+            }
+            finally
+            {
+                //Tie the loose ends here
+                conn.Close();
+            }
+            return id;
+        }
+
+
+        //Create a new AuctionBidder
+        public int editAuctionBidder(AuctionBidder auctionBidder, AuctionBidder newAuctionBidder)
+        {
+            int id = 0;
+            MySqlConnection conn = new MySqlConnection(connectionString);
+            conn.Open();
+
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.CommandText = "sp_editAuctionBidder";
+                cmd.Parameters.Add(new MySqlParameter("@pAuctionID", auctionBidder.AuctionID));
+                cmd.Parameters.Add(new MySqlParameter("@pBidderNumber", auctionBidder.BidderNumber));
+                cmd.Parameters.Add(new MySqlParameter("@pNewBidderNumber", newAuctionBidder.BidderNumber));
+
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = conn;
+                cmd.ExecuteNonQuery();
+
+            }
+            catch (Exception ex)
+            {
+                //Panic
+                throw;
+            }
+            finally
+            {
+                //Tie the loose ends here
+                conn.Close();
+            }
+            return id;
+        }
+
         //Create a new AuctionSale
         public int createAuctionSale(AuctionSale auctionSale)
         {
@@ -257,6 +356,35 @@ namespace AMS.App_Code
                 conn.Close();
             }
             return id;
+        }
+
+        //This procedure retrieves all BidderNumbers for a given Auction
+        public DataSet getSaleByID(int saleID)
+        {
+            DataSet ds = new DataSet("Sale");
+            MySqlConnection conn = new MySqlConnection(connectionString);
+            MySqlDataAdapter da = new MySqlDataAdapter();
+
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.CommandText = "sp_getSaleByID";
+                cmd.Parameters.Add(new MySqlParameter("@pSaleID", saleID));
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = conn;
+                da.SelectCommand = cmd;
+                da.Fill(ds, "Sale");
+            }
+            catch (Exception ex)
+            {
+                //Panic
+                throw;
+            }
+            finally
+            {
+                //Tie the loose ends here
+            }
+            return ds;
         }
 
 
